@@ -14,3 +14,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Cloned repos
+generative-ai-for-beginners/
+
+# Obsidian workspace
+.obsidian/
