@@ -1,0 +1,14 @@
+{
+  "app:open-another-vault": [
+    {
+      "modifiers": [],
+      "key": "F9"
+    }
+  ],
+  "app:open-vault": [
+    {
+      "modifiers": [],
+      "key": "F10"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+# Claude
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+
+# Cloned repos
+generative-ai-for-beginners/
+
+# Obsidian workspace（保留配置，排除工作区状态）
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
