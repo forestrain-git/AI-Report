@@ -69,7 +69,9 @@
     height: 100%;
     border: 0;
     display: block;
-    background: #fff;
+    background: #0a1628;
+    opacity: 1;
+    transition: opacity 0.12s ease;
   }
   .counter {
     position: fixed;
@@ -169,14 +171,19 @@
 
   function show(idx) {
     if (idx < 0 || idx >= deck.length) return;
+    if (idx === current) return;
     current = idx;
-    frame.src = deck[idx].file;
-    counter.innerHTML = `${idx + 1} / ${deck.length} <span class="label">${deck[idx].label || ''}</span>`;
-    try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
-    if (location.hash !== '#' + (idx + 1)) {
-      history.replaceState(null, '', '#' + (idx + 1));
-    }
+    frame.style.opacity = '0';
+    setTimeout(() => {
+      frame.src = deck[idx].file;
+      counter.innerHTML = `${idx + 1} / ${deck.length} <span class="label">${deck[idx].label || ''}</span>`;
+      try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
+      if (location.hash !== '#' + (idx + 1)) {
+        history.replaceState(null, '', '#' + (idx + 1));
+      }
+    }, 120);
   }
+  frame.addEventListener('load', () => { frame.style.opacity = '1'; });
 
   function next() { show(Math.min(current + 1, deck.length - 1)); }
   function prev() { show(Math.max(current - 1, 0)); }
