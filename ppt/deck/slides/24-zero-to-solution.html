@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P24 从零基础到方案落地</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0a1628; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(74,144,217,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(201,169,97,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(74,144,217,0.4); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #C9A961; box-shadow: 0 0 12px rgba(201,169,97,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; z-index: 1; }
+  .context { text-align: center; font-size: 20px; color: var(--ink-tertiary); margin-bottom: 32px; }
+  .flow { display: flex; gap: 16px; align-items: stretch; margin-bottom: 48px; }
+  .flow-step { flex: 1; padding: 28px 20px; border: 1px solid rgba(74,144,217,0.15); text-align: center; position: relative; }
+  .flow-step .icon { font-size: 28px; margin-bottom: 12px; }
+  .flow-step .title { font-size: 18px; font-weight: 600; color: var(--ink-primary); margin-bottom: 8px; }
+  .flow-step .desc { font-size: 14px; color: var(--ink-tertiary); line-height: 1.5; }
+  .flow-arrow { display: flex; align-items: center; font-size: 24px; color: rgba(201,169,97,0.3); }
+  .highlight { text-align: center; padding: 32px 60px; border: 1px solid rgba(201,169,97,0.2); background: rgba(201,169,97,0.04); }
+  .highlight p { font-size: 22px; color: var(--ink-secondary); line-height: 1.8; }
+  .highlight strong { color: #C9A961; }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(232,232,232,0.25); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(201,169,97,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 1 · 阶段四</span>
+    <span class="badge" style="border:1px solid rgba(201,169,97,0.25);padding:3px 12px;color:rgba(201,169,97,0.55);background:rgba(201,169,97,0.04)">落地</span>
+    <span>24 / 39</span>
+  </div>
+  <div class="header">
+    <h1>从零基础到方案落地</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="context">董事长汇报大体满意 → 要求深化至初设深度 → 老产品经理顾不过来 → 被逼深入</div>
+    <div class="flow">
+      <div class="flow-step"><div class="icon">🔍</div><div class="title">挖掘痛点</div><div class="desc">从客户实际场景出发</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="icon">🕳️</div><div class="title">揭示缺口</div><div class="desc">能力差距分析</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="icon">⚙️</div><div class="title">设计功能</div><div class="desc">功能架构设计</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="icon">🖥️</div><div class="title">配置软硬件</div><div class="desc">选型与集成</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="icon">💰</div><div class="title">测算成本</div><div class="desc">详细成本分解</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><div class="icon">📊</div><div class="title">计算报价</div><div class="desc">最终商务报价</div></div>
+    </div>
+    <div class="highlight">
+      <p><strong>没有外部专家，没有外包团队</strong><br>都是现有人员的能力拓展 · 目前已对接设计院开展预留预埋和方案深化讨论</p>
+    </div>
+  </div>
+  <div class="hud-bot">
+    <span>[37:00] 累计</span>
+    <span>CC + Wiki 构建初设 · 一条龙跑通</span>
+  </div>
+</div>
+</body>
+</html>

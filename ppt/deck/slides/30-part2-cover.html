@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P30 Part 2 当前工具矩阵</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0a1628; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(74,144,217,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(201,169,97,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(74,144,217,0.4); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #C9A961; box-shadow: 0 0 12px rgba(201,169,97,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; }
+  .part-num { font-family: var(--font-display); font-size: 200px; font-weight: 700; color: rgba(201,169,97,0.08); line-height: 1; position: absolute; left: 120px; top: 50%; transform: translateY(-50%); }
+  .content { text-align: center; max-width: 900px; }
+  .subtitle { font-size: 32px; color: var(--ink-secondary); letter-spacing: 0.05em; margin-bottom: 48px; }
+  .subtitle strong { color: #C9A961; }
+  .tools-preview { display: flex; gap: 24px; justify-content: center; }
+  .tool-card { padding: 24px 40px; border: 1px solid rgba(74,144,217,0.15); text-align: center; }
+  .tool-card .name { font-size: 20px; font-weight: 600; color: var(--ink-primary); margin-bottom: 8px; }
+  .tool-card .role { font-size: 14px; color: rgba(74,144,217,0.6); font-family: var(--font-mono); }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(232,232,232,0.25); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(201,169,97,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 2</span>
+    <span class="badge" style="border:1px solid rgba(201,169,97,0.25);padding:3px 12px;color:rgba(201,169,97,0.55);background:rgba(201,169,97,0.04)">工具矩阵</span>
+    <span>30 / 39</span>
+  </div>
+  <div class="header">
+    <h1>当前工具矩阵</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="part-num">02</div>
+    <div class="content">
+      <div class="subtitle">打蚊子不要用高射炮，<strong>杀牛才要用牛刀</strong></div>
+      <div class="tools-preview">
+        <div class="tool-card"><div class="name">窗口工具</div><div class="role">解决"快"</div></div>
+        <div class="tool-card"><div class="name">Kimi</div><div class="role">解决"全"</div></div>
+        <div class="tool-card"><div class="name">龙虾</div><div class="role">解决"勤"</div></div>
+        <div class="tool-card"><div class="name">CC</div><div class="role">解决"深"</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hud-bot">
+    <span>[49:00] 累计</span>
+    <span>Part 2 开启 · 工具选型</span>
+  </div>
+</div>
+</body>
+</html>

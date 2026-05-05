@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P1 封面 · AI 觉醒经历分享</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: var(--bg-primary);
+    font-family: var(--font-body);
+    color: var(--ink-primary);
+  }
+
+  .slide {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--page-margin);
+  }
+
+  /* ── 背景层：极淡科技网格 ── */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(201,169,97,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 45%, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 45%, black 30%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── 几何装饰：细线圆环 ── */
+  .orbit-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 720px;
+    height: 720px;
+    border: 1px solid rgba(201,169,97,0.12);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .orbit-ring::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 920px;
+    height: 920px;
+    border: 1px solid rgba(74,144,217,0.08);
+    border-radius: 50%;
+  }
+
+  .orbit-ring::after {
+    content: '';
+    position: absolute;
+    top: -4px; left: 50%;
+    transform: translateX(-50%);
+    width: 8px; height: 8px;
+    background: var(--accent-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(201,169,97,0.5);
+  }
+
+  /* ── 四角标记 ── */
+  .corner {
+    position: absolute;
+    width: 40px; height: 40px;
+    pointer-events: none;
+  }
+  .corner::before, .corner::after {
+    content: '';
+    position: absolute;
+    background: var(--accent-gold-dim);
+  }
+  .corner-tl { top: var(--space-sm); left: var(--space-sm); }
+  .corner-tl::before { top: 0; left: 0; width: 1px; height: 100%; }
+  .corner-tl::after  { top: 0; left: 0; width: 100%; height: 1px; }
+
+  .corner-tr { top: var(--space-sm); right: var(--space-sm); }
+  .corner-tr::before { top: 0; right: 0; width: 1px; height: 100%; }
+  .corner-tr::after  { top: 0; right: 0; width: 100%; height: 1px; }
+
+  .corner-bl { bottom: var(--space-sm); left: var(--space-sm); }
+  .corner-bl::before { bottom: 0; left: 0; width: 1px; height: 100%; }
+  .corner-bl::after  { bottom: 0; left: 0; width: 100%; height: 1px; }
+
+  .corner-br { bottom: var(--space-sm); right: var(--space-sm); }
+  .corner-br::before { bottom: 0; right: 0; width: 1px; height: 100%; }
+  .corner-br::after  { bottom: 0; right: 0; width: 100%; height: 1px; }
+
+  /* ── 顶部／底部 hairline ── */
+  .hairline-top {
+    position: absolute;
+    top: var(--space-lg);
+    left: var(--page-margin);
+    right: var(--page-margin);
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent-gold-dim) 20%, var(--accent-gold-dim) 80%, transparent 100%);
+  }
+
+  .hairline-bot {
+    position: absolute;
+    bottom: var(--space-lg);
+    left: var(--page-margin);
+    right: var(--page-margin);
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent-gold-dim) 20%, var(--accent-gold-dim) 80%, transparent 100%);
+  }
+
+  /* ── 标题组 ── */
+  .title-group {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    z-index: 1;
+  }
+
+  .title-main {
+    font-family: var(--font-display);
+    font-size: var(--text-hero);
+    font-weight: 700;
+    color: var(--ink-primary);
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    text-shadow: 0 0 80px rgba(201,169,97,0.15);
+  }
+
+  .title-main .accent {
+    color: var(--accent-gold);
+    text-shadow: 0 0 60px rgba(201,169,97,0.35);
+  }
+
+  .divider {
+    width: 80px;
+    height: 3px;
+    background: var(--accent-gold);
+    box-shadow: 0 0 16px rgba(201,169,97,0.4);
+  }
+
+  .subtitle {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    color: var(--ink-secondary);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── 底部信息 ── */
+  .meta {
+    position: absolute;
+    bottom: calc(var(--space-lg) + var(--space-sm));
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: var(--text-body);
+    color: var(--ink-tertiary);
+    letter-spacing: 0.15em;
+    z-index: 1;
+  }
+
+  .corner-label {
+    position: absolute;
+    top: calc(var(--space-lg) + var(--space-xs));
+    right: var(--page-margin);
+    font-size: var(--text-caption);
+    color: var(--ink-tertiary);
+    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+    z-index: 1;
+  }
+
+  .corner-label span {
+    color: var(--accent-gold);
+  }
+</style>
+</head>
+<body>
+
+<div class="slide">
+  <div class="grid-overlay"></div>
+  <div class="orbit-ring"></div>
+
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="hairline-top"></div>
+  <div class="hairline-bot"></div>
+
+  <div class="corner-label">CSCEC <span>·</span> INTELLIGENT</div>
+
+  <div class="title-group">
+    <h1 class="title-main">
+      AI <span class="accent">觉醒</span>经历分享
+    </h1>
+    <div class="divider"></div>
+    <p class="subtitle">一个老程序员两个月的记录</p>
+  </div>
+
+  <div class="meta">中建智能技术有限公司</div>
+</div>
+
+</body>
+</html>

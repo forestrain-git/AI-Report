@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P29 阶段四反思</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0a1628; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(74,144,217,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(201,169,97,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(74,144,217,0.4); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #C9A961; box-shadow: 0 0 12px rgba(201,169,97,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; }
+  .formula-box { text-align: center; padding: 60px 100px; border: 2px solid rgba(201,169,97,0.3); background: rgba(201,169,97,0.05); margin-bottom: 48px; }
+  .formula-box .label { font-family: var(--font-mono); font-size: 12px; color: rgba(201,169,97,0.5); letter-spacing: 0.2em; margin-bottom: 24px; }
+  .formula-box .formula { font-family: var(--font-display); font-size: 52px; font-weight: 700; color: #C9A961; letter-spacing: 0.05em; }
+  .formula-box .formula .dim { color: rgba(232,232,232,0.3); }
+  .explain { display: flex; gap: 48px; margin-bottom: 48px; }
+  .explain-col { flex: 1; max-width: 440px; padding: 32px; border: 1px solid rgba(74,144,217,0.12); }
+  .explain-col .title { font-size: 20px; font-weight: 600; color: var(--ink-primary); margin-bottom: 12px; }
+  .explain-col .text { font-size: 18px; color: var(--ink-secondary); line-height: 1.6; }
+  .conclusion { text-align: center; font-size: 26px; color: var(--ink-primary); }
+  .conclusion strong { color: #C9A961; }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(232,232,232,0.25); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(201,169,97,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 1 · 阶段四</span>
+    <span class="badge" style="border:1px solid rgba(201,169,97,0.25);padding:3px 12px;color:rgba(201,169,97,0.55);background:rgba(201,169,97,0.04)">第三课</span>
+    <span>29 / 39</span>
+  </div>
+  <div class="header">
+    <h1>阶段四反思</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="formula-box">
+      <div class="label">FORMULA</div>
+      <div class="formula">你的超能力 <span class="dim">=</span> 领域知识 <span class="dim">×</span> AI 执行力</div>
+    </div>
+    <div class="explain">
+      <div class="explain-col">
+        <div class="title">有知识无 AI</div>
+        <div class="text">效率瓶颈，知识沉淀但无法快速转化</div>
+      </div>
+      <div class="explain-col">
+        <div class="title">有 AI 无知识</div>
+        <div class="text">速度快但质量不可控，错误也被放大</div>
+      </div>
+    </div>
+    <div class="conclusion">新的时代到来了 —— <strong>但船桨还得自己划</strong></div>
+  </div>
+  <div class="hud-bot">
+    <span>[47:00] 累计</span>
+    <span>公式页 · 阶段四收尾</span>
+  </div>
+</div>
+</body>
+</html>

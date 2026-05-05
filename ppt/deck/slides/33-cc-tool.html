@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P33 CC</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0a1628; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(74,144,217,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(201,169,97,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(74,144,217,0.4); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #C9A961; box-shadow: 0 0 12px rgba(201,169,97,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; z-index: 1; }
+  .intro { text-align: center; font-size: 24px; color: var(--ink-secondary); margin-bottom: 48px; }
+  .intro strong { color: #C9A961; }
+  .features { display: flex; gap: 24px; margin-bottom: 48px; }
+  .feat { flex: 1; padding: 36px; border: 1px solid rgba(74,144,217,0.15); }
+  .feat .title { font-size: 22px; font-weight: 600; color: var(--ink-primary); margin-bottom: 12px; }
+  .feat .desc { font-size: 16px; color: var(--ink-secondary); line-height: 1.6; }
+  .models { text-align: center; padding: 28px 60px; border: 1px solid rgba(201,169,97,0.2); background: rgba(201,169,97,0.04); margin-bottom: 40px; }
+  .models .label { font-family: var(--font-mono); font-size: 12px; color: rgba(201,169,97,0.5); letter-spacing: 0.15em; margin-bottom: 12px; }
+  .models .text { font-size: 20px; color: var(--ink-primary); }
+  .models .text span { color: var(--ink-tertiary); }
+  .conclusion { text-align: center; font-size: 22px; color: var(--ink-secondary); }
+  .conclusion strong { color: #C9A961; }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(232,232,232,0.25); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(201,169,97,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 2 · 工具矩阵</span>
+    <span class="badge" style="border:1px solid rgba(201,169,97,0.25);padding:3px 12px;color:rgba(201,169,97,0.55);background:rgba(201,169,97,0.04)">CC</span>
+    <span>33 / 39</span>
+  </div>
+  <div class="header">
+    <h1>Claude Code</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="intro">搭配知识库（Obsidian）使用，处理<strong>复杂任务</strong> —— 解决"深"</div>
+    <div class="features">
+      <div class="feat">
+        <div class="title">文件系统操作</div>
+        <div class="desc">不只是对话，能读写、整理、维护整个项目文件</div>
+      </div>
+      <div class="feat">
+        <div class="title">知识库联动</div>
+        <div class="desc">与 Obsidian 深度配合，基于完整知识上下文工作</div>
+      </div>
+      <div class="feat">
+        <div class="title">复杂任务处理</div>
+        <div class="desc">架构设计、代码重构、文档生成、多文件协调</div>
+      </div>
+    </div>
+    <div class="models">
+      <div class="label">MODEL ROUTING</div>
+      <div class="text">通过 OpenRouter + 野卡，按需调度 <span>Claude / DeepSeek / MiMo 等</span></div>
+    </div>
+    <div class="conclusion">核心原则：窗口解决"快"，Kimi 解决"全"，龙虾解决"勤"，<strong>CC 解决"深"</strong></div>
+  </div>
+  <div class="hud-bot">
+    <span>[55:00] 累计</span>
+    <span>CC 解决"深" · 工具矩阵收尾</span>
+  </div>
+</div>
+</body>
+</html>

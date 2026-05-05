@@ -1,0 +1,43 @@
+/* === 中建发展 AI 演讲 · Design Tokens === */
+:root {
+  /* 色板 · 深底 + 金色 accent */
+  --bg-primary: #0D1117;
+  --bg-elevated: #161B22;
+  --bg-card: rgba(255,255,255,0.04);
+
+  --ink-primary: #E8E8E8;
+  --ink-secondary: rgba(232,232,232,0.65);
+  --ink-tertiary: rgba(232,232,232,0.38);
+
+  --accent-gold: #C9A961;
+  --accent-gold-dim: rgba(201,169,97,0.35);
+  --accent-blue: #4A90D9;
+  --accent-blue-dim: rgba(74,144,217,0.25);
+
+  /* 字体 */
+  --font-display: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  --font-body: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", monospace;
+
+  /* 字号 · 10m 投屏 */
+  --text-hero: 120px;
+  --text-h1: 72px;
+  --text-h2: 48px;
+  --text-h3: 36px;
+  --text-body: 24px;
+  --text-small: 18px;
+  --text-caption: 14px;
+
+  /* 间距 */
+  --space-xs: 12px;
+  --space-sm: 24px;
+  --space-md: 48px;
+  --space-lg: 96px;
+
+  /* 布局 */
+  --page-w: 1920px;
+  --page-h: 1080px;
+  --page-margin: 96px;
+  --masthead-h: 64px;
+  --footer-h: 56px;
+}

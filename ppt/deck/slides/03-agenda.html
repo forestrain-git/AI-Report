@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P3 今天说三件事</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #0a1628;
+    font-family: var(--font-body);
+    color: var(--ink-primary);
+  }
+  .slide {
+    width: 100%; height: 100%;
+    position: relative;
+    padding: 80px 120px;
+    display: flex;
+    flex-direction: column;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .frame {
+    position: absolute; inset: 48px;
+    border: 1px solid rgba(74,144,217,0.12);
+    pointer-events: none;
+  }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(201,169,97,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 11px;
+    color: rgba(74,144,217,0.4); letter-spacing: 0.08em;
+    margin-bottom: 48px; z-index: 1;
+  }
+  .header { margin-bottom: 64px; z-index: 1; }
+  .header h1 {
+    font-family: var(--font-display); font-size: 72px;
+    font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px;
+  }
+  .header .underline { width: 60px; height: 4px; background: #C9A961; box-shadow: 0 0 12px rgba(201,169,97,0.3); }
+
+  .body { flex: 1; display: flex; align-items: center; z-index: 1; }
+  .agenda-wrap { width: 100%; display: flex; flex-direction: column; gap: 40px; }
+  .agenda-item {
+    display: flex; align-items: center; gap: 48px;
+    padding: 36px 48px;
+    border: 1px solid rgba(74,144,217,0.15);
+    background: rgba(74,144,217,0.03);
+    position: relative;
+  }
+  .agenda-item.highlight {
+    border-color: rgba(201,169,97,0.3);
+    background: rgba(201,169,97,0.05);
+  }
+  .agenda-item .num {
+    font-family: var(--font-display); font-size: 64px; font-weight: 700;
+    color: rgba(201,169,97,0.15); line-height: 1; width: 80px;
+  }
+  .agenda-item.highlight .num { color: rgba(201,169,97,0.35); }
+  .agenda-item .text { flex: 1; }
+  .agenda-item .title {
+    font-size: 32px; font-weight: 600; color: var(--ink-primary);
+    letter-spacing: 0.05em; margin-bottom: 8px;
+  }
+  .agenda-item .desc {
+    font-size: 20px; color: var(--ink-secondary); letter-spacing: 0.05em;
+  }
+  .agenda-item .time {
+    font-family: var(--font-mono); font-size: 14px;
+    color: rgba(201,169,97,0.6); letter-spacing: 0.1em;
+  }
+  .note {
+    margin-top: 32px; text-align: center;
+    font-size: 20px; color: var(--ink-tertiary); letter-spacing: 0.08em;
+  }
+  .note span { color: #C9A961; }
+  .hud-bot {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: rgba(232,232,232,0.25);
+    letter-spacing: 0.08em; margin-top: 32px; z-index: 1;
+  }
+  .hud-bot span { color: rgba(201,169,97,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>开场</span>
+    <span class="badge" style="border:1px solid rgba(201,169,97,0.25);padding:3px 12px;color:rgba(201,169,97,0.55);background:rgba(201,169,97,0.04)">议程总览</span>
+    <span>03 / 39</span>
+  </div>
+  <div class="header">
+    <h1>今天说三件事</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="agenda-wrap">
+      <div class="agenda-item">
+        <div class="num">01</div>
+        <div class="text">
+          <div class="title">AI 觉醒四阶段</div>
+          <div class="desc">我两个月里实际经历的四个阶段 —— 从「高级搜索引擎」到「不失忆的工作平台」</div>
+        </div>
+        <div class="time">~45 min</div>
+      </div>
+      <div class="agenda-item">
+        <div class="num">02</div>
+        <div class="text">
+          <div class="title">当前工具矩阵</div>
+          <div class="desc">窗口 / Kimi / 龙虾 / CC —— 哪个场景用什么工具</div>
+        </div>
+        <div class="time">~10 min</div>
+      </div>
+      <div class="agenda-item highlight">
+        <div class="num">03</div>
+        <div class="text">
+          <div class="title">建议与行动</div>
+          <div class="desc">三条心法 · 四步学法 · 两条用法 + 自由交流</div>
+        </div>
+        <div class="time">~15 min</div>
+      </div>
+      <div class="note">第三块我希望大家最认真听 —— <span>前面都是经历，这块是现在最想跟各位说的话</span></div>
+    </div>
+  </div>
+  <div class="hud-bot">
+    <span>[01:30] 累计</span>
+    <span>70 分钟 · 三大部分</span>
+  </div>
+</div>
+</body>
+</html>

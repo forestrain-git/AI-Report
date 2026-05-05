@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P12 信任来自哪里 · 融合定稿版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #0a1628;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    color: #E8E8E8;
+  }
+  .slide {
+    width: 100%; height: 100%;
+    position: relative;
+    padding: 80px 120px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── 蓝图网格 ── */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* ── 外框角标 ── */
+  .frame {
+    position: absolute;
+    inset: 48px;
+    border: 1px solid rgba(74,144,217,0.12);
+    pointer-events: none;
+  }
+  .corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border: 2px solid rgba(201,169,97,0.4);
+  }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  /* ── 顶部 HUD ── */
+  .hud-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: "SF Mono", "Fira Code", monospace;
+    font-size: 11px;
+    color: rgba(74,144,217,0.4);
+    letter-spacing: 0.08em;
+    margin-bottom: 48px;
+    z-index: 1;
+  }
+  .hud-top .badge {
+    border: 1px solid rgba(201,169,97,0.25);
+    padding: 3px 12px;
+    color: rgba(201,169,97,0.55);
+    background: rgba(201,169,97,0.04);
+  }
+
+  /* ── 标题区 ── */
+  .header {
+    margin-bottom: 64px;
+    z-index: 1;
+  }
+  .header h1 {
+    font-family: "Noto Serif SC", serif;
+    font-size: 72px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #E8E8E8;
+    margin-bottom: 16px;
+  }
+  .header .underline {
+    width: 60px;
+    height: 4px;
+    background: #C9A961;
+    box-shadow: 0 0 12px rgba(201,169,97,0.3);
+  }
+
+  /* ── 主体内容 ── */
+  .body {
+    flex: 1;
+    display: flex;
+    gap: 120px;
+    z-index: 1;
+  }
+
+  /* ── 左侧：金字塔 ── */
+  .pyramid-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    position: relative;
+  }
+  .pyramid-tier {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    position: relative;
+    clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+    padding: 28px 0;
+  }
+  .tier-top {
+    width: 320px;
+    background: linear-gradient(180deg, rgba(201,169,97,0.9) 0%, rgba(201,169,97,0.7) 100%);
+    color: #0a1628;
+    font-family: "Noto Serif SC", serif;
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(201,169,97,0.5);
+    box-shadow: 0 0 24px rgba(201,169,97,0.15);
+  }
+  .tier-mid {
+    width: 480px;
+    background: rgba(201,169,97,0.06);
+    color: #E8E8E8;
+    border: 1px solid rgba(201,169,97,0.2);
+  }
+  .tier-bot {
+    width: 640px;
+    background: rgba(74,144,217,0.05);
+    color: #E8E8E8;
+    border: 1px solid rgba(74,144,217,0.15);
+  }
+  .tier-label {
+    position: absolute;
+    left: calc(100% + 32px);
+    white-space: nowrap;
+    font-size: 13px;
+    color: rgba(232,232,232,0.35);
+    font-family: "SF Mono", monospace;
+    letter-spacing: 0.05em;
+  }
+  .tier-top .tier-label { color: #C9A961; }
+
+  /* 左侧竖向标注线 */
+  .pyramid-wrap::before {
+    content: '';
+    position: absolute;
+    left: -60px;
+    top: 15%; bottom: 15%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(201,169,97,0.2), rgba(74,144,217,0.15), transparent);
+  }
+
+  /* ── 右侧：金句 ── */
+  .quote-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    padding-left: 80px;
+    position: relative;
+  }
+  .quote-wrap::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10%; bottom: 10%;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, rgba(201,169,97,0.3), rgba(201,169,97,0.3), transparent);
+  }
+  .quote-text {
+    font-family: "Noto Serif SC", serif;
+    font-size: 48px;
+    color: #C9A961;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 40px rgba(201,169,97,0.12);
+  }
+  .quote-sub {
+    font-size: 28px;
+    color: rgba(232,232,232,0.55);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .quote-note {
+    font-size: 14px;
+    color: rgba(232,232,232,0.3);
+    font-family: "SF Mono", monospace;
+    letter-spacing: 0.05em;
+    margin-top: 16px;
+  }
+
+  /* ── 底部 HUD ── */
+  .hud-bot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(232,232,232,0.25);
+    letter-spacing: 0.08em;
+    margin-top: 32px;
+    z-index: 1;
+  }
+  .hud-bot span {
+    color: rgba(201,169,97,0.5);
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+  </div>
+
+  <div class="hud-top">
+    <span>PART 1 · STAGE 2</span>
+    <span class="badge">AI 编程觉醒</span>
+    <span>12 / 39</span>
+  </div>
+
+  <div class="header">
+    <h1>信任来自哪里</h1>
+    <div class="underline"></div>
+  </div>
+
+  <div class="body">
+    <div class="pyramid-wrap">
+      <div class="pyramid-tier tier-top">
+        AI 辅助
+        <span class="tier-label">01 · 可视化放大</span>
+      </div>
+      <div class="pyramid-tier tier-mid">
+        多年行业积累
+        <span class="tier-label">02 · 专业厚度</span>
+      </div>
+      <div class="pyramid-tier tier-bot">
+        中建品牌信用
+        <span class="tier-label">03 · 平台根基</span>
+      </div>
+    </div>
+
+    <div class="quote-wrap">
+      <div class="quote-text">
+        「AI 是放大器，是加速器，<br>但不是魔术师。」
+      </div>
+      <div class="quote-sub">
+        自身积累越厚，<br>AI 的放大效应才越显著。
+      </div>
+      <div class="quote-note">
+        LESSON 01 <span style="color:#C9A961">·</span> 阶段二收尾
+      </div>
+    </div>
+  </div>
+
+  <div class="hud-bot">
+    <span>[16:00] 累计</span>
+    <span>信任结构分析</span>
+  </div>
+</div>
+</body>
+</html>
