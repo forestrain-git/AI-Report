@@ -22,24 +22,41 @@
   h1 {
     font-size: 56px;
     font-weight: 900;
-    margin: 0 0 48px 0;
+    margin: 0 0 40px 0;
+  }
+  .main-row {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 32px;
+    align-items: flex-start;
+  }
+  .left-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
   }
   .story {
     font-size: 24px;
     line-height: 1.8;
     color: var(--ink);
-    margin-bottom: 24px;
   }
   .story strong {
     color: var(--primary);
   }
+  .right-col {
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .screenshot {
     width: 100%;
-    max-height: 280px;
+    height: auto;
+    max-height: 520px;
     object-fit: contain;
     border-radius: 4px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 16px rgba(15,23,42,0.08);
+    box-shadow: 0 4px 24px rgba(15,23,42,0.12);
   }
   .steps {
     display: flex;
@@ -47,7 +64,7 @@
   }
   .step {
     flex: 1;
-    padding: 28px;
+    padding: 24px;
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(15,23,42,0.03);
@@ -72,26 +89,32 @@
   <div class="content">
     <div class="kicker">Stage 4 &middot; 深入</div>
     <h1>从零基础到方案落地</h1>
-    <div class="story">
-      在大厂朋友的强烈建议下，用上了 <strong>Claude Code</strong>——DOS 时代的过来人，上手就用的 CLI 终端。
-      安装过程其实也挺麻烦的，但这个时候已经进化了：安排小龙虾帮忙安装，等了一会，就装好了。
-      <br><br>
-      刚开始用也没觉得多惊艳，只是好像干活更有章法了、更聪明了、Bug 出得更少了。
-      但真正让我惊艳的，是 <strong>Karpathy 的 LLM+Wiki 构想的落地</strong>。
-    </div>
-    <img class="screenshot" src="../../assets/cc-cli-screenshot.png" alt="Claude Code CLI">
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-text">用上 Claude Code<br>CLI 终端直连</div>
+    <div class="main-row">
+      <div class="left-col">
+        <div class="story">
+          在大厂朋友的强烈建议下，用上了 <strong>Claude Code</strong>——DOS 时代的过来人，上手就用的 CLI 终端。
+          安装过程其实也挺麻烦的，但这个时候已经进化了：安排小龙虾帮忙安装，等了一会，就装好了。
+          <br><br>
+          刚开始用也没觉得多惊艳，只是好像干活更有章法了、更聪明了、Bug 出得更少了。
+          但真正让我惊艳的，是 <strong>Karpathy 的 LLM+Wiki 构想的落地</strong>。
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-text">用上 Claude Code<br>CLI 终端直连</div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-text">感觉更有章法<br>Bug 更少</div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-text">真正惊艳的是<br>LLM+Wiki 落地</div>
+          </div>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-text">感觉更有章法<br>Bug 更少</div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-text">真正惊艳的是<br>LLM+Wiki 落地</div>
+      <div class="right-col">
+        <img class="screenshot" src="../assets/cc-cli-screenshot.png" alt="Claude Code CLI">
       </div>
     </div>
   </div>

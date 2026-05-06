@@ -24,20 +24,34 @@
     font-weight: 900;
     margin: 0 0 40px 0;
   }
-  .setup {
+  .split-row {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 32px;
+    align-items: flex-start;
+  }
+  .split-text {
+    flex: 1;
     font-size: 24px;
     line-height: 1.8;
     color: var(--ink);
-    margin-bottom: 40px;
   }
-  .setup strong {
+  .split-text strong {
     color: var(--primary);
+  }
+  .split-img {
+    flex: 1;
+    max-height: 380px;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 4px 24px rgba(15,23,42,0.1);
   }
   .flow {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     flex-wrap: wrap;
   }
   .flow-node {
@@ -70,9 +84,12 @@
   <div class="content">
     <div class="kicker">Stage 4 &middot; 落地</div>
     <h1>用 CC+OB 落地垃圾站项目</h1>
-    <div class="setup">
-      阶段三龙虾做初设时翻了车。<strong>到了深化设计阶段，换上了 CC + OB。</strong><br>
-      先给这个项目搭了一个完整的知识库——业态资料、政策文件、参考案例、客户访谈、内部讨论纪要，<strong>全部沉到 OB 里</strong>。
+    <div class="split-row">
+      <div class="split-text">
+        阶段三龙虾做初设时翻了车。<strong>到了深化设计阶段，换上了 CC + OB。</strong><br><br>
+        先给这个项目搭了一个完整的知识库——业态资料、政策文件、参考案例、客户访谈、内部讨论纪要，<strong>全部沉到 OB 里</strong>。
+      </div>
+      <img class="split-img" src="../assets/obsidian-graph.png" alt="Obsidian 知识库关系图谱">
     </div>
     <div class="flow">
       <div class="flow-node">挖掘痛点</div>
@@ -91,7 +108,7 @@
       一条龙下来，整个工作流跑通了。再一个点一个点地落地——每一段都有 OB 里的资料兜底，每一段都有 CC 帮我做交叉检索。<br><br>
       <strong>我们已经在跟设计院对接，开始讨论预留预埋、方案深化</strong>——注意，内容的基础版本都是 CC 基于 OB 知识库生成的。
       <div style="margin-top:16px;">
-        <a class="link-btn" href="../../assets/260424-智能化系统预留预埋技术对接清单_设计院版-v1.pdf" target="_blank">&#x2197; 查看设计院对接清单示例</a>
+        <a class="link-btn" href="../assets/260424-智能化系统预留预埋技术对接清单_设计院版-v1.pdf" target="_blank">&#x2197; 查看设计院对接清单示例</a>
       </div>
     </div>
   </div>
