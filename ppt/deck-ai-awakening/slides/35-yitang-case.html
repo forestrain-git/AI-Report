@@ -56,8 +56,31 @@
     font-weight: 700;
     color: var(--primary);
   }
-  .link-row {
-    margin-bottom: 40px;
+  .split-row {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 32px;
+    align-items: flex-start;
+  }
+  .left-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .right-col {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .kb-img {
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 4px 24px rgba(15,23,42,0.12);
   }
   .link-row a {
     display: inline-flex;
@@ -88,27 +111,34 @@
   <div class="content">
     <div class="kicker">综合案例</div>
     <h1>"一堂"创业课程知识库</h1>
-    <div class="story">
-      我自己学了两年，做过好几十个项目实操。用 CC 加 Wiki，给这门课的内容做了一个知识库，再创建一套工作流。
-      然后做了一件让我有点惊到的事情——<strong>让 AI 基于这个知识库，预判一个真实的项目案例。</strong>
-      我自己也手动判一遍。两份判断，做对比。
-    </div>
-    <div class="experiment">
-      <div class="exp-card">
-        <div class="exp-label">我的学习时长</div>
-        <div class="exp-value">2 年</div>
+    <div class="split-row">
+      <div class="left-col">
+        <div class="story">
+          我自己学了两年，做过好几十个项目实操。用 CC 加 Wiki，给这门课的内容做了一个知识库，再创建一套工作流。
+          然后做了一件让我有点惊到的事情——<strong>让 AI 基于这个知识库，预判一个真实的项目案例。</strong>
+          我自己也手动判一遍。两份判断，做对比。
+        </div>
+        <div class="experiment">
+          <div class="exp-card">
+            <div class="exp-label">我的学习时长</div>
+            <div class="exp-value">2 年</div>
+          </div>
+          <div class="exp-card">
+            <div class="exp-label">AI 构建知识库</div>
+            <div class="exp-value">几天</div>
+          </div>
+          <div class="exp-card">
+            <div class="exp-label">AI 预判水平</div>
+            <div class="exp-value">高于我自己</div>
+          </div>
+        </div>
+        <div class="link-row">
+          <a href="../assets/某标的企业-04-AI预判vs手动预判对比报告.pdf" target="_blank">&#x2197; 查看 AI 预判 vs 手动预判对比报告</a>
+        </div>
       </div>
-      <div class="exp-card">
-        <div class="exp-label">AI 构建知识库</div>
-        <div class="exp-value">几天</div>
+      <div class="right-col">
+        <img class="kb-img" src="../assets/yitang-kb-graph.png" alt="一堂知识库网络架构">
       </div>
-      <div class="exp-card">
-        <div class="exp-label">AI 预判水平</div>
-        <div class="exp-value">高于我自己</div>
-      </div>
-    </div>
-    <div class="link-row">
-      <a href="../assets/某标的企业-04-AI预判vs手动预判对比报告.pdf" target="_blank">&#x2197; 查看 AI 预判 vs 手动预判对比报告</a>
     </div>
     <div class="conclusion">
       我自己学了两年的领域，被 AI 在几天内反超了。<br>
