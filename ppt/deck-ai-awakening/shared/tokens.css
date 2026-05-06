@@ -1,0 +1,155 @@
+/* AI觉醒经历分享 · 共享设计令牌 */
+/* 基于 C2-navy 墨蓝沉稳风格扩展 */
+
+* { box-sizing: border-box; }
+
+:root {
+  /* 色板 */
+  --bg: #FAFBFC;
+  --ink: #0F172A;
+  --primary: #1E3A5F;
+  --primary-light: #E2E8F0;
+  --muted: #64748B;
+  --grid: rgba(30,58,95,0.06);
+  --accent: #C9A96E;
+
+  /* 深色模式（章节分隔页） */
+  --dark-bg: #1E3A5F;
+  --dark-ink: #FAFBFC;
+  --dark-muted: #94A3B8;
+
+  /* 字号阶梯（px，幻灯片10米观看距离） */
+  --text-xs: 18px;
+  --text-sm: 22px;
+  --text-base: 28px;
+  --text-lg: 36px;
+  --text-xl: 48px;
+  --text-2xl: 64px;
+  --text-3xl: 88px;
+  --text-hero: 120px;
+
+  /* 间距 */
+  --space-sm: 24px;
+  --space-md: 40px;
+  --space-lg: 64px;
+  --space-xl: 100px;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 通用 chrome */
+.top-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 8px;
+  background: var(--primary);
+  z-index: 10;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 80px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--primary-light);
+  background: var(--bg);
+  z-index: 10;
+}
+
+.page-footer .section-name {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.page-footer .page-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Kicker 标签 */
+.kicker {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+/* 通用链接样式 */
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.link-btn:hover {
+  background: #2a4a73;
+}
+.link-btn.outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.link-btn.outline:hover {
+  background: var(--primary-light);
+}
+
+/* 大引号装饰 */
+.big-quote {
+  font-family: "Instrument Serif", "Georgia", serif;
+  font-size: 180px;
+  line-height: 0.6;
+  color: var(--primary);
+  opacity: 0.15;
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  user-select: none;
+}
+
+/* 几何装饰 */
+.deco-square {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border: 1px solid var(--grid);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  pointer-events: none;
+}
+.deco-square-inner {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border: 1px solid var(--grid);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  pointer-events: none;
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P20 · 阶段三反思</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--dark-bg);
+    color: var(--dark-ink);
+    padding: 0 200px;
+  }
+  .content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+  }
+  .kicker {
+    color: var(--accent);
+    margin-bottom: 36px;
+  }
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 0 0 48px 0;
+  }
+  .lesson-text {
+    font-size: 28px;
+    line-height: 1.8;
+    color: var(--dark-muted);
+    margin-bottom: 56px;
+  }
+  .formula-box {
+    padding: 48px 80px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 48px;
+  }
+  .formula {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+  .formula .op {
+    color: var(--accent);
+  }
+  .formula-sub {
+    font-size: 22px;
+    color: var(--dark-muted);
+    margin-top: 16px;
+  }
+  .note {
+    font-size: 24px;
+    line-height: 1.7;
+    color: var(--dark-muted);
+  }
+  .page-num {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: var(--dark-muted);
+    letter-spacing: 0.15em;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="kicker">Stage 3 &middot; 第二课</div>
+    <h1>AI 是放大器，不是神</h1>
+    <div class="lesson-text">
+      AI 能大幅提升效率，但它不能替代专业判断。<br>
+      AI 把专业能力放大 10 倍——前提是，使用者具备这门专业能力。<br>
+      AI 把工作效率提升 10 倍——前提是，使用者能辨别结果的对错。
+    </div>
+    <div class="formula-box">
+      <div class="formula">输出质量 <span class="op">=</span> AI 能力 <span class="op">&times;</span> 使用者的管理能力</div>
+      <div class="formula-sub">你懂，他会让你更懂，然后飞快出活；你不懂，他会替你懂，然后飞快搞砸。</div>
+    </div>
+    <div class="note">
+      AI 给你 80 分的下限，你的功夫决定 100 分的上限。
+    </div>
+  </div>
+  <div class="page-num">20 / 39</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P12 · 信任来自哪里</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 64px;
+    font-weight: 900;
+    margin: 0 0 56px 0;
+  }
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .layer {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 32px 40px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+  }
+  .layer-label {
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--muted);
+    width: 80px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .layer-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    width: 320px;
+    flex-shrink: 0;
+  }
+  .layer-desc {
+    font-size: 22px;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+  .lesson {
+    padding: 40px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .lesson-quote {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .lesson-sub {
+    font-size: 22px;
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Stage 2 &middot; 第一课</div>
+    <h1>信任来自哪里？</h1>
+    <div class="layers">
+      <div class="layer">
+        <div class="layer-label">底层</div>
+        <div class="layer-title">中建的品牌信用</div>
+        <div class="layer-desc">央企的平台，是我们说话有人听的根本。</div>
+      </div>
+      <div class="layer">
+        <div class="layer-label">中层</div>
+        <div class="layer-title">多年的行业积累</div>
+        <div class="layer-desc">智慧运营是我们的初心，坚持了 8 年的主业。</div>
+      </div>
+      <div class="layer">
+        <div class="layer-label">顶层</div>
+        <div class="layer-title">AI 的辅助</div>
+        <div class="layer-desc">AI 把这些专业度，在短时间内有效地可视化了。</div>
+      </div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-quote">AI 是放大器、是加速器，但不是魔术师。</div>
+      <div class="lesson-sub">自身积累越厚，AI 的放大效应才越显著。<br>没有根基，AI 也无能为力。</div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">阶段二：AI 编程觉醒</span>
+    <span class="page-num">12 / 39</span>
+  </div>
+</body>
+</html>

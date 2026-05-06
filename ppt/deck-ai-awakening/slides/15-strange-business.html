@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P15 · 陌生业态的可研设计</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 0 0 48px 0;
+    line-height: 1.2;
+  }
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+  .problem-card {
+    padding: 36px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+  }
+  .problem-card.danger {
+    background: var(--primary);
+    color: #fff;
+  }
+  .problem-label {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+  .problem-text {
+    font-size: 24px;
+    line-height: 1.7;
+    font-weight: 700;
+  }
+  .story {
+    font-size: 24px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .story strong {
+    color: var(--primary);
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Stage 3 &middot; 压力</div>
+    <h1>陌生业态的可研设计</h1>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-label">现状</div>
+        <div class="problem-text">这个业态，我们团队从来没碰过。<br>零经验。</div>
+      </div>
+      <div class="problem-card danger">
+        <div class="problem-label">困境</div>
+        <div class="problem-text">话已经说出去了——<br>「AI 时代咱们什么都能干」</div>
+      </div>
+    </div>
+    <div class="story">
+      按传统路径——聘请专家、查阅资料、几个月学习——是来得及的。<br>
+      但<strong>时间窗口不等人</strong>。错过这一次，就没下一次。<br><br>
+      关于龙虾，3 月初装过很多次，但主要也就是装着玩——<strong>从来没真正用起来</strong>。<br>
+      直到这个项目——<strong>被逼的</strong>。
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">阶段三：龙虾依赖期</span>
+    <span class="page-num">15 / 39</span>
+  </div>
+</body>
+</html>

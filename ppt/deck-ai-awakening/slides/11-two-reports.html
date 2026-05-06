@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P11 · 两次汇报</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 64px;
+    font-weight: 900;
+    margin: 0 0 40px 0;
+  }
+  .steps {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+  .step {
+    flex: 1;
+    padding: 32px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+  }
+  .step-num {
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+  .step-text {
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .step-text strong {
+    color: var(--primary);
+  }
+  .results {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .result-card {
+    flex: 1;
+    padding: 28px 36px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .result-label {
+    font-size: 18px;
+    opacity: 0.8;
+    margin-bottom: 8px;
+  }
+  .result-status {
+    font-size: 32px;
+    font-weight: 700;
+  }
+  .link-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .link-row a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .link-row a:hover { background: #2a4a73; }
+  .question {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 32px;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Stage 2 &middot; 压力时刻</div>
+    <h1>两次汇报，怎么出来的</h1>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">Step 1</div>
+        <div class="step-text">把大概思路阐述清楚，交给 <strong>ChatGPT</strong>，让他帮忙梳理逻辑，输出每一页 PPT 的提示词。</div>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 2</div>
+        <div class="step-text">打开 <strong>Kimi 49元基础会员</strong>，把提示词给它。<strong>10 分钟，初稿出来了。</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 3</div>
+        <div class="step-text">让 Kimi 生成<strong>详细逐字稿</strong>——充满嗯嗯啊啊的口水话，对着念就像正常说话。</div>
+      </div>
+    </div>
+    <div class="results">
+      <div class="result-card">
+        <div class="result-label">第一次汇报</div>
+        <div class="result-status">投资总监 &middot; 远程 &middot; 通过</div>
+      </div>
+      <div class="result-card">
+        <div class="result-label">第二次汇报</div>
+        <div class="result-status">业主总经理 &middot; 当面 &middot; 通过</div>
+      </div>
+    </div>
+    <div class="link-row">
+      <a href="ppt/assets/260317-城市第六器官·环卫智能体.pdf" target="_blank">&#x2197; 查看当时那份 PPT</a>
+    </div>
+    <div class="question">业主为什么相信我们？</div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">阶段二：AI 编程觉醒</span>
+    <span class="page-num">11 / 39</span>
+  </div>
+</body>
+</html>

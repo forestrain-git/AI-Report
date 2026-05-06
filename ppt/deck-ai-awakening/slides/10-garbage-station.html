@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P10 · 垃圾中转站智能管理系统</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 0 0 48px 0;
+    line-height: 1.2;
+  }
+  .scenario {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .scenario-text {
+    flex: 1;
+    font-size: 24px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+  .scenario-text strong {
+    color: var(--primary);
+  }
+  .scenario-visual {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .clock {
+    font-family: "Inter", sans-serif;
+    font-size: 80px;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .clock-label {
+    font-size: 20px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .stress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--primary-light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .stress-fill {
+    width: 95%;
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+  }
+  .stress-label {
+    font-size: 18px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .punchline {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    padding: 24px;
+    background: var(--primary-light);
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Stage 2 &middot; 第一个硬骨头</div>
+    <h1>垃圾中转站智能管理系统</h1>
+    <div class="scenario">
+      <div class="scenario-text">
+        业主要求就垃圾站智能化做一个远程汇报，要有亮点，不局限于传统智慧化建设。<br><br>
+        出于 AI 赋能后的盲目自信，直接给业主拍胸脯——<strong>没问题！</strong><br><br>
+        但问题是——<strong>我们不会啊，是真的没干过。</strong><br><br>
+        明天上午 10 点远程汇报，今天晚上 10 点，PPT 还没出来。
+      </div>
+      <div class="scenario-visual">
+        <div class="clock">22:00</div>
+        <div class="clock-label">今晚 &middot; 16层办公室</div>
+        <div class="stress-bar"><div class="stress-fill"></div></div>
+        <div class="stress-label">焦虑指数：拉满</div>
+      </div>
+    </div>
+    <div class="punchline">那么，PPT 是怎么出来的？</div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">阶段二：AI 编程觉醒</span>
+    <span class="page-num">10 / 39</span>
+  </div>
+</body>
+</html>

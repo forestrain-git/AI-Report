@@ -69,9 +69,8 @@
     height: 100%;
     border: 0;
     display: block;
-    background: #0a1628;
+    background: #FAFBFC;
     opacity: 1;
-    transition: opacity 0.12s ease;
   }
   .counter {
     position: fixed;
@@ -155,7 +154,7 @@
   const counter = document.getElementById('counter');
   const printStack = document.getElementById('printStack');
   const storageKey = 'deck-index-' + location.pathname;
-  let current = 0;
+  let current = -1;
 
   stage.style.width  = W + 'px';
   stage.style.height = H + 'px';
@@ -173,17 +172,13 @@
     if (idx < 0 || idx >= deck.length) return;
     if (idx === current) return;
     current = idx;
-    frame.style.opacity = '0';
-    setTimeout(() => {
-      frame.src = deck[idx].file;
-      counter.innerHTML = `${idx + 1} / ${deck.length} <span class="label">${deck[idx].label || ''}</span>`;
-      try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
-      if (location.hash !== '#' + (idx + 1)) {
-        history.replaceState(null, '', '#' + (idx + 1));
-      }
-    }, 120);
+    frame.src = deck[idx].file;
+    counter.innerHTML = `${idx + 1} / ${deck.length} <span class="label">${deck[idx].label || ''}</span>`;
+    try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
+    if (location.hash !== '#' + (idx + 1)) {
+      history.replaceState(null, '', '#' + (idx + 1));
+    }
   }
-  frame.addEventListener('load', () => { frame.style.opacity = '1'; });
 
   function next() { show(Math.min(current + 1, deck.length - 1)); }
   function prev() { show(Math.max(current - 1, 0)); }
@@ -207,6 +202,20 @@
   document.getElementById('navL').addEventListener('click', prev);
   document.getElementById('navR').addEventListener('click', next);
   window.addEventListener('resize', fit);
+
+  window.addEventListener('focus', () => {
+    if (document.activeElement === frame) {
+      frame.blur();
+      document.body.focus();
+    }
+  });
+
+  setInterval(() => {
+    if (document.activeElement === frame) {
+      frame.blur();
+      document.body.focus();
+    }
+  }, 100);
   window.addEventListener('hashchange', () => {
     const m = location.hash.match(/^#(\d+)$/);
     if (m) show(parseInt(m[1], 10) - 1);
@@ -219,7 +228,9 @@
     if (!isNaN(v) && v >= 0 && v < deck.length) current = v;
   } catch (_) {}
   fit();
-  show(current);
+  const startIdx = current < 0 ? 0 : current;
+  current = -1;
+  show(startIdx);
 
   window.addEventListener('beforeprint', () => {
     printStack.innerHTML = '';

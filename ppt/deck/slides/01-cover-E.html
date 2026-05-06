@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -9,9 +9,9 @@
   html, body {
     width: 1920px; height: 1080px;
     overflow: hidden;
-    background: #0a1628;
+    background: #FAFBFC;
     font-family: "SF Mono", "Fira Code", "PingFang SC", monospace;
-    color: #E8E8E8;
+    color: #0F172A;
   }
   .slide {
     width: 100%; height: 100%;
@@ -37,8 +37,8 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(45deg, transparent 49.8%, rgba(255,255,255,0.03) 49.8%, rgba(255,255,255,0.03) 50.2%, transparent 50.2%),
-      linear-gradient(-45deg, transparent 49.8%, rgba(255,255,255,0.03) 49.8%, rgba(255,255,255,0.03) 50.2%, transparent 50.2%);
+      linear-gradient(45deg, transparent 49.8%, rgba(0,0,0,0.04) 49.8%, rgba(0,0,0,0.04) 50.2%, transparent 50.2%),
+      linear-gradient(-45deg, transparent 49.8%, rgba(0,0,0,0.04) 49.8%, rgba(0,0,0,0.04) 50.2%, transparent 50.2%);
     background-size: 200px 200px;
   }
 
@@ -68,26 +68,26 @@
   .title-frame {
     position: relative;
     padding: 60px 80px;
-    border: 1px solid rgba(74,144,217,0.3);
+    border: 1px solid rgba(37,99,235,0.3);
   }
   .title-frame::before, .title-frame::after {
     content: '';
     position: absolute;
     width: 20px; height: 20px;
-    border: 2px solid rgba(201,169,97,0.6);
+    border: 2px solid rgba(30,58,95,0.6);
   }
   .title-frame::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
   .title-frame::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
 
   .title-frame h1 {
-    font-family: "Noto Serif SC", serif;
+    font-family: "Noto Sans SC", sans-serif;
     font-size: 88px;
     font-weight: 700;
     letter-spacing: 0.06em;
     line-height: 1.2;
-    color: #E8E8E8;
+    color: #0F172A;
   }
-  .title-frame h1 .gold { color: #C9A961; }
+  .title-frame h1 .gold { color: #1E3A5F; }
   .title-frame .sub {
     margin-top: 24px;
     font-size: 22px;
@@ -126,7 +126,7 @@
   }
   .footer-bar .scale {
     font-size: 11px;
-    color: rgba(74,144,217,0.5);
+    color: rgba(37,99,235,0.5);
   }
 </style>
 </head>

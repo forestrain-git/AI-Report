@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -7,10 +7,22 @@
 <link rel="stylesheet" href="../shared/tokens.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-primary: #F7F5F0;
+    --bg-elevated: #F0EDE6;
+    --bg-card: rgba(0,0,0,0.03);
+    --ink-primary: #1C1C2E;
+    --ink-secondary: rgba(15,23,42,0.65);
+    --ink-tertiary: rgba(15,23,42,0.4);
+    --accent-gold: #1E3A5F;
+    --accent-gold-dim: rgba(184,149,79,0.35);
+    --accent-blue: #3A7AB8;
+    --accent-blue-dim: rgba(58,122,184,0.25);
+  }
   html, body {
     width: 1920px; height: 1080px;
     overflow: hidden;
-    background: #0a1628;
+    background: #FAFBFC;
     font-family: var(--font-body);
     color: var(--ink-primary);
   }
@@ -24,17 +36,17 @@
   .grid {
     position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(30,58,95,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,58,95,0.04) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
   }
   .frame {
     position: absolute; inset: 48px;
-    border: 1px solid rgba(74,144,217,0.12);
+    border: 1px solid rgba(30,58,95,0.18);
     pointer-events: none;
   }
-  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(201,169,97,0.4); }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(30,58,95,0.5); }
   .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
   .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
   .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
@@ -43,7 +55,7 @@
   .hud-top {
     display: flex; justify-content: space-between;
     font-family: var(--font-mono); font-size: 11px;
-    color: rgba(74,144,217,0.4); letter-spacing: 0.08em;
+    color: rgba(30,58,95,0.5); letter-spacing: 0.08em;
     margin-bottom: 48px; z-index: 1;
   }
   .header { margin-bottom: 64px; z-index: 1; }
@@ -51,21 +63,21 @@
     font-family: var(--font-display); font-size: 72px;
     font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px;
   }
-  .header .underline { width: 60px; height: 4px; background: #C9A961; box-shadow: 0 0 12px rgba(201,169,97,0.3); }
+  .header .underline { width: 60px; height: 4px; background: #1E3A5F; box-shadow: 0 0 12px rgba(184,149,79,0.25); }
 
   .body { flex: 1; display: flex; align-items: center; z-index: 1; }
   .timeline { display: flex; gap: 80px; width: 100%; justify-content: center; }
   .time-node { text-align: center; position: relative; flex: 1; max-width: 360px; }
   .time-node .year {
     font-family: var(--font-display); font-size: 80px; font-weight: 700;
-    color: rgba(232,232,232,0.08); line-height: 1;
+    color: rgba(15,23,42,0.08); line-height: 1;
     position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
     white-space: nowrap;
   }
   .time-node .dot {
     width: 16px; height: 16px; border-radius: 50%;
-    background: #C9A961; margin: 0 auto 24px;
-    box-shadow: 0 0 16px rgba(201,169,97,0.4);
+    background: #1E3A5F; margin: 0 auto 24px;
+    box-shadow: 0 0 16px rgba(184,149,79,0.4);
     position: relative; z-index: 1;
   }
   .time-node .label {
@@ -79,7 +91,7 @@
   .timeline::before {
     content: ''; position: absolute;
     top: 56px; left: 25%; right: 25%; height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201,169,97,0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(184,149,79,0.3), transparent);
   }
   .highlight-box {
     margin-top: 64px; text-align: center;
@@ -87,15 +99,15 @@
     letter-spacing: 0.08em; z-index: 1;
   }
   .highlight-box strong {
-    color: #C9A961; font-weight: 700;
-    text-shadow: 0 0 20px rgba(201,169,97,0.2);
+    color: #1E3A5F; font-weight: 700;
+    text-shadow: 0 0 20px rgba(184,149,79,0.15);
   }
   .hud-bot {
     display: flex; justify-content: space-between;
-    font-size: 12px; color: rgba(232,232,232,0.25);
+    font-size: 12px; color: rgba(15,23,42,0.3);
     letter-spacing: 0.08em; margin-top: 32px; z-index: 1;
   }
-  .hud-bot span { color: rgba(201,169,97,0.5); }
+  .hud-bot span { color: rgba(184,149,79,0.55); }
 </style>
 </head>
 <body>
@@ -107,7 +119,7 @@
   </div>
   <div class="hud-top">
     <span>开场</span>
-    <span class="badge" style="border:1px solid rgba(201,169,97,0.25);padding:3px 12px;color:rgba(201,169,97,0.55);background:rgba(201,169,97,0.04)">反差人设</span>
+    <span class="badge" style="border:1px solid rgba(30,58,95,0.4);padding:3px 12px;color:rgba(30,58,95,0.8);background:rgba(30,58,95,0.04)">反差人设</span>
     <span>02 / 39</span>
   </div>
   <div class="header">
@@ -131,7 +143,7 @@
         </div>
         <div class="time-node">
           <div class="year">2026</div>
-          <div class="dot" style="background:#4A90D9;box-shadow:0 0 16px rgba(74,144,217,0.4)"></div>
+          <div class="dot" style="background:#4A90D9;box-shadow:0 0 16px rgba(30,58,95,0.6)"></div>
           <div class="label">三月至今</div>
           <div class="desc">被 AI 重新教育</div>
         </div>

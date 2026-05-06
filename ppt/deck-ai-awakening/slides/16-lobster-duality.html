@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P16 · 龙虾的双面性</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 0 0 48px 0;
+  }
+  .duality {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+  .face {
+    padding: 40px;
+    border-radius: 4px;
+  }
+  .face.good {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+    border-top: 4px solid var(--primary);
+  }
+  .face.bad {
+    background: var(--primary);
+    color: #fff;
+  }
+  .face-label {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .face-title {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 24px;
+  }
+  .face-list {
+    font-size: 22px;
+    line-height: 1.8;
+  }
+  .face-list li {
+    margin-bottom: 8px;
+  }
+  .lesson {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    padding: 28px 40px;
+    background: var(--primary-light);
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Stage 3 &middot; 双面性</div>
+    <h1>龙虾——从惊艳到惊吓</h1>
+    <div class="duality">
+      <div class="face good">
+        <div class="face-label">第一个感觉</div>
+        <div class="face-title">惊艳</div>
+        <div class="face-list">
+          多个龙虾之间能商量、能沟通、能讨论<br>
+          出活特别快，质量初看起来还不错<br>
+          形式新颖——md文件+富文本<br>
+          像是真有一个灵魂在干活
+        </div>
+      </div>
+      <div class="face bad">
+        <div class="face-label">第二个感觉</div>
+        <div class="face-title">惊吓</div>
+        <div class="face-list">
+          反复失忆——今天教的明天又忘了<br>
+          幻觉严重——信誓旦旦给你错误结论<br>
+          质量偏离——十次里三次好，七次返工<br>
+          难以精准控制——说改 A，顺手改 B<br>
+          随意扩散——把项目带进死胡同
+        </div>
+      </div>
+    </div>
+    <div class="lesson">AI 自动化能力越强，失控的风险也越大。</div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">阶段三：龙虾依赖期</span>
+    <span class="page-num">16 / 39</span>
+  </div>
+</body>
+</html>
