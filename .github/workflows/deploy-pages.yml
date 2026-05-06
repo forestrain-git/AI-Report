@@ -7,6 +7,7 @@ on:
       - 'ppt/deck-ai-awakening/index.html'
       - 'ppt/deck-ai-awakening/shared/**'
       - 'ppt/deck-ai-awakening/slides/**'
+      - 'ppt/deck-ai-awakening/assets/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
@@ -30,10 +31,11 @@ jobs:
 
       - name: Stage publish dir (whitelist)
         run: |
-          mkdir -p _site/shared _site/slides
+          mkdir -p _site/shared _site/slides _site/assets
           cp ppt/deck-ai-awakening/index.html _site/
           cp -r ppt/deck-ai-awakening/shared/. _site/shared/
           cp -r ppt/deck-ai-awakening/slides/. _site/slides/
+          cp -r ppt/deck-ai-awakening/assets/. _site/assets/
           touch _site/.nojekyll
 
       - uses: actions/configure-pages@v5
