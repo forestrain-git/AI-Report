@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>能碳平台 - 页面原型示意</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; }
+        .sidebar-item { transition: all 0.2s; }
+        .sidebar-item:hover { background-color: #263445; }
+        .sidebar-item.active { background-color: #1890ff; color: white; }
+        .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-overlay { background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen overflow-hidden">
+    <div class="flex h-full">
+        <!-- 侧边栏 -->
+        <aside class="w-56 bg-[#304156] text-gray-300 flex flex-col flex-shrink-0">
+            <div class="h-14 flex items-center px-4 bg-[#2b3a4d]">
+                <span class="text-white font-bold text-lg">能碳平台</span>
+            </div>
+            <nav class="flex-1 overflow-y-auto py-2">
+                <div class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">业务菜单</div>
+                <a href="#" class="sidebar-item active flex items-center px-4 py-3 text-sm" onclick="showPage('project')">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    光伏项目管理
+                </a>
+                <a href="#" class="sidebar-item flex items-center px-4 py-3 text-sm" onclick="showPage('material')">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    资料库
+                </a>
+                <a href="#" class="sidebar-item flex items-center px-4 py-3 text-sm" onclick="showPage('module')">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    模块管理
+                </a>
+                <a href="#" class="sidebar-item flex items-center px-4 py-3 text-sm" onclick="showPage('audit')">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    指标审核
+                </a>
+                <a href="#" class="sidebar-item flex items-center px-4 py-3 text-sm" onclick="showPage('sheet')">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    测算表版本
+                </a>
+                <div class="px-4 py-2 mt-4 text-xs text-gray-500 uppercase tracking-wider">系统配置</div>
+                <a href="#" class="sidebar-item flex items-center px-4 py-3 text-sm" onclick="showPage('indicator-registry')">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                    指标库管理
+                </a>
+                <a href="#" class="sidebar-item flex items-center px-4 py-3 text-sm" onclick="showPage('module-type-config')">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    模块类型配置
+                </a>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="flex-1 flex flex-col overflow-hidden">
+            <!-- 顶部栏 -->
+            <header class="h-14 bg-white border-b flex items-center justify-between px-6 flex-shrink-0">
+                <h2 id="page-title" class="text-lg font-medium text-gray-800">光伏项目管理</h2>
+                <div class="flex items-center gap-4 text-sm text-gray-600">
+                    <span>admin</span>
+                    <img src="https://ui-avatars.com/api/?name=admin&background=1890ff&color=fff&size=32" class="w-8 h-8 rounded-full">
+                </div>
+            </header>
+
+            <!-- 页面内容 -->
+            <div class="flex-1 overflow-auto p-6">
+
+                <!-- 页面1：光伏项目管理 -->
+                <div id="page-project" class="page active">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex gap-3">
+                                <input type="text" placeholder="请输入项目名称" class="border rounded px-3 py-2 text-sm w-64">
+                                <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">查询</button>
+                                <button class="border px-4 py-2 rounded text-sm hover:bg-gray-50">重置</button>
+                            </div>
+                            <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">+ 新增</button>
+                        </div>
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">项目编号</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">项目名称</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">项目地点</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">项目面积(m²)</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">创建时间</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3">PV2026001</td>
+                                    <td class="px-4 py-3 font-medium">某工厂屋顶光伏项目</td>
+                                    <td class="px-4 py-3">江苏省南京市</td>
+                                    <td class="px-4 py-3">12,500</td>
+                                    <td class="px-4 py-3 text-gray-500">2026-06-08</td>
+                                    <td class="px-4 py-3"><button class="text-[#1890ff] hover:underline">查看</button></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3">PV2026002</td>
+                                    <td class="px-4 py-3 font-medium">某园区分布式光伏</td>
+                                    <td class="px-4 py-3">浙江省杭州市</td>
+                                    <td class="px-4 py-3">8,300</td>
+                                    <td class="px-4 py-3 text-gray-500">2026-06-09</td>
+                                    <td class="px-4 py-3"><button class="text-[#1890ff] hover:underline">查看</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 页面2：资料库 -->
+                <div id="page-material" class="page">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex gap-3 items-center">
+                                <select class="border rounded px-3 py-2 text-sm w-48">
+                                    <option>选择项目</option>
+                                    <option selected>某工厂屋顶光伏项目</option>
+                                    <option>某园区分布式光伏</option>
+                                </select>
+                                <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">查询</button>
+                            </div>
+                            <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">+ 上传文档</button>
+                        </div>
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">文档名称</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">文档类型</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">解析状态</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">上传时间</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 flex items-center gap-2">
+                                        <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
+                                        可行性研究报告.docx
+                                    </td>
+                                    <td class="px-4 py-3">可研报告</td>
+                                    <td class="px-4 py-3"><span class="tag bg-green-100 text-green-700">已解析</span></td>
+                                    <td class="px-4 py-3 text-gray-500">2026-06-09 10:30</td>
+                                    <td class="px-4 py-3"><button class="text-[#1890ff] hover:underline">下载</button></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 flex items-center gap-2">
+                                        <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>
+                                        经济测算表.xlsx
+                                    </td>
+                                    <td class="px-4 py-3">测算表</td>
+                                    <td class="px-4 py-3"><span class="tag bg-green-100 text-green-700">已解析</span></td>
+                                    <td class="px-4 py-3 text-gray-500">2026-06-09 11:00</td>
+                                    <td class="px-4 py-3"><button class="text-[#1890ff] hover:underline">下载</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 页面3：模块管理 -->
+                <div id="page-module" class="page">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex gap-3 items-center">
+                                <select class="border rounded px-3 py-2 text-sm w-48">
+                                    <option>选择项目</option>
+                                    <option selected>某工厂屋顶光伏项目</option>
+                                </select>
+                                <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">查询</button>
+                            </div>
+                            <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">+ 新增模块</button>
+                        </div>
+
+                        <!-- 状态说明 -->
+                        <div class="flex gap-3 mb-4 text-xs">
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-gray-400"></span>草稿</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-orange-400"></span>提取中</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-red-500"></span>审核中</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-500"></span>待业务测算</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#8B5CF6]"></span>待财务测算</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500"></span>待生成输出</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-green-600"></span>已完成</span>
+                        </div>
+
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">模块名称</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">模块类型</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">状态</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">屋顶光伏一期</td>
+                                    <td class="px-4 py-3">屋顶光伏</td>
+                                    <td class="px-4 py-3"><span class="tag bg-red-100 text-red-700">审核中</span></td>
+                                    <td class="px-4 py-3 flex gap-2">
+                                        <button class="bg-[#1890ff] text-white px-3 py-1 rounded text-xs">审核</button>
+                                        <button class="border px-3 py-1 rounded text-xs hover:bg-gray-50" onclick="alert('进入业务测算阶段')">进入业务测算</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">屋顶光伏一期</td>
+                                    <td class="px-4 py-3">屋顶光伏</td>
+                                    <td class="px-4 py-3"><span class="tag bg-blue-100 text-blue-700">待业务测算</span></td>
+                                    <td class="px-4 py-3">
+                                        <button class="bg-[#1890ff] text-white px-3 py-1 rounded text-xs" onclick="alert('业务测算功能开发中，预计第二阶段实现')">开始业务测算</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">照明节能改造</td>
+                                    <td class="px-4 py-3">照明节能</td>
+                                    <td class="px-4 py-3"><span class="tag bg-[#8B5CF6] text-white">待财务测算</span></td>
+                                    <td class="px-4 py-3">
+                                        <button class="bg-[#1890ff] text-white px-3 py-1 rounded text-xs" onclick="alert('财务测算功能开发中，预计第三阶段实现')">开始财务测算</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">储能系统</td>
+                                    <td class="px-4 py-3">储能</td>
+                                    <td class="px-4 py-3"><span class="tag bg-emerald-100 text-emerald-700">待生成输出</span></td>
+                                    <td class="px-4 py-3 flex gap-2">
+                                        <button class="bg-emerald-500 text-white px-3 py-1 rounded text-xs">生成测算表</button>
+                                        <button class="border px-3 py-1 rounded text-xs bg-gray-100 text-gray-400 cursor-not-allowed" disabled>生成文档</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 页面4：指标审核 -->
+                <div id="page-audit" class="page">
+                    <div class="space-y-4">
+                        <!-- 期望提取指标清单 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-medium text-gray-800">期望提取指标清单</h3>
+                                    <span class="tag bg-blue-100 text-blue-700 text-xs">屋顶光伏</span>
+                                    <span class="text-xs text-gray-500">共 4 项指标，3 项必填</span>
+                                </div>
+                                <button onclick="toggleExpectation()" class="text-[#1890ff] text-sm hover:underline">收起</button>
+                            </div>
+                            <div id="expectation-panel" class="grid grid-cols-2 gap-3">
+                                <div class="border rounded-lg p-3 flex items-center justify-between bg-green-50 border-green-200">
+                                    <div>
+                                        <div class="font-medium text-sm">安装容量 (installed_capacity)</div>
+                                        <div class="text-xs text-gray-500 mt-1">组件总装机容量，单位kWp</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="tag bg-red-100 text-red-700 text-xs">必填</span>
+                                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-3 flex items-center justify-between bg-green-50 border-green-200">
+                                    <div>
+                                        <div class="font-medium text-sm">首年发电量 (annual_generation)</div>
+                                        <div class="text-xs text-gray-500 mt-1">首年发电量，单位万kWh</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="tag bg-red-100 text-red-700 text-xs">必填</span>
+                                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-3 flex items-center justify-between bg-green-50 border-green-200">
+                                    <div>
+                                        <div class="font-medium text-sm">上网电价 (electricity_price)</div>
+                                        <div class="text-xs text-gray-500 mt-1">上网电价，单位元/kWh</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="tag bg-red-100 text-red-700 text-xs">必填</span>
+                                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    </div>
+                                </div>
+                                <div class="border rounded-lg p-3 flex items-center justify-between bg-gray-50 border-gray-200">
+                                    <div>
+                                        <div class="font-medium text-sm">可利用屋顶面积 (roof_area)</div>
+                                        <div class="text-xs text-gray-500 mt-1">可利用屋顶面积，单位m²</div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="tag bg-gray-100 text-gray-600 text-xs">非必填</span>
+                                        <span class="text-xs text-gray-400">未提取</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 实际提取结果 -->
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-medium text-gray-800">提取结果审核</h3>
+                                <div class="flex gap-2">
+                                    <span class="text-sm text-gray-500">已确认 2/3</span>
+                                    <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm" onclick="checkComplete()">完成审核</button>
+                                </div>
+                            </div>
+                            <table class="w-full text-sm">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="text-left px-4 py-3 font-medium text-gray-600">指标名称</th>
+                                        <th class="text-left px-4 py-3 font-medium text-gray-600">提取值</th>
+                                        <th class="text-left px-4 py-3 font-medium text-gray-600">来源文档</th>
+                                        <th class="text-left px-4 py-3 font-medium text-gray-600">置信度</th>
+                                        <th class="text-left px-4 py-3 font-medium text-gray-600">状态</th>
+                                        <th class="text-left px-4 py-3 font-medium text-gray-600">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3">
+                                            <div class="font-medium">安装容量</div>
+                                            <div class="text-xs text-gray-500">installed_capacity</div>
+                                        </td>
+                                        <td class="px-4 py-3 font-medium text-blue-600">5,000 kWp</td>
+                                        <td class="px-4 py-3 text-gray-600">可研报告.docx 第5页</td>
+                                        <td class="px-4 py-3"><span class="tag bg-green-100 text-green-700">高</span></td>
+                                        <td class="px-4 py-3"><span class="tag bg-green-100 text-green-700">已确认</span></td>
+                                        <td class="px-4 py-3">
+                                            <button class="text-[#1890ff] text-sm hover:underline mr-3" onclick="showRefModal()">参考说明</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3">
+                                            <div class="font-medium">首年发电量</div>
+                                            <div class="text-xs text-gray-500">annual_generation</div>
+                                        </td>
+                                        <td class="px-4 py-3 font-medium text-blue-600">650 万kWh</td>
+                                        <td class="px-4 py-3 text-gray-600">可研报告.docx 第8页</td>
+                                        <td class="px-4 py-3"><span class="tag bg-yellow-100 text-yellow-700">中</span></td>
+                                        <td class="px-4 py-3"><span class="tag bg-yellow-100 text-yellow-700">待审核</span></td>
+                                        <td class="px-4 py-3">
+                                            <button class="text-[#1890ff] text-sm hover:underline mr-3" onclick="showRefModal()">参考说明</button>
+                                            <button class="text-green-600 text-sm hover:underline mr-2">确认</button>
+                                            <button class="text-orange-600 text-sm hover:underline">修改</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3">
+                                            <div class="font-medium">上网电价</div>
+                                            <div class="text-xs text-gray-500">electricity_price</div>
+                                        </td>
+                                        <td class="px-4 py-3 font-medium text-blue-600">0.42 元/kWh</td>
+                                        <td class="px-4 py-3 text-gray-600">合同.docx 第2页</td>
+                                        <td class="px-4 py-3"><span class="tag bg-green-100 text-green-700">高</span></td>
+                                        <td class="px-4 py-3"><span class="tag bg-yellow-100 text-yellow-700">待审核</span></td>
+                                        <td class="px-4 py-3">
+                                            <button class="text-[#1890ff] text-sm hover:underline mr-3" onclick="showRefModal()">参考说明</button>
+                                            <button class="text-green-600 text-sm hover:underline mr-2">确认</button>
+                                            <button class="text-orange-600 text-sm hover:underline">修改</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 页面5：测算表版本 -->
+                <div id="page-sheet" class="page">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex gap-3 items-center">
+                                <select class="border rounded px-3 py-2 text-sm w-48">
+                                    <option>选择模块</option>
+                                    <option selected>屋顶光伏一期</option>
+                                </select>
+                                <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">查询</button>
+                            </div>
+                        </div>
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">版本名称</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">生成时间</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">生成人</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-medium">V1.0_初版测算</td>
+                                    <td class="px-4 py-3 text-gray-500">2026-06-09 14:30</td>
+                                    <td class="px-4 py-3">admin</td>
+                                    <td class="px-4 py-3"><button class="text-[#1890ff] hover:underline">下载</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 页面6：指标库管理 -->
+                <div id="page-indicator-registry" class="page">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex gap-3">
+                                <input type="text" placeholder="指标名称/编码" class="border rounded px-3 py-2 text-sm w-48">
+                                <select class="border rounded px-3 py-2 text-sm w-32">
+                                    <option>全部分类</option>
+                                    <option>基础信息</option>
+                                    <option>发电量</option>
+                                    <option>财务</option>
+                                </select>
+                                <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">查询</button>
+                            </div>
+                            <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">+ 新增指标</button>
+                        </div>
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">指标编码</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">指标名称</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">分类</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">数据类型</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">单位</th>
+                                    <th class="text-left px-4 py-3 font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-mono text-xs">installed_capacity</td>
+                                    <td class="px-4 py-3 font-medium">安装容量</td>
+                                    <td class="px-4 py-3"><span class="tag bg-blue-100 text-blue-700">基础信息</span></td>
+                                    <td class="px-4 py-3">数值</td>
+                                    <td class="px-4 py-3">kWp</td>
+                                    <td class="px-4 py-3 flex gap-2">
+                                        <button class="text-[#1890ff] text-sm hover:underline">编辑</button>
+                                        <button class="text-red-500 text-sm hover:underline">删除</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-mono text-xs">annual_generation</td>
+                                    <td class="px-4 py-3 font-medium">首年发电量</td>
+                                    <td class="px-4 py-3"><span class="tag bg-green-100 text-green-700">发电量</span></td>
+                                    <td class="px-4 py-3">数值</td>
+                                    <td class="px-4 py-3">万kWh</td>
+                                    <td class="px-4 py-3 flex gap-2">
+                                        <button class="text-[#1890ff] text-sm hover:underline">编辑</button>
+                                        <button class="text-red-500 text-sm hover:underline">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 页面7：模块类型配置 -->
+                <div id="page-module-type-config" class="page">
+                    <div class="bg-white rounded-lg shadow-sm flex h-[calc(100vh-140px)]">
+                        <!-- 左侧：模块类型列表 -->
+                        <div class="w-48 border-r bg-gray-50 flex-shrink-0">
+                            <div class="p-3 font-medium text-gray-700 border-b bg-white">模块类型</div>
+                            <div class="p-2 space-y-1">
+                                <div class="p-3 rounded bg-[#1890ff] text-white cursor-pointer text-sm font-medium">屋顶光伏</div>
+                                <div class="p-3 rounded hover:bg-white cursor-pointer text-sm text-gray-600">照明节能</div>
+                                <div class="p-3 rounded hover:bg-white cursor-pointer text-sm text-gray-600">储能</div>
+                            </div>
+                        </div>
+                        <!-- 右侧：指标配置 -->
+                        <div class="flex-1 flex flex-col">
+                            <div class="p-4 border-b flex justify-between items-center">
+                                <div>
+                                    <span class="font-medium text-gray-800">屋顶光伏</span>
+                                    <span class="text-sm text-gray-500 ml-2">已配置 4 项指标</span>
+                                </div>
+                                <button class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm hover:bg-blue-600">+ 从指标库添加</button>
+                            </div>
+                            <div class="flex-1 overflow-auto p-4">
+                                <table class="w-full text-sm">
+                                    <thead class="bg-gray-50 sticky top-0">
+                                        <tr>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600 w-10">排序</th>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600">指标编码</th>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600">指标名称</th>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600">必填</th>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600">自定义说明</th>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600">提取规则</th>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600">启用</th>
+                                            <th class="text-left px-3 py-2 font-medium text-gray-600">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y">
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-3 py-3 text-gray-400 cursor-move">1</td>
+                                            <td class="px-3 py-3 font-mono text-xs">installed_capacity</td>
+                                            <td class="px-3 py-3 font-medium">安装容量</td>
+                                            <td class="px-3 py-3"><input type="checkbox" checked class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3 text-gray-600 max-w-xs truncate">组件总装机容量，单位kWp</td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-xs hover:underline">查看规则</button>
+                                            </td>
+                                            <td class="px-3 py-3"><input type="checkbox" checked class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-sm hover:underline mr-2">编辑</button>
+                                                <button class="text-red-500 text-sm hover:underline">移除</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-3 py-3 text-gray-400 cursor-move">2</td>
+                                            <td class="px-3 py-3 font-mono text-xs">annual_generation</td>
+                                            <td class="px-3 py-3 font-medium">首年发电量</td>
+                                            <td class="px-3 py-3"><input type="checkbox" checked class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3 text-gray-600 max-w-xs truncate">首年发电量，单位万kWh</td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-xs hover:underline">查看规则</button>
+                                            </td>
+                                            <td class="px-3 py-3"><input type="checkbox" checked class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-sm hover:underline mr-2">编辑</button>
+                                                <button class="text-red-500 text-sm hover:underline">移除</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-3 py-3 text-gray-400 cursor-move">3</td>
+                                            <td class="px-3 py-3 font-mono text-xs">electricity_price</td>
+                                            <td class="px-3 py-3 font-medium">上网电价</td>
+                                            <td class="px-3 py-3"><input type="checkbox" checked class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3 text-gray-600 max-w-xs truncate">上网电价，单位元/kWh</td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-xs hover:underline">查看规则</button>
+                                            </td>
+                                            <td class="px-3 py-3"><input type="checkbox" checked class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-sm hover:underline mr-2">编辑</button>
+                                                <button class="text-red-500 text-sm hover:underline">移除</button>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-3 py-3 text-gray-400 cursor-move">4</td>
+                                            <td class="px-3 py-3 font-mono text-xs">roof_area</td>
+                                            <td class="px-3 py-3 font-medium">可利用屋顶面积</td>
+                                            <td class="px-3 py-3"><input type="checkbox" class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3 text-gray-600 max-w-xs truncate">可利用屋顶面积，单位m²</td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-xs hover:underline">查看规则</button>
+                                            </td>
+                                            <td class="px-3 py-3"><input type="checkbox" checked class="w-4 h-4 text-[#1890ff]"></td>
+                                            <td class="px-3 py-3">
+                                                <button class="text-[#1890ff] text-sm hover:underline mr-2">编辑</button>
+                                                <button class="text-red-500 text-sm hover:underline">移除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- 参考说明弹窗 -->
+    <div id="ref-modal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-[600px] max-h-[80vh] overflow-auto">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 class="font-medium text-gray-800">参考说明 - 安装容量</h3>
+                <button onclick="closeRefModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-4 space-y-4">
+                <!-- 基础信息 -->
+                <div class="border rounded-lg p-4 bg-blue-50 border-blue-200">
+                    <div class="font-medium text-blue-800 mb-2 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        基础信息
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div><span class="text-gray-500">指标说明：</span>组件总装机容量，单位kWp</div>
+                        <div><span class="text-gray-500">提取位置：</span>从可研报告设备清单表提取</div>
+                        <div><span class="text-gray-500">实际来源：</span>附件1-可研报告第5页表2-1（正则匹配命中）</div>
+                    </div>
+                </div>
+                <!-- 高级规则 -->
+                <div class="border rounded-lg p-4">
+                    <div class="font-medium text-gray-700 mb-2 flex items-center gap-2 cursor-pointer" onclick="toggleAdvanced()">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        高级规则（技术人员排查用）
+                    </div>
+                    <div id="advanced-panel" class="hidden space-y-2 text-sm">
+                        <div class="bg-gray-50 p-3 rounded">
+                            <div class="text-gray-500 text-xs mb-1">正则表达式</div>
+                            <code class="text-xs font-mono text-orange-600">装机容量[：:]\s*(\d+\.?\d*)</code>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded">
+                            <div class="text-gray-500 text-xs mb-1">LLM 提示词</div>
+                            <div class="text-gray-700">该指标通常出现在设备清单表格中，单位是kWp，注意区分组件功率和总装机容量</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 完成审核阻断提示 -->
+    <div id="block-modal" class="fixed inset-0 modal-overlay hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-[400px]">
+            <div class="p-4 border-b">
+                <h3 class="font-medium text-red-600 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    还有必填指标未确认
+                </h3>
+            </div>
+            <div class="p-4">
+                <p class="text-sm text-gray-600 mb-3">以下必填指标尚未处理，请确认或标记为不适用：</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center gap-2 text-sm">
+                        <span class="tag bg-red-100 text-red-700 text-xs">必填</span>
+                        <span>首年发电量 (annual_generation)</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-sm">
+                        <span class="tag bg-red-100 text-red-700 text-xs">必填</span>
+                        <span>上网电价 (electricity_price)</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-4 border-t flex justify-end">
+                <button onclick="closeBlockModal()" class="bg-[#1890ff] text-white px-4 py-2 rounded text-sm">知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.sidebar-item').forEach(a => a.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            event.target.classList.add('active');
+
+            const titles = {
+                'project': '光伏项目管理',
+                'material': '资料库',
+                'module': '模块管理',
+                'audit': '指标审核',
+                'sheet': '测算表版本',
+                'indicator-registry': '指标库管理',
+                'module-type-config': '模块类型配置'
+            };
+            document.getElementById('page-title').textContent = titles[pageId];
+        }
+
+        function toggleExpectation() {
+            const panel = document.getElementById('expectation-panel');
+            panel.style.display = panel.style.display === 'none' ? 'grid' : 'none';
+        }
+
+        function showRefModal() {
+            document.getElementById('ref-modal').classList.remove('hidden');
+            document.getElementById('ref-modal').classList.add('flex');
+        }
+
+        function closeRefModal() {
+            document.getElementById('ref-modal').classList.add('hidden');
+            document.getElementById('ref-modal').classList.remove('flex');
+        }
+
+        function toggleAdvanced() {
+            const panel = document.getElementById('advanced-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        function checkComplete() {
+            document.getElementById('block-modal').classList.remove('hidden');
+            document.getElementById('block-modal').classList.add('flex');
+        }
+
+        function closeBlockModal() {
+            document.getElementById('block-modal').classList.add('hidden');
+            document.getElementById('block-modal').classList.remove('flex');
+        }
+    </script>
+</body>
+</html>

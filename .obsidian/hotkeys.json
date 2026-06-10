@@ -10,5 +10,11 @@
       "modifiers": [],
       "key": "F10"
     }
+  ],
+  "workspace:export-pdf": [
+    {
+      "modifiers": [],
+      "key": "F12"
+    }
   ]
 }

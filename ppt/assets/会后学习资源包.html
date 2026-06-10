@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 学习资源包 - 中建发展</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+  .header .subtitle { font-size: 15px; opacity: 0.85; line-height: 1.6; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0f3460;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 32px 0 8px;
+    padding: 0 24px;
+  }
+  .container { max-width: 480px; margin: 0 auto; padding: 0 24px; }
+
+  .qr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .qr-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+  }
+  .qr-card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .qr-card.wide { grid-column: 1 / -1; }
+  .qr-card img { width: 140px; height: 140px; border-radius: 8px; }
+  .qr-card.wide img { width: 160px; height: 160px; }
+  .qr-card h3 { font-size: 15px; font-weight: 600; margin: 12px 0 4px; color: #1a1a2e; }
+  .qr-card p { font-size: 12px; color: #666; line-height: 1.4; }
+  .qr-card .tag {
+    display: inline-block;
+    background: #e8f4f8;
+    color: #0f3460;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+
+  .role-section {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .role-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .role-desc { font-size: 13px; color: #666; margin-bottom: 12px; }
+  .timeline { padding-left: 20px; border-left: 2px solid #e8f4f8; }
+  .timeline-item {
+    position: relative;
+    padding: 8px 0 8px 16px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -25px;
+    top: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #0f3460;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #e8f4f8;
+  }
+  .timeline-item strong { color: #1a1a2e; }
+  .tool-tag {
+    background: #fff3e0;
+    color: #e65100;
+    font-size: 11px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 4px;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .tool-chip {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .tool-chip .tool-name { font-weight: 600; color: #1a1a2e; }
+  .tool-chip .tool-desc { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .footer {
+    text-align: center;
+    padding: 32px 24px 48px;
+    color: #999;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .footer strong { color: #666; }
+
+  @media print {
+    body { background: white; }
+    .header { padding: 24px; }
+    .qr-card, .role-section { box-shadow: none; border: 1px solid #eee; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚀 AI 学习资源包</h1>
+  <p class="subtitle">扫一个码，从今天开始行动</p>
+  <div class="badge">中建发展 · AI 转型工作组</div>
+</div>
+
+<div class="container">
+  <div class="section-label">用微信扫一个就够</div>
+  <div class="qr-grid">
+    <div class="qr-card wide">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAAEICAIAAAAslP2oAAAFBUlEQVR4nO3dQY4cNRiA0RnEHXrPRTh7LsK+T1Gsga8kSrJle/q9HSyqO8l8clR/bH9f1/UF/NNv//pvQBjQrBgQhAFBGBCEAUEYEIQBQRgQhAFBGBCEAUEYEIQBQRgQfv966PXHn18neP/1a+qv6+nzn37u7O//1Pvm+/zUnwcrBgRhQBAGBGFAEAYEYUAQBoyYY8x+r//U0/fos9+7r5qH7OZ9yM/DHSsGBGFAEAYEYUAQBgRhQBAGzJxjzH6vPOq9+Kr366P2V9w9Z/b+kJ/683DHigFBGBCEAUEYEIQBQRgQhAEr5hinGzVPWPWcVfOQ01kxIAgDgjAgCAOCMCAIA4IwIHzcHGP2e/3d7osYNd/4NFYMCMKAIAwIwoAgDAjCgCAMWDHH2O29+Krzl2bfkz37vvD34ed6PWXFgCAMCMKAIAwIwoAgDAjCgJlzjN32IdyZfS7T7PsfTvn+r0N+Hu5YMSAIA4IwIAgDgjAgCAOCMCB8X9dV///j7HbO0m7zk09jxYAgDAjCgCAMCMKAIAwIwoARc4xV+wFOuedh9vcZdZ7Vbt//vdn3tGJAEAYEYUAQBgRhQBAGBGHAijnG7OeMMvvXdWf2/opRn/uePEfa7TlWDAjCgCAMCMKAIAwIwoAgDBhxP8aq9+6z9yHMnp+cch7UbvtGXovu2bBiQBAGBGFAEAYEYUAQBgRhwAn7MZ5atU9g1PeZ/ZzZz38fvu/ijhUDgjAgCAOCMCAIA4IwIAgDTrgf4+nnrtpfsdtc4pTPXXWvuXOlYAB/lYIgDAjCgCAMCMKAIAwYca7UnafvlXfbV3CKVedHvTb7/Zz9527FgCAMCMKAIAwIwoAgDAjCgJn3Y9zZ7ZyiVe/jV52nNPv8pfch96U8ZcWAIAwIwoAgDAjCgCAMCMKAEXOMp+/Fd5t7zL7HetU92av2w/zU+86tGBCEAUEYEIQBQRgQhAFBGDBzP8Zu/+7/lPflo56/6vfhNfnPfdX3sWJAEAYEYUAQBgRhQBAGBGHAzPsxRtltTvLUqnO0ntrt3K3d5jNWDAjCgCAMCMKAIAwIwoAgDAjf13V9/cT7KGZbdT7Vqv0kr0Hzmdn3hDz9PnesGBCEAUEYEIQBwoD/x4oBQRiw4lypVc95atX79adOOSfqNei+jlX3n1gxIAgDgjAgCAOCMCAIA4IwYMV+jFHP2W2+MepzT/n9nG3VfRp3rBgQhAFBGBCEAUEYEIQBQRgwcz/G7Oes2nexai6x6vm7zYVei87RsmJAEAYEYUAQBgRhQBAGBGHAiDnGbv+O/87TucQp84fd9le8fuh+EisGBGFAEAYEYUAQBgRhQBAGjJhj7HYu0Oz32budZzV7P8yqX+9Tsz/XigFBGBCEAUEYEIQBQRgQhAEz5xi7nQt05/T39LvNVUbZbf5jxYAgDAjCgCAMCMKAIAwIwoAVc4zdjDrvaNTzZ1u1r2O3+zGesmJAEAYEYUAQBgRhQBAGBGFA+Lg5xuy5xOlzj93mFe/Jn3vHigFBGBCEAUEYEIQBQRgQhAEr5hi7vacfdV7TbvOQp0Y9/zV5v8eqz7ViQBAGBGFAEAYEYUAQBgRhwMw5xqrzf075nqvmHqPmNqff4+F+DBjAX6UgCAOCMCAIA4IwIAgDwvd1XfX/4aNZMSAIA4IwIAgDgjAgCAOCMCAIA4IwIAgDgjAgCAOCMCAIA4Iw4Ou//gY+tjr//MMfGAAAAABJRU5ErkJggg==" alt="快速入门">
+      <h3>📋 AI 快速入门指南</h3>
+      <p>按你的角色，给你最短路径</p>
+      <div class="tag">⏱ 2 小时 · 推荐首选</div>
+    </div>
+    <div class="qr-card">
+      <img src="data:image/png;base64,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" alt="通识课程">
+      <h3>🎓 吴恩达通识课</h3>
+      <p>全球最佳<br>AI 入门课</p>
+      <div class="tag">⏱ 6 小时</div>
+    </div>
+    <div class="qr-card">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAAEICAIAAAAslP2oAAAE7ElEQVR4nO3dQa4jNRRA0XzEHjJnI6y9N8I8qwhj4JZESbZsJ+fMQK10dfKvHJW/6/283+8H8E+//eu/AWFAs2JAEAYEYUAQBgRhQBAGBGFAEAYEYUAQBgRhQBAGBGFA+P1x0/OPPx8neP31a8j1X73OlavXH/U6o/69s//8bu6+/1YMCMKAIAwIwoAgDAjCgCAMGLGPMeo+8Sij7qOvuv5V+zCj9ls+9efBigFBGBCEAUEYEIQBQRgQhAEz9zFO32fY7RzCKeccPvXnwYoBQRgQhAFBGBCEAUEYEIQBK/YxdjP7+U6j3N0/GXWds89pnMKKAUEYEIQBQRgQhAFBGBCEAeHr9jF2O+cw+3pWPVfqdFYMCMKAIAwIwoAgDAjCgCAMWLGPsdt98VVzu+9ezylzvk//ebhixYAgDAjCgCAMCMKAIAwIwoCZ+xi7nXO4Mvs+/ex9g9Pf51NYMSAIA4IwIAgDgjAgCAOCMCD8vN/v+v9f55T9jVVzP16HnKMYxYoBQRgQhAFBGBCEAUEYEIQBI85jjLrfv9vv68/er7hr1fs5+3lTz0XnT+5epxUDgjAgCAOCMCAIA4IwIAgDTp7zPfu+/ilzr0/ZR3ou2qca9XlZMSAIA4IwIAgDgjAgCAOCMGDEPsZu855POYdw16h9mCuzr/+12fmKu6wYEIQBQRgQhAFBGBCEAUEYMHM+xqeeZ1j1PKW7rzPb6/D3x3OlYABfpSAIA4IwIAgDgjAgCANWzMdYNQ/hyuy/d9Xr7Ha+5Xnzc99tv8uKAUEYEIQBQRgQhAFBGBCEATOfKzX7PMZu5xZW3e8/fe7Hc7P57lesGBCEAUEYEIQBQRgQhAFBGHDCnO9R9+/v3qef/fyiVfsJq+ZUPAd9XqvO81gxIAgDgjAgCAOCMCAIA4Iw4IR9jE89P3D6vIgruz03bBQrBgRhQBAGBGFAEAYEYUAQBqyY833llPvos/dPdps7/m3nVa5YMSAIA4IwIAgDgjAgCAOCMGDmnO/ZVv3e/+znI42y2zmH16LnRI3a97BiQBAGBGFAEAYEYUAQBgRhwIjzGKt+j383q85LrJp3serzWvUcLSsGBGFAEAYEYYAw4P+xYkAQBuy0j7Hqvvsop8yvGOW5aM7GldnvjxUDgjAgCAOCMCAIA4IwIAgDVuxj3HXKuYUru8233u18xWyeKwUT+SoFQRgQhAFBGBCEAUEYMGI+xm7nBGZfzynzrXfbXzrl3MUVKwYEYUAQBgRhQBAGBGFAEAacPOf7rm+7735l1Xzx12bvw11WDAjCgCAMCMKAIAwIwoAgDBixj3HKnIpVz4PabW7GKfNJXpP3ncz5hgF8lYIgDAjCgCAMCMKAIAyYuY9xZbf75d82x3rU+/885FyH+Rgwka9SEIQBQRgQhAFBGBCEASv2MU53ytyJ3f7e56J9IfsYMJGvUhCEAUEYEIQBQRgQhAHh6/YxZs/b3u2cxqh/73PR87JWPdfLigFBGBCEAUEYEIQBQRgQhAEr9jFOn/e8aq75bvf1Zxu1nzPq87JiQBAGBGFAEAYEYUAQBgRhQPh5v9+PE+7rn3LuYvZ5g9nnKz713MtdVgwIwoAgDAjCgCAMCMKAIAwYsY8B38CKAUEYEIQBQRgQhAFBGBCEAUEYEIQBQRgQhAFBGBCEAUEYEIQBj//6G+ddCieSu/QhAAAAAElFTkSuQmCC" alt="30天挑战">
+      <h3>🔥 30天实战挑战</h3>
+      <p>每天 15 分钟<br>从会用到用好</p>
+      <div class="tag">⏱ 每天 15 分钟</div>
+    </div>
+    <div class="qr-card">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAAEICAIAAAAslP2oAAAE5klEQVR4nO3dTa4jNRhA0TzEHjJnI6ydjTDPKsIYuCVRyJbt5JwZqJX307lyVF/b/nm/3w/g7375x38DwoBmxYAgDAjCgCAMCMKAIAwIwoAgDAjCgCAMCMKAIAwIwoDw6+Om52+/P07w+vOPW9//7D8/yuyve/X6n/p+uGLFgCAMCMKAIAwIwoAgDAjCgBFzjFHPiUcZ9Rz97uucPjeY/ff1Ovz9YMWAIAwIwoAgDAjCgCAMCMKAmXOMU567j9p3cWXU68z+uVZ9n8/N3g9XrBgQhAFBGBCEAUEYEIQBQRiwYo6xm9n7Lmbvrzjl/KvTWTEgCAOCMCAIA4IwIAgDgjAgfN0cY/Z+jFFGzR/MK/4fKwYEYUAQBgRhQBAGBGFAEAasmGOsmgPcteo8pVHzitlzj9fkc712Y8WAIAwIwoAgDAjCgCAMCMKAmXOMU/7d/6h5wm5//q7Zr/885P1wxYoBQRgQhAFBGBCEAUEYEIQBI+YYp/x7+lXu/n5O2Ufxbe8HKwYEYUAQBgRhQBAGBGFAEAaEn/f7/fjE85FWvf5dp+zTmD0/WfW+umLFgCAMCMKAIAwIwoAgDAjCgBFzjCu7PXefPT8Z9Zz+lDnMa7P5yZVRf19WDAjCgCAMCMKAIAwIwoAgDFhxz/cp90Wsmm+s2rdwyr3dz8n7Lq5YMSAIA4IwIAgDgjAgCAOCMGDEHGPVPdDfNt9YZbd9Na9F51xZMSAIA4IwIAgDgjAgCAOCMGDFfozZ+y5mzytmzyVWnX+1aj/J7N+D/RgwkY9SEIQBQRgQhAFBGBCEASfc8/1t5xetmj/sdn/IlVXvHysGBGFAEAYEYUAQBgRhQBAGnHzP96p9CLudT7Wb12bzlivmGDCAj1IQhAFBGBCEAUEYEIQBM+cYn2r2c/Td7u2evS/lOXm+4VwpmMhHKQjCgCAMCMKAIAwIwoAV93x/6nlQu/1cs19nt3vcZ7NiQBAGBGFAEAYEYUAQBgRhwIg5xqrnyrPPg9rtOfqo+8532+fw2uwe9ytWDAjCgCAMCMKAIAwIwoAgDDjhnu9T7k+4suq5+6p7x+/a7RytK1YMCMKAIAwIwgBhwH9jxYAgDFixH2O3/RKnnNc0ex/F6fejz2bFgCAMCMKAIAwIwoAgDAjCgJn3fO82Z5j9fN3rr2U/BizgoxQEYUAQBgRhQBAGBGHAzDnGKXbbR7Hb/eWrzpWa7e73b8WAIAwIwoAgDAjCgCAMCMKAEedKnXJe0Ozzrz51XjHqdV6L7gUf9XWtGBCEAUEYEIQBQRgQhAFBGDBijrHqnJ/T77tYNf/Z7V72UWbPN6wYEIQBQRgQhAFBGBCEAUEYMHOOcWX2fRSjXuf086ZmzxOei34/q35eKwYEYUAQBgRhQBAGBGFAEAasmGPsZtR+g1XzmVPOy7py9XVH7RtxrhRM5KMUBGFAEAYEYUAQBgRhQPi6OcYqs5/H73ZvyXPyz+VcKVjARykIwoAgDAjCgCAMCMKAFXOMVfcnnPL9nH5/9vPm/GT2fhj7MWAiH6UgCAOCMCAIA4IwIAgDZs4xdtsPcGXVeVCrznG6csp9IKtYMSAIA4IwIAgDgjAgCAOCMCD8vN/v+v/w1awYEIQBQRgQhAFBGBCEAUEYEIQBQRgQhAFBGBCEAUEYEIQBQRjw+Le/AJqNNbm506EjAAAAAElFTkSuQmCC" alt="工具速查">
+      <h3>🧰 工具速查卡</h3>
+      <p>5 个工具<br>3 分钟上手</p>
+      <div class="tag">⚡ 即用</div>
+    </div>
+    <div class="qr-card">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAAEICAIAAAAslP2oAAAFD0lEQVR4nO3dQW4kNxJAUfXAd6j9XGTO7ot4X6cor8f+CTgBhsmU3tt1Q6iqTumDQkYz+evz+XwB/+8/f/kzIAxoVgwIwoAgDAjCgCAMCMKAIAwIwoAgDAjCgCAMCMKAIAwIv33d9Prv/76e4P3H718nubpudz/nruv/vvic3/XnwYoBQRgQhAFBGBCEAUEYEIQBK+YYp80N7t5Hv/v1d+/fX3390+cA3/Xn4YoVA4IwIAgDgjAgCAOCMCAIAybnGNP3lVfdF787T1j1+XfNT+6anqu8Dvt5uGLFgCAMCMKAIAwIwoAgDAjCgB1zjKc7bV/BqudQ3d038tNYMSAIA4IwIAgDgjAgCAOCMCD8uDnG3fv6q+YJu/ZXXNn1vk9hxYAgDAjCgCAMCMKAIAwIwoAdc4zT7ouvOqfiKc9HWvUcrffwc71OY8WAIAwIwoAgDAjCgCAMCMKAyTnGU86rnt6P8V2//rv+PFyxYkAQBgRhQBAGBGFAEAYEYUD49fl86u/5l86puDI9Z7j7vj+NFQOCMCAIA4IwIAgDgjAgCANWzDGesn9ges5w16q5xK7r8F4033jK57RiQBAGBGFAEAYEYUAQBgRhwI79GKvu00+/75Vd521fOe3879dhc4lVr2PFgCAMCMKAIAwIwoAgDAjCgJOeK/X0fQinzUmm9ydcmb4Ou66zFQOCMCAIA4IwIAgDgjAgCANOeq7Ulac8P+rpc5Xp13nKvosrVgwIwoAgDAjCgCAMCMKAIAwIv309xKq5wfT8YZXT5hVXTrv+nisFg/wqBUEYEIQBQRgQhAFBGDA5x5g+J/u0+9x37dpfserrX8Pf37um5zNWDAjCgCAMCMKAIAwIwoAgDJicY6z6f/Z370Oftj/htPed9t7075p+fSsGBGFAEAYEYUAQBgRhQBAG7Hiu1PR8Y9U+iunztqfnLU+Zh7wPO8/7ihUDgjAgCAOCMCAIA4IwIAgDVpzzvct3PX/6u+4DeR923e5+HisGBGFAEAYEYUAQBgRhQBAG7DgfY/p87lWfZ/p1Vpnef3Lavo7XprmQFQOCMCAIA4IwIAgDgjAgCANWzDGm5xW77qOfds73LtPfl9fwfGkVKwYEYUAQBgRhgDDgn7FiQBAGTD5X6unzh9Oea7Tr85w2Z3hvOi/FigFBGBCEAUEYEIQBQRgQhAE79mOc9jrfdT/JlVWf83XYeRrT+1isGBCEAUEYEIQBQRgQhAFBGPDkc75Xmd63cNdpz1N6+r6XK875hgX8KgVBGBCEAUEYEIQBQRgwuR/jNHfPC59+TtT0vpRd85DXYftqVrFiQBAGBGFAEAYEYUAQBgRhwIo5xpVd51XvmqtMv+/0c59Om+es4nwMGORXKQjCgCAMCMKAIAwIwoDJOcaVXc8FOm0+cPf1d73O3ddfZdX+k1XXwYoBQRgQhAFBGBCEAUEYEIQBO+YYp5m+/71rn8aufRHv4euza7+NFQOCMCAIA4IwIAgDgjAgCAPCj5tj7JpXrJozTM9h7r7v9Lxi1xzJigFBGBCEAUEYEIQBQRgQhAE75hhPOT9h1/kSp50vvup13sPf9+n3tWJAEAYEYUAQBgRhQBAGBGHA5Bxj1/N/7pqeV0x//WnX+X3YeeHOx4BBfpWCIAwIwoAgDAjCgCAMCL8+n0/9PfxoVgwIwoAgDAjCgCAMCMKAIAwIwoAgDAjCgCAMCMKAIAwIwoAgDPj6uz8BaGZEEagT43MAAAAASUVORK5CYII=" alt="学习社群">
+      <h3>👥 AI 学习社群</h3>
+      <p>持续更新<br>互相学习</p>
+      <div class="tag">💬 长期</div>
+    </div>
+  </div>
+
+  <div class="section-label">按你的角色 · 推荐路径</div>
+
+  <div class="role-section">
+    <h3>👔 班子成员 / 决策层</h3>
+    <p class="role-desc">核心问题：AI 对我的业务意味着什么？怎么决策？</p>
+    <div class="timeline">
+      <div class="timeline-item"><strong>第 1 周</strong>：完成吴恩达《AI For Everyone》<span class="tool-tag">Coursera</span><br><small style="color:#888">收获：理解 AI 能做什么、不能做什么、怎么定战略</small></div>
+      <div class="timeline-item"><strong>第 2 周</strong>：用豆包帮你处理 3 件日常事务（邮件/报告/摘要）<span class="tool-tag">豆包</span></div>
+      <div class="timeline-item"><strong>第 3 周</strong>：让秘书/助理用 Kimi 整理一份 50 页行业报告<span class="tool-tag">Kimi</span></div>
+      <div class="timeline-item"><strong>第 4 周</strong>：在部门会上分享你的 AI 体验——这就是最好的推动</div>
+    </div>
+  </div>
+
+  <div class="role-section">
+    <h3>🏢 本部职能岗</h3>
+    <p class="role-desc">核心问题：AI 能帮我提高哪些工作效率？</p>
+    <div class="timeline">
+      <div class="timeline-item"><strong>第 1 天</strong>：用豆包写一封你一直在拖的邮件 <span class="tool-tag">豆包</span></div>
+      <div class="timeline-item"><strong>第 3 天</strong>：用 Kimi 读一份 20 页 PDF，10 分钟提取要点 <span class="tool-tag">Kimi</span></div>
+      <div class="timeline-item"><strong>第 5 天</strong>：用通义听悟整理一次会议录音，30 分钟纪要变 5 分钟 <span class="tool-tag">通义听悟</span></div>
+      <div class="timeline-item"><strong>第 7 天</strong>：用 AI 生成一份周报初稿——从"写"变成"改"</div>
+      <div class="timeline-item"><strong>第 14 天</strong>：扫 30 天挑战码，系统提升</div>
+    </div>
+  </div>
+
+  <div class="role-section">
+    <h3>💻 信息化系统条线</h3>
+    <p class="role-desc">核心问题：怎么把 AI 集成到系统和工作流中？</p>
+    <div class="timeline">
+      <div class="timeline-item"><strong>第 1 周</strong>：完成 Elements of AI（含中文版）<span class="tool-tag">免费</span></div>
+      <div class="timeline-item"><strong>第 2 周</strong>：学习 Claude Code 基础操作，尝试用 AI 写一个数据处理脚本 <span class="tool-tag">Claude Code</span></div>
+      <div class="timeline-item"><strong>第 3 周</strong>：用 Cursor 搭建一个简单的数据看板 <span class="tool-tag">Cursor</span></div>
+      <div class="timeline-item"><strong>第 4 周</strong>：把经验分享给一个本部同事——传播 AI 文化</div>
+      <div class="timeline-item"><strong>持续</strong>：加入社群，参与技术交流</div>
+    </div>
+  </div>
+
+  <div class="section-label">5 个工具 · 3 分钟上手</div>
+  <div class="role-section" style="padding:16px;">
+    <div class="tools-grid">
+      <div class="tool-chip"><div class="tool-name">🫘 豆包</div><div class="tool-desc">写邮件/报告/文案</div></div>
+      <div class="tool-chip"><div class="tool-name">🌙 Kimi</div><div class="tool-desc">读长文档/提取要点</div></div>
+      <div class="tool-chip"><div class="tool-name">🎙 通义听悟</div><div class="tool-desc">会议录音→纪要</div></div>
+      <div class="tool-chip"><div class="tool-name">🤖 WorkBuddy</div><div class="tool-desc">无代码建系统</div></div>
+      <div class="tool-chip" style="grid-column:1/-1;"><div class="tool-name">🧠 Claude</div><div class="tool-desc">深度对话/分析/编程——AI 中的"最强大脑"</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>扫码即学 · 学了就用 · 用了再学</strong><br>
+  有问题？扫码加入学习社群，我们持续更新<br><br>
+  <span style="font-size:11px;">中建发展 AI 转型工作组 · 2026年6月</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P12 · 全球非科技企业AI震撼实践</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    padding: 56px 80px 40px;
+  }
+
+  .page-label {
+    font-size: 14px;
+    color: var(--ink-light);
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    background: var(--red);
+    padding: 3px 10px;
+    border-radius: 3px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 24px;
+    width: fit-content;
+  }
+
+  .title-area {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 8px;
+  }
+  .title-main {
+    font-size: 44px;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .title-sub {
+    font-size: 22px;
+    color: var(--ink-light);
+    font-weight: 400;
+  }
+
+  .divider-line {
+    height: 3px;
+    width: 80px;
+    background: var(--red);
+    margin-bottom: 36px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .case-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-top: 4px solid var(--navy);
+    box-shadow: 0 2px 24px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card:nth-child(1) { border-top-color: var(--red); }
+  .case-card:nth-child(2) { border-top-color: #2B7BD6; }
+  .case-card:nth-child(3) { border-top-color: #1B8A5A; }
+  .case-card:nth-child(4) { border-top-color: #D4683A; }
+
+  .card-company {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .card-company .cn {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-light);
+    margin-top: 2px;
+  }
+
+  .card-mega {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 8px 0;
+  }
+  .card-mega.red   { color: var(--red); }
+  .card-mega.blue  { color: #1a5faa; }
+  .card-mega.green { color: #1B8A5A; }
+
+  .card-stats {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.5;
+    margin: 6px 0;
+  }
+  .card-stats strong {
+    font-weight: 800;
+    font-size: 22px;
+  }
+
+  .card-insight {
+    font-size: 16px;
+    color: var(--ink-light);
+    font-style: italic;
+    border-left: 3px solid var(--red);
+    padding-left: 14px;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .quote-strip {
+    margin-top: 28px;
+    padding: 20px 32px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .quote-mark {
+    font-size: 48px;
+    color: var(--red);
+    line-height: 0;
+    font-family: Georgia, serif;
+  }
+  .quote-text {
+    font-size: 24px;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  .footer-strip {
+    position: absolute;
+    bottom: 32px;
+    right: 80px;
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-label">PART 3 · 同行压力与中建实践</div>
+<div class="section-tag">3.1 全球标杆</div>
+
+<div class="title-area">
+  <span class="title-main">全球非科技企业 AI 震撼实践</span>
+  <span class="title-sub">不是科技公司在秀技术——是和你一样的传统巨头在用 AI 重构核心业务</span>
+</div>
+
+<div class="divider-line"></div>
+
+<div class="cards-grid">
+
+  <!-- Card 1: JPMorgan -->
+  <div class="case-card">
+    <div>
+      <div class="card-company">
+        JPMorgan Chase <span class="cn">摩根大通</span>
+      </div>
+      <div class="card-mega red">36万小时 → 几秒</div>
+      <div class="card-stats">
+        COiN 平台每年审查 <strong>120万份</strong> 商业贷款协议<br>
+        合同审查错误率比人工降低 <strong>90%</strong>
+      </div>
+    </div>
+    <div class="card-insight">不是「提效」——是原来根本做不完的事，现在可以做了</div>
+  </div>
+
+  <!-- Card 2: Walmart -->
+  <div class="case-card">
+    <div>
+      <div class="card-company">
+        Walmart <span class="cn">沃尔玛</span>
+      </div>
+      <div class="card-mega blue">200万 SKU</div>
+      <div class="card-stats">
+        AI 需求预测引擎管理超过 <strong>200万</strong> 个 SKU<br>
+        库存减少 <strong>15%</strong>，同时缺货率降低 <strong>16%</strong><br>
+        配送 AI 路径优化，年省 <strong>数亿美元</strong>
+      </div>
+    </div>
+    <div class="card-insight">AI 不在后台「辅助决策」——在供应链里直接「下指令」</div>
+  </div>
+
+  <!-- Card 3: Pfizer -->
+  <div class="case-card">
+    <div>
+      <div class="card-company">
+        Pfizer <span class="cn">辉瑞</span>
+      </div>
+      <div class="card-mega green">4年 → 18个月</div>
+      <div class="card-stats">
+        AI 辅助化合物筛选，研发周期大幅缩短<br>
+        蛋白质结构 AI 预测，直接加速 <strong>COVID-19 疫苗</strong>上市<br>
+        年省研发成本 <strong>超 10 亿美元</strong>
+      </div>
+    </div>
+    <div class="card-insight">AI 不是在「帮研究员查资料」——是在「替代实验」</div>
+  </div>
+
+  <!-- Card 4: Toyota -->
+  <div class="case-card">
+    <div>
+      <div class="card-company">
+        Toyota <span class="cn">丰田</span>
+      </div>
+      <div class="card-mega" style="color:#D4683A;">99.9%</div>
+      <div class="card-stats">
+        生产线 AI 视觉缺陷检测准确率 <strong>99.9%</strong><br>
+        AI 预测性维护：故障预测准确率 <strong>95%</strong><br>
+        非计划停机减少 <strong>40%</strong>
+      </div>
+    </div>
+    <div class="card-insight">质量问题和停机损失每年减少数亿美元</div>
+  </div>
+
+</div>
+
+<div class="quote-strip">
+  <span class="quote-mark">「</span>
+  <span class="quote-text">当摩根大通用几秒做完原来 36 万小时的工作时——这不是「优化」，这是「重新定义」。</span>
+</div>
+
+<div class="footer-strip">McKinsey 2025 · Gartner AI ROI Report · Accenture AI Achievers</div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781061397629-rxoq3tom4",
+  "providerId": "claude",
+  "title": "用huashu-design，把国企AI宣讲-中高层完整版生成html版式ppt，色调亮一点，页面内...",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1781061397629,
+  "updatedAt": 1781069080040,
+  "lastResponseAt": 1781062786098,
+  "sessionId": "c19038a2-26c6-4437-8ee7-e80c9aa2a430",
+  "providerState": {
+    "providerSessionId": "c19038a2-26c6-4437-8ee7-e80c9aa2a430"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版.md",
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 31169,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 78976,
+    "contextWindow": 1000000,
+    "contextTokens": 110145,
+    "percentage": 11
+  }
+}

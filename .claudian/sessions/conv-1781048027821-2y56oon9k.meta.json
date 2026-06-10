@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781048027821-2y56oon9k",
+  "providerId": "claude",
+  "title": "Analyze SOE AI presentation gaps vs North Star",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781048027821,
+  "updatedAt": 1781058835445,
+  "lastResponseAt": 1781054099850,
+  "sessionId": "6aca34a4-cdb3-400f-a76a-6bb8e37c55d1",
+  "providerState": {
+    "providerSessionId": "6aca34a4-cdb3-400f-a76a-6bb8e37c55d1"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版.md",
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 374,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 98880,
+    "contextWindow": 1000000,
+    "contextTokens": 99254,
+    "percentage": 10
+  }
+}

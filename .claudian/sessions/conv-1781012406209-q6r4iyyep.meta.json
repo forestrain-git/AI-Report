@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781012406209-q6r4iyyep",
+  "providerId": "claude",
+  "title": "充实AI知识库：政策、案例与落地路径",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781012406209,
+  "updatedAt": 1781043112458,
+  "lastResponseAt": 1781012879665,
+  "sessionId": "c1f83d79-7a56-4798-8958-a0456f9e4ed7",
+  "providerState": {
+    "providerSessionId": "c1f83d79-7a56-4798-8958-a0456f9e4ed7"
+  },
+  "currentNote": "index.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 101661,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 101376,
+    "contextWindow": 200000,
+    "contextTokens": 203037,
+    "percentage": 100,
+    "contextWindowIsAuthoritative": true
+  }
+}

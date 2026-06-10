@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「AI 时代：国企的选择与行动」PPT 大纲</title>
+<style>
+  :root {
+    --navy: #0B1A30; --red: #C41E3A; --gold: #C8A24C;
+    --paper: #F8F7F4; --ink: #1A1A1A; --ink-light: #555;
+    --white: #fff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy);
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 80px 80px 60px;
+    text-align: center;
+    background: radial-gradient(ellipse at 30% 20%, #132744 0%, #0B1A30 60%, #060F1E 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; right: -100px; width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(196,30,58,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: 56px; font-weight: 900; color: #fff; letter-spacing: 0.05em;
+    position: relative; z-index: 1;
+  }
+  .hero h1 .red { color: var(--red); }
+  .hero .meta {
+    margin-top: 20px; font-size: 18px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em;
+    position: relative; z-index: 1;
+  }
+  .hero .meta span { color: var(--gold); margin: 0 12px; }
+
+  /* ── Container ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  /* ── Part ── */
+  .part {
+    margin: 60px auto;
+    max-width: 1200px;
+    background: var(--paper);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.2);
+  }
+  .part-header {
+    padding: 28px 48px;
+    display: flex; align-items: center; gap: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .part-num {
+    width: 56px; height: 56px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-weight: 900; color: #fff; flex-shrink: 0;
+  }
+  .part:nth-child(1) .part-num { background: var(--red); }
+  .part:nth-child(2) .part-num { background: var(--gold); }
+  .part:nth-child(3) .part-num { background: #2B6CB0; }
+  .part:nth-child(4) .part-num { background: #2B8C6A; }
+  .part:nth-child(5) .part-num { background: #7B5EA7; }
+  .part-title-area { flex:1; }
+  .part-title { font-size: 28px; font-weight: 900; color: var(--ink); }
+  .part-sub { font-size: 16px; color: var(--ink-light); margin-top: 2px; }
+  .part-pages { font-size: 14px; color: var(--ink-light); white-space: nowrap; }
+
+  .part-body { padding: 32px 48px 40px; }
+
+  /* ── Pages within part ── */
+  .page-item {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .page-item:last-child { border-bottom: none; }
+  .page-num {
+    font-size: 13px; font-weight: 700; color: var(--ink-light);
+    min-width: 44px; text-align: right; flex-shrink: 0; padding-top: 2px;
+  }
+  .page-content { flex: 1; }
+  .page-label { font-size: 18px; font-weight: 700; color: var(--ink); }
+  .page-desc  { font-size: 15px; color: var(--ink-light); margin-top: 2px; }
+  .page-tags  { margin-top: 4px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 3px; font-weight: 700; letter-spacing: 0.05em; }
+  .tag-shock { background: var(--red); color: #fff; }
+  .tag-key   { background: var(--gold); color: var(--navy); }
+  .tag-new   { background: #2B6CB0; color: #fff; }
+  .tag-calm  { background: rgba(0,0,0,0.06); color: var(--ink-light); }
+
+  .jinquote {
+    margin: 8px 0 0; padding: 8px 14px; background: rgba(196,30,58,0.04);
+    border-left: 3px solid var(--red); font-size: 15px; color: var(--red);
+    font-weight: 600; font-style: italic;
+  }
+
+  /* ── Sub-section ── */
+  .subsection { margin-top: 20px; padding-top: 16px; border-top: 1px dashed rgba(0,0,0,0.08); }
+  .subsection-label {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: var(--ink-light);
+    text-transform: uppercase; margin-bottom: 10px;
+  }
+
+  /* ── Part 3 special ── */
+  .progression-bar {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 24px;
+    padding: 12px 0; flex-wrap: wrap;
+  }
+  .prog-step {
+    padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 700;
+    white-space: nowrap;
+  }
+  .prog-step.shock { background: rgba(196,30,58,0.12); color: var(--red); }
+  .prog-step.trans { background: rgba(0,0,0,0.05); color: var(--ink-light); }
+  .prog-arrow { color: rgba(0,0,0,0.15); font-size: 16px; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; padding: 60px 40px; color: rgba(255,255,255,0.3);
+    font-size: 14px; letter-spacing: 0.08em;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .hero { padding: 40px 24px 30px; }
+    .hero h1 { font-size: 32px; }
+    .part-header { padding: 20px 24px; flex-wrap: wrap; }
+    .part-body { padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h1>《AI 时代：<span class="red">国企</span>的选择与行动》</h1>
+  <div class="meta">
+    从认知到落地的实践指南
+    <span>·</span> 中建发展
+    <span>·</span> 40-43页
+    <span>·</span> 65-80分钟
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══ PART 1 ═══ -->
+<div class="part">
+  <div class="part-header">
+    <div class="part-num">1</div>
+    <div class="part-title-area">
+      <div class="part-title">政策锚定——为什么必须现在行动</div>
+      <div class="part-sub">AI 不是可选项，是必答题</div>
+    </div>
+    <div class="part-pages">P1–P6.6 / 8页</div>
+  </div>
+  <div class="part-body">
+
+    <div class="page-item">
+      <div class="page-num">P1</div>
+      <div class="page-content">
+        <div class="page-label">封面 + 五部分导航</div>
+        <div class="page-desc">《AI 时代：国企的选择与行动》· 五个部分一目了然</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P2</div>
+      <div class="page-content">
+        <div class="page-label">开场金句 + 竞争态势</div>
+        <div class="page-desc">「这不是技术选项，这是政治任务。」——先行央企 vs 滞后企业对比表</div>
+        <div class="page-tags"><span class="tag tag-shock">震撼开场</span></div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P3</div>
+      <div class="page-content">
+        <div class="page-label">政策逻辑链</div>
+        <div class="page-desc">国家意志 → 两会「人工智能+」→ 新质生产力 → 国资委考核 → 你</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P4</div>
+      <div class="page-content">
+        <div class="page-label">核心政策时间线</div>
+        <div class="page-desc">2020 数字化转型 → 2023 AI列为战略性新兴产业 → 2024 纳入考核 → 2026 新网络安全法（罚款1000万+个人责任）</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P5</div>
+      <div class="page-content">
+        <div class="page-label">央企AI考核指标体系</div>
+        <div class="page-desc">研发投入 · 场景落地 · 数字化程度 · 人才建设 · 创新成效 · 数据治理（六角雷达图）</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P6</div>
+      <div class="page-content">
+        <div class="page-label">数据冲击——AI已经不是未来</div>
+        <div class="page-desc">国内：中石油/南网/中铁/中建五局已在大规模行动；全球：建筑业数字化指数1.375（倒数第二），AI采用率仅1.5%</div>
+        <div class="jinquote">「全球建筑业数字化倒数第二——谁先数字化，谁就获得巨大的相对竞争优势。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P6.6</div>
+      <div class="page-content">
+        <div class="page-label">中建智能四个真实案例——你也能做到 <span class="tag tag-shock">震撼</span></div>
+        <div class="page-desc">半天上线招标系统 · 1周完成80%档案系统 · 1人全栈交付 · 商务经理自建系统（现场演示）</div>
+        <div class="jinquote">「最懂业务的人，现在最懂 AI。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P7.5</div>
+      <div class="page-content">
+        <div class="page-label">你可能在想什么</div>
+        <div class="page-desc">三个顾虑：替代岗位？/ 拍脑袋项目？/ 怎么用？——正面回应，消除抵触</div>
+        <div class="jinquote">「AI 不是来替代你的，是来帮你把时间从'打杂'里抢回来的。」</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ PART 2 ═══ -->
+<div class="part">
+  <div class="part-header">
+    <div class="part-num">2</div>
+    <div class="part-title-area">
+      <div class="part-title">技术祛魅——LLM 这条线到底有什么</div>
+      <div class="part-sub">不讲公式不讲代码，讲清楚大模型的四种形态+四种能力+四种工作模式</div>
+    </div>
+    <div class="part-pages">P8–P11 / 5页</div>
+  </div>
+  <div class="part-body">
+
+    <div class="page-item">
+      <div class="page-num">P7</div>
+      <div class="page-content">
+        <div class="page-label">AI 做了 60 年，为什么最近三年才爆发？</div>
+        <div class="page-desc">传统AI（安全帽检测）→ 2017 Transformer → 2022 ChatGPT → 2023-2026 大爆炸。关键转折：LLM 让 AI 从「只做一件事」变成「能做无穷多种事」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P8</div>
+      <div class="page-content">
+        <div class="page-label">大模型的三种形态</div>
+        <div class="page-desc">① 通用大模型（DeepSeek/Kimi/豆包/GPT/Claude——全民用）→ ② 垂直领域模型（昆仑/大瓦特/蓝翼——行业适配）→ ③ 小参数专用模型（OCR/翻译/匹配——产品嵌入式）</div>
+        <div class="jinquote">「不是所有问题都需要一个『读过全世界书的实习生』来回答。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P9</div>
+      <div class="page-content">
+        <div class="page-label">LLM 的四种能力升级</div>
+        <div class="page-desc">① 多模态——从读文字到看图纸 · ② 工具调用——从只会说到能操作软件 · ③ 企业知识库——从懂全世界到懂你们公司 · ④ 推理能力——从直接回答到先想再说</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P10</div>
+      <div class="page-content">
+        <div class="page-label">LLM 的四种工作模式 <span class="tag tag-key">核心框架</span></div>
+        <div class="page-desc">① Chat（你问我答，★☆☆☆☆）→ ② Copilot（嵌在工作软件里，★★☆☆☆）→ ③ Agent（给目标AI自己干，★★★☆☆）→ ④ Multi-Agent（一群AI协作，★★★★☆）</div>
+        <div class="jinquote">「大模型给你答案，Agent 给你结果。选对级别比追最新重要。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P11</div>
+      <div class="page-content">
+        <div class="page-label">技术演进路线：从聊天到协作</div>
+        <div class="page-desc">2022 ChatGPT → 2023 Copilot嵌入 → 2024 Agent爆发+推理模型 → 2025 多模态成熟 → 2026 Multi-Agent生产环境</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-label">Part 2 核心叙事主线</div>
+      <div style="font-size:15px; color:var(--ink); line-height:1.8;">
+        传统 AI（只做一件事）→ LLM（能做无穷多种事）→ 三种形态（通用/垂直/专用，对应不同受众）→ 四种能力升级（多模态/工具/RAG/推理）→ 四种工作模式（Chat→Copilot→Agent→Multi-Agent，从弱到强）→ 演进时间线
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ PART 3 ═══ -->
+<div class="part">
+  <div class="part-header">
+    <div class="part-num">3</div>
+    <div class="part-title-area">
+      <div class="part-title">同行压力与中建实践——别人做了什么，我们做了什么</div>
+      <div class="part-sub">四层递进 · 前三层震撼扎实，说自己简略</div>
+    </div>
+    <div class="part-pages">P12–P23 / 12页</div>
+  </div>
+  <div class="part-body">
+
+    <div class="progression-bar">
+      <div class="prog-step shock">🌍 全球标杆</div>
+      <span class="prog-arrow">→</span>
+      <div class="prog-step shock">🇨🇳 国内顶尖</div>
+      <span class="prog-arrow">→</span>
+      <div class="prog-step shock">🏗️ 建筑央企</div>
+      <span class="prog-arrow">→</span>
+      <div class="prog-step trans">🏢 中建系</div>
+      <span class="prog-arrow">→</span>
+      <div class="prog-step trans">🏠 中建发展</div>
+    </div>
+
+    <!-- 3.1 -->
+    <div class="subsection">
+      <div class="subsection-label">3.1 全球标杆——传统企业 + 建筑巨头（P12–P13 · P17 · 3页 · 震撼扎实）</div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P12</div>
+      <div class="page-content">
+        <div class="page-label">全球非科技企业AI震撼实践</div>
+        <div class="page-desc">
+          摩根大通：36万小时→几秒，COiN审120万份贷款协议 · 沃尔玛：AI管200万SKU，库存↓15% · 辉瑞：研发4年→18个月，年省$10亿 · 丰田：质检99.9%，停机↓40%
+        </div>
+        <div class="jinquote">「当摩根大通用几秒做完原来36万小时的工作——这不是优化，是重新定义。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P13</div>
+      <div class="page-content">
+        <div class="page-label">全球AI采用率分层 + 建筑业冲击</div>
+        <div class="page-desc">金融78% · 制造72% · 零售65% · 医疗55% · <strong style="color:var(--red)">建筑业仅1.5%</strong>（头部承包商39%）。全员AI化、强制培训、AI原生重构、劳动力替代四大信号</div>
+        <div class="jinquote">「全球72%制造业已经把AI塞进核心业务流。建筑业1.5%不是'还有机会'，是'已经被甩开'。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P17</div>
+      <div class="page-content">
+        <div class="page-label">国际建筑巨头三大案例 <span class="tag tag-key">全球建筑业</span></div>
+        <div class="page-desc">Eiffage：RFP分析2天→20分钟·节省99% · Kajima：3人操作14台机械·劳动力↓80%·62年纪录 · Bouygues：10分钟生成600万种方案·省4个月·省140吨钢</div>
+        <div class="jinquote">「Kajima用3个工程师远程操作14台机械完成大坝——这不是未来，是已经发生的现在。」</div>
+      </div>
+    </div>
+
+    <!-- 3.2 -->
+    <div class="subsection">
+      <div class="subsection-label">3.2 国内顶尖企业——AI 已进入「自主可控」深水区（P14–P15 · 2页 · 震撼扎实）</div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P14</div>
+      <div class="page-content">
+        <div class="page-label">能源央企：从试点到全产业链</div>
+        <div class="page-desc">中石油昆仑：3000亿参数·152场景·21款国产芯片适配 · 国家电网光明：20分钟→3分钟·效率↑85% · 南方电网大瓦特：日释放2小时·80%替代率·年调用23.4亿次</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P15</div>
+      <div class="page-content">
+        <div class="page-label">制造业与金融业：AI重塑核心</div>
+        <div class="page-desc">美的：195万种物料排产10h→1h·四层架构方法论 · 招行：毫秒级信贷审批·80%客服替代 · 平安：11万科技人·车险天级→分钟级</div>
+        <div class="jinquote">「美的把排产从10小时压到1小时——这不是辅助工具，是核心业务系统。」</div>
+      </div>
+    </div>
+
+    <!-- 3.3 -->
+    <div class="subsection">
+      <div class="subsection-label">3.3 国内建筑央企——AI 重新定义施工现场（P16 · 1页）</div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P16</div>
+      <div class="page-content">
+        <div class="page-label">国内建筑央企四大案例</div>
+        <div class="page-desc">中铁建设「铁小智」：22万㎡方案90秒审完·效率↑80% · 中铁十一局：大盾构智能建造·国资委首批40项（建筑唯一） · 中交「蓝翼」：首款土木建筑大模型·140亿参数 · 中冶赛迪：10万小时视频分析·98.7%识别</div>
+      </div>
+    </div>
+
+    <!-- 3.4 -->
+    <div class="subsection">
+      <div class="subsection-label">3.4 中建系兄弟单位成果（P18 · 1页）</div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P18</div>
+      <div class="page-content">
+        <div class="page-label">中建三局·五局·科工·八局</div>
+        <div class="page-desc"><strong>三局</strong>：天工智算·成本测算4-7天→1天 · 央视报道 · <strong>五局</strong>：4万人培训·94%活跃率 · <strong>科工</strong>：自研焊接机器人·千台级具身智能产业化 · <strong>八局</strong>：路智纵横全国首创</div>
+      </div>
+    </div>
+
+    <!-- 3.5 -->
+    <div class="subsection">
+      <div class="subsection-label">3.5 中建发展内部实践（P20–P21 · 2页 · 简略谦逊）</div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P20</div>
+      <div class="page-content">
+        <div class="page-label">中建电商·云筑网</div>
+        <div class="page-desc">三大国家级认证（网信办备案·国家数据局典型案例·中建一等奖） · 云智采：采购周期↓40%·成本↓20% · 110万供应商毫秒级匹配</div>
+        <div class="jinquote">「当别的企业还在讨论AI要不要做的时候，云筑网已经把AI做成了建筑行业的国家标准。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P21</div>
+      <div class="page-content">
+        <div class="page-label">生态·碳科技·环能——AI合作探索</div>
+        <div class="page-desc">生态：运营赋能平台 · 碳科技：能碳方案自动生成 · 环能：财务报表自动审核探索。均在和中建智能合作推进</div>
+        <div class="jinquote">「发展的每个板块都在动——不是等总部发令，是自己在找AI的入口。」</div>
+      </div>
+    </div>
+
+    <!-- 3.6 -->
+    <div class="subsection">
+      <div class="subsection-label">3.6 场景速查（P23 · 1页）</div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P23</div>
+      <div class="page-content">
+        <div class="page-label">中建发展各业务线AI机会地图</div>
+        <div class="page-desc">投资·环保·供应链·双碳·建造·职能 ——六维度对标央企+国际标杆，让每个部门看到自己的AI入口</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ PART 4 ═══ -->
+<div class="part">
+  <div class="part-header">
+    <div class="part-num">4</div>
+    <div class="part-title-area">
+      <div class="part-title">落地路径与组织保障——怎么从零开始</div>
+      <div class="part-sub">先试点再定战略·一把手工程·考核绑定</div>
+    </div>
+    <div class="part-pages">P24–P29 / 6页</div>
+  </div>
+  <div class="part-body">
+
+    <div class="page-item">
+      <div class="page-num">P24</div>
+      <div class="page-content">
+        <div class="page-label">吴恩达五步法——战略是第四步，不是第一步 <span class="tag tag-key">核心</span></div>
+        <div class="page-desc">试点→建团队→培训→<strong style="color:var(--red)">定战略（第四步！）</strong>→内外沟通。先通过试点了解AI能做什么，再制定战略</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P25</div>
+      <div class="page-content">
+        <div class="page-label">四阶段推进模型</div>
+        <div class="page-desc">0-6月筑基破冰（轻量化试点）→ 6-12月迭代增效（场景扩容·ROI成型）→ 1-2年全域规模化（全场景覆盖）→ 2-3年标杆领跑（行业标准输出）</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P26</div>
+      <div class="page-content">
+        <div class="page-label">美的四层架构——技术落地方法论</div>
+        <div class="page-desc">基础设施层→算法平台层→应用集成层→业务应用层。核心：IT与业务直接对话·ROI驱动·模型资产化</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P27</div>
+      <div class="page-content">
+        <div class="page-label">三层组织架构——一把手工程</div>
+        <div class="page-desc">核心决策层（董事长挂帅）→ 执行协调层（技术+业务+数据跨部门）→ 支撑保障层（专职日常运营）。南钢×华为「百日会战」：董事长亲任总指挥</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P28</div>
+      <div class="page-content">
+        <div class="page-label">考核绑定与差异化KPI</div>
+        <div class="page-desc">职能部门重应用成效 · 生产部门重数字化率 · 技术部门重自主创新。明确「创新容错」边界，让中层敢试</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P29</div>
+      <div class="page-content">
+        <div class="page-label">投入产出与ROI——钱从哪来、值不值</div>
+        <div class="page-desc">试点期：零安全风险·隐性价值打底·小幅降本。隐性收益（国企看重）：合规留痕·审计可追溯·风险预警·政绩加分</div>
+        <div class="jinquote">「85%的AI项目没有商业价值——关键是选对场景、量化目标、步步为营。」</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ PART 5 ═══ -->
+<div class="part">
+  <div class="part-header">
+    <div class="part-num">5</div>
+    <div class="part-title-area">
+      <div class="part-title">风险预判与行动倡议——避坑 + 从今天开始</div>
+      <div class="part-sub">85%项目失败？为什么、怎么办、今天能做什么</div>
+    </div>
+    <div class="part-pages">P30–P35 / 6页</div>
+  </div>
+  <div class="part-body">
+
+    <div class="page-item">
+      <div class="page-num">P30</div>
+      <div class="page-content">
+        <div class="page-label">AI项目失败率——85%的项目没有商业价值 <span class="tag tag-shock">警示</span></div>
+        <div class="page-desc">85%失败 · 30%POC后放弃 · 仅28%实现预期ROI · 73%因数据问题受阻。POC陷阱：演示70-80%看似可行，生产优化到95%需指数级投入</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P31</div>
+      <div class="page-content">
+        <div class="page-label">五大核心失败原因 + 全球行业数据</div>
+        <div class="page-desc">RICS调查（2200+建筑专业人士）：45%无AI使用·仅12%常规使用·&lt;1%全组织嵌入。五大原因：问题不清·数据缺失·基础设施不足·技术业务脱节·合规失控</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P32</div>
+      <div class="page-content">
+        <div class="page-label">合规「高压线」清单</div>
+        <div class="page-desc">数据泄露·未通过等保·未备案境外服务·AI内容未标识（最高500万罚款）·供应商锁定·忽视信创。五要五不要</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P33</div>
+      <div class="page-content">
+        <div class="page-label">国产大模型选型决策树</div>
+        <div class="page-desc">私有化部署？信创极高→华为盘古 · 丰富生态→文心一言 · 成本敏感→DeepSeek · 公有云→通义千问。多模型网关防锁定</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P34</div>
+      <div class="page-content">
+        <div class="page-label">30/60/90天行动计划</div>
+        <div class="page-desc">0-30天：选3个高频场景·制定数据策略·选定试点产品 → 30-60天：启动1-2个试点·验证业务价值 → 60-90天：总结模板·第二批复制</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P34.5</div>
+      <div class="page-content">
+        <div class="page-label">你的个人7天行动清单 <span class="tag tag-shock">行动</span></div>
+        <div class="page-desc">信息化条线：AI生成脚本→搭建看板→自动化任务→分享同事。本部职能岗：豆包写邮件→Kimi读PDF→通义听悟整理会议→AI生成周报</div>
+        <div class="jinquote">「不用等到公司部署系统——你今天就可以开始。」</div>
+      </div>
+    </div>
+    <div class="page-item">
+      <div class="page-num">P35</div>
+      <div class="page-content">
+        <div class="page-label">收尾·五部分一页总结 + 号召 <span class="tag tag-key">闭环</span></div>
+        <div class="page-desc">五个部分各一句话总结 · 三个震撼时刻回顾 · 立即行动：本月成立专项组·本季度选1-2个试点·今天打开豆包/Kimi</div>
+        <div class="jinquote">「AI转型最大的风险不是技术失败，是人的信任破产。」</div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-label">附录</div>
+      <div style="font-size:15px; color:var(--ink-light); line-height:1.8;">
+        P39：AI成熟度自评表（五维度五级） · P40：国产大模型选型对比表 · P41：Q&A交流页 · P42：会后学习资源包（5个二维码）
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  中建发展 · AI 宣讲 PPT 大纲 · 2026.06
+</div>
+
+</body>
+</html>

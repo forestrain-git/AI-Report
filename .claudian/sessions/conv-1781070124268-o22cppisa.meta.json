@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781070124268-o22cppisa",
+  "providerId": "claude",
+  "title": "讨论汇报AI概念祛魅：厘清大模型、Agent与AI边界",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781070124268,
+  "updatedAt": 1781075148459,
+  "lastResponseAt": 1781073464399,
+  "sessionId": "b04e99f8-21d1-4c9f-ab53-7fbecd21cf03",
+  "providerState": {
+    "providerSessionId": "b04e99f8-21d1-4c9f-ab53-7fbecd21cf03"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版-详细版.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 171,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 151296,
+    "contextWindow": 1000000,
+    "contextTokens": 151467,
+    "percentage": 15
+  }
+}

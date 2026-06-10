@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781069938080-75gp4hw7e",
+  "providerId": "claude",
+  "title": "Reorder PPT outline to open with real-world AI ...",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781069938081,
+  "updatedAt": 1781078125100,
+  "lastResponseAt": 1781078125100,
+  "sessionId": "bb0a7229-f8c8-4446-95d2-b2367dced23c",
+  "providerState": {
+    "providerSessionId": "bb0a7229-f8c8-4446-95d2-b2367dced23c"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版-详细版.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 213,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 240256,
+    "contextWindow": 1000000,
+    "contextTokens": 240469,
+    "percentage": 24
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781069099002-w3e53ghsa",
+  "providerId": "claude",
+  "title": "生成 AI 知识库项目思维导图",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781069099002,
+  "updatedAt": 1781069964558,
+  "lastResponseAt": 1781069331203,
+  "sessionId": "6d1e414f-0e6d-4cbf-ab79-6a4928719cd5",
+  "providerState": {
+    "providerSessionId": "6d1e414f-0e6d-4cbf-ab79-6a4928719cd5"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 64790,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 53504,
+    "contextWindow": 200000,
+    "contextTokens": 118294,
+    "percentage": 59,
+    "contextWindowIsAuthoritative": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781008261781-wipuzo98v",
+  "providerId": "claude",
+  "title": "Evaluate anysearch for AI knowledge base resear...",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781008261783,
+  "updatedAt": 1781012140150,
+  "lastResponseAt": 1781011191779,
+  "sessionId": "a7e2608f-d017-441f-a250-b6f32e914076",
+  "providerState": {
+    "providerSessionId": "a7e2608f-d017-441f-a250-b6f32e914076"
+  },
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 80734,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 80384,
+    "contextWindow": 200000,
+    "contextTokens": 161118,
+    "percentage": 81,
+    "contextWindowIsAuthoritative": true
+  }
+}

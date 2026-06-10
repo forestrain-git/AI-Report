@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781075159111-eq35vh0xs",
+  "providerId": "claude",
+  "title": "Analyze AI relevance in Kajima remote dam project",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781075159111,
+  "updatedAt": 1781077920836,
+  "lastResponseAt": 1781077920836,
+  "sessionId": "c18fa3e1-ec62-4181-98a8-bedfe18c63e8",
+  "providerState": {
+    "providerSessionId": "c18fa3e1-ec62-4181-98a8-bedfe18c63e8"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版-详细版.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 376,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 116864,
+    "contextWindow": 1000000,
+    "contextTokens": 117240,
+    "percentage": 12,
+    "contextWindowIsAuthoritative": true
+  }
+}
