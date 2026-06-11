@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P44 · AI成熟度自评表</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .slide-title { margin-bottom: 16px; }
+  .slide-lead { margin-bottom: 20px; }
+
+  /* 矩阵表 */
+  .matrix-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .maturity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    flex: 1;
+  }
+  .maturity-table th {
+    text-align: center;
+    background: #f8fafc;
+    color: var(--brand-blue);
+    font-weight: 700;
+    padding: 12px 10px;
+    border: 1px solid #e2e8f0;
+    font-size: 15px;
+  }
+  .maturity-table td {
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    color: var(--ink-body);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .maturity-table td:first-child {
+    font-weight: 700;
+    color: var(--ink-title);
+    background: #f8fafc;
+    width: 140px;
+    text-align: center;
+    font-size: 15px;
+  }
+  .maturity-table .level-1 { background: #fff; }
+  .maturity-table .level-2 { background: #f8fafc; }
+  .maturity-table .level-3 { background: #eff6ff; }
+  .maturity-table .level-4 { background: #dbeafe; }
+  .maturity-table .level-5 { background: #bfdbfe; }
+
+  .maturity-table .level-header {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    color: var(--brand-blue);
+  }
+
+  /* 底部说明 */
+  .usage-note {
+    margin-top: 16px;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 14px 20px;
+    font-size: 16px;
+    color: var(--ink-dim);
+    border-left: 4px solid var(--brand-blue);
+  }
+  .usage-note b { color: var(--ink-title); }
+</style>
+</head>
+<body>
+
+<h1 class="slide-title">AI 成熟度自评表</h1>
+<p class="slide-lead">五维度 × 五级别——定位你的起点，规划下一步</p>
+
+<div class="matrix-wrap">
+  <table class="maturity-table">
+    <tr>
+      <th>维度 \ 级别</th>
+      <th>Level 1<br>初始</th>
+      <th>Level 2<br>探索</th>
+      <th>Level 3<br>定义</th>
+      <th>Level 4<br>管理</th>
+      <th>Level 5<br>引领</th>
+    </tr>
+    <tr>
+      <td>战略与领导力</td>
+      <td class="level-1">无明确 AI 战略，领导层未关注</td>
+      <td class="level-2">个别领导提及 AI，无系统规划</td>
+      <td class="level-3">制定 AI 转型战略，设立专项预算</td>
+      <td class="level-4">AI 纳入核心经营指标，高管亲自推动</td>
+      <td class="level-5">AI 驱动商业模式创新，行业标杆</td>
+    </tr>
+    <tr>
+      <td>技术能力</td>
+      <td class="level-1">无 AI 技术储备，依赖外部供应商</td>
+      <td class="level-2">试用 SaaS 级 AI 工具，无自研能力</td>
+      <td class="level-3">具备模型调优和集成能力，有技术中台</td>
+      <td class="level-4">自研模型或深度定制，技术自主可控</td>
+      <td class="level-5">核心技术行业领先，输出标准</td>
+    </tr>
+    <tr>
+      <td>数据管理</td>
+      <td class="level-1">数据分散，无治理体系</td>
+      <td class="level-2">初步数据盘点，质量参差不齐</td>
+      <td class="level-3">建立数据治理规范，核心数据可用</td>
+      <td class="level-4">数据资产化，支持实时决策</td>
+      <td class="level-5">数据驱动运营，形成数据壁垒</td>
+    </tr>
+    <tr>
+      <td>组织与文化</td>
+      <td class="level-1">员工对 AI 陌生或抵触</td>
+      <td class="level-2">少数员工自发尝试，无组织支持</td>
+      <td class="level-3">开展全员培训，建立 AI 创新机制</td>
+      <td class="level-4">AI 能力纳入绩效考核，形成创新文化</td>
+      <td class="level-5">AI 成为组织 DNA，人才自驱创新</td>
+    </tr>
+    <tr>
+      <td>业务应用</td>
+      <td class="level-1">无 AI 应用场景</td>
+      <td class="level-2">个别试点项目，效果未验证</td>
+      <td class="level-3">多个场景落地，产生可量化价值</td>
+      <td class="level-4">AI 嵌入核心业务流程，规模化推广</td>
+      <td class="level-5">AI 重塑业务模式，创造新增长曲线</td>
+    </tr>
+  </table>
+</div>
+
+<div class="usage-note">
+  <b>使用方法：</b>在每一行勾选最符合当前状态的级别，连成一条线即为企业 AI 成熟度轮廓。差距最大的维度，就是下一步优先投入的方向。
+</div>
+
+<div class="page-footer">
+  <span class="part-label">附录</span>
+  <span class="page-num">44 / 47</span>
+</div>
+
+</body>
+</html>

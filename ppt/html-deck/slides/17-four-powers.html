@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P17 · LLM 的四种能力升级</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  /* 2x2 四宫格 */
+  .powers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    flex: 1;
+    margin-top: 16px;
+  }
+  .power-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .power-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: var(--brand-blue);
+  }
+
+  .power-card .power-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .power-card .power-icon {
+    font-size: 36px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eff6ff;
+    border-radius: 12px;
+  }
+  .power-card .power-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--ink-title);
+  }
+  .power-card .power-sub {
+    font-size: 16px;
+    color: var(--ink-dim);
+    font-weight: 600;
+  }
+
+  .power-card .power-body {
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .power-card .power-body li {
+    margin-bottom: 6px;
+    list-style: none;
+    position: relative;
+    padding-left: 18px;
+  }
+  .power-card .power-body li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--brand-blue);
+    font-weight: 700;
+  }
+
+  .power-card .power-case {
+    font-size: 16px;
+    color: var(--brand-blue);
+    font-weight: 600;
+    padding: 12px 16px;
+    background: #eff6ff;
+    border-radius: 8px;
+    border-left: 3px solid var(--brand-blue);
+  }
+  .power-case .case-label {
+    font-size: 13px;
+    color: var(--ink-dim);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">LLM 的四种能力升级</div>
+
+<div class="powers-grid">
+  <div class="power-card">
+    <div class="power-header">
+      <div class="power-icon">👁️</div>
+      <div>
+        <div class="power-title">多模态</div>
+        <div class="power-sub">从"读文字"到"看图纸、听语音、读表格"</div>
+      </div>
+    </div>
+    <ul class="power-body">
+      <li>上传一张 CAD 图纸，AI 直接解读结构</li>
+      <li>语音输入现场问题，AI 生成整改方案</li>
+      <li>扫描表格/发票，自动提取结构化数据</li>
+    </ul>
+    <div class="power-case">
+      <span class="case-label">建筑行业案例</span>
+      中铁建设"铁小智"90 秒审完 22 万㎡ 高铁站房方案图纸
+    </div>
+  </div>
+
+  <div class="power-card">
+    <div class="power-header">
+      <div class="power-icon">🔧</div>
+      <div>
+        <div class="power-title">工具调用</div>
+        <div class="power-sub">从"只会说"到"能操作软件"</div>
+      </div>
+    </div>
+    <ul class="power-body">
+      <li>自动查询数据库，生成经营分析报表</li>
+      <li>调用邮件系统，发送会议纪要给相关人员</li>
+      <li>操作 OA 系统，自动填单、走审批流</li>
+    </ul>
+    <div class="power-case">
+      <span class="case-label">建筑行业案例</span>
+      王佳男商务管理平台自动预警：项目亏损/收付款倒挂/产值确认异常
+    </div>
+  </div>
+
+  <div class="power-card">
+    <div class="power-header">
+      <div class="power-icon">📚</div>
+      <div>
+        <div class="power-title">企业知识库</div>
+        <div class="power-sub">从"懂全世界"到"懂你们公司"</div>
+      </div>
+    </div>
+    <ul class="power-body">
+      <li>上传内部制度、规范、历史项目文档</li>
+      <li>AI 秒查制度条款，不再翻 300 页 PDF</li>
+      <li>新员工问答机器人，7×24 小时在线</li>
+    </ul>
+    <div class="power-case">
+      <span class="case-label">建筑行业案例</span>
+      国家电网"光明"大模型：1855 项标准条款级检索，检修准备 20min→3min
+    </div>
+  </div>
+
+  <div class="power-card">
+    <div class="power-header">
+      <div class="power-icon">🧠</div>
+      <div>
+        <div class="power-title">推理能力</div>
+        <div class="power-sub">从"直接回答"到"先想再说"</div>
+      </div>
+    </div>
+    <ul class="power-body">
+      <li>复杂问题拆解为多步推理，逐步求解</li>
+      <li>数学计算、逻辑判断准确率大幅提升</li>
+      <li>生成答案前展示思考过程，可审计可追溯</li>
+    </ul>
+    <div class="power-case">
+      <span class="case-label">建筑行业案例</span>
+      DeepSeek-R1、OpenAI o3 在工程预算复核、合同风险审查中展现深度推理
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 2 · 技术祛魅</span>
+  <span class="page-num">17 / 47</span>
+</div>
+
+</body>
+</html>

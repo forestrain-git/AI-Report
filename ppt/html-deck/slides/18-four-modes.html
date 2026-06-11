@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P18 · LLM 四种工作模式</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  /* 四列模式卡片 */
+  .modes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .mode-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mode-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+  }
+  .mode-card.chat::before { background: #16a34a; }
+  .mode-card.copilot::before { background: #1e40af; }
+  .mode-card.agent::before { background: #0891b2; }
+  .mode-card.multi::before { background: #ea580c; }
+
+  .mode-card .mode-icon {
+    font-size: 32px;
+  }
+  .mode-card .mode-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--ink-title);
+  }
+  .mode-card .mode-def {
+    font-size: 16px;
+    color: var(--ink-body);
+    line-height: 1.55;
+    min-height: 50px;
+  }
+
+  .mode-card .mode-stars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    color: var(--ink-dim);
+  }
+  .mode-card .mode-stars .star {
+    color: #f59e0b;
+    font-size: 18px;
+  }
+  .mode-card .mode-stars .star.empty {
+    color: #e2e8f0;
+  }
+
+  .mode-card .mode-tools {
+    font-size: 15px;
+    color: var(--ink-body);
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+  }
+  .mode-card .mode-tools b {
+    color: var(--brand-blue);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mode-card .mode-scene {
+    font-size: 15px;
+    color: var(--ink-body);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .mode-card .mode-scene b {
+    color: var(--ink-dim);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .mode-card .mode-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    align-self: flex-start;
+  }
+  .mode-card.chat .mode-tag { background: #dcfce7; color: #16a34a; }
+  .mode-card.copilot .mode-tag { background: #dbeafe; color: #1e40af; }
+  .mode-card.agent .mode-tag { background: #ccfbf1; color: #0891b2; }
+  .mode-card.multi .mode-tag { background: #fff7ed; color: #ea580c; }
+
+  /* 底部总览表 */
+  .summary-table-wrap {
+    margin-top: 24px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .summary-table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  .summary-table-wrap th {
+    text-align: left;
+    background: #f8fafc;
+    color: var(--brand-blue);
+    font-weight: 700;
+    padding: 12px 16px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .summary-table-wrap td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--ink-body);
+  }
+  .summary-table-wrap tr:last-child td { border-bottom: none; }
+  .summary-table-wrap .hl { font-weight: 700; }
+  .summary-table-wrap .hl-green { color: #16a34a; }
+  .summary-table-wrap .hl-blue { color: #1e40af; }
+  .summary-table-wrap .hl-cyan { color: #0891b2; }
+  .summary-table-wrap .hl-orange { color: #ea580c; }
+</style>
+</head>
+<body>
+
+<div class="slide-title">LLM 怎么干活？——四种工作模式</div>
+
+<div class="modes-grid">
+  <div class="mode-card chat">
+    <div class="mode-icon">💬</div>
+    <div class="mode-title">Chat</div>
+    <div class="mode-def">你问我答，单次对话完成一个任务</div>
+    <div class="mode-stars">
+      <span>自主度</span>
+      <span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
+    </div>
+    <div class="mode-tools"><b>代表工具</b><br>ChatGPT、DeepSeek、Kimi、豆包</div>
+    <div class="mode-scene"><b>适用场景</b><br>写材料、查资料、头脑风暴、翻译、简单分析</div>
+    <span class="mode-tag">已普及</span>
+  </div>
+
+  <div class="mode-card copilot">
+    <div class="mode-icon">✈️</div>
+    <div class="mode-title">Copilot</div>
+    <div class="mode-def">嵌入工作流，在你熟悉的工具里实时辅助</div>
+    <div class="mode-stars">
+      <span>自主度</span>
+      <span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
+    </div>
+    <div class="mode-tools"><b>代表工具</b><br>GitHub Copilot、Office Copilot、Cursor</div>
+    <div class="mode-scene"><b>适用场景</b><br>写代码补全、PPT 排版、Excel 公式、文档润色</div>
+    <span class="mode-tag">大规模落地</span>
+  </div>
+
+  <div class="mode-card agent">
+    <div class="mode-icon">🤖</div>
+    <div class="mode-title">Agent</div>
+    <div class="mode-def">给定目标，AI 自主规划步骤并执行</div>
+    <div class="mode-stars">
+      <span>自主度</span>
+      <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+    </div>
+    <div class="mode-tools"><b>代表工具</b><br>Claude Code、AutoGPT、Dify、Coze</div>
+    <div class="mode-scene"><b>适用场景</b><br>自动写代码并部署、自动抓取数据生成报告、智能客服</div>
+    <span class="mode-tag">快速成熟</span>
+  </div>
+
+  <div class="mode-card multi">
+    <div class="mode-icon">🌐</div>
+    <div class="mode-title">Multi-Agent</div>
+    <div class="mode-def">多个 AI 协作，各负责不同子任务</div>
+    <div class="mode-stars">
+      <span>自主度</span>
+      <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+    </div>
+    <div class="mode-tools"><b>代表工具</b><br>CrewAI、MetaGPT、多 Agent 编排框架</div>
+    <div class="mode-scene"><b>适用场景</b><br>复杂项目管理、多角色协同创作、供应链优化</div>
+    <span class="mode-tag">已可用</span>
+  </div>
+</div>
+
+<div class="summary-table-wrap">
+  <table>
+    <tr>
+      <th>维度</th>
+      <th>Chat</th>
+      <th>Copilot</th>
+      <th>Agent</th>
+      <th>Multi-Agent</th>
+    </tr>
+    <tr>
+      <td>交互方式</td>
+      <td class="hl hl-green">对话窗口</td>
+      <td class="hl hl-blue">嵌入工具</td>
+      <td class="hl hl-cyan">目标驱动</td>
+      <td class="hl hl-orange">多角色协作</td>
+    </tr>
+    <tr>
+      <td>用户投入</td>
+      <td>高（需反复 prompt）</td>
+      <td>低（实时跟随）</td>
+      <td>中（设定目标即可）</td>
+      <td>中（设计协作流程）</td>
+    </tr>
+    <tr>
+      <td>适合谁</td>
+      <td>所有人</td>
+      <td>专业岗位</td>
+      <td>技术/业务骨干</td>
+      <td>技术团队</td>
+    </tr>
+    <tr>
+      <td>落地难度</td>
+      <td class="hl-green">极低</td>
+      <td class="hl-blue">低</td>
+      <td class="hl-cyan">中</td>
+      <td class="hl-orange">中高</td>
+    </tr>
+  </table>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 2 · 技术祛魅</span>
+  <span class="page-num">18 / 47</span>
+</div>
+
+</body>
+</html>

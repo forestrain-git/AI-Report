@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P11 · 案例四·王佳男</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title {
+    margin-bottom: 24px;
+  }
+
+  .case-body {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 28px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .case-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .info-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 4px;
+  }
+
+  .demo-tag {
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    color: #1e40af;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid #bfdbfe;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .role-tag {
+    background: #fff7ed;
+    color: #c2410c;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid #fed7aa;
+  }
+
+  .info-section {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px 24px;
+    border-left: 4px solid #ea580c;
+  }
+
+  .info-section .sec-label {
+    font-size: 15px;
+    color: #94a3b8;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .info-section .sec-content {
+    font-size: 19px;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .info-section .sec-content b {
+    color: #ea580c;
+    font-weight: 700;
+  }
+
+  .metric-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .metric-box {
+    flex: 1;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .metric-box .num {
+    font-family: "Inter", sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #ea580c;
+    line-height: 1.1;
+  }
+
+  .metric-box .label {
+    font-size: 15px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .demo-zone {
+    background: #f1f5f9;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 12px;
+  }
+
+  .demo-zone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .success-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+    border: 2px solid #86efac;
+    border-radius: 12px;
+    padding: 16px 32px;
+    margin-top: 20px;
+  }
+
+  .success-bar .check {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #16a34a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .success-bar .text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #15803d;
+  }
+
+  .success-bar .sub {
+    font-size: 16px;
+    color: #65a30d;
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">案例四 · 王佳男——商务经理自己建系统</div>
+
+<div class="case-body">
+  <div class="case-info">
+    <div class="info-header">
+      <span class="demo-tag">🖥️ 现场演示（U盘本地）</span>
+      <span class="role-tag">📋 商务经理 · 非程序员</span>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">做了什么</div>
+      <div class="sec-content">
+        用 <b>WorkBuddy 无代码</b>搭建 <b>CSCEC 智能商务管理平台</b>。"等研发排期" → "今天想到今天上线"。
+      </div>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-box">
+        <div class="num">数天</div>
+        <div class="label">AI 耗时</div>
+      </div>
+      <div class="metric-box">
+        <div class="num" style="color:#dc2626;text-decoration:line-through;text-decoration-color:#fca5a5;">6人月</div>
+        <div class="label">传统方式</div>
+      </div>
+      <div class="metric-box">
+        <div class="num">19</div>
+        <div class="label">视图页面</div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">系统规模</div>
+      <div class="sec-content">
+        <b>19 个视图页面</b>——<b>4 类智能预警</b>（项目亏损/收付款倒挂/产值确认倒挂/合同结算差异）
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">效果</div>
+      <div class="sec-content">
+        <b>"等研发排期" → "今天想到今天上线"</b>。商务经理一个人完成原本需要 6 人月的系统搭建。
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-zone">
+    <img src="../../assets/case-wang-jn-screenshot.png" alt="商务管理平台首页">
+  </div>
+</div>
+
+<div class="success-bar">
+  <div class="check">✓</div>
+  <div class="text">已投入使用</div>
+  <div class="sub">商务经理自建系统</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num">11 / 47</span>
+</div>
+
+</body>
+</html>

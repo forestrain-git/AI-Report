@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P28 · 生态·碳科技·环能</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .card-table {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }
+  .table-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 220px;
+    gap: 0;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    align-items: stretch;
+  }
+  .table-row .cell {
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .table-row .cell:not(:last-child) {
+    border-right: 1px solid #f1f5f9;
+  }
+  .table-row .cell-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink-title);
+  }
+  .table-row .cell-name .sub {
+    font-size: 15px;
+    color: var(--ink-dim);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .table-row .cell-dir {
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.7;
+  }
+  .table-row .cell-dir b {
+    color: var(--ink-title);
+  }
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    align-self: flex-start;
+  }
+  .status-tag.fire {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 2px solid #fecaca;
+  }
+  .status-tag.check {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 2px solid #bbf7d0;
+  }
+
+  .bottom-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .summary-card {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+  }
+  .summary-card .sum-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-title);
+    margin-bottom: 6px;
+  }
+  .summary-card .sum-desc {
+    font-size: 15px;
+    color: var(--ink-dim);
+  }
+
+  .kicker {
+    text-align: center;
+    font-family: "Noto Serif SC", serif;
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--brand-blue);
+    padding: 16px 0;
+    border-top: 2px solid #dbeafe;
+    border-bottom: 2px solid #dbeafe;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">生态 · 碳科技 · 环能——AI 合作探索</div>
+
+<div class="card-table">
+  <div class="table-row">
+    <div class="cell cell-name">
+      中建生态
+      <div class="sub">江阴农污项目</div>
+    </div>
+    <div class="cell cell-dir">
+      <b>AI 运营平台</b>：Dify 智能体中台搭建，实现农污设备远程监控与智能调度<br>
+      <b>核心突破</b>：1 人搭建，快速上线，运营效率提升显著
+    </div>
+    <div class="cell">
+      <span class="status-tag fire">🔥 已上线</span>
+    </div>
+  </div>
+
+  <div class="table-row">
+    <div class="cell cell-name">
+      中建碳科技
+      <div class="sub">能碳管理平台</div>
+    </div>
+    <div class="cell cell-dir">
+      <b>AI 自动提取</b>：能耗数据自动识别与录入，七步审核流智能校验<br>
+      <b>核心突破</b>：从"人工抄表"到"AI 读数+自动审核"
+    </div>
+    <div class="cell">
+      <span class="status-tag check">✅ 联合开发中</span>
+    </div>
+  </div>
+
+  <div class="table-row">
+    <div class="cell cell-name">
+      中建环能
+      <div class="sub">财务管理</div>
+    </div>
+    <div class="cell cell-dir">
+      <b>AI 辅助评审</b>：财务报表智能分析与风险识别，辅助决策<br>
+      <b>核心突破</b>：合作开发中，原型验证阶段
+    </div>
+    <div class="cell">
+      <span class="status-tag fire">🔥 积极推动</span>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-summary">
+  <div class="summary-card">
+    <div class="sum-title">已上线</div>
+    <div class="sum-desc">生态农污 AI 平台<br>1 人搭建，快速验证</div>
+  </div>
+  <div class="summary-card">
+    <div class="sum-title">联合开发中</div>
+    <div class="sum-desc">碳科技能碳平台<br>原型已出，迭代推进</div>
+  </div>
+  <div class="summary-card">
+    <div class="sum-title">积极推动</div>
+    <div class="sum-desc">环能财务评审<br>合作开发，场景验证</div>
+  </div>
+</div>
+
+<div class="kicker">
+  "发展的每个板块都在动——不是等总部发令，是自己在找 AI 的入口。"
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 同行压力与中建实践</span>
+  <span class="page-num">28 / 47</span>
+</div>
+
+</body>
+</html>

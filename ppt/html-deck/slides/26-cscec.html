@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P26 · 中建系兄弟单位成果</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+  }
+  .case-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+  }
+  .case-card .org {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink-title);
+  }
+  .case-card .org-sub {
+    font-size: 15px;
+    color: var(--ink-dim);
+    margin-top: -10px;
+  }
+  .case-card .metric {
+    font-family: "Inter", sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--brand-blue);
+  }
+  .case-card .metric .unit {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+  .case-card .points {
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.65;
+    flex: 1;
+  }
+  .case-card .points li {
+    list-style: none;
+    padding-left: 18px;
+    position: relative;
+  }
+  .case-card .points li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--ink-subtle);
+  }
+  .case-card .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: auto;
+  }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-green { background: #dcfce7; color: #16a34a; }
+  .tag-orange { background: #fff7ed; color: #ea580c; }
+  .tag-purple { background: #ede9fe; color: #7c3aed; }
+
+  .summary-bar {
+    background: linear-gradient(90deg, #1e40af, #0ea5e9);
+    color: #fff;
+    border-radius: 12px;
+    padding: 20px 36px;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 16px;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">中建系兄弟单位成果</div>
+
+<div class="card-row">
+  <div class="case-card">
+    <div class="org">中建三局</div>
+    <div class="org-sub">天工智算平台</div>
+    <div class="metric">央视报道</div>
+    <ul class="points">
+      <li>建筑行业首个算力中心</li>
+      <li>央视《新闻联播》专题报道</li>
+      <li>覆盖设计、施工、运维全链</li>
+    </ul>
+    <span class="tag tag-blue">算力底座</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">中建五局</div>
+    <div class="org-sub">全员 AI 培训</div>
+    <div class="metric">4<span class="unit">万人</span></div>
+    <ul class="points">
+      <li>全员 AI 工具培训覆盖</li>
+      <li>活跃率高达 <b>94%</b></li>
+      <li>从"不会用"到"离不开"</li>
+    </ul>
+    <span class="tag tag-green">组织赋能</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">中建科工</div>
+    <div class="org-sub">智能建造</div>
+    <div class="metric">千台级</div>
+    <ul class="points">
+      <li>千台级焊接机器人集群</li>
+      <li>钢结构智能生产线</li>
+      <li>从"人海战术"到"机器军团"</li>
+    </ul>
+    <span class="tag tag-orange">智能制造</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">中建八局</div>
+    <div class="org-sub">路智纵横</div>
+    <div class="metric">全国首创</div>
+    <ul class="points">
+      <li>道路养护智能巡检系统</li>
+      <li>全国首创 AI+道路养护</li>
+      <li>病害识别+自动派单</li>
+    </ul>
+    <span class="tag tag-purple">智慧运维</span>
+  </div>
+</div>
+
+<div class="summary-bar">
+  中建系 AI 已覆盖「算」「造」「管」全链条
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 同行压力与中建实践</span>
+  <span class="page-num">26 / 47</span>
+</div>
+
+</body>
+</html>

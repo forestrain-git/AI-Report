@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P31 · 七个入口</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .table-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .tool-row {
+    display: grid;
+    grid-template-columns: 220px 240px 120px 1fr;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 19px;
+    color: var(--ink-body);
+  }
+  .tool-row:first-child {
+    background: #f8fafc;
+    font-weight: 700;
+    color: var(--brand-blue);
+    font-size: 17px;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid #cbd5e1;
+  }
+  .tool-row .want { font-weight: 700; color: var(--ink-title); }
+  .tool-row .tool { font-weight: 700; color: var(--brand-blue); }
+  .tool-row .time { color: var(--ink-dim); }
+  .tool-row .why { color: var(--ink-body); line-height: 1.5; }
+
+  /* 三条递进路径 */
+  .path-bar {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    flex-shrink: 0;
+  }
+  .path-item {
+    flex: 1;
+    border-radius: 12px;
+    padding: 20px 24px;
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .path-item .path-label {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .path-green { background: linear-gradient(135deg, #16a34a, #15803d); }
+  .path-yellow { background: linear-gradient(135deg, #d97706, #b45309); }
+  .path-red { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+</style>
+</head>
+<body>
+
+<div class="slide-title">你的场景，你的工具——七个入口</div>
+
+<div class="table-wrap">
+  <div class="tool-row">
+    <div>你想做什么</div>
+    <div>用这个</div>
+    <div>上手</div>
+    <div>为什么是它</div>
+  </div>
+  <div class="tool-row">
+    <div class="want">写材料、写公文</div>
+    <div class="tool">DeepSeek / 通义千问</div>
+    <div class="time">即开即用</div>
+    <div class="why">中文写作最强，深度推理 + 阿里生态</div>
+  </div>
+  <div class="tool-row">
+    <div class="want">做 PPT</div>
+    <div class="tool">Kimi</div>
+    <div class="time">即开即用</div>
+    <div class="why">一句话生成整份 PPT 初稿</div>
+  </div>
+  <div class="tool-row">
+    <div class="want">读长文档、深入研究</div>
+    <div class="tool">Kimi 蜂群模式</div>
+    <div class="time">10 分钟</div>
+    <div class="why">多源搜索 + 多 Agent 并行</div>
+  </div>
+  <div class="tool-row">
+    <div class="want">搭小工具、做自动化</div>
+    <div class="tool">WorkBuddy</div>
+    <div class="time">半天</div>
+    <div class="why">拖拽式无代码，业务人员也能建</div>
+  </div>
+  <div class="tool-row">
+    <div class="want">日常 AI 助手（飞书）</div>
+    <div class="tool">龙虾 / Hermes</div>
+    <div class="time">即装即用</div>
+    <div class="why">中建智能出品，飞书原生</div>
+  </div>
+  <div class="tool-row">
+    <div class="want">写代码、深度开发</div>
+    <div class="tool">Claude Code</div>
+    <div class="time">需学习</div>
+    <div class="why">Agent 模式自主执行，可接国产模型</div>
+  </div>
+  <div class="tool-row">
+    <div class="want">建知识库、沉淀经验</div>
+    <div class="tool">Obsidian + Claudian</div>
+    <div class="time">半天</div>
+    <div class="why">本地化部署，可接国产模型，数据不出域</div>
+  </div>
+</div>
+
+<div class="path-bar">
+  <div class="path-item path-green">
+    <div class="path-label">零门槛</div>
+    <div>DeepSeek / Kimi → 人人可用，今天就能开始</div>
+  </div>
+  <div class="path-item path-yellow">
+    <div class="path-label">业务赋能</div>
+    <div>WorkBuddy → 自己能搭工具，不再等研发</div>
+  </div>
+  <div class="path-item path-red">
+    <div class="path-label">护城河级</div>
+    <div>Claude Code / Claudian → 本地知识库 + AI 编程，组织级能力</div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 4 · 落地路径</span>
+  <span class="page-num">31 / 47</span>
+</div>
+
+</body>
+</html>

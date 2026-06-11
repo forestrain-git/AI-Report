@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P41 · 30/60/90天行动计划</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .slide-title { margin-bottom: 16px; }
+  .slide-lead { margin-bottom: 32px; }
+
+  /* 三阶段时间轴 */
+  .timeline-wrap {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+  .phase-block {
+    flex: 1;
+    border-radius: 14px;
+    padding: 28px 32px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .phase-block.p1 {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+    border-radius: 14px 0 0 14px;
+  }
+  .phase-block.p2 {
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+  }
+  .phase-block.p3 {
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    border-radius: 0 14px 14px 0;
+  }
+  .phase-block .phase-label {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    opacity: 0.85;
+    margin-bottom: 8px;
+  }
+  .phase-block .phase-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .phase-block .phase-time {
+    font-size: 18px;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+  }
+  .phase-block .phase-actions {
+    list-style: none;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .phase-block .phase-actions li {
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .phase-block .phase-actions li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+
+  /* 箭头连接 */
+  .arrow-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    flex-shrink: 0;
+  }
+  .arrow-connector .arr {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 24px solid rgba(30,64,175,0.25);
+  }
+
+  /* 底部说明 */
+  .bottom-note {
+    margin-top: auto;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px 28px;
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.6;
+    border-left: 4px solid var(--brand-blue);
+  }
+  .bottom-note b {
+    color: var(--brand-blue);
+  }
+</style>
+</head>
+<body>
+
+<h1 class="slide-title">30 / 60 / 90 天行动计划</h1>
+<p class="slide-lead">不需要等条件成熟——今天就能启动</p>
+
+<div class="timeline-wrap">
+  <div class="phase-block p1">
+    <div class="phase-label">PHASE 01</div>
+    <div class="phase-title">基线建立</div>
+    <div class="phase-time">第 0-30 天</div>
+    <ul class="phase-actions">
+      <li>梳理 3 个最高频、最痛点的业务场景</li>
+      <li>完成数据资产盘点与分类分级策略</li>
+      <li>选定 1 个试点产品/工具（国产优先）</li>
+      <li>成立 AI 专项工作组，明确 Owner</li>
+      <li>制定试点成功标准和评估框架</li>
+    </ul>
+  </div>
+
+  <div class="arrow-connector"><div class="arr"></div></div>
+
+  <div class="phase-block p2">
+    <div class="phase-label">PHASE 02</div>
+    <div class="phase-title">试点运行</div>
+    <div class="phase-time">第 30-60 天</div>
+    <ul class="phase-actions">
+      <li>启动 1-2 个轻量化试点项目</li>
+      <li>完成数据对接与模型部署/配置</li>
+      <li>验证业务价值，收集用户反馈</li>
+      <li>输出第一批操作手册和模板</li>
+      <li>识别风险点，调整合规策略</li>
+    </ul>
+  </div>
+
+  <div class="arrow-connector"><div class="arr"></div></div>
+
+  <div class="phase-block p3">
+    <div class="phase-label">PHASE 03</div>
+    <div class="phase-title">优化推广</div>
+    <div class="phase-time">第 60-90 天</div>
+    <ul class="phase-actions">
+      <li>总结试点经验，形成可复制模板</li>
+      <li>启动第二批 2-3 个场景复制</li>
+      <li>建立内部知识库和培训材料</li>
+      <li>向班子汇报阶段性成果与规划</li>
+      <li>制定下季度规模化推广计划</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bottom-note">
+  <b>关键原则：</b>每个阶段必须有可交付成果（文档/模板/数据），不允许"只开会不产出"。<br>
+  90 天结束时，你应该拥有：<b>1 套方法论 + 1 批模板 + 1 个成功案例 + 1 支种子团队</b>。
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 5 · 风险预判与行动倡议</span>
+  <span class="page-num">41 / 47</span>
+</div>
+
+</body>
+</html>

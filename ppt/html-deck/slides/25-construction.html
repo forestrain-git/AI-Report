@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P25 · 国内建筑央企</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+  }
+  .case-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+  }
+  .case-card.gold {
+    border: 3px solid #d97706;
+    box-shadow: 0 4px 20px rgba(217,119,6,0.12);
+  }
+  .case-card.gold::before {
+    background: linear-gradient(90deg, #d97706, #f59e0b);
+  }
+  .case-card .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+  }
+  .case-card .org {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink-title);
+    padding-right: 60px;
+  }
+  .case-card .org-sub {
+    font-size: 15px;
+    color: var(--ink-dim);
+    margin-top: -10px;
+  }
+  .case-card .metric {
+    font-family: "Inter", sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--brand-blue);
+  }
+  .case-card .metric .unit {
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+  .case-card .points {
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.65;
+    flex: 1;
+  }
+  .case-card .points li {
+    list-style: none;
+    padding-left: 18px;
+    position: relative;
+  }
+  .case-card .points li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--ink-subtle);
+  }
+  .case-card .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: auto;
+  }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-gold { background: #fef3c7; color: #d97706; }
+  .tag-teal { background: #ccfbf1; color: #0d9488; }
+  .tag-purple { background: #ede9fe; color: #7c3aed; }
+</style>
+</head>
+<body>
+
+<div class="slide-title">国内建筑央企——从审方案到管隧道</div>
+
+<div class="card-row">
+  <div class="case-card">
+    <div class="org">中铁建设 · 铁小智</div>
+    <div class="org-sub">AI 辅助设计审查</div>
+    <div class="metric">90<span class="unit">秒</span></div>
+    <ul class="points">
+      <li>审完 22 万㎡ 高铁站房方案</li>
+      <li>效率提升 <b>80%</b></li>
+      <li>审核成本降低 <b>73%</b></li>
+    </ul>
+    <span class="tag tag-blue">设计审查</span>
+  </div>
+
+  <div class="case-card gold">
+    <div class="badge">唯一入选</div>
+    <div class="org">中铁十一局 · 大盾构</div>
+    <div class="org-sub">国资委首批高价值场景</div>
+    <div class="metric">40<span class="unit">项</span></div>
+    <ul class="points">
+      <li>国资委首批 <b>40 项</b>高价值场景</li>
+      <li><b>建筑施工领域唯一</b>入选</li>
+      <li>盾构隧道智能掘进</li>
+    </ul>
+    <span class="tag tag-gold">国家级标杆</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">中交集团 · 蓝翼</div>
+    <div class="org-sub">央企首个土木建筑大模型</div>
+    <div class="metric">140<span class="unit">亿参数</span></div>
+    <ul class="points">
+      <li>地质预报准确率 <b>90%</b></li>
+      <li>覆盖公路、桥梁、隧道</li>
+      <li>设计+施工双场景</li>
+    </ul>
+    <span class="tag tag-teal">行业首创</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">中冶赛迪</div>
+    <div class="org-sub">AI 安全监控</div>
+    <div class="metric">98.7<span class="unit">%</span></div>
+    <ul class="points">
+      <li>10 万小时视频分析</li>
+      <li>安全违规识别率 <b>98.7%</b></li>
+      <li>从"人盯屏"到"AI 盯屏"</li>
+    </ul>
+    <span class="tag tag-purple">安全管控</span>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 同行压力与中建实践</span>
+  <span class="page-num">25 / 47</span>
+</div>
+
+</body>
+</html>

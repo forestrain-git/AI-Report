@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P01 · 封面</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    background: #fff;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── 左半：纯白底文字区 ── */
+  .cover-left {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 50%;
+    background: #fff;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    justify-content: center;
+    padding: 0 100px 0 120px;
+  }
+
+  /* ── 右半：纯照片，无遮罩 ── */
+  .cover-right {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 55%;
+    background: url('../shared/cover-bg.jpg') left center/cover no-repeat;
+    z-index: 0;
+  }
+  /* 左边缘锐利过渡带：照片 → 白色 */
+  .cover-right::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 120px;
+    background: linear-gradient(90deg, #fff 0%, transparent 100%);
+    z-index: 1;
+  }
+
+  /* ── 数据流线（只在右半照片区） ── */
+  .data-stream {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    pointer-events: none;
+  }
+  .stream-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(30,64,175,0.5), var(--brand-blue), rgba(30,64,175,0.3));
+    animation: streamFlow 5s ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes streamFlow {
+    0%   { transform: translateX(0); opacity: 0; }
+    20%  { opacity: 0.8; }
+    60%  { opacity: 0.5; }
+    100% { transform: translateX(500px); opacity: 0; }
+  }
+  .stream-line:nth-child(1) { top: 20%; left: 48%; width: 350px; animation-delay: 0s; }
+  .stream-line:nth-child(2) { top: 32%; left: 52%; width: 280px; animation-delay: 1s; }
+  .stream-line:nth-child(3) { top: 45%; left: 50%; width: 400px; animation-delay: 2s; }
+  .stream-line:nth-child(4) { top: 58%; left: 55%; width: 300px; animation-delay: 3s; }
+  .stream-line:nth-child(5) { top: 72%; left: 48%; width: 360px; animation-delay: 4s; }
+
+  /* ── 文字 ── */
+  .cover-pre {
+    font-size: var(--fs-sm);
+    letter-spacing: 0.2em;
+    color: var(--brand-blue);
+    margin-bottom: var(--space-lg);
+    font-weight: 700;
+  }
+  .cover-title {
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    font-size: 84px;
+    font-weight: 900;
+    line-height: 1.12;
+    margin-bottom: var(--space-md);
+    color: #0f172a;
+  }
+  .cover-title .hl {
+    color: var(--brand-blue);
+  }
+  .cover-sub {
+    font-size: 28px;
+    color: var(--ink-dim);
+  }
+
+  /* ── 底部导航 ── */
+  .cover-nav {
+    position: absolute;
+    bottom: 30px;
+    left: 0; right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+  }
+  .cover-nav-inner {
+    display: flex;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+  }
+  .nav-item {
+    padding: 12px 30px;
+    font-size: 15px;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: default;
+    white-space: nowrap;
+  }
+  .nav-item:first-child { border-radius: 10px 0 0 10px; }
+  .nav-item:last-child  { border-radius: 0 10px 10px 0; }
+  .nav-item .num { display: block; font-size: 11px; color: var(--brand-blue); margin-bottom: 3px; font-weight: 700; }
+  .nav-item:not(:last-child) { border-right: 1px solid #f1f5f9; }
+  .nav-item:hover { background: #eff6ff; color: var(--brand-blue); }
+
+  /* ── 左下角小字 ── */
+  .cover-org {
+    position: absolute;
+    bottom: 36px;
+    left: 120px;
+    font-size: 13px;
+    color: var(--ink-subtle);
+    z-index: 5;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<!-- 右半照片 -->
+<div class="cover-right"></div>
+
+<!-- 数据流（仅照片区） -->
+<div class="data-stream">
+  <div class="stream-line"></div>
+  <div class="stream-line"></div>
+  <div class="stream-line"></div>
+  <div class="stream-line"></div>
+  <div class="stream-line"></div>
+</div>
+
+<!-- 左半文字 -->
+<div class="cover-left">
+  <div class="cover-pre">中建发展 · AI 战略宣讲</div>
+  <div class="cover-title">
+    AI 时代：<br><span class="hl">我们的选择与行动</span>
+  </div>
+  <div class="cover-sub">从认知到落地的实践指南</div>
+</div>
+
+<!-- 底部导航 -->
+<div class="cover-nav">
+  <div class="cover-nav-inner">
+    <div class="nav-item"><span class="num">①</span>政策锚定</div>
+    <div class="nav-item"><span class="num">②</span>技术祛魅</div>
+    <div class="nav-item"><span class="num">③</span>中建实践</div>
+    <div class="nav-item"><span class="num">④</span>落地路径</div>
+    <div class="nav-item"><span class="num">⑤</span>行动倡议</div>
+  </div>
+</div>
+
+<div class="cover-org">中建发展 · 2026</div>
+
+</body>
+</html>

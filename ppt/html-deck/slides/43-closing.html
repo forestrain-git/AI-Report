@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P43 · 最好的时代，最坏的时代</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    padding: 36px 80px 24px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    gap: 16px;
+    align-items: center;
+  }
+
+  /* ── 顶部三句金句 ── */
+  .opening {
+    font-family: "Noto Serif SC", serif;
+    font-size: 26px;
+    font-style: italic;
+    color: var(--ink-title);
+    line-height: 1.6;
+    text-align: center;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 14px;
+    width: 100%;
+    max-width: 1400px;
+  }
+  .opening .hl { color: var(--brand-blue); font-weight: 700; }
+  .opening .hl-red { color: var(--red); font-weight: 700; }
+
+  /* ── 环形图区域 ── */
+  .ring-area {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    flex-shrink: 0;
+  }
+  .ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+      #1e40af 0deg 72deg,
+      #2563eb 72deg 144deg,
+      #0ea5e9 144deg 216deg,
+      #38bdf8 216deg 288deg,
+      #7dd3fc 288deg 360deg
+    );
+    position: relative;
+  }
+  .ring::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58%;
+    height: 58%;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.06);
+  }
+
+  /* 中心金句 */
+  .ring-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    text-align: center;
+    z-index: 2;
+  }
+  .ring-center .main-quote {
+    font-family: "Noto Serif SC", serif;
+    font-size: 22px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--brand-blue);
+    line-height: 1.5;
+  }
+  .ring-center .sub-quote {
+    font-size: 15px;
+    color: var(--ink-dim);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* 五个扇区标签 */
+  .sector-label {
+    position: absolute;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    line-height: 1.3;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    pointer-events: none;
+  }
+  .sector-label .num { font-size: 20px; display: block; margin-bottom: 2px; }
+  .sector-label .desc { font-size: 13px; font-weight: 500; opacity: 0.9; }
+
+  .s1 { top: 8%;  left: 50%; transform: translateX(-50%); }
+  .s2 { top: 28%; right: 2%; }
+  .s3 { bottom: 18%; right: 6%; }
+  .s4 { bottom: 18%; left: 6%; }
+  .s5 { top: 28%; left: 2%; }
+
+  /* ── 锚点回顾 ── */
+  .anchors {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+  }
+  .anchor {
+    font-size: 14px;
+    color: var(--ink-dim);
+    background: #f8fafc;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+  .anchor b { color: var(--brand-blue); }
+
+  /* ── 四行动卡片：渐变色区分 ── */
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 1600px;
+  }
+  .action-card {
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    border: 2px solid;
+  }
+  .action-card .day {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .action-card .act {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .action-card.a1 { background: #f0fdf4; border-color: #16a34a; }
+  .action-card.a1 .day { color: #16a34a; }
+  .action-card.a1 .act { color: #14532d; }
+  .action-card.a2 { background: #eff6ff; border-color: #1e40af; }
+  .action-card.a2 .day { color: #1e40af; }
+  .action-card.a2 .act { color: #1e3a8a; }
+  .action-card.a3 { background: #fff7ed; border-color: #ea580c; }
+  .action-card.a3 .day { color: #ea580c; }
+  .action-card.a3 .act { color: #7c2d12; }
+  .action-card.a4 { background: #1e40af; border-color: #1e40af; }
+  .action-card.a4 .day { color: #93c5fd; }
+  .action-card.a4 .act { color: #fff; }
+
+  /* ── 底部收尾金句 ── */
+  .closing-line {
+    font-family: "Noto Serif SC", serif;
+    font-size: 28px;
+    color: var(--brand-blue);
+    font-weight: 700;
+    font-style: italic;
+    text-align: center;
+    padding: 12px 0;
+    border-top: 1px solid #e2e8f0;
+    width: 100%;
+    max-width: 1200px;
+  }
+</style>
+</head>
+<body>
+
+<div class="opening">
+  "这是<span class="hl">最好的时代</span>：获悉即学会，看到就拿到，想到就做到。"<br>
+  "这也是<span class="hl-red">最坏的时代</span>：AI 进步比你更快，黑箱藏着未知，技术债务在暗处累积。"<br>
+  "——但这更是<span class="hl">行动的时代</span>。窗口不会永远敞开。"
+</div>
+
+<div class="ring-area">
+  <div class="ring"></div>
+  <div class="ring-center">
+    <div class="main-quote">限制你能力边界的，只有你的想象力。</div>
+    <div class="sub-quote">最懂业务的人，现在最懂 AI。</div>
+  </div>
+  <div class="sector-label s1">
+    <span class="num">①</span>政策锚定
+    <span class="desc">16行业·千场景</span>
+  </div>
+  <div class="sector-label s2">
+    <span class="num">②</span>技术祛魅
+    <span class="desc">2月1亿用户</span>
+  </div>
+  <div class="sector-label s3">
+    <span class="num">③</span>中建实践
+    <span class="desc">采购周期↓40%</span>
+  </div>
+  <div class="sector-label s4">
+    <span class="num">④</span>落地路径
+    <span class="desc">5个支撑能力</span>
+  </div>
+  <div class="sector-label s5">
+    <span class="num">⑤</span>行动倡议
+    <span class="desc">30天内启动</span>
+  </div>
+</div>
+
+<div class="anchors">
+  <div class="anchor"><b>P7</b> · 五个真实案例</div>
+  <div class="anchor"><b>P14</b> · 你可能在想什么</div>
+  <div class="anchor"><b>P34</b> · 先跑起来</div>
+  <div class="anchor"><b>P42</b> · 7天行动清单</div>
+</div>
+
+<div class="actions">
+  <div class="action-card a1">
+    <span class="day">今天</span>
+    <span class="act">打开豆包 / Kimi<br>问一个头疼的问题</span>
+  </div>
+  <div class="action-card a2">
+    <span class="day">本月内</span>
+    <span class="act">成立 AI 专项工作组<br>明确牵头人</span>
+  </div>
+  <div class="action-card a3">
+    <span class="day">本季度</span>
+    <span class="act">选定 1-2 个<br>低风险场景试点</span>
+  </div>
+  <div class="action-card a4">
+    <span class="day">本年度</span>
+    <span class="act">形成可复制的<br>AI 应用模板</span>
+  </div>
+</div>
+
+<div class="closing-line">
+  "最懂业务的人，现在最懂 AI。从今天开始。"
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 5 · 行动倡议</span>
+  <span class="page-num">43 / 47</span>
+</div>
+
+</body>
+</html>

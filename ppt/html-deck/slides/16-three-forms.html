@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P16 · 大模型的三种形态</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  /* 三列卡片 */
+  .forms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .form-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+  }
+  .form-card:nth-child(1)::before { background: #1e40af; }
+  .form-card:nth-child(2)::before { background: #0891b2; }
+  .form-card:nth-child(3)::before { background: #0ea5e9; }
+
+  .form-card .form-icon {
+    font-size: 40px;
+  }
+  .form-card .form-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--ink-title);
+  }
+  .form-card .form-sub {
+    font-size: 16px;
+    color: var(--ink-dim);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .form-card .form-body {
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .form-card .form-body li {
+    margin-bottom: 8px;
+    list-style: none;
+    position: relative;
+    padding-left: 18px;
+  }
+  .form-card .form-body li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--brand-blue);
+    font-weight: 700;
+  }
+  .form-card .form-quote {
+    font-size: 17px;
+    color: var(--ink-dim);
+    font-style: italic;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 3px solid #cbd5e1;
+  }
+
+  /* 受众映射表 */
+  .mapping-table-wrap {
+    margin-top: 28px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .mapping-table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+  }
+  .mapping-table-wrap th {
+    text-align: left;
+    background: #f8fafc;
+    color: var(--brand-blue);
+    font-weight: 700;
+    padding: 14px 20px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .mapping-table-wrap td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--ink-body);
+  }
+  .mapping-table-wrap tr:last-child td { border-bottom: none; }
+  .mapping-table-wrap .hl { color: var(--brand-blue); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="slide-title">大模型的三种形态</div>
+
+<div class="forms-grid">
+  <div class="form-card">
+    <div class="form-icon">🌐</div>
+    <div class="form-title">通用大模型</div>
+    <div class="form-sub">千亿 ~ 万亿参数</div>
+    <ul class="form-body">
+      <li>DeepSeek、Kimi、Qwen、GPT-4、Claude</li>
+      <li>知识广博，对话能力强</li>
+      <li>适合写作、分析、编程、创意等通用任务</li>
+    </ul>
+    <div class="form-quote">"所有人都在用，是 AI 的'自来水'"</div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-icon">🏗️</div>
+    <div class="form-title">垂直领域模型</div>
+    <div class="form-sub">百亿 ~ 千亿参数</div>
+    <ul class="form-body">
+      <li>中国石油昆仑、南方电网大瓦特、中交蓝翼</li>
+      <li>在特定行业数据上深度训练</li>
+      <li>懂行业术语、合规要求、业务流程</li>
+    </ul>
+    <div class="form-quote">"信息化条线做行业适配，让 AI 懂你的业务"</div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-icon">⚡</div>
+    <div class="form-title">小参数专用模型</div>
+    <div class="form-sub">几亿 ~ 几十亿参数</div>
+    <ul class="form-body">
+      <li>OCR、翻译、云筑网供需匹配、安全巡检</li>
+      <li>轻量化、低延迟、可嵌入产品</li>
+      <li>可私有化部署，成本可控</li>
+    </ul>
+    <div class="form-quote">"工程化团队嵌入产品，用户无感知却处处可用"</div>
+  </div>
+</div>
+
+<div class="mapping-table-wrap">
+  <table>
+    <tr>
+      <th>形态</th>
+      <th>谁在用</th>
+      <th>怎么用</th>
+      <th>需要的能力</th>
+    </tr>
+    <tr>
+      <td class="hl">通用大模型</td>
+      <td>全员</td>
+      <td>网页/APP 直接对话</td>
+      <td>会打字、会提问</td>
+    </tr>
+    <tr>
+      <td class="hl">垂直领域模型</td>
+      <td>信息化条线 + 业务专家</td>
+      <td>行业系统接入、知识库构建</td>
+      <td>业务理解 + 模型调优</td>
+    </tr>
+    <tr>
+      <td class="hl">小参数专用模型</td>
+      <td>研发团队</td>
+      <td>嵌入产品、边缘设备部署</td>
+      <td>工程化 + 模型压缩</td>
+    </tr>
+  </table>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 2 · 技术祛魅</span>
+  <span class="page-num">16 / 47</span>
+</div>
+
+</body>
+</html>

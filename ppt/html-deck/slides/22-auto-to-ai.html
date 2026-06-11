@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P22 · 从自动化到AI</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .compare-area {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0;
+    flex: 1;
+    min-height: 0;
+  }
+  .side-panel {
+    border-radius: 16px;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+  .side-panel.left {
+    background: linear-gradient(160deg, #f1f5f9, #e2e8f0);
+    border: 2px solid #cbd5e1;
+  }
+  .side-panel.right {
+    background: linear-gradient(160deg, #dbeafe, #eff6ff);
+    border: 3px solid var(--brand-blue);
+    box-shadow: 0 8px 32px rgba(30,64,175,0.12);
+  }
+  .side-panel .sp-title {
+    font-size: 32px;
+    font-weight: 900;
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 3px solid;
+  }
+  .side-panel.left .sp-title { color: #64748b; border-color: #cbd5e1; }
+  .side-panel.right .sp-title { color: var(--brand-blue); border-color: var(--brand-blue); }
+  .side-panel .sp-case {
+    font-size: 22px;
+    line-height: 1.6;
+    padding-left: 20px;
+    border-left: 4px solid;
+  }
+  .side-panel.left .sp-case { color: #475569; border-color: #94a3b8; }
+  .side-panel.right .sp-case { color: var(--ink-title); border-color: var(--brand-blue); font-weight: 600; }
+  .side-panel .sp-note {
+    font-size: 18px;
+    color: var(--ink-dim);
+    font-style: italic;
+    margin-top: 8px;
+  }
+  .side-panel.left .sp-note { color: #94a3b8; }
+
+  .arrow-mid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .arrow-mid .arrow-icon {
+    font-size: 48px;
+    color: var(--brand-blue);
+    font-weight: 900;
+  }
+  .arrow-mid .arrow-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-top: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  /* 底部五列卡片 */
+  .bottom-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .dir-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 18px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .dir-card .dir-icon {
+    font-size: 28px;
+  }
+  .dir-card .dir-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--ink-title);
+  }
+  .dir-card .dir-desc {
+    font-size: 15px;
+    color: var(--ink-dim);
+    line-height: 1.45;
+  }
+
+  /* 结论条 */
+  .conclusion {
+    background: linear-gradient(90deg, #1e40af, #0ea5e9);
+    color: #fff;
+    border-radius: 12px;
+    padding: 18px 32px;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">从自动化到 AI——建筑业的两级跳</div>
+
+<div class="compare-area">
+  <div class="side-panel left">
+    <div class="sp-title">自动化</div>
+    <div class="sp-case">
+      <b>Kajima A4CSEL</b><br>
+      3 人操作 14 台机械<br>
+      零事故运行<br>
+      <span style="color:#94a3b8;font-size:18px;">——但不是 AI</span>
+    </div>
+    <div class="sp-note">规则驱动 · 预设程序 · 无法自适应</div>
+  </div>
+
+  <div class="arrow-mid">
+    <div class="arrow-icon">→</div>
+    <div class="arrow-label">AI 叠上去</div>
+  </div>
+
+  <div class="side-panel right">
+    <div class="sp-title">AI 叠上去</div>
+    <div class="sp-case">
+      <b>Eiffage</b>：2 天 → 20 分钟<br>
+      <b>Bouygues</b>：10 分钟 600 万种方案<br>
+      <span style="color:var(--brand-cyan);font-size:18px;">——数量级的差距</span>
+    </div>
+    <div class="sp-note">学习驱动 · 实时优化 · 自主决策</div>
+  </div>
+</div>
+
+<div class="conclusion">
+  自动化已经很可怕。AI 叠上去，差距是数量级的。
+</div>
+
+<div class="bottom-cards">
+  <div class="dir-card">
+    <div class="dir-icon">📐</div>
+    <div class="dir-title">设计优化</div>
+    <div class="dir-desc">AI 生成多方案比选</div>
+  </div>
+  <div class="dir-card">
+    <div class="dir-icon">🔧</div>
+    <div class="dir-title">施工调度</div>
+    <div class="dir-desc">动态排程+资源优化</div>
+  </div>
+  <div class="dir-card">
+    <div class="dir-icon">🛡️</div>
+    <div class="dir-title">安全监控</div>
+    <div class="dir-desc">视觉识别实时预警</div>
+  </div>
+  <div class="dir-card">
+    <div class="dir-icon">📊</div>
+    <div class="dir-title">成本预测</div>
+    <div class="dir-desc">动态造价+风险预判</div>
+  </div>
+  <div class="dir-card">
+    <div class="dir-icon">🤖</div>
+    <div class="dir-title">无人化运维</div>
+    <div class="dir-desc">设备预测性维护</div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 同行压力与中建实践</span>
+  <span class="page-num">22 / 47</span>
+</div>
+
+</body>
+</html>

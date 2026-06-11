@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P05 · 央企AI考核指标体系</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 40px 80px 36px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title {
+    margin-bottom: 32px;
+  }
+
+  /* 2x3 卡片网格 */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    flex: 1;
+  }
+
+  .kpi-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 32px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: box-shadow 0.2s;
+  }
+
+  .kpi-card:hover {
+    box-shadow: 0 4px 20px rgba(30,64,175,0.08);
+  }
+
+  .kpi-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .kpi-card .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .kpi-card .card-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a;
+  }
+
+  .kpi-card .metric-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .kpi-card .metric-item {
+    font-size: 17px;
+    color: #475569;
+    line-height: 1.7;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .kpi-card .metric-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2563eb;
+  }
+
+  .kpi-card .metric-item b {
+    color: #1e40af;
+    font-weight: 700;
+  }
+
+  .kpi-card .card-note {
+    font-size: 15px;
+    color: #94a3b8;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">央企AI考核指标体系</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="card-header">
+      <div class="card-icon">💰</div>
+      <div class="card-title">研发投入</div>
+    </div>
+    <div class="metric-list">
+      <div class="metric-item"><b>研发经费占比</b>：营业收入中研发投入比例</div>
+      <div class="metric-item"><b>AI专项预算</b>：单列人工智能专项资金</div>
+      <div class="metric-item"><b>创新项目数</b>：年度AI相关立项数量</div>
+    </div>
+    <div class="card-note">考核权重：高</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="card-header">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">场景落地</div>
+    </div>
+    <div class="metric-list">
+      <div class="metric-item"><b>场景覆盖率</b>：业务环节AI应用覆盖比例</div>
+      <div class="metric-item"><b>标杆案例数</b>：可复制推广的典型场景</div>
+      <div class="metric-item"><b>投产比(ROI)</b>：投入产出效率评估</div>
+    </div>
+    <div class="card-note">考核权重：高</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="card-header">
+      <div class="card-icon">💻</div>
+      <div class="card-title">数字化程度</div>
+    </div>
+    <div class="metric-list">
+      <div class="metric-item"><b>系统上云率</b>：核心业务系统云端部署比例</div>
+      <div class="metric-item"><b>数据贯通度</b>：跨部门数据共享与流转水平</div>
+      <div class="metric-item"><b>流程自动化</b>：RPA/AI替代人工流程比例</div>
+    </div>
+    <div class="card-note">考核权重：中高</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="card-header">
+      <div class="card-icon">👥</div>
+      <div class="card-title">人才建设</div>
+    </div>
+    <div class="metric-list">
+      <div class="metric-item"><b>AI人才占比</b>：具备AI技能员工比例</div>
+      <div class="metric-item"><b>培训覆盖率</b>：全员AI素养培训完成率</div>
+      <div class="metric-item"><b>认证持证数</b>：AI相关资质认证人数</div>
+    </div>
+    <div class="card-note">考核权重：中</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="card-header">
+      <div class="card-icon">🏆</div>
+      <div class="card-title">创新成效</div>
+    </div>
+    <div class="metric-list">
+      <div class="metric-item"><b>专利/软著数</b>：年度AI相关知识产权数量</div>
+      <div class="metric-item"><b>降本增效额</b>：AI应用带来的成本节约</div>
+      <div class="metric-item"><b>获奖/标杆</b>：行业奖项与示范认定</div>
+    </div>
+    <div class="card-note">考核权重：中高</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="card-header">
+      <div class="card-icon">🛡️</div>
+      <div class="card-title">数据治理</div>
+    </div>
+    <div class="metric-list">
+      <div class="metric-item"><b>数据质量分</b>：准确性、完整性、时效性</div>
+      <div class="metric-item"><b>安全合规率</b>：等保、数据分级分类达标率</div>
+      <div class="metric-item"><b>信创适配度</b>：国产替代与自主可控进度</div>
+    </div>
+    <div class="card-note">考核权重：高（2026起）</div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num">5 / 47</span>
+</div>
+
+</body>
+</html>

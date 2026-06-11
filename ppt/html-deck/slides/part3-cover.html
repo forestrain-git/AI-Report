@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Part 3 过渡页</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    background: linear-gradient(160deg, #eef2ff 0%, #dbeafe 50%, #bfdbfe 100%);
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 大号半透明水印 */
+  .watermark {
+    position: absolute;
+    font-family: "Inter", sans-serif;
+    font-size: 380px;
+    font-weight: 900;
+    color: rgba(30,64,175,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* 装饰线条 */
+  .deco-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #1e40af, #0ea5e9, #1e40af);
+  }
+
+  .part-num {
+    font-size: 22px;
+    letter-spacing: 0.35em;
+    color: var(--brand-blue);
+    font-weight: 700;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .part-title {
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    font-size: 96px;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 20px;
+    line-height: 1.15;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 20px rgba(255,255,255,0.8);
+  }
+  .part-sub {
+    font-size: 32px;
+    color: #334155;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+  }
+  .part-divider {
+    width: 80px;
+    height: 4px;
+    background: var(--brand-blue);
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .part-foot {
+    position: absolute;
+    bottom: 30px;
+    text-align: center;
+    font-size: var(--fs-xs);
+    color: var(--ink-dim);
+  }
+</style>
+</head>
+<body>
+
+<div class="watermark">03</div>
+<div class="deco-line"></div>
+
+<div class="part-num">PART 3</div>
+<div class="part-title">同行压力与中建实践</div>
+<div class="part-sub">全球 → 国内 → 中建系 → 我们</div>
+<div class="part-divider"></div>
+
+<div class="part-foot">
+  <span class="page-num"></span>
+</div>
+
+</body>
+</html>

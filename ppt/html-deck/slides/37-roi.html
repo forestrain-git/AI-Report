@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P37 · 投入产出参考</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    gap: 20px;
+  }
+
+  /* 投入产出对比 */
+  .roi-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+  .roi-panel {
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .roi-panel.in {
+    background: linear-gradient(160deg, #fef2f2, #fff);
+    border: 2px solid #fecaca;
+  }
+  .roi-panel.out {
+    background: linear-gradient(160deg, #eff6ff, #fff);
+    border: 2px solid #dbeafe;
+  }
+  .roi-panel .roi-label {
+    font-size: 22px;
+    font-weight: 800;
+    padding-bottom: 10px;
+    border-bottom: 2px solid;
+  }
+  .roi-panel.in .roi-label { color: var(--red); border-color: #fecaca; }
+  .roi-panel.out .roi-label { color: var(--brand-blue); border-color: #dbeafe; }
+  .roi-panel .roi-item {
+    font-size: 20px;
+    color: var(--ink-body);
+    line-height: 1.6;
+    padding-left: 20px;
+    border-left: 3px solid transparent;
+  }
+  .roi-panel.in .roi-item { border-left-color: #fecaca; }
+  .roi-panel.out .roi-item { border-left-color: #dbeafe; }
+  .roi-panel .roi-item b {
+    color: var(--ink-title);
+  }
+
+  /* 隐性收益 2x2 */
+  .hidden-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    flex: 1;
+  }
+  .hidden-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .hidden-card .hc-icon {
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+  .hidden-card .hc-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink-title);
+  }
+  .hidden-card .hc-desc {
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.5;
+  }
+
+  /* 金句 */
+  .quote-line {
+    text-align: center;
+    font-family: "Noto Serif SC", serif;
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--red);
+    padding: 20px 0;
+    border-top: 2px solid #fecaca;
+    border-bottom: 2px solid #fecaca;
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">投入产出参考</div>
+
+<div class="roi-split">
+  <div class="roi-panel in">
+    <div class="roi-label">投入端</div>
+    <div class="roi-item"><b>人力成本：</b>1 人 × 数天（传统需 3 人 × 3-6 月）</div>
+    <div class="roi-item"><b>工具成本：</b>多数工具免费或低费用（DeepSeek / Kimi 免费额度充足）</div>
+    <div class="roi-item"><b>学习成本：</b>半天到 1 周上手，边做边学</div>
+    <div class="roi-item"><b>机会成本：</b>几乎为零——试点失败可随时调整</div>
+  </div>
+  <div class="roi-panel out">
+    <div class="roi-label">产出端</div>
+    <div class="roi-item"><b>时间压缩：</b>人天压缩数十倍，从"月"到"天"</div>
+    <div class="roi-item"><b>质量提升：</b>AI 辅助减少人为疏漏，标准化输出</div>
+    <div class="roi-item"><b>能力沉淀：</b>知识库、模板、SOP 可复用</div>
+    <div class="roi-item"><b>回报周期：</b>选对场景的试点项目，通常 6 个月以内回本</div>
+  </div>
+</div>
+
+<div class="hidden-grid">
+  <div class="hidden-card">
+    <div class="hc-icon">📋</div>
+    <div class="hc-title">合规留痕</div>
+    <div class="hc-desc">AI 操作全程可记录、可审计，满足央企合规要求</div>
+  </div>
+  <div class="hidden-card">
+    <div class="hc-icon">🔍</div>
+    <div class="hc-title">审计可追溯</div>
+    <div class="hc-desc">每一次决策都有数据支撑，审计不再是"翻箱倒柜"</div>
+  </div>
+  <div class="hidden-card">
+    <div class="hc-icon">⚠️</div>
+    <div class="hc-title">风险预警</div>
+    <div class="hc-desc">AI 实时监控业务异常，提前发现潜在风险</div>
+  </div>
+  <div class="hidden-card">
+    <div class="hc-icon">🏆</div>
+    <div class="hc-title">政绩加分</div>
+    <div class="hc-desc">AI 指标纳入考核，先行者有数据、有案例、有话语权</div>
+  </div>
+</div>
+
+<div class="quote-line">"在 AI 时代，最大的成本不是钱——是'等'。"</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 4 · 落地路径</span>
+  <span class="page-num">37 / 47</span>
+</div>
+
+</body>
+</html>

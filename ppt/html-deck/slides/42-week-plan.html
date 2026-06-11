@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P42 · 个人7天行动清单</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .slide-title { margin-bottom: 16px; }
+  .slide-lead { margin-bottom: 24px; }
+
+  /* 双列布局 */
+  .dual-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    min-height: 0;
+  }
+  .col-block {
+    border-radius: 14px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .col-block.tech {
+    background: linear-gradient(180deg, #eff6ff, #fff);
+    border: 2px solid #dbeafe;
+  }
+  .col-block.biz {
+    background: linear-gradient(180deg, #f0fdf4, #fff);
+    border: 2px solid #dcfce7;
+  }
+  .col-header {
+    font-size: 22px;
+    font-weight: 800;
+    padding-bottom: 10px;
+    border-bottom: 2px solid;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .col-block.tech .col-header { color: #1e40af; border-color: #dbeafe; }
+  .col-block.biz .col-header { color: #14532d; border-color: #dcfce7; }
+  .col-header .icon { font-size: 28px; }
+
+  /* 行动项 */
+  .action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .action-item:last-child { border-bottom: none; }
+  .day-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .tech .day-circle { background: #2563eb; }
+  .biz .day-circle { background: #16a34a; }
+  .action-text {
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.5;
+    padding-top: 6px;
+  }
+  .action-text b { color: var(--ink-title); }
+
+  /* 底部三级递进 */
+  .tier-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .tier-card {
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .tier-card.t1 { background: #f0fdf4; color: #14532d; border: 2px solid #86efac; }
+  .tier-card.t2 { background: #eff6ff; color: #1e3a8a; border: 2px solid #93c5fd; }
+  .tier-card.t3 { background: #fef2f2; color: #7f1d1d; border: 2px solid #fecaca; }
+  .tier-card .tier-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  /* 底部金句 */
+  .kicker.blue {
+    margin-top: 16px;
+    font-size: 24px;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="slide-title">你的个人 7 天行动清单</h1>
+<p class="slide-lead">不用等到公司部署系统——你今天就可以开始</p>
+
+<div class="dual-col">
+  <div class="col-block tech">
+    <div class="col-header">
+      <span class="icon">💻</span>
+      信息化条线
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D1</div>
+      <div class="action-text">用 <b>DeepSeek / Claude</b>（可接国产模型）生成一个数据处理脚本，解决手头重复性工作</div>
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D3</div>
+      <div class="action-text">用 <b>Cursor / V0</b> 搭建一个数据看板或内部工具原型</div>
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D5</div>
+      <div class="action-text">用 <b>WorkBuddy</b> 完成一个小型自动化任务（如日报汇总、数据同步）</div>
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D7</div>
+      <div class="action-text">向本部同事分享你的 AI 实践经验，带动身边人</div>
+    </div>
+  </div>
+
+  <div class="col-block biz">
+    <div class="col-header">
+      <span class="icon">📋</span>
+      本部职能岗
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D1</div>
+      <div class="action-text">用 <b>豆包 / Kimi</b> 写一封邮件或通知，对比 AI 版与自己写的差异</div>
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D3</div>
+      <div class="action-text">用 <b>Kimi</b> 读一份 20 页 PDF 报告，让它提炼核心要点和行动建议</div>
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D5</div>
+      <div class="action-text">用 <b>通义听悟</b> 整理一次 30 分钟会议录音，生成纪要初稿</div>
+    </div>
+    <div class="action-item">
+      <div class="day-circle">D7</div>
+      <div class="action-text">用 AI 生成一份周报初稿，再人工润色，对比效率提升</div>
+    </div>
+  </div>
+</div>
+
+<div class="tier-bar">
+  <div class="tier-card t1">
+    <div class="tier-label">零门槛</div>
+    今天打开 AI 工具<br>问一个头疼的问题
+  </div>
+  <div class="tier-card t2">
+    <div class="tier-label">业务赋能</div>
+    本周用 AI 完成<br>一项具体工作任务
+  </div>
+  <div class="tier-card t3">
+    <div class="tier-label">护城河级</div>
+    本月形成个人<br>AI 工作流方法论
+  </div>
+</div>
+
+<div class="kicker blue">
+  "最懂业务的人，现在最懂 AI。从今天开始。"
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 5 · 风险预判与行动倡议</span>
+  <span class="page-num">42 / 47</span>
+</div>
+
+</body>
+</html>

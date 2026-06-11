@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P45 · 国产大模型选型指南</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .slide-title { margin-bottom: 12px; }
+  .slide-lead { margin-bottom: 16px; }
+
+  /* 决策树 */
+  .tree-wrap {
+    margin-bottom: 16px;
+  }
+  .tree-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+  }
+  .decision-tree {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+  .tree-node {
+    background: #eff6ff;
+    border: 2px solid #93c5fd;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e3a8a;
+    text-align: center;
+  }
+  .tree-node.root {
+    background: #1e40af;
+    border-color: #1e40af;
+    color: #fff;
+  }
+  .tree-node.leaf {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #14532d;
+  }
+  .tree-arrow {
+    font-size: 18px;
+    color: var(--ink-subtle);
+  }
+  .tree-branch {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+  }
+  .branch-label {
+    font-size: 12px;
+    color: var(--ink-dim);
+    font-weight: 600;
+  }
+
+  /* 四模型对比表 */
+  .compare-wrap {
+    margin-bottom: 16px;
+  }
+  .compare-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+  }
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .compare-table th {
+    text-align: left;
+    background: #f8fafc;
+    color: var(--brand-blue);
+    font-weight: 700;
+    padding: 10px 12px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .compare-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--ink-body);
+    vertical-align: top;
+  }
+  .compare-table td:first-child {
+    font-weight: 600;
+    color: var(--ink-title);
+    width: 140px;
+  }
+  .tag-inline {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-green { background: #dcfce7; color: #14532d; }
+  .tag-orange { background: #fff7ed; color: #7c2d12; }
+  .tag-red { background: #fee2e2; color: #7f1d1d; }
+
+  /* 部署方式对比 */
+  .deploy-wrap {
+    margin-top: auto;
+  }
+  .deploy-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+  }
+  .deploy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .deploy-card {
+    border-radius: 12px;
+    padding: 16px 20px;
+    border: 2px solid;
+  }
+  .deploy-card.private {
+    background: #f0fdf4;
+    border-color: #86efac;
+  }
+  .deploy-card.cloud {
+    background: #eff6ff;
+    border-color: #93c5fd;
+  }
+  .deploy-card .dc-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .deploy-card.private .dc-title { color: #14532d; }
+  .deploy-card.cloud .dc-title { color: #1e3a8a; }
+  .deploy-card .dc-list {
+    list-style: none;
+    font-size: 15px;
+    color: var(--ink-body);
+    line-height: 1.7;
+  }
+  .deploy-card .dc-list li {
+    padding-left: 16px;
+    position: relative;
+  }
+  .deploy-card .dc-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="slide-title">国产大模型选型完全指南</h1>
+<p class="slide-lead">决策树 + 四模型对比 + 部署方式选择</p>
+
+<div class="tree-wrap">
+  <div class="tree-title">选型决策树</div>
+  <div class="decision-tree">
+    <div class="tree-node root">需要私有化部署？</div>
+    <div class="tree-arrow">→</div>
+    <div class="tree-branch">
+      <div class="branch-label">是</div>
+      <div class="tree-node leaf">DeepSeek / 华为盘古<br>私有化版</div>
+    </div>
+    <div class="tree-arrow">→</div>
+    <div class="tree-branch">
+      <div class="branch-label">否 → 强中文写作？</div>
+      <div class="tree-node leaf">文心一言 / 通义千问</div>
+    </div>
+    <div class="tree-arrow">→</div>
+    <div class="tree-branch">
+      <div class="branch-label">否 → 深度推理？</div>
+      <div class="tree-node leaf">DeepSeek-R1</div>
+    </div>
+    <div class="tree-arrow">→</div>
+    <div class="tree-branch">
+      <div class="branch-label">否</div>
+      <div class="tree-node leaf">通义千问 / Kimi<br>通用场景</div>
+    </div>
+  </div>
+</div>
+
+<div class="compare-wrap">
+  <div class="compare-title">四模型完整对比</div>
+  <table class="compare-table">
+    <tr>
+      <th>维度</th>
+      <th>DeepSeek</th>
+      <th>文心一言</th>
+      <th>通义千问</th>
+      <th>华为盘古</th>
+    </tr>
+    <tr>
+      <td>核心优势</td>
+      <td>深度推理、代码生成、开源</td>
+      <td>中文理解、文学创作、搜索增强</td>
+      <td>多模态、长文本、阿里生态</td>
+      <td>行业适配、B端服务、昇腾生态</td>
+    </tr>
+    <tr>
+      <td>适用场景</td>
+      <td>技术开发、复杂推理、私有化</td>
+      <td>公文写作、内容创作、营销</td>
+      <td>办公提效、文档处理、电商</td>
+      <td>金融、制造、政务等行业落地</td>
+    </tr>
+    <tr>
+      <td>私有化</td>
+      <td><span class="tag-inline tag-green">支持</span>开源可本地部署</td>
+      <td><span class="tag-inline tag-orange">部分</span>企业版</td>
+      <td><span class="tag-inline tag-orange">部分</span>企业版</td>
+      <td><span class="tag-inline tag-green">原生支持</span>昇腾芯片</td>
+    </tr>
+    <tr>
+      <td>定价</td>
+      <td><span class="tag-inline tag-green">低</span>开源免费 / API 低价</td>
+      <td><span class="tag-inline tag-orange">中</span>会员+企业版</td>
+      <td><span class="tag-inline tag-orange">中</span>按量计费</td>
+      <td><span class="tag-inline tag-red">高</span>企业定制</td>
+    </tr>
+    <tr>
+      <td>信创适配</td>
+      <td><span class="tag-inline tag-green">优</span>国产芯片友好</td>
+      <td><span class="tag-inline tag-green">优</span>百度生态</td>
+      <td><span class="tag-inline tag-green">优</span>阿里生态</td>
+      <td><span class="tag-inline tag-green">最优</span>全栈国产化</td>
+    </tr>
+  </table>
+</div>
+
+<div class="deploy-wrap">
+  <div class="deploy-title">部署方式对比</div>
+  <div class="deploy-grid">
+    <div class="deploy-card private">
+      <div class="dc-title">私有化部署</div>
+      <ul class="dc-list">
+        <li>数据完全不出域，合规最安全</li>
+        <li>可深度定制模型和知识库</li>
+        <li>需要 GPU 算力投入，维护成本高</li>
+        <li>适合：金融、政务、核心数据敏感场景</li>
+      </ul>
+    </div>
+    <div class="deploy-card cloud">
+      <div class="dc-title">公有云 API</div>
+      <ul class="dc-list">
+        <li>即开即用，零基础设施投入</li>
+        <li>按量付费，弹性扩展</li>
+        <li>需确认供应商合规资质和数据处理方式</li>
+        <li>适合：通用办公、非敏感业务、快速验证</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">附录</span>
+  <span class="page-num">45 / 47</span>
+</div>
+
+</body>
+</html>

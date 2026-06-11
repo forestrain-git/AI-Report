@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P32 · 两个标杆案例</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    gap: 20px;
+  }
+
+  /* 上：南钢 */
+  .block-nangang {
+    background: linear-gradient(160deg, #7f1d1d 0%, #991b1b 60%, #b91c1c 100%);
+    border-radius: 16px;
+    padding: 36px 44px;
+    color: #fff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .block-nangang::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(251,191,36,0.25), transparent 70%);
+  }
+  .block-nangang .tag {
+    display: inline-block;
+    background: rgba(251,191,36,0.2);
+    border: 1px solid rgba(251,191,36,0.5);
+    color: #fbbf24;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    width: fit-content;
+  }
+  .block-nangang .title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .block-nangang .points {
+    display: flex;
+    gap: 40px;
+    font-size: 20px;
+    line-height: 1.7;
+    opacity: 0.95;
+  }
+  .block-nangang .points li {
+    list-style: none;
+    position: relative;
+    padding-left: 20px;
+  }
+  .block-nangang .points li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #fbbf24;
+    font-weight: 700;
+  }
+
+  /* 下：美的 */
+  .block-midea {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 36px 44px;
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .block-midea .tag {
+    display: inline-block;
+    background: #dbeafe;
+    color: var(--brand-blue);
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    width: fit-content;
+  }
+  .block-midea .title {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--ink-title);
+    line-height: 1.3;
+  }
+  .arch-stack {
+    display: flex;
+    gap: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+  }
+  .arch-layer {
+    flex: 1;
+    padding: 20px 16px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .arch-layer:nth-child(1) { background: #1e40af; }
+  .arch-layer:nth-child(2) { background: #2563eb; }
+  .arch-layer:nth-child(3) { background: #3b82f6; }
+  .arch-layer:nth-child(4) { background: #60a5fa; }
+  .arch-layer .layer-name {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .arch-layer .layer-desc {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  .anti-list {
+    display: flex;
+    gap: 20px;
+  }
+  .anti-item {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.5;
+  }
+  .anti-item b {
+    color: var(--brand-blue);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">别人怎么组织的——两个标杆案例</div>
+
+<!-- 上：南钢 -->
+<div class="block-nangang">
+  <div class="tag">钢铁大模型百日会战</div>
+  <div class="title">南钢 × 华为：董事长亲任总指挥</div>
+  <ul class="points">
+    <li>三大作战横队 + 12 场景纵队，组织化推进</li>
+    <li>"三分建设七分运营"——强调落地而非立项</li>
+    <li>百日闭环，从战略到执行的极致效率</li>
+  </ul>
+</div>
+
+<!-- 下：美的 -->
+<div class="block-midea">
+  <div class="tag">美的集团四层架构</div>
+  <div class="title">从业务应用到基础设施的完整闭环</div>
+  <div class="arch-stack">
+    <div class="arch-layer">
+      <div class="layer-name">业务应用</div>
+      <div class="layer-desc">智能排产 / 质检 / 客服</div>
+    </div>
+    <div class="arch-layer">
+      <div class="layer-name">应用集成</div>
+      <div class="layer-desc">API 网关 / 数据中台</div>
+    </div>
+    <div class="arch-layer">
+      <div class="layer-name">算法平台</div>
+      <div class="layer-desc">模型训练 / 推理服务</div>
+    </div>
+    <div class="arch-layer">
+      <div class="layer-name">基础设施</div>
+      <div class="layer-desc">算力 / 存储 / 安全</div>
+    </div>
+  </div>
+  <div class="anti-list">
+    <div class="anti-item">
+      <b>反直觉设计 ①</b>
+      IT 经理驻场事业部——技术懂业务，业务信技术
+    </div>
+    <div class="anti-item">
+      <b>反直觉设计 ②</b>
+      每个项目必须 ROI 评估——不投无法量化的项目
+    </div>
+    <div class="anti-item">
+      <b>反直觉设计 ③</b>
+      模型资产化——训练好的模型复用，不重复造轮子
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 4 · 落地路径</span>
+  <span class="page-num">32 / 47</span>
+</div>
+
+</body>
+</html>

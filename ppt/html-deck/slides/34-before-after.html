@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P34 · 先跑起来</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    padding: 50px 100px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    gap: 24px;
+  }
+  .page-title {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--ink-title);
+    padding-bottom: 8px;
+    border-bottom: 4px solid var(--brand-blue);
+    display: inline-block;
+    align-self: flex-start;
+  }
+
+  /* ── 左右对比：灰 vs 蓝 ── */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    gap: 0;
+    flex: 1;
+    min-height: 0;
+  }
+  .panel {
+    border-radius: 16px;
+    padding: 40px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+  }
+  .panel.old {
+    background: #e2e8f0;
+    border: 2px solid #cbd5e1;
+  }
+  .panel.new {
+    background: linear-gradient(160deg, #dbeafe, #eff6ff);
+    border: 3px solid var(--brand-blue);
+    box-shadow: 0 8px 32px rgba(30,64,175,0.12);
+  }
+  .panel .panel-label {
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    font-weight: 800;
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 2px solid;
+  }
+  .panel.old .panel-label {
+    color: #94a3b8;
+    border-color: #cbd5e1;
+  }
+  .panel.new .panel-label {
+    color: var(--brand-blue);
+    border-color: var(--brand-blue);
+  }
+  .panel .item {
+    font-size: 28px;
+    line-height: 1.6;
+    padding-left: 24px;
+    border-left: 4px solid transparent;
+  }
+  .panel.old .item {
+    color: #94a3b8;
+    border-left-color: #cbd5e1;
+    text-decoration: line-through;
+    text-decoration-color: #cbd5e1;
+  }
+  .panel.new .item {
+    color: var(--ink-title);
+    border-left-color: var(--brand-blue);
+    font-weight: 700;
+  }
+
+  .arrows-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+  .arrow-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e2e8f0, #dbeafe);
+    border: 2px solid #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .arrow-wrap .arrow {
+    font-size: 32px;
+    color: var(--brand-blue);
+    font-weight: 700;
+  }
+
+  /* ── 公式条：简洁 ── */
+  .formula-bar {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink-title);
+    padding: 20px 0;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+  }
+  .formula-bar .hl { color: var(--brand-blue); }
+
+  /* ── 学习法 + 案例故事 ── */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 20px;
+  }
+  .learn-box {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-size: 19px;
+    color: var(--ink-body);
+    line-height: 1.7;
+    position: relative;
+    overflow: hidden;
+  }
+  .learn-box::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--brand-blue);
+  }
+  .learn-box .title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+  }
+  .stories {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.7;
+  }
+  .stories .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-title);
+    margin-bottom: 8px;
+  }
+  .stories .story {
+    padding: 6px 0;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+  .stories .story:last-child { border-bottom: none; }
+  .stories .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .tag-green  { background: #dcfce7; color: #16a34a; }
+  .tag-orange { background: #fff7ed; color: #ea580c; }
+  .tag-blue   { background: #dbeafe; color: #1e40af; }
+</style>
+</head>
+<body>
+
+<div class="page-title">怎么做到的？——先跑起来</div>
+
+<div class="split">
+  <div class="panel old">
+    <div class="panel-label">三个月前</div>
+    <div class="item">等需求、等排期</div>
+    <div class="item">一个系统做几个月</div>
+    <div class="item">"AI 跟我有什么关系"</div>
+  </div>
+  <div class="arrows-col">
+    <div class="arrow-wrap"><div class="arrow">→</div></div>
+    <div class="arrow-wrap"><div class="arrow">→</div></div>
+    <div class="arrow-wrap"><div class="arrow">→</div></div>
+  </div>
+  <div class="panel new">
+    <div class="panel-label">今天</div>
+    <div class="item">针对问题直接上手</div>
+    <div class="item">半天 / 一周上线</div>
+    <div class="item">"搞到停不下来"</div>
+  </div>
+</div>
+
+<div class="formula-bar">
+  核心公式：<span class="hl">先跑起来 → 尝到甜头 → 自己就想跑了</span>
+</div>
+
+<div class="bottom-grid">
+  <div class="learn-box">
+    <div class="title">AI 时代二八学习法</div>
+    ① 让 AI 提炼 20% 核心知识 → ② 用这 20% 直接做 MVP → ③ 逐个摸清知识点 → ④ 用起来以后回过头补理论<br>
+    <b style="color:var(--brand-blue)">"别先学再用——直接用，在用中学。"</b>
+  </div>
+  <div class="stories">
+    <div class="title">真实破冰故事</div>
+    <div class="story"><span class="tag tag-green">首单</span>管理学院：第一单 AI 辅助课程设计，2 小时完成原需 2 天的工作量</div>
+    <div class="story"><span class="tag tag-orange">打破质疑</span>中建方程康养：刘力用 1 周出 29 页前端，说服政府拿下项目</div>
+    <div class="story"><span class="tag tag-blue">练兵</span>免费内部项目：档案系统 / 评标中心 / 商务平台，零成本验证</div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 4 · 落地路径</span>
+  <span class="page-num">34 / 47</span>
+</div>
+
+</body>
+</html>

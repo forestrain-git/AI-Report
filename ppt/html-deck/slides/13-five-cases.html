@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P13 · 五个案例规律</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    padding: 40px 80px 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 1080px;
+  }
+  .page-title {
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--ink-title);
+    padding-bottom: 6px;
+    border-bottom: 4px solid var(--brand-blue);
+    display: inline-block;
+    align-self: flex-start;
+  }
+
+  /* ── 五张竖条色卡 ── */
+  .case-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    flex: 1.6;
+    min-height: 0;
+  }
+  .case-card {
+    border-radius: 14px;
+    padding: 28px 20px 24px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: rgba(255,255,255,0.4);
+  }
+  .case-card .who {
+    font-size: 26px;
+    font-weight: 800;
+  }
+  .case-card .role {
+    font-size: 16px;
+    opacity: 0.9;
+    font-weight: 500;
+  }
+  .case-card .metric {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-top: 10px;
+  }
+  .case-card .metric .unit {
+    font-size: 20px;
+    font-weight: 500;
+    opacity: 0.85;
+  }
+  .case-card .detail {
+    font-size: 16px;
+    opacity: 0.85;
+    line-height: 1.35;
+    margin-top: 4px;
+  }
+  .c1 { background: linear-gradient(160deg, #2563eb, #1d4ed8); }
+  .c2 { background: linear-gradient(160deg, #0891b2, #0e7490); }
+  .c3 { background: linear-gradient(160deg, #059669, #047857); }
+  .c4 { background: linear-gradient(160deg, #ea580c, #c2410c); }
+  .c5 { background: linear-gradient(160deg, #7c3aed, #6d28d9); }
+
+  /* ── 四洞察：彩色左边条 ── */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .insight-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 20px 18px 24px;
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.55;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    border-radius: 12px 0 0 12px;
+  }
+  .insight-card:nth-child(1)::before { background: #2563eb; }
+  .insight-card:nth-child(2)::before { background: #0891b2; }
+  .insight-card:nth-child(3)::before { background: #059669; }
+  .insight-card:nth-child(4)::before { background: #ea580c; }
+  .insight-card .num {
+    display: inline;
+    font-family: "Inter", sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-right: 6px;
+  }
+  .insight-card:nth-child(1) .num { color: #2563eb; }
+  .insight-card:nth-child(2) .num { color: #0891b2; }
+  .insight-card:nth-child(3) .num { color: #059669; }
+  .insight-card:nth-child(4) .num { color: #ea580c; }
+
+  /* ── 底部公式：醒目 ── */
+  .formula-bar {
+    text-align: center;
+    padding: 18px 0;
+    border-top: 2px solid #e2e8f0;
+    border-bottom: 2px solid #e2e8f0;
+    flex-shrink: 0;
+  }
+  .formula {
+    font-family: "Inter", "Noto Sans SC", sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: #0f172a;
+  }
+  .formula .hl { color: var(--brand-blue); }
+  .formula-sub {
+    font-family: "Noto Serif SC", serif;
+    font-size: 24px;
+    color: var(--ink-dim);
+    font-style: italic;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">五个案例，一个规律</div>
+
+<div class="case-row">
+  <div class="case-card c1">
+    <div class="who">黄天赐</div>
+    <div class="role">前端 → 后端</div>
+    <div class="metric">1周<span class="unit"> / 2人月</span></div>
+    <div class="detail">16 页 · 已签合同</div>
+  </div>
+  <div class="case-card c2">
+    <div class="who">王桂平</div>
+    <div class="role">后端 → 前端</div>
+    <div class="metric">半天<span class="unit"> / 3-6人月</span></div>
+    <div class="detail">33 页 · 已签合同</div>
+  </div>
+  <div class="case-card c3">
+    <div class="who">刘力</div>
+    <div class="role">产品经理 → 开发</div>
+    <div class="metric">1周<span class="unit"> / 3+人月</span></div>
+    <div class="detail">29 页 · 零代码</div>
+  </div>
+  <div class="case-card c4">
+    <div class="who">王佳男</div>
+    <div class="role">商务经理 → 全部</div>
+    <div class="metric">数天<span class="unit"> / 6人月</span></div>
+    <div class="detail">19 页</div>
+  </div>
+  <div class="case-card c5">
+    <div class="who">吴迪</div>
+    <div class="role">总工 → 写代码</div>
+    <div class="metric">碎片<span class="unit"> / 1-2周</span></div>
+    <div class="detail">1 页大屏 · AI 引擎</div>
+  </div>
+</div>
+
+<div class="insight-grid">
+  <div class="insight-card">
+    <span class="num">01</span>
+    时间被压缩了一个数量级：从"月"到"天"到"小时"。不是效率提升，是<b>维度跃迁</b>。
+  </div>
+  <div class="insight-card">
+    <span class="num">02</span>
+    <b>一个人就是一个团队</b>：五个系统合计 98 个视图页面，全部一人完成。
+  </div>
+  <div class="insight-card">
+    <span class="num">03</span>
+    <b>角色边界被 AI 融化了</b>：后端补前端、产品补开发、商务补全部。AI 把每个人的能力缺口填上了。
+  </div>
+  <div class="insight-card">
+    <span class="num">04</span>
+    <b>连总工也在写代码</b>：吴迪写出了水务监控大屏 + AI 权重优化引擎。这不是研发部的事。
+  </div>
+</div>
+
+<div class="formula-bar">
+  <div class="formula">
+    你的 <span class="hl">AI 价值</span> = 专业领域知识 × <span class="hl">AI 工具使用能力</span>
+  </div>
+  <div class="formula-sub">"最懂业务的人，现在最懂 AI。"</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 中建实践</span>
+  <span class="page-num">13 / 47</span>
+</div>
+
+</body>
+</html>

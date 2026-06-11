@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P38 · 避坑指南</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .slide-title { margin-bottom: 16px; }
+  .slide-lead { margin-bottom: 20px; }
+
+  /* 顶部数据冲击表 */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .stat-box {
+    background: #fff;
+    border: 2px solid #fecaca;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .stat-box .num {
+    font-family: "Inter", sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1.1;
+  }
+  .stat-box .label {
+    font-size: 15px;
+    color: var(--ink-dim);
+    margin-top: 6px;
+  }
+  .stat-box .source {
+    font-size: 12px;
+    color: var(--ink-subtle);
+    margin-top: 4px;
+  }
+
+  /* 五大避坑卡片 */
+  .pitfall-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .pitfall-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .pitfall-card .pf-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pitfall-card .pf-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink-title);
+    line-height: 1.3;
+  }
+  .pitfall-card .pf-desc {
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  /* 场景选择矩阵 */
+  .matrix-wrap {
+    margin-bottom: 16px;
+  }
+  .matrix-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+  }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .matrix-table th {
+    text-align: left;
+    background: #f8fafc;
+    color: var(--brand-blue);
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .matrix-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--ink-body);
+  }
+  .matrix-table .wrong {
+    color: var(--red);
+    font-weight: 600;
+  }
+  .matrix-table .right {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* POC陷阱流程图 */
+  .poc-wrap {
+    margin-top: auto;
+  }
+  .poc-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 10px;
+  }
+  .poc-flow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .poc-step {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--ink-body);
+  }
+  .poc-step.trap {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: var(--red);
+    font-weight: 700;
+  }
+  .poc-arrow {
+    font-size: 20px;
+    color: var(--ink-subtle);
+  }
+</style>
+</head>
+<body>
+
+<h1 class="slide-title">如何避开大多数 AI 项目都会踩的坑</h1>
+<p class="slide-lead">RAND / Gartner 最新研究：AI 项目失败率居高不下，但失败原因高度集中</p>
+
+<div class="stats-bar">
+  <div class="stat-box">
+    <div class="num">85%</div>
+    <div class="label">AI 项目未达预期或失败</div>
+    <div class="source">RAND Corporation 2024</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">~50%</div>
+    <div class="label">项目从未进入生产环境</div>
+    <div class="source">Gartner 2024</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">80%+</div>
+    <div class="label">失败源于非技术因素</div>
+    <div class="source">综合多源研究</div>
+  </div>
+</div>
+
+<div class="pitfall-grid">
+  <div class="pitfall-card">
+    <div class="pf-num">1</div>
+    <div class="pf-title">问题定义不清</div>
+    <div class="pf-desc">为 AI 而 AI，没有明确业务目标与成功标准</div>
+  </div>
+  <div class="pitfall-card">
+    <div class="pf-num">2</div>
+    <div class="pf-title">数据战略缺失</div>
+    <div class="pf-desc">数据分散、质量差、无治理，模型喂"垃圾"</div>
+  </div>
+  <div class="pitfall-card">
+    <div class="pf-num">3</div>
+    <div class="pf-title">IT 基础设施不足</div>
+    <div class="pf-desc">算力、网络、安全底座跟不上模型需求</div>
+  </div>
+  <div class="pitfall-card">
+    <div class="pf-num">4</div>
+    <div class="pf-title">技术与业务脱节</div>
+    <div class="pf-desc">IT 部门单打独斗，业务部门不参与</div>
+  </div>
+  <div class="pitfall-card">
+    <div class="pf-num">5</div>
+    <div class="pf-title">合规与风险失控</div>
+    <div class="pf-desc">忽视等保、数据安全、AI 内容标识要求</div>
+  </div>
+</div>
+
+<div class="matrix-wrap">
+  <div class="matrix-title">场景选择矩阵：四类常见问题 vs 正确做法</div>
+  <table class="matrix-table">
+    <tr>
+      <th>问题类型</th>
+      <th>错误做法</th>
+      <th>正确做法</th>
+    </tr>
+    <tr>
+      <td>场景过大</td>
+      <td class="wrong">一上来就做"智慧XX"大平台</td>
+      <td class="right">从 1-2 个高频、低风险场景切入</td>
+    </tr>
+    <tr>
+      <td>期望过高</td>
+      <td class="wrong">要求 AI 100% 准确、零失误</td>
+      <td class="right">设定"人机协同"边界，允许迭代</td>
+    </tr>
+    <tr>
+      <td>数据裸奔</td>
+      <td class="wrong">直接用境外工具处理内部数据</td>
+      <td class="right">先分级分类，再选合规工具</td>
+    </tr>
+    <tr>
+      <td>没有复盘</td>
+      <td class="wrong">POC 做完不总结、不复制</td>
+      <td class="right">每个试点必须输出模板和方法论</td>
+    </tr>
+  </table>
+</div>
+
+<div class="poc-wrap">
+  <div class="poc-title">POC 陷阱：从"概念验证"到"证完就丢"</div>
+  <div class="poc-flow">
+    <div class="poc-step">立项<br><small>领导拍板</small></div>
+    <div class="poc-arrow">→</div>
+    <div class="poc-step">POC<br><small>技术演示</small></div>
+    <div class="poc-arrow">→</div>
+    <div class="poc-step">汇报<br><small>展示亮点</small></div>
+    <div class="poc-arrow">→</div>
+    <div class="poc-step trap">停滞<br><small>无预算/无Owner</small></div>
+    <div class="poc-arrow">→</div>
+    <div class="poc-step trap">废弃<br><small>证完就丢</small></div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 5 · 风险预判与行动倡议</span>
+  <span class="page-num">38 / 47</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Part 1 过渡页</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    background: linear-gradient(160deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .watermark {
+    position: absolute;
+    font-family: "Inter", sans-serif;
+    font-size: 380px;
+    font-weight: 900;
+    color: rgba(30,64,175,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .deco-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #1e40af, #0ea5e9, #1e40af);
+  }
+
+  .part-num {
+    font-size: 22px;
+    letter-spacing: 0.35em;
+    color: var(--brand-blue);
+    font-weight: 700;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .part-title {
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: #0f172a;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 20px rgba(255,255,255,0.8);
+  }
+
+  .part-sub {
+    font-size: 32px;
+    color: #334155;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+  }
+
+  .part-divider {
+    width: 80px;
+    height: 4px;
+    background: var(--brand-blue);
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-footer {
+    position: absolute;
+    bottom: 30px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-xs);
+    color: var(--ink-subtle);
+    z-index: 1;
+  }
+
+  .page-footer .part-label {
+    color: var(--brand-blue);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<div class="watermark">01</div>
+
+<div class="part-num">PART 1</div>
+<div class="part-title">政策锚定</div>
+<div class="part-sub">为什么必须现在行动</div>
+<div class="part-divider"></div>
+
+<div class="deco-line"></div>
+
+<div class="page-footer">
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num"></span>
+</div>
+
+</body>
+</html>

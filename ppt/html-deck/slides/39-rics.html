@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P39 · 全球建筑业真实进度</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .slide-title { margin-bottom: 16px; }
+  .slide-lead { margin-bottom: 20px; }
+
+  /* 上部双栏：RICS数据 + 柱状图 */
+  .top-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  /* RICS 数据表 */
+  .rics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+  }
+  .rics-table th {
+    text-align: left;
+    background: #f8fafc;
+    color: var(--brand-blue);
+    font-weight: 700;
+    padding: 12px 16px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .rics-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--ink-body);
+  }
+  .rics-table .pct {
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .rics-table .pct.red { color: var(--red); }
+  .rics-table .pct.orange { color: var(--orange); }
+  .rics-table .pct.blue { color: var(--brand-blue); }
+  .rics-table .pct.dim { color: var(--ink-subtle); }
+
+  /* 柱状图 */
+  .chart-wrap {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .chart-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 16px;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .bar-label {
+    width: 100px;
+    font-size: 14px;
+    color: var(--ink-body);
+    text-align: right;
+    padding-right: 12px;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    transition: width 0.6s ease;
+  }
+  .bar-fill.tech { background: var(--brand-blue); }
+  .bar-fill.finance { background: #2563eb; }
+  .bar-fill.mfg { background: #0ea5e9; }
+  .bar-fill.construction { background: var(--red); }
+
+  /* 洞察卡片 */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: auto;
+  }
+  .insight-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 5px solid var(--brand-blue);
+  }
+  .insight-card .ic-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 8px;
+  }
+  .insight-card .ic-body {
+    font-size: 16px;
+    color: var(--ink-body);
+    line-height: 1.55;
+  }
+
+  /* 底部金句 */
+  .kicker.blue {
+    margin-top: 16px;
+    font-size: 26px;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="slide-title">全球建筑业的真实进度</h1>
+<p class="slide-lead">RICS 2024 全球调查：不是只有我们在摸索</p>
+
+<div class="top-section">
+  <div>
+    <table class="rics-table">
+      <tr>
+        <th>成熟度阶段</th>
+        <th>占比</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td>未使用 AI</td>
+        <td class="pct red">45%</td>
+        <td>尚未开始任何 AI 探索</td>
+      </tr>
+      <tr>
+        <td>早期试点</td>
+        <td class="pct orange">34%</td>
+        <td>个别团队或小范围尝试</td>
+      </tr>
+      <tr>
+        <td>常规使用</td>
+        <td class="pct blue">12%</td>
+        <td>部分流程已嵌入 AI</td>
+      </tr>
+      <tr>
+        <td>全组织嵌入</td>
+        <td class="pct dim">&lt;1%</td>
+        <td>AI 成为核心生产力</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">行业 AI 核心业务嵌入率对比</div>
+    <div class="bar-row">
+      <div class="bar-label">科技</div>
+      <div class="bar-track">
+        <div class="bar-fill tech" style="width: 89%;">89%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">金融</div>
+      <div class="bar-track">
+        <div class="bar-fill finance" style="width: 78%;">78%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">制造</div>
+      <div class="bar-track">
+        <div class="bar-fill mfg" style="width: 65%;">65%</div>
+      </div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">建筑业</div>
+      <div class="bar-track">
+        <div class="bar-fill construction" style="width: 3%;">1.5%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="insight-grid">
+  <div class="insight-card">
+    <div class="ic-title">洞察一：差距即机遇</div>
+    <div class="ic-body">建筑业 AI 采用率仅为科技行业的 1/60，这意味着先行者将获得巨大的效率红利和竞争优势。</div>
+  </div>
+  <div class="insight-card">
+    <div class="ic-title">洞察二：试点到规模化是鸿沟</div>
+    <div class="ic-body">34% 企业在早期试点，但只有 &lt;1% 实现全组织嵌入。关键差距不在技术，而在方法论和执行力。</div>
+  </div>
+  <div class="insight-card">
+    <div class="ic-title">洞察三：窗口期有限</div>
+    <div class="ic-body">56% 全球建筑高管计划增加 AI 投资。当竞争对手完成布局，追赶成本将呈指数级上升。</div>
+  </div>
+</div>
+
+<div class="kicker blue">
+  "全球建筑业 AI 采用率 1.5%——这不是落后的证据，是领先的机会窗口。"
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 5 · 风险预判与行动倡议</span>
+  <span class="page-num">39 / 47</span>
+</div>
+
+</body>
+</html>

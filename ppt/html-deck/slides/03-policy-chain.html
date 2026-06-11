@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P03 · 政策逻辑链</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title {
+    margin-bottom: 40px;
+  }
+
+  /* 垂直层级图 */
+  .policy-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    justify-content: center;
+    padding: 0 60px;
+  }
+
+  .policy-bar {
+    border-radius: 12px;
+    padding: 20px 36px;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .policy-bar .bar-label {
+    font-weight: 800;
+    font-size: 24px;
+  }
+
+  .policy-bar .bar-desc {
+    opacity: 0.95;
+    font-weight: 500;
+  }
+
+  /* 宽度递减形成倒金字塔 */
+  .bar-1 { max-width: 100%; background: linear-gradient(135deg, #1e3a8a, #1e40af); }
+  .bar-2 { max-width: 92%; background: linear-gradient(135deg, #1e40af, #1d4ed8); }
+  .bar-3 { max-width: 84%; background: linear-gradient(135deg, #2563eb, #3b82f6); }
+  .bar-4 { max-width: 76%; background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+  .bar-5 { max-width: 68%; background: linear-gradient(135deg, #0ea5e9, #38bdf8); color: #fff; }
+  .bar-6 {
+    max-width: 56%;
+    background: #fff;
+    color: #1e40af;
+    border: 4px solid #2563eb;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+  }
+  .bar-6 .bar-label { color: #2563eb; }
+  .bar-6 .bar-desc { color: #475569; }
+
+  /* 向下箭头 */
+  .arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid #94a3b8;
+    margin: -4px 0;
+    z-index: 2;
+  }
+
+  /* 底部金句 */
+  .foot-kicker {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 2px solid #e2e8f0;
+    margin-top: 20px;
+  }
+  .foot-kicker .line {
+    font-family: "Noto Serif SC", serif;
+    font-size: 28px;
+    font-weight: 700;
+    font-style: italic;
+    color: #0f172a;
+    letter-spacing: 0.02em;
+  }
+  .foot-kicker .line .hl {
+    color: var(--brand-blue);
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">政策逻辑链</div>
+
+<div class="policy-stack">
+  <div class="policy-bar bar-1">
+    <span class="bar-label">国家意志</span>
+  </div>
+  <div class="arrow-down"></div>
+  <div class="policy-bar bar-2">
+    <span class="bar-label">2025两会</span>
+    <span class="bar-desc">深化"人工智能+"行动</span>
+  </div>
+  <div class="arrow-down"></div>
+  <div class="policy-bar bar-3">
+    <span class="bar-label">新质生产力</span>
+    <span class="bar-desc">科技创新驱动产业升级</span>
+  </div>
+  <div class="arrow-down"></div>
+  <div class="policy-bar bar-4">
+    <span class="bar-label">国资委</span>
+    <span class="bar-desc">AI+专项行动 + 数字化转型考核</span>
+  </div>
+  <div class="arrow-down"></div>
+  <div class="policy-bar bar-5">
+    <span class="bar-label">央企负责人</span>
+    <span class="bar-desc">经营业绩考核纳入AI指标</span>
+  </div>
+  <div class="arrow-down"></div>
+  <div class="policy-bar bar-6">
+    <span class="bar-label">你</span>
+    <span class="bar-desc">不是做不做，是怎么做的问题</span>
+  </div>
+</div>
+
+<div class="foot-kicker">
+  <div class="line">"这不是技术选项，这是<span class="hl">政治任务</span>。"</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num">3 / 47</span>
+</div>
+
+</body>
+</html>

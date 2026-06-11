@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P09 · 案例二·王桂平</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title {
+    margin-bottom: 24px;
+  }
+
+  .case-body {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 28px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .case-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .info-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 4px;
+  }
+
+  .demo-tag {
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    color: #1e40af;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid #bfdbfe;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .role-tag {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .info-section {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px 24px;
+    border-left: 4px solid #0891b2;
+  }
+
+  .info-section .sec-label {
+    font-size: 15px;
+    color: #94a3b8;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .info-section .sec-content {
+    font-size: 19px;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .info-section .sec-content b {
+    color: #0891b2;
+    font-weight: 700;
+  }
+
+  .metric-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .metric-box {
+    flex: 1;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .metric-box .num {
+    font-family: "Inter", sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #0891b2;
+    line-height: 1.1;
+  }
+
+  .metric-box .label {
+    font-size: 15px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .demo-zone {
+    background: #f1f5f9;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 12px;
+  }
+
+  .demo-zone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .success-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+    border: 2px solid #86efac;
+    border-radius: 12px;
+    padding: 16px 32px;
+    margin-top: 20px;
+  }
+
+  .success-bar .check {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #16a34a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .success-bar .text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #15803d;
+  }
+
+  .success-bar .sub {
+    font-size: 16px;
+    color: #65a30d;
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">案例二 · 王桂平——智能评标中心</div>
+
+<div class="case-body">
+  <div class="case-info">
+    <div class="info-header">
+      <span class="demo-tag">🖥️ 现场演示</span>
+      <span class="role-tag">💻 研发人员 · 1人</span>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">做了什么</div>
+      <div class="sec-content">
+        用 <b>Claude Code</b> 从零搭建<b>首企阳光智能评标中心</b>。没有外包、没有美工，AI 直接生成可运行系统。
+      </div>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-box">
+        <div class="num">半天</div>
+        <div class="label">AI 耗时</div>
+      </div>
+      <div class="metric-box">
+        <div class="num" style="color:#dc2626;text-decoration:line-through;text-decoration-color:#fca5a5;">3-6人月</div>
+        <div class="label">传统外包</div>
+      </div>
+      <div class="metric-box">
+        <div class="num">33</div>
+        <div class="label">独立视图</div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">系统规模</div>
+      <div class="sec-content">
+        <b>33 个独立视图</b>——覆盖招投标全流程 + <b>物联网硬件集成</b>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">效果</div>
+      <div class="sec-content">
+        半天上线给客户看，<b>拿下了合同</b>。没有外包、没有美工，AI 直接生成可运行系统。
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-zone">
+    <!-- TODO: 替换为 P9 智能评标/档案管理平台首页截图 -->
+    <div class="demo-icon">🖥️</div>
+    <div class="demo-label">演示区</div>
+    <div class="demo-hint">现场浏览器实时演示</div>
+  </div>
+</div>
+
+<div class="success-bar">
+  <div class="check">✓</div>
+  <div class="text">已签合同</div>
+  <div class="sub">半天拿下客户</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num">9 / 47</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+/* ═══════════════════════════════════════════════════════
+   shared/tokens.css — 国企AI宣讲 PPT 共享设计 Token
+   亮色主题 · 投影仪友好
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  /* 底色系统 */
+  --bg-page:     #ffffff;
+  --bg-warm:     #f8fafc;
+  --bg-card:     #f1f5f9;
+  --bg-card-alt: #eef2ff;
+  --bg-dark-bar: #0f172a;
+
+  /* 品牌色 */
+  --brand-blue: #1e40af;
+  --brand-cyan: #0369a1;
+  --accent-teal: #0d9488;
+  --red:        #dc2626;
+  --orange:     #ea580c;
+  --green:      #16a34a;
+  --purple:     #7c3aed;
+  --gold:       #d97706;
+
+  /* 文字色 */
+  --ink-title:  #0f172a;
+  --ink-body:   #334155;
+  --ink-dim:    #64748b;
+  --ink-subtle: #94a3b8;
+
+  /* 字号阶 — 投影仪友好 */
+  --fs-hero:    120px;
+  --fs-h1:      64px;
+  --fs-h2:      48px;
+  --fs-h3:      36px;
+  --fs-quote:   34px;
+  --fs-body:    26px;
+  --fs-sm:      18px;
+  --fs-xs:      14px;
+
+  /* 间距阶 */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+  --space-2xl: 96px;
+}
+
+/* ═══════════════ 页面骨架 ═══════════════ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: var(--fs-body);
+  color: var(--ink-body);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ═══════════════ 页脚 Chrome ═══════════════ */
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-xs);
+  color: var(--ink-subtle);
+  padding-top: 12px;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+.page-footer .part-label { color: var(--brand-blue); font-weight: 600; letter-spacing: 0.1em; }
+.page-footer .page-num { font-variant-numeric: tabular-nums; color: var(--ink-dim); }
+
+/* ═══════════════ 金句引用 ═══════════════ */
+blockquote.quote-accent {
+  font-family: "Noto Serif SC", "STSong", serif;
+  font-size: var(--fs-quote);
+  font-style: italic;
+  color: var(--brand-cyan);
+  border-left: 4px solid var(--brand-cyan);
+  padding-left: var(--space-md);
+  margin: var(--space-md) 0;
+  max-width: 1400px;
+  background: linear-gradient(90deg, rgba(3,105,161,0.04), transparent);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: 0 8px 8px 0;
+}
+
+/* ═══════════════ 通用卡片 ═══════════════ */
+.card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: var(--space-lg);
+  border: 1px solid #e2e8f0;
+}
+.card .big-num {
+  font-family: "Inter", -apple-system, sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink-title);
+}
+.card .label {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  margin-top: var(--space-xs);
+}
+
+/* ═══════════════ 表格 ═══════════════ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+.data-table th {
+  text-align: left;
+  color: var(--brand-blue);
+  font-weight: 600;
+  padding: var(--space-sm);
+  border-bottom: 2px solid #cbd5e1;
+  background: var(--bg-card);
+}
+.data-table td {
+  padding: var(--space-sm);
+  border-bottom: 1px solid #e2e8f0;
+  color: var(--ink-body);
+}
+.data-table tr:hover td { background: rgba(30,64,175,0.03); }
+
+/* ═══════════════ 标签 ═══════════════ */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.tag-blue   { background: #dbeafe; color: #1e40af; }
+.tag-red    { background: #fee2e2; color: #dc2626; }
+.tag-green  { background: #dcfce7; color: #16a34a; }
+.tag-orange { background: #fff7ed; color: #ea580c; }
+.tag-teal   { background: #ccfbf1; color: #0d9488; }
+
+/* ═══════════════ 过渡页 ═══════════════ */
+.part-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: var(--space-2xl);
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+.part-cover .part-num {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.25em;
+  color: var(--brand-blue);
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+  font-weight: 700;
+}
+.part-cover .part-title {
+  font-size: var(--fs-hero);
+  font-weight: 900;
+  font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+  color: var(--ink-title);
+  margin-bottom: var(--space-sm);
+}
+.part-cover .part-sub {
+  font-size: var(--fs-h3);
+  color: var(--ink-dim);
+}

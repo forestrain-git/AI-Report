@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P29 · 你能用AI做什么·三层速查</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    flex: 1;
+    min-height: 0;
+  }
+  .role-card {
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 2px solid;
+    position: relative;
+    overflow: hidden;
+  }
+  .role-card.leader {
+    background: linear-gradient(160deg, #eff6ff, #fff);
+    border-color: #1e40af;
+  }
+  .role-card.leader::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #1e40af, #3b82f6);
+  }
+  .role-card.staff {
+    background: linear-gradient(160deg, #f0fdf4, #fff);
+    border-color: #059669;
+  }
+  .role-card.staff::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #059669, #10b981);
+  }
+  .role-card.tech {
+    background: linear-gradient(160deg, #ecfeff, #fff);
+    border-color: #0891b2;
+  }
+  .role-card.tech::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #0891b2, #06b6d4);
+  }
+
+  .role-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .role-icon {
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px solid;
+  }
+  .role-card.leader .role-icon { border-color: #1e40af; }
+  .role-card.staff .role-icon { border-color: #059669; }
+  .role-card.tech .role-icon { border-color: #0891b2; }
+  .role-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--ink-title);
+  }
+  .role-title .sub {
+    font-size: 15px;
+    color: var(--ink-dim);
+    font-weight: 500;
+  }
+
+  .role-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  .rrow {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .rrow .rlabel {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .role-card.leader .rrow .rlabel { color: #1e40af; }
+  .role-card.staff .rrow .rlabel { color: #059669; }
+  .role-card.tech .rrow .rlabel { color: #0891b2; }
+  .rrow .rvalue {
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.5;
+  }
+  .rrow .rvalue b {
+    color: var(--ink-title);
+  }
+
+  .role-footer {
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 2px solid #e2e8f0;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .role-card.leader .role-footer { color: #1e40af; }
+  .role-card.staff .role-footer { color: #059669; }
+  .role-card.tech .role-footer { color: #0891b2; }
+
+  .bottom-hint {
+    text-align: center;
+    font-size: 20px;
+    color: var(--ink-dim);
+    margin-top: 16px;
+    padding: 14px;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px dashed #cbd5e1;
+  }
+  .bottom-hint b {
+    color: var(--brand-blue);
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">你能用 AI 做什么——三层速查</div>
+
+<div class="card-row">
+  <div class="role-card leader">
+    <div class="role-header">
+      <div class="role-icon">🏛️</div>
+      <div class="role-title">
+        班子成员
+        <div class="sub">决策层 · 战略视角</div>
+      </div>
+    </div>
+    <div class="role-rows">
+      <div class="rrow">
+        <div class="rlabel">AI 能帮你</div>
+        <div class="rvalue">政策研判、趋势分析、<b>决策提效</b></div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">今天就能</div>
+        <div class="rvalue">让 AI 分析一份行业政策文件</div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">做成了的</div>
+        <div class="rvalue">中建五局 <b>4 万人</b>培训落地</div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">具体工具</div>
+        <div class="rvalue">→ 翻到 P31「七个入口」</div>
+      </div>
+    </div>
+    <div class="role-footer">→ 翻到 P31 看详细工具</div>
+  </div>
+
+  <div class="role-card staff">
+    <div class="role-header">
+      <div class="role-icon">📋</div>
+      <div class="role-title">
+        本部职能岗
+        <div class="sub">执行层 · 业务视角</div>
+      </div>
+    </div>
+    <div class="role-rows">
+      <div class="rrow">
+        <div class="rlabel">AI 能帮你</div>
+        <div class="rvalue">写公文、做 PPT、<b>读文档、整理纪要</b></div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">今天就能</div>
+        <div class="rvalue">让 AI 帮你写一封邮件</div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">做成了的</div>
+        <div class="rvalue">王佳男 <b>自建商务系统</b>，数天上线</div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">具体工具</div>
+        <div class="rvalue">→ 翻到 P31「七个入口」</div>
+      </div>
+    </div>
+    <div class="role-footer">→ 翻到 P31 看详细工具</div>
+  </div>
+
+  <div class="role-card tech">
+    <div class="role-header">
+      <div class="role-icon">💻</div>
+      <div class="role-title">
+        信息化条线
+        <div class="sub">技术层 · 落地视角</div>
+      </div>
+    </div>
+    <div class="role-rows">
+      <div class="rrow">
+        <div class="rlabel">AI 能帮你</div>
+        <div class="rvalue">搭系统、写代码、<b>建知识库</b></div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">今天就能</div>
+        <div class="rvalue">让 AI 生成一个数据处理脚本</div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">做成了的</div>
+        <div class="rvalue">黄天赐 <b>1 周</b>完成档案系统 80%</div>
+      </div>
+      <div class="rrow">
+        <div class="rlabel">具体工具</div>
+        <div class="rvalue">→ 翻到 P31「七个入口」</div>
+      </div>
+    </div>
+    <div class="role-footer">→ 翻到 P31 看详细工具</div>
+  </div>
+</div>
+
+<div class="bottom-hint">
+  不需要懂技术，不需要等预算——<b>今天就能开始</b>。选一个角色，选一个场景，先跑起来。
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 同行压力与中建实践</span>
+  <span class="page-num">29 / 47</span>
+</div>
+
+</body>
+</html>

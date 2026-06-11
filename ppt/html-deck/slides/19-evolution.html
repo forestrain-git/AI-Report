@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P19 · LLM 技术演进路线</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  /* 五个台阶 */
+  .stairs-wrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    flex: 1;
+    width: 100%;
+    padding-bottom: 40px;
+  }
+  .ev-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px 24px;
+    border-radius: 14px 14px 0 0;
+    position: relative;
+    color: #fff;
+    min-height: 200px;
+  }
+  .ev-step .ev-year {
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    opacity: 0.95;
+  }
+  .ev-step .ev-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .ev-step .ev-desc {
+    font-size: 17px;
+    line-height: 1.55;
+    opacity: 0.9;
+  }
+  .ev-step .ev-note {
+    font-size: 15px;
+    opacity: 0.75;
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* 台阶高度递增 */
+  .ev-step.s1 { height: 280px; background: #1e40af; }
+  .ev-step.s2 { height: 360px; background: #1d4ed8; }
+  .ev-step.s3 { height: 440px; background: #2563eb; }
+  .ev-step.s4 { height: 520px; background: #0ea5e9; }
+  .ev-step.s5 { height: 600px; background: #0891b2; }
+
+  /* 台阶间连接箭头 */
+  .ev-step::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    bottom: 40px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 16px 0 16px 20px;
+    z-index: 2;
+  }
+  .ev-step.s1::after { border-color: transparent transparent transparent #1e40af; }
+  .ev-step.s2::after { border-color: transparent transparent transparent #1d4ed8; }
+  .ev-step.s3::after { border-color: transparent transparent transparent #2563eb; }
+  .ev-step.s4::after { border-color: transparent transparent transparent #0ea5e9; }
+  .ev-step.s5::after { display: none; }
+
+  /* 底部认知 */
+  .ev-foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 24px 40px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-top: 8px;
+  }
+  .ev-foot .ev-icon {
+    font-size: 32px;
+  }
+  .ev-foot .ev-text {
+    font-size: 22px;
+    color: var(--ink-title);
+    font-weight: 700;
+  }
+  .ev-foot .ev-text span {
+    color: var(--brand-blue);
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">LLM 技术演进路线</div>
+
+<div class="stairs-wrap">
+  <div class="ev-step s1">
+    <div class="ev-year">2022</div>
+    <div class="ev-title">ChatGPT 3.5</div>
+    <div class="ev-desc">对话式 AI 破圈，大众第一次感受到"机器能听懂人话"</div>
+    <div class="ev-note">2 个月 1 亿用户</div>
+  </div>
+
+  <div class="ev-step s2">
+    <div class="ev-year">2023</div>
+    <div class="ev-title">Copilot 嵌入工作流</div>
+    <div class="ev-desc">AI 不再是一个独立网站，而是藏在代码编辑器、Office 里</div>
+    <div class="ev-note">GitHub Copilot、Office 365 Copilot</div>
+  </div>
+
+  <div class="ev-step s3">
+    <div class="ev-year">2024</div>
+    <div class="ev-title">Agent + 推理模型</div>
+    <div class="ev-desc">AI 能自主执行多步任务，会"先想再说"</div>
+    <div class="ev-note">Claude Code、DeepSeek-R1、OpenAI o1</div>
+  </div>
+
+  <div class="ev-step s4">
+    <div class="ev-year">2025</div>
+    <div class="ev-title">多模态 + 小模型</div>
+    <div class="ev-desc">能看图、听语音、读表格；小模型让端侧部署成为可能</div>
+    <div class="ev-note">GPT-4V、端侧 AI、私有化部署</div>
+  </div>
+
+  <div class="ev-step s5">
+    <div class="ev-year">2026</div>
+    <div class="ev-title">Multi-Agent 进入生产</div>
+    <div class="ev-desc">多个 AI 协作完成复杂项目，从"工具"变成"团队"</div>
+    <div class="ev-note">CrewAI、企业级 Agent 编排平台</div>
+  </div>
+</div>
+
+<div class="ev-foot">
+  <div class="ev-icon">💡</div>
+  <div class="ev-text">关键认知：<span>四种模式共存互补，选对级别比追最新重要。</span>不是每一步都要走到最前沿，而是找到适合你当前业务成熟度的台阶。</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 2 · 技术祛魅</span>
+  <span class="page-num">19 / 47</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI时代：我们的选择与行动 · 导航页</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: linear-gradient(160deg, #f8fafc 0%, #eef2ff 50%, #dbeafe 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 40px 40px;
+    color: #0f172a;
+  }
+  .hero {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .hero .pre {
+    font-size: 16px;
+    letter-spacing: 0.3em;
+    color: #1e40af;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero h1 .hl { color: #1e40af; }
+  .hero .sub {
+    font-size: 22px;
+    color: #475569;
+    margin-bottom: 28px;
+  }
+  .hero .btn-primary {
+    display: inline-block;
+    padding: 14px 40px;
+    background: #1e40af;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.25s;
+    box-shadow: 0 4px 16px rgba(30,64,175,0.25);
+  }
+  .hero .btn-primary:hover {
+    background: #1e3a8a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(30,64,175,0.35);
+  }
+
+  .parts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    width: 100%;
+  }
+  .part-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+  .part-card:hover {
+    border-color: #93c5fd;
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(30,64,175,0.15);
+  }
+  .part-card .thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .part-card .info {
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .part-card .info .part-num {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: #1e40af;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .part-card .info .part-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+  }
+  .part-card .info .part-desc {
+    font-size: 14px;
+    color: #64748b;
+    margin-top: 6px;
+  }
+
+  /* 第5个卡片居中 */
+  .parts-grid .part-card:last-child {
+    grid-column: 2;
+  }
+
+  .footer {
+    margin-top: 48px;
+    font-size: 14px;
+    color: #94a3b8;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .parts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .parts-grid .part-card:last-child {
+      grid-column: auto;
+    }
+    .hero h1 { font-size: 36px; }
+  }
+  @media (max-width: 600px) {
+    .parts-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="pre">中建发展 · AI 战略宣讲</div>
+  <h1>AI 时代：<br><span class="hl">我们的选择与行动</span></h1>
+  <div class="sub">从认知到落地的实践指南 · 52页完整演示</div>
+  <a class="btn-primary" href="index.html">开始演示 ›</a>
+</div>
+
+<div class="parts-grid">
+  <a class="part-card" href="index.html#2">
+    <img class="thumb" src="showcase-part1.png" alt="Part 1 政策锚定">
+    <div class="info">
+      <div class="part-num">PART 1</div>
+      <div class="part-title">政策锚定</div>
+      <div class="part-desc">为什么必须现在行动</div>
+    </div>
+  </a>
+  <a class="part-card" href="index.html#16">
+    <img class="thumb" src="showcase-part2.png" alt="Part 2 技术祛魅">
+    <div class="info">
+      <div class="part-num">PART 2</div>
+      <div class="part-title">技术祛魅</div>
+      <div class="part-desc">不讲公式不讲代码，只讲和你有关的</div>
+    </div>
+  </a>
+  <a class="part-card" href="index.html#22">
+    <img class="thumb" src="showcase-part3.png" alt="Part 3 同行压力与中建实践">
+    <div class="info">
+      <div class="part-num">PART 3</div>
+      <div class="part-title">同行压力与中建实践</div>
+      <div class="part-desc">全球→国内→中建系→我们</div>
+    </div>
+  </a>
+  <a class="part-card" href="index.html#34">
+    <img class="thumb" src="showcase-part4.png" alt="Part 4 落地路径">
+    <div class="info">
+      <div class="part-num">PART 4</div>
+      <div class="part-title">落地路径</div>
+      <div class="part-desc">从案例到方法论，从我们能做什么到你们能做什么</div>
+    </div>
+  </a>
+  <a class="part-card" href="index.html#42">
+    <img class="thumb" src="showcase-part5.png" alt="Part 5 风险预判与行动倡议">
+    <div class="info">
+      <div class="part-num">PART 5</div>
+      <div class="part-title">风险预判与行动倡议</div>
+      <div class="part-desc">避开 85% 项目踩过的坑，从今天开始行动</div>
+    </div>
+  </a>
+</div>
+
+<div class="footer">
+  中建发展 · 2026 · 52页完整演示 · 按 → 或空格键翻页
+</div>
+
+</body>
+</html>

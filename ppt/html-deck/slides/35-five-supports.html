@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P35 · 五个支撑能力</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    flex: 1;
+    margin-top: 20px;
+  }
+  .support-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .support-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: var(--brand-blue);
+  }
+  .support-card .num {
+    font-family: "Inter", sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--brand-blue);
+    line-height: 1;
+  }
+  .support-card .title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink-title);
+    line-height: 1.3;
+  }
+  .support-card .desc {
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.6;
+    flex: 1;
+  }
+  .support-card .tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    background: #dbeafe;
+    color: var(--brand-blue);
+    width: fit-content;
+    margin-top: auto;
+  }
+  .kicker {
+    text-align: center;
+    font-family: "Noto Serif SC", serif;
+    font-size: 28px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--brand-blue);
+    padding: 20px 0;
+    border-top: 2px solid #dbeafe;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">我们能提供什么——五个支撑能力</div>
+
+<div class="support-grid">
+  <div class="support-card">
+    <div class="num">01</div>
+    <div class="title">培训赋能体系</div>
+    <div class="desc">分层课程 + 实战训练，从办公提效到系统开发全覆盖</div>
+    <div class="tag">中建五局 4 万人已验证</div>
+  </div>
+  <div class="support-card">
+    <div class="num">02</div>
+    <div class="title">系统开发底座</div>
+    <div class="desc">统一认证 + 权限 + API 网关，开箱即用的技术中台</div>
+    <div class="tag">碳科技 / 环能 / 生态已运行</div>
+  </div>
+  <div class="support-card">
+    <div class="num">03</div>
+    <div class="title">方法论与模板</div>
+    <div class="desc">从 5+ 案例提炼的 SOP、场景模板、评估框架</div>
+    <div class="tag">可复用可迁移</div>
+  </div>
+  <div class="support-card">
+    <div class="num">04</div>
+    <div class="title">工具链</div>
+    <div class="desc">WorkBuddy + Claude Code + 国产大模型接入，全场景覆盖</div>
+    <div class="tag">零门槛到护城河级</div>
+  </div>
+  <div class="support-card">
+    <div class="num">05</div>
+    <div class="title">标杆复制能力</div>
+    <div class="desc">档案 / 评标 / 商务系统 → 场景迁移，快速复制成功经验</div>
+    <div class="tag">1 人 × 数天上线</div>
+  </div>
+</div>
+
+<div class="kicker">"不是给你一套系统，是给你一套自己长出来的能力。"</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 4 · 落地路径</span>
+  <span class="page-num">35 / 47</span>
+</div>
+
+</body>
+</html>

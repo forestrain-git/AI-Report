@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P23 · 能源央企</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    flex: 1;
+    min-height: 0;
+  }
+  .case-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+  }
+  .case-card.cnpc::before { background: linear-gradient(90deg, #dc2626, #b91c1c); }
+  .case-card.sgcc::before { background: linear-gradient(90deg, #1e40af, #0ea5e9); }
+  .case-card.csg::before { background: linear-gradient(90deg, #059669, #10b981); }
+
+  .case-card .org {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--ink-title);
+  }
+  .case-card .org-sub {
+    font-size: 16px;
+    color: var(--ink-dim);
+    margin-top: -10px;
+  }
+  .case-card .metric {
+    font-family: "Inter", sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--brand-blue);
+  }
+  .case-card.cnpc .metric { color: #dc2626; }
+  .case-card.sgcc .metric { color: #1e40af; }
+  .case-card.csg .metric { color: #059669; }
+  .case-card .metric .unit {
+    font-size: 24px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+  .case-card .points {
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .case-card .points li {
+    list-style: none;
+    padding-left: 20px;
+    position: relative;
+  }
+  .case-card .points li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--ink-subtle);
+  }
+  .case-card .quote {
+    font-size: 16px;
+    color: var(--ink-dim);
+    font-style: italic;
+    border-left: 3px solid #e2e8f0;
+    padding-left: 12px;
+    margin-top: auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">能源央企——AI 已进入"自主可控"深水区</div>
+
+<div class="card-row">
+  <div class="case-card cnpc">
+    <div class="org">中国石油 · 昆仑大模型</div>
+    <div class="org-sub">能源行业首个超大规模 AI</div>
+    <div class="metric">3000<span class="unit">亿参数</span></div>
+    <ul class="points">
+      <li>覆盖 <b>152</b> 个业务场景</li>
+      <li><b>21 款</b>模型完成昇腾适配</li>
+      <li>勘探、炼化、销售全产业链</li>
+      <li>全栈自主可控</li>
+    </ul>
+    <div class="quote">"能源安全，模型也要安全。"</div>
+  </div>
+
+  <div class="case-card sgcc">
+    <div class="org">国家电网 · 光明大模型</div>
+    <div class="org-sub">千亿参数多模态行业大模型</div>
+    <div class="metric">20<span class="unit">min → 3min</span></div>
+    <ul class="points">
+      <li>检修准备时间 <b>20 分钟 → 3 分钟</b></li>
+      <li><b>1855 项</b>标准条款级检索</li>
+      <li>多模态：文本+图像+语音</li>
+      <li>覆盖输电、变电、配电全环节</li>
+    </ul>
+    <div class="quote">"从查手册到问 AI。"</div>
+  </div>
+
+  <div class="case-card csg">
+    <div class="org">南方电网 · 大瓦特</div>
+    <div class="org-sub">全自主可控 AI 平台</div>
+    <div class="metric">23.4<span class="unit">亿次/年</span></div>
+    <ul class="points">
+      <li>年调用量 <b>23.4 亿次</b></li>
+      <li>日均释放员工 <b>2 小时</b></li>
+      <li><b>80%</b> 人工替代率</li>
+      <li>全栈国产化，数据不出域</li>
+    </ul>
+    <div class="quote">"不是替代人，是释放人。"</div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 同行压力与中建实践</span>
+  <span class="page-num">23 / 47</span>
+</div>
+
+</body>
+</html>

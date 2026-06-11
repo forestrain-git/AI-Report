@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P10 · 案例三·刘力</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title {
+    margin-bottom: 24px;
+  }
+
+  .case-body {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 28px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .case-info {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .info-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 4px;
+  }
+
+  .demo-tag {
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    color: #1e40af;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid #bfdbfe;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .role-tag {
+    background: #fff7ed;
+    color: #c2410c;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid #fed7aa;
+  }
+
+  .info-section {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px 24px;
+    border-left: 4px solid #059669;
+  }
+
+  .info-section .sec-label {
+    font-size: 15px;
+    color: #94a3b8;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .info-section .sec-content {
+    font-size: 19px;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .info-section .sec-content b {
+    color: #059669;
+    font-weight: 700;
+  }
+
+  .metric-row {
+    display: flex;
+    gap: 16px;
+  }
+
+  .metric-box {
+    flex: 1;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .metric-box .num {
+    font-family: "Inter", sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #059669;
+    line-height: 1.1;
+  }
+
+  .metric-box .label {
+    font-size: 15px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .demo-zone {
+    background: #f1f5f9;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 12px;
+  }
+
+  .demo-zone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .story-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #fefce8, #fef9c3);
+    border: 2px solid #fde047;
+    border-radius: 12px;
+    padding: 14px 32px;
+    margin-top: 20px;
+  }
+
+  .story-bar .text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #a16207;
+  }
+
+  .story-bar .arrow {
+    font-size: 20px;
+    color: #ca8a04;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">案例三 · 刘力——产品经理出前端</div>
+
+<div class="case-body">
+  <div class="case-info">
+    <div class="info-header">
+      <span class="demo-tag">🖥️ 现场演示</span>
+      <span class="role-tag">📋 产品经理 · 基本不写代码</span>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">做了什么</div>
+      <div class="sec-content">
+        用 AI 辅助搭建<b>中建方程智慧养老平台前端</b>（Vue3，AI 全程辅助）。产品经理跳过"写需求文档→等研发排期"，直接出可交互前端去说服政府。
+      </div>
+    </div>
+
+    <div class="metric-row">
+      <div class="metric-box">
+        <div class="num">1周</div>
+        <div class="label">AI 耗时</div>
+      </div>
+      <div class="metric-box">
+        <div class="num" style="color:#dc2626;text-decoration:line-through;text-decoration-color:#fca5a5;">3+人月</div>
+        <div class="label">传统团队</div>
+      </div>
+      <div class="metric-box">
+        <div class="num">29</div>
+        <div class="label">视图页面</div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">系统规模</div>
+      <div class="sec-content">
+        <b>29 个视图页面</b>——7 大模块，Dashboard 含 <b>6 大指标卡片</b>、<b>7 类实时告警</b>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="sec-label">效果</div>
+      <div class="sec-content">
+        产品经理跳过"写需求文档→等研发排期"，<b>直接出可交互前端去说服政府</b>。零代码基础，全程 AI 辅助。
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-zone">
+    <img src="../../assets/case-liu-screenshot.png" alt="智慧养老平台首页">
+  </div>
+</div>
+
+<div class="story-bar">
+  <span class="text">翻到 P34 展开讲"打破内部质疑"</span>
+  <span class="arrow">→</span>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num">10 / 47</span>
+</div>
+
+</body>
+</html>

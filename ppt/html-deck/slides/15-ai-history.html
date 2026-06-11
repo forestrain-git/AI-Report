@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P15 · AI 60年为什么最近三年才爆发</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  /* 垂直时间线容器 */
+  .timeline-tree {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    position: relative;
+    padding-left: 48px;
+    margin-top: 20px;
+  }
+  .timeline-tree::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 8px;
+    bottom: 8px;
+    width: 4px;
+    background: linear-gradient(180deg, #94a3b8 0%, #1e40af 40%, #2563eb 70%, #0ea5e9 100%);
+    border-radius: 2px;
+  }
+
+  .tree-node {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    position: relative;
+  }
+  .tree-node::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #94a3b8;
+    box-shadow: 0 0 0 3px #fff;
+  }
+  .tree-node.hot::before { border-color: #1e40af; }
+  .tree-node.blast::before { border-color: #0ea5e9; background: #0ea5e9; }
+
+  .node-time {
+    min-width: 140px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink-title);
+    padding: 8px 16px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .tree-node.hot .node-time { background: #dbeafe; color: #1e40af; }
+  .tree-node.blast .node-time { background: #e0f2fe; color: #0369a1; }
+
+  .node-content {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 28px;
+  }
+  .node-content .node-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--ink-title);
+    margin-bottom: 8px;
+  }
+  .node-content .node-desc {
+    font-size: 18px;
+    color: var(--ink-body);
+    line-height: 1.6;
+  }
+  .node-content .node-tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .node-content .node-tag.gray { background: #f1f5f9; color: #64748b; }
+  .node-content .node-tag.blue { background: #dbeafe; color: #1e40af; }
+  .node-content .node-tag.cyan { background: #e0f2fe; color: #0369a1; }
+
+  /* 底部金句 */
+  .foot-quote {
+    text-align: center;
+    font-family: "Noto Serif SC", serif;
+    font-size: 28px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--brand-blue);
+    padding: 20px 40px;
+    border-top: 2px solid #dbeafe;
+    border-bottom: 2px solid #dbeafe;
+    margin-top: 24px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">AI 做了 60 年，为什么最近三年才爆发？</div>
+
+<div class="timeline-tree">
+  <div class="tree-node">
+    <div class="node-time">1950s-2010s</div>
+    <div class="node-content">
+      <div class="node-title">传统 AI</div>
+      <div class="node-desc">人脸识别、安全帽检测、设备预测性维护——每个任务需要单独训练一个模型，泛化能力弱，部署成本高</div>
+      <span class="node-tag gray">规则驱动 · 单点应用 · 工程化困难</span>
+    </div>
+  </div>
+
+  <div class="tree-node hot">
+    <div class="node-time">2017</div>
+    <div class="node-content">
+      <div class="node-title">Transformer 诞生</div>
+      <div class="node-desc">Google 提出"注意力机制"，让机器第一次真正理解上下文关系。这是大语言模型的地基，但还未被大众感知</div>
+      <span class="node-tag blue">技术突破 · 学术圈 · 潜伏期</span>
+    </div>
+  </div>
+
+  <div class="tree-node hot">
+    <div class="node-time">2022.11</div>
+    <div class="node-content">
+      <div class="node-title">ChatGPT 3.5 发布</div>
+      <div class="node-desc">2 个月突破 1 亿用户，史上增长最快消费级应用。AI 从实验室走进办公室，从论文标题变成日常工具</div>
+      <span class="node-tag blue">现象级产品 · 用户觉醒 · 临界点</span>
+    </div>
+  </div>
+
+  <div class="tree-node blast">
+    <div class="node-time">2023-2026</div>
+    <div class="node-content">
+      <div class="node-title">大爆炸</div>
+      <div class="node-desc">GPT-4、Claude、DeepSeek 相继登场；多模态让 AI 能看图说话；Agent 让 AI 能自主执行任务；推理模型让 AI 会"先想再说"</div>
+      <span class="node-tag cyan">能力跃迁 · 生态爆发 · 现在进行时</span>
+    </div>
+  </div>
+</div>
+
+<div class="foot-quote">
+  "60 年积累，3 年爆发——不是因为算力突然够了，而是因为'通用智能'的开关被打开了。"
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 2 · 技术祛魅</span>
+  <span class="page-num">15 / 47</span>
+</div>
+
+</body>
+</html>

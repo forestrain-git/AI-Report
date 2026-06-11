@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P30 · 三级跃迁</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    padding: 50px 100px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    align-items: center;
+    gap: 32px;
+  }
+  .page-title {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--ink-title);
+    align-self: flex-start;
+    padding-bottom: 8px;
+    border-bottom: 4px solid var(--brand-blue);
+  }
+
+  /* ── 阶梯容器：宽度递减 ── */
+  .stairs {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    height: 520px;
+    width: 100%;
+    max-width: 1700px;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px 36px;
+    position: relative;
+    border-radius: 16px;
+  }
+  .step .step-icon { font-size: 40px; margin-bottom: 12px; }
+  .step .step-label { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
+  .step .step-desc { font-size: 20px; line-height: 1.55; margin-bottom: 14px; }
+  .step .step-case { font-size: 17px; font-style: italic; opacity: 0.85; }
+
+  /* 第一级：辅助 —— 实心品牌蓝，白字 */
+  .step.l1 {
+    background: #1e40af;
+    color: #fff;
+    height: 240px;
+    flex: 1.25;
+    border-radius: 16px 0 0 16px;
+    box-shadow: 0 8px 32px rgba(30,64,175,0.25);
+  }
+  .step.l1 .step-desc { opacity: 0.9; }
+  .step.l1 .step-case { opacity: 0.7; }
+
+  /* 第二级：替代 —— 浅蓝底，深色字，青蓝实线边框 */
+  .step.l2 {
+    background: #dbeafe;
+    color: #1e40af;
+    height: 380px;
+    flex: 1;
+    border: 4px solid #0ea5e9;
+    border-radius: 0;
+    margin-left: -8px;
+    z-index: 2;
+    box-shadow: 0 8px 32px rgba(14,165,233,0.18);
+  }
+  .step.l2 .step-label { color: #1e40af; }
+  .step.l2 .step-desc { color: #334155; }
+  .step.l2 .step-case { color: #64748b; }
+
+  /* 第三级：创造不可能 —— 浅灰实底，灰色虚线边框，深色字 */
+  .step.l3 {
+    background: #f1f5f9;
+    color: #0f172a;
+    height: 520px;
+    flex: 0.85;
+    border: 4px dashed #94a3b8;
+    border-radius: 0 16px 16px 0;
+    margin-left: -8px;
+    z-index: 1;
+  }
+  .step.l3 .step-label { color: #0f172a; }
+  .step.l3 .step-desc { color: #475569; }
+  .step.l3 .step-case { color: #64748b; }
+
+  /* 宽度递减的箭头暗示 */
+  .step::after {
+    content: '';
+    position: absolute;
+    right: -16px;
+    bottom: 40px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  .step.l1::after {
+    border-width: 16px 0 16px 20px;
+    border-color: transparent transparent transparent #1e40af;
+  }
+  .step.l2::after {
+    border-width: 16px 0 16px 20px;
+    border-color: transparent transparent transparent #0ea5e9;
+  }
+  .step.l3::after { display: none; }
+
+  /* ── 洞察卡片：彩色编号 + 左边条 ── */
+  .judgements {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1700px;
+  }
+  .judgement {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px 28px 28px 24px;
+    border: 1px solid #e2e8f0;
+    font-size: 20px;
+    color: var(--ink-body);
+    line-height: 1.6;
+    position: relative;
+    overflow: hidden;
+  }
+  .judgement::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    border-radius: 12px 0 0 12px;
+  }
+  .judgement:nth-child(1)::before { background: #1e40af; }
+  .judgement:nth-child(2)::before { background: #0ea5e9; }
+  .judgement:nth-child(3)::before { background: #94a3b8; }
+  .judgement .num {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .judgement:nth-child(1) .num { color: #1e40af; }
+  .judgement:nth-child(2) .num { color: #0ea5e9; }
+  .judgement:nth-child(3) .num { color: #94a3b8; }
+
+  /* ── 底部金句 ── */
+  .foot-quote {
+    font-family: "Noto Serif SC", serif;
+    font-size: 32px;
+    color: var(--brand-blue);
+    font-style: italic;
+    font-weight: 700;
+    text-align: center;
+    padding: 16px 40px;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    width: 100%;
+    max-width: 1200px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">AI 赋能就三步——你在哪一步？</div>
+
+<div class="stairs">
+  <div class="step l1">
+    <div class="step-icon">💬</div>
+    <div class="step-label">辅助</div>
+    <div class="step-desc">突破效率边界<br>AI 帮你做本来就会的事</div>
+    <div class="step-case">Eiffage 2天→20分钟 · 国家电网 20min→3min</div>
+  </div>
+  <div class="step l2">
+    <div class="step-icon">👤→👥</div>
+    <div class="step-label">替代</div>
+    <div class="step-desc">突破角色边界<br>一个人 = 一个团队</div>
+    <div class="step-case">王佳男 商务经理建系统 · 刘力 产品经理出前端</div>
+  </div>
+  <div class="step l3">
+    <div class="step-icon">💡</div>
+    <div class="step-label">创造不可能</div>
+    <div class="step-desc">突破能力边界<br>AI 做到人类做不到的事</div>
+    <div class="step-case">Bouygues 600万种方案 · 中铁十一局 无人化运输</div>
+  </div>
+</div>
+
+<div class="judgements">
+  <div class="judgement">
+    <span class="num">①</span>
+    大部分企业对 AI 的想象停在"辅助"——提高效率。这没错，<b>但只是起点</b>。
+  </div>
+  <div class="judgement">
+    <span class="num">②</span>
+    真正拉开差距的是"替代"——不是用 AI 优化旧流程，是<b>重新定义角色边界</b>。
+  </div>
+  <div class="judgement">
+    <span class="num">③</span>
+    先打穿经济上的不可能（半天干一个团队的活），再向能力上的不可能进军。
+  </div>
+</div>
+
+<div class="foot-quote">
+  "你在哪一步？下一步往哪走？"
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 中建实践</span>
+  <span class="page-num">30 / 47</span>
+</div>
+
+</body>
+</html>

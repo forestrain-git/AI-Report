@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P24 · 制造业与金融业</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+  .card-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+  }
+  .case-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+  }
+  .case-card .org {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink-title);
+  }
+  .case-card .metric {
+    font-family: "Inter", sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--brand-blue);
+  }
+  .case-card .metric .unit {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+  .case-card .points {
+    font-size: 17px;
+    color: var(--ink-body);
+    line-height: 1.65;
+    flex: 1;
+  }
+  .case-card .points li {
+    list-style: none;
+    padding-left: 18px;
+    position: relative;
+  }
+  .case-card .points li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--ink-subtle);
+  }
+  .case-card .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: auto;
+  }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-green { background: #dcfce7; color: #16a34a; }
+  .tag-orange { background: #fff7ed; color: #ea580c; }
+  .tag-red { background: #fee2e2; color: #dc2626; }
+
+  /* 美的卡片更大 */
+  .case-card.midea {
+    background: linear-gradient(160deg, #fff, #f8fafc);
+  }
+  .case-card.midea .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .case-card.midea .layer {
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: var(--ink-body);
+    border-left: 3px solid var(--brand-blue);
+  }
+  .case-card.midea .layer .layer-name {
+    font-weight: 700;
+    color: var(--ink-title);
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">制造业与金融业——AI 重塑核心业务流程</div>
+
+<div class="card-row">
+  <div class="case-card midea">
+    <div class="org">美的集团 · 四层架构</div>
+    <div class="metric">10h → 1h</div>
+    <div class="points">AI 排产从 10 小时压缩到 1 小时</div>
+    <div class="layers">
+      <div class="layer"><span class="layer-name">业务应用</span> 智能制造、智慧楼宇、机器人</div>
+      <div class="layer"><span class="layer-name">应用集成</span> 统一平台，数据贯通</div>
+      <div class="layer"><span class="layer-name">算法平台</span> 自研美言大模型+行业模型</div>
+      <div class="layer"><span class="layer-name">基础设施</span> 私有云+边缘计算</div>
+    </div>
+    <span class="tag tag-blue">制造业标杆</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">招商银行</div>
+    <div class="metric">毫秒级</div>
+    <div class="points">
+      <li>信贷审批从"天"到"毫秒"</li>
+      <li>AI 风控覆盖全业务流程</li>
+      <li>智能客服替代率超 90%</li>
+    </div>
+    <span class="tag tag-green">金融数字化</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">中国平安</div>
+    <div class="metric">11<span class="unit">万科技人员</span></div>
+    <div class="points">
+      <li>科技员工占全员 30%+</li>
+      <li>AI 覆盖 3000+ 疾病诊断</li>
+      <li>"金融+科技"双轮驱动</li>
+    </div>
+    <span class="tag tag-orange">综合金融</span>
+  </div>
+
+  <div class="case-card">
+    <div class="org">宏观信号</div>
+    <div class="metric">1500<span class="unit">亿 AI 投资</span></div>
+    <div class="points">
+      <li>2025 年央企 AI 投资规模</li>
+      <li>国资委"AI+"专项行动</li>
+      <li>16 个重点行业超千场景</li>
+    </div>
+    <span class="tag tag-red">政策驱动</span>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 3 · 同行压力与中建实践</span>
+  <span class="page-num">24 / 47</span>
+</div>
+
+</body>
+</html>

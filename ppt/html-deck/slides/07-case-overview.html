@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P07 · 案例速览表</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title {
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    color: #64748b;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .subtitle .demo-badge {
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    color: #1e40af;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid #bfdbfe;
+  }
+
+  /* 表格样式 */
+  .table-wrap {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 19px;
+  }
+
+  .case-table th {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+    color: #fff;
+    font-weight: 700;
+    padding: 18px 20px;
+    text-align: left;
+    font-size: 17px;
+  }
+
+  .case-table th:first-child {
+    width: 140px;
+  }
+
+  .case-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+    vertical-align: middle;
+  }
+
+  .case-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .case-table tr:nth-child(even) {
+    background: #f8fafc;
+  }
+
+  .case-table tr:hover td {
+    background: #eff6ff;
+  }
+
+  /* 身份标签 */
+  .role-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .role-tech {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  .role-non-tech {
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+  }
+
+  .role-mgmt {
+    background: #f3e8ff;
+    color: #7c3aed;
+  }
+
+  /* 高亮数字 */
+  .hl-num {
+    font-family: "Inter", sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e40af;
+  }
+
+  .hl-time {
+    color: #059669;
+    font-weight: 700;
+  }
+
+  .hl-contrast {
+    color: #dc2626;
+    font-weight: 700;
+    text-decoration: line-through;
+    text-decoration-color: #fca5a5;
+  }
+
+  /* 底部说明 */
+  .foot-note {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 20px;
+    padding: 16px 24px;
+    background: #f8fafc;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #64748b;
+  }
+
+  .foot-note .legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">中建智能的五个真实案例</div>
+<div class="subtitle">
+  <span class="demo-badge">🖥️ 全部可现场演示</span>
+  <span>——你也能做到</span>
+</div>
+
+<div class="table-wrap">
+  <table class="case-table">
+    <tr>
+      <th>维度</th>
+      <th>黄天赐</th>
+      <th>王桂平</th>
+      <th>刘力</th>
+      <th>王佳男</th>
+      <th>吴迪</th>
+    </tr>
+    <tr>
+      <td><b>身份</b></td>
+      <td><span class="role-tag role-tech">💻 前端开发</span></td>
+      <td><span class="role-tag role-tech">💻 后端开发</span></td>
+      <td><span class="role-tag role-non-tech">📋 产品经理</span></td>
+      <td><span class="role-tag role-non-tech">📋 商务经理</span></td>
+      <td><span class="role-tag role-mgmt">🏗️ 总工</span></td>
+    </tr>
+    <tr>
+      <td><b>系统</b></td>
+      <td>人才档案</td>
+      <td>智能评标</td>
+      <td>智慧养老</td>
+      <td>商务管理</td>
+      <td>水务监控</td>
+    </tr>
+    <tr>
+      <td><b>页面/视图</b></td>
+      <td><span class="hl-num">16</span> 页</td>
+      <td><span class="hl-num">33</span> 个独立视图</td>
+      <td><span class="hl-num">29</span> 页</td>
+      <td><span class="hl-num">19</span> 页</td>
+      <td><span class="hl-num">1</span> 页（大屏）</td>
+    </tr>
+    <tr>
+      <td><b>AI 耗时</b></td>
+      <td><span class="hl-time">1 周</span></td>
+      <td><span class="hl-time">半天</span></td>
+      <td><span class="hl-time">1 周</span></td>
+      <td><span class="hl-time">数天</span></td>
+      <td><span class="hl-time">碎片时间</span></td>
+    </tr>
+    <tr>
+      <td><b>传统估时</b></td>
+      <td><span class="hl-contrast">2 人月</span></td>
+      <td><span class="hl-contrast">3-6 人月</span></td>
+      <td><span class="hl-contrast">3+ 人月</span></td>
+      <td><span class="hl-contrast">6 人月</span></td>
+      <td><span class="hl-contrast">1 人月</span></td>
+    </tr>
+  </table>
+</div>
+
+<div class="foot-note">
+  <div class="legend">💻 <b>技术岗</b>：有编程基础</div>
+  <div class="legend">📋 <b>非技术岗</b>：基本不写代码，橙色高亮</div>
+  <div class="legend">🏗️ <b>管理岗</b>：项目总工/高管</div>
+  <div style="margin-left:auto;font-weight:700;color:#1e40af;">五个系统合计 98 个视图页面，全部一人完成 →</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num">7 / 47</span>
+</div>
+
+</body>
+</html>

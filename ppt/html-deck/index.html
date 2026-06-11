@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI时代：我们的选择与行动 · 宣讲PPT</title>
+
+<script>
+  window.DECK_MANIFEST = [
+    { file: "slides/01-cover.html",        label: "P1 封面" },
+    { file: "slides/part1-cover.html",     label: "Part 1 过渡页" },
+    { file: "slides/02-opening.html",      label: "P2 开场金句" },
+    { file: "slides/03-policy-chain.html", label: "P3 政策逻辑链" },
+    { file: "slides/04-timeline.html",     label: "P4 核心政策时间线" },
+    { file: "slides/05-kpi-cards.html",    label: "P5 央企AI考核指标" },
+    { file: "slides/06-data.html",         label: "P6 数据冲击" },
+    { file: "slides/07-case-overview.html",label: "P7 案例速览" },
+    { file: "slides/08-case-huang.html",   label: "P8 案例一·黄天赐" },
+    { file: "slides/09-case-wang-gp.html", label: "P9 案例二·王桂平" },
+    { file: "slides/10-case-liu.html",     label: "P10 案例三·刘力" },
+    { file: "slides/11-case-wang-jn.html", label: "P11 案例四·王佳男" },
+    { file: "slides/12-case-wu.html",      label: "P12 案例五·吴迪" },
+    { file: "slides/13-five-cases.html",   label: "P13 五案例规律" },
+    { file: "slides/14-qa.html",           label: "P14 你可能在想什么" },
+    { file: "slides/part2-cover.html",     label: "Part 2 过渡页" },
+    { file: "slides/15-ai-history.html",   label: "P15 AI为什么最近爆发" },
+    { file: "slides/16-three-forms.html",  label: "P16 大模型三种形态" },
+    { file: "slides/17-four-powers.html",  label: "P17 四种能力升级" },
+    { file: "slides/18-four-modes.html",   label: "P18 四种工作模式" },
+    { file: "slides/19-evolution.html",    label: "P19 技术演进路线" },
+    { file: "slides/part3-cover.html",     label: "Part 3 过渡页" },
+    { file: "slides/20-global-cases.html", label: "P20 全球震撼实践" },
+    { file: "slides/21-industry-chart.html",label: "P21 全球AI转型" },
+    { file: "slides/22-auto-to-ai.html",   label: "P22 从自动化到AI" },
+    { file: "slides/23-energy.html",       label: "P23 能源央企" },
+    { file: "slides/24-mfg-finance.html",  label: "P24 制造与金融" },
+    { file: "slides/25-construction.html", label: "P25 国内建筑央企" },
+    { file: "slides/26-cscec.html",        label: "P26 中建系兄弟单位" },
+    { file: "slides/27-yunzhu.html",       label: "P27 中建电商·云筑网" },
+    { file: "slides/28-eco.html",          label: "P28 生态·碳科技·环能" },
+    { file: "slides/29-role-guide.html",   label: "P29 三层速查" },
+    { file: "slides/30-three-levels.html", label: "P30 三级跃迁" },
+    { file: "slides/part4-cover.html",     label: "Part 4 过渡页" },
+    { file: "slides/31-seven-gates.html",  label: "P31 七个入口" },
+    { file: "slides/32-benchmarks.html",   label: "P32 标杆案例" },
+    { file: "slides/33-methodology.html",  label: "P33 行业规律" },
+    { file: "slides/34-before-after.html", label: "P34 先跑起来" },
+    { file: "slides/35-five-supports.html",label: "P35 五个支撑能力" },
+    { file: "slides/36-entry-points.html", label: "P36 最容易的切入点" },
+    { file: "slides/37-roi.html",          label: "P37 投入产出参考" },
+    { file: "slides/part5-cover.html",     label: "Part 5 过渡页" },
+    { file: "slides/38-pitfalls.html",     label: "P38 避坑指南" },
+    { file: "slides/39-rics.html",         label: "P39 全球建筑业进度" },
+    { file: "slides/40-compliance.html",   label: "P40 合规高压线" },
+    { file: "slides/41-action-plan.html",  label: "P41 行动计划" },
+    { file: "slides/42-week-plan.html",    label: "P42 个人7天清单" },
+    { file: "slides/43-closing.html",      label: "P43 收尾" },
+    { file: "slides/44-maturity.html",     label: "P44 成熟度自评" },
+    { file: "slides/45-model-guide.html",  label: "P45 选型指南" },
+    { file: "slides/46-qa.html",           label: "P46 Q&A" },
+    { file: "slides/47-resources.html",    label: "P47 资源包" },
+  ];
+
+  window.DECK_WIDTH = 1920;
+  window.DECK_HEIGHT = 1080;
+</script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: #e2e8f0;
+    overflow: hidden;
+    font-family: -apple-system, "PingFang SC", sans-serif;
+  }
+  #stage {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform-origin: top left;
+    will-change: transform;
+    background: #fff;
+    box-shadow: 0 10px 60px rgba(0,0,0,0.4);
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: #0a1628;
+  }
+  .counter {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    font-variant-numeric: tabular-nums;
+    z-index: 100;
+    user-select: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .counter:hover { opacity: 1; }
+  .counter .label { color: rgba(255,255,255,0.7); margin-left: 8px; }
+  .nav-zone {
+    position: fixed;
+    top: 0; bottom: 0;
+    width: 15%;
+    cursor: pointer;
+    z-index: 50;
+  }
+  .nav-zone.left  { left: 0; }
+  .nav-zone.right { right: 0; }
+  .nav-hint {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .nav-zone.left  .nav-hint { left: 20px; }
+  .nav-zone.right .nav-hint { right: 20px; }
+  .nav-zone:hover .nav-hint { opacity: 1; }
+
+  @media print {
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { background: #fff; overflow: visible; height: auto; }
+    #stage { position: static; transform: none !important; box-shadow: none; }
+    .counter, .nav-zone { display: none !important; }
+    .print-stack { display: block; }
+    .print-stack iframe {
+      width: 1920px; height: 1080px;
+      page-break-after: always; display: block;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <iframe id="frame" src="about:blank"></iframe>
+</div>
+
+<div class="nav-zone left"  id="navL"><div class="nav-hint">‹</div></div>
+<div class="nav-zone right" id="navR"><div class="nav-hint">›</div></div>
+<div class="counter" id="counter">1 / 1</div>
+
+<div class="print-stack" id="printStack" style="display:none;"></div>
+
+<script>
+(function () {
+  const W = window.DECK_WIDTH || 1920;
+  const H = window.DECK_HEIGHT || 1080;
+  const deck = window.DECK_MANIFEST || [];
+  const stage = document.getElementById('stage');
+  const frame = document.getElementById('frame');
+  const counter = document.getElementById('counter');
+  const printStack = document.getElementById('printStack');
+  const storageKey = 'deck-index-' + location.pathname;
+  let current = 0;
+
+  stage.style.width  = W + 'px';
+  stage.style.height = H + 'px';
+
+  function fit() {
+    const s = Math.min(window.innerWidth / W, window.innerHeight / H);
+    const x = (window.innerWidth  - W * s) / 2;
+    const y = (window.innerHeight - H * s) / 2;
+    stage.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+    stage.style.top = '0';
+    stage.style.left = '0';
+  }
+
+  function show(idx) {
+    if (idx < 0 || idx >= deck.length) return;
+    current = idx;
+    frame.src = deck[idx].file;
+    counter.innerHTML = `${idx + 1} / ${deck.length} <span class="label">${deck[idx].label || ''}</span>`;
+    try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
+    if (location.hash !== '#' + (idx + 1)) {
+      history.replaceState(null, '', '#' + (idx + 1));
+    }
+  }
+
+  function next() { show(Math.min(current + 1, deck.length - 1)); }
+  function prev() { show(Math.max(current - 1, 0)); }
+
+  function onKey(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    switch (e.key) {
+      case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft':  case 'PageUp':              e.preventDefault(); prev(); break;
+      case 'Home':                                    e.preventDefault(); show(0); break;
+      case 'End':                                     e.preventDefault(); show(deck.length - 1); break;
+      case 'p': case 'P':                             window.print(); break;
+      default:
+        if (e.key >= '1' && e.key <= '9') {
+          const i = parseInt(e.key, 10) - 1;
+          if (i < deck.length) { e.preventDefault(); show(i); }
+        }
+    }
+  }
+
+  document.addEventListener('keydown', onKey);
+
+  // iframe 获得焦点后键盘事件不会冒泡到父页，需向每个 slide 内部也注入监听
+  function bindIframeKeys() {
+    try {
+      const iw = frame.contentWindow;
+      if (!iw) return;
+      iw.document.addEventListener('keydown', onKey);
+      iw.addEventListener('keydown', onKey);
+    } catch (_) {}
+  }
+  frame.addEventListener('load', bindIframeKeys);
+
+  document.getElementById('navL').addEventListener('click', prev);
+  document.getElementById('navR').addEventListener('click', next);
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', () => {
+    const m = location.hash.match(/^#(\d+)$/);
+    if (m) show(parseInt(m[1], 10) - 1);
+  });
+
+  const hashMatch = location.hash.match(/^#(\d+)$/);
+  if (hashMatch) current = Math.min(parseInt(hashMatch[1], 10) - 1, deck.length - 1);
+  else try {
+    const v = parseInt(localStorage.getItem(storageKey), 10);
+    if (!isNaN(v) && v >= 0 && v < deck.length) current = v;
+  } catch (_) {}
+  fit();
+  show(current);
+
+  window.addEventListener('beforeprint', () => {
+    printStack.innerHTML = '';
+    deck.forEach(item => {
+      const f = document.createElement('iframe');
+      f.src = item.file;
+      printStack.appendChild(f);
+    });
+    printStack.style.display = 'block';
+    document.getElementById('stage').style.display = 'none';
+  });
+  window.addEventListener('afterprint', () => {
+    printStack.innerHTML = '';
+    printStack.style.display = 'none';
+    document.getElementById('stage').style.display = '';
+  });
+})();
+</script>
+
+</body>
+</html>

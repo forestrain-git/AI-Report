@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P33 · 行业规律</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 30px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    gap: 20px;
+  }
+
+  .bridge {
+    font-size: 22px;
+    color: var(--ink-dim);
+    line-height: 1.6;
+    max-width: 1400px;
+  }
+  .bridge b {
+    color: var(--brand-blue);
+  }
+
+  /* 五步法 */
+  .steps-wrap {
+    display: flex;
+    gap: 0;
+    flex-shrink: 0;
+  }
+  .step-item {
+    flex: 1;
+    padding: 20px 16px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 700;
+    position: relative;
+  }
+  .step-item:nth-child(1) { background: #1e40af; }
+  .step-item:nth-child(2) { background: #1d4ed8; }
+  .step-item:nth-child(3) { background: #2563eb; }
+  .step-item:nth-child(4) { background: #dc2626; }
+  .step-item:nth-child(5) { background: #0ea5e9; }
+  .step-item .step-num {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 4px;
+    letter-spacing: 0.1em;
+  }
+  .step-item .step-name {
+    font-size: 20px;
+  }
+  .step-item.highlight::after {
+    content: '← 注意：这是第四步！';
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--red);
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* 四阶段表 */
+  .table-wrap {
+    margin-top: 36px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .phase-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+  }
+  .phase-table th {
+    background: #f8fafc;
+    color: var(--brand-blue);
+    font-weight: 700;
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 16px;
+  }
+  .phase-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--ink-body);
+    line-height: 1.5;
+  }
+  .phase-table tr:last-child td { border-bottom: none; }
+  .phase-table .phase-name {
+    font-weight: 700;
+    color: var(--ink-title);
+  }
+
+  /* 关键洞察 */
+  .insight-box {
+    background: linear-gradient(90deg, #eff6ff, #fff);
+    border-left: 5px solid var(--brand-blue);
+    border-radius: 0 12px 12px 0;
+    padding: 22px 28px;
+    font-size: 22px;
+    color: var(--ink-title);
+    line-height: 1.6;
+    font-style: italic;
+    margin-top: auto;
+  }
+  .insight-box::before {
+    content: '"';
+    font-size: 48px;
+    color: var(--brand-blue);
+    line-height: 1;
+    margin-right: 8px;
+    font-family: serif;
+    vertical-align: top;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">行业规律——从案例到方法论</div>
+
+<div class="bridge">
+  南钢和美的不是孤例。全球数百家企业验证了同一个规律：<b>AI 转型不是从战略开始，是从试点开始。</b>
+</div>
+
+<!-- 吴恩达五步法 -->
+<div class="steps-wrap">
+  <div class="step-item">
+    <div class="step-num">STEP 1</div>
+    <div class="step-name">执行试点</div>
+  </div>
+  <div class="step-item">
+    <div class="step-num">STEP 2</div>
+    <div class="step-name">建立团队</div>
+  </div>
+  <div class="step-item">
+    <div class="step-num">STEP 3</div>
+    <div class="step-name">提供培训</div>
+  </div>
+  <div class="step-item highlight">
+    <div class="step-num">STEP 4</div>
+    <div class="step-name">制定 AI 战略</div>
+  </div>
+  <div class="step-item">
+    <div class="step-num">STEP 5</div>
+    <div class="step-name">广泛沟通</div>
+  </div>
+</div>
+
+<!-- 四阶段推进模型 -->
+<div class="table-wrap">
+  <table class="phase-table">
+    <tr>
+      <th>阶段</th>
+      <th>时间</th>
+      <th>核心主题</th>
+      <th>我们当时在干嘛</th>
+    </tr>
+    <tr>
+      <td class="phase-name">筑基破冰</td>
+      <td>0-6 月</td>
+      <td>轻量化试点</td>
+      <td>黄天赐 1 周档案系统、王桂平半天评标</td>
+    </tr>
+    <tr>
+      <td class="phase-name">迭代增效</td>
+      <td>6-12 月</td>
+      <td>场景扩容</td>
+      <td>刘力养老、王佳男商务平台</td>
+    </tr>
+    <tr>
+      <td class="phase-name">全域规模化</td>
+      <td>1-2 年</td>
+      <td>全场景覆盖</td>
+      <td>碳科技能碳、环能财务评审</td>
+    </tr>
+    <tr>
+      <td class="phase-name">标杆领跑</td>
+      <td>2-3 年</td>
+      <td>自主可控</td>
+      <td>（进行中）</td>
+    </tr>
+  </table>
+</div>
+
+<div class="insight-box">
+  先跑起来，尝到甜头，自己就想跑了。战略是第四步，不是第一步。
+</div>
+
+<div class="page-footer">
+  <span class="part-label">Part 4 · 落地路径</span>
+  <span class="page-num">33 / 47</span>
+</div>
+
+</body>
+</html>
