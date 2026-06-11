@@ -12,18 +12,21 @@ if (!manifestMatch) {
 }
 const manifest = eval(manifestMatch[1]);
 
-// 读取共享 CSS
-const sharedCss = [
-  fs.readFileSync(path.join(DECK_DIR, 'shared', 'tokens.css'), 'utf8'),
-  fs.readFileSync(path.join(DECK_DIR, 'shared', 'slide-system.css'), 'utf8')
-].join('\n');
+// 读取共享 CSS，并预处理掉 @import
+const tokensCss = fs.readFileSync(path.join(DECK_DIR, 'shared', 'tokens.css'), 'utf8');
+const slideSystemCss = fs.readFileSync(path.join(DECK_DIR, 'shared', 'slide-system.css'), 'utf8')
+  .replace(/@import\s+url\(["']?tokens\.css["']?\);?\s*\n?/g, '');
+const combinedCss = tokensCss + '\n' + slideSystemCss;
 
 // 读取每个 slide 的完整 HTML，用 JSON.stringify 安全编码
 const slides = manifest.map(item => {
   const slidePath = path.join(DECK_DIR, item.file);
   let content = fs.readFileSync(slidePath, 'utf8');
-  // 路径修正：slide 文件在 slides/ 子目录，single-file.html 在 html-deck/ 根目录
-  // ../shared/ 在 iframe srcdoc 中应解析为相对于 single-file.html 的路径
+  // 1. 移除所有指向 shared/ 的 link 标签（CSS 将内联）
+  content = content.replace(/<link rel="stylesheet" href="[^"]*shared\/[^"]*"[^>]*>\s*\n?/g, '');
+  // 2. 在 </head> 之前插入内联共享 CSS
+  content = content.replace('<\/head>', '<style>' + combinedCss + '<\/style>\n<\/head>');
+  // 3. 修正图片路径：slide 在 slides/ 子目录，single-file.html 在 html-deck/ 根目录
   content = content.replaceAll('../shared/', './shared/');
   return JSON.stringify(content);
 });
@@ -37,7 +40,6 @@ parts.push(`<!DOCTYPE html>
 <meta charset="UTF-8">
 <title>AI时代：我们的选择与行动 · 宣讲PPT</title>
 <style>
-${sharedCss}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; background: #e2e8f0; overflow: hidden; font-family: -apple-system, "PingFang SC", sans-serif; }
 #stage { position: fixed; top: 50%; left: 50%; transform-origin: top left; will-change: transform; background: #fff; box-shadow: 0 10px 60px rgba(0,0,0,0.4); }
