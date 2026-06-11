@@ -21,7 +21,10 @@ const sharedCss = [
 // 读取每个 slide 的完整 HTML，用 JSON.stringify 安全编码
 const slides = manifest.map(item => {
   const slidePath = path.join(DECK_DIR, item.file);
-  const content = fs.readFileSync(slidePath, 'utf8');
+  let content = fs.readFileSync(slidePath, 'utf8');
+  // 路径修正：slide 文件在 slides/ 子目录，single-file.html 在 html-deck/ 根目录
+  // ../shared/ 在 iframe srcdoc 中应解析为相对于 single-file.html 的路径
+  content = content.replaceAll('../shared/', './shared/');
   return JSON.stringify(content);
 });
 
