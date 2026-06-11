@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>P21 · 数据冲击</title>
+<title>P06 · 数据冲击</title>
 <link rel="stylesheet" href="../shared/tokens.css">
 <style>
   body {
@@ -21,18 +21,7 @@
   }
   .page-title .hl { color: var(--red); }
 
-  .transition-bar {
-    background: linear-gradient(90deg, #1e40af, #0ea5e9);
-    color: #fff;
-    padding: 16px 32px;
-    border-radius: 12px;
-    font-size: 22px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 8px;
-  }
-
-  /* 三卡片阵 */
+  /* 六卡片阵 — 每张更大 */
   .card-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -55,6 +44,7 @@
     line-height: 1.05;
     color: var(--ink-title);
   }
+  .card-stat .big-num.cyan   { color: var(--brand-cyan); }
   .card-stat .big-num.red    { color: var(--red); }
   .card-stat .big-num.orange { color: var(--orange); }
   .card-stat .unit {
@@ -72,6 +62,20 @@
     font-size: 15px;
     color: var(--ink-subtle);
     margin-top: 8px;
+  }
+
+  .divider-strip {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 40px;
+  }
+  .divider-strip .line { flex: 1; height: 1px; background: #cbd5e1; }
+  .divider-strip .text {
+    font-size: 19px;
+    color: var(--ink-dim);
+    white-space: nowrap;
+    font-weight: 600;
   }
 
   /* 底部：对比表 + 万分之三 */
@@ -146,11 +150,32 @@
 
 <div class="page-title">数据冲击——<span class="hl">AI已经不是未来，是现在</span></div>
 
-<div class="transition-bar">
-  前面看了全球和同行的数据，现在看看中建智能自己的五个实践证明
+<!-- 上排：国内信号 -->
+<div class="card-row">
+  <div class="card-stat">
+    <div class="big-num cyan">152<span class="unit">个场景</span></div>
+    <div class="desc">中国石油昆仑大模型覆盖勘探、炼化、销售全产业链</div>
+    <div class="source">3000 亿参数 · 21 款模型昇腾适配</div>
+  </div>
+  <div class="card-stat">
+    <div class="big-num cyan">80%</div>
+    <div class="desc">南方电网"大瓦特"人工替代率<br>日均释放员工 2 小时</div>
+    <div class="source">全自主可控 · 年调用 23.4 亿次</div>
+  </div>
+  <div class="card-stat">
+    <div class="big-num cyan">90<span class="unit">秒</span></div>
+    <div class="desc">中铁建设"铁小智"审完<br>22 万㎡ 高铁站房方案</div>
+    <div class="source">效率提升 80% · 审核成本降低 73%</div>
+  </div>
 </div>
 
-<!-- 全球信号 -->
+<div class="divider-strip">
+  <div class="line"></div>
+  <div class="text">国内在跑，全球在追——建筑业的位置很尴尬</div>
+  <div class="line"></div>
+</div>
+
+<!-- 下排：全球信号 -->
 <div class="card-row">
   <div class="card-stat">
     <div class="big-num red">1.375</div>
@@ -193,8 +218,8 @@
 </div>
 
 <div class="page-footer">
-  <span class="part-label">Part 4 · 中建智能实践</span>
-  <span class="page-num">21 / 53</span>
+  <span class="part-label">Part 1 · 政策锚定</span>
+  <span class="page-num">6 / 53</span>
 </div>
 
 </body>

@@ -12,7 +12,7 @@
 
 ## 页面列表
 
-### Part 1：政策锚定（6页）
+### Part 1：政策锚定（7页）
 | 页码 | 文件 | 内容 |
 |-----|------|------|
 | P1 | `slides/01-cover.html` | 封面 + 六部分导航 |
@@ -21,37 +21,37 @@
 | P3 | `slides/03-policy-chain.html` | 政策逻辑链（倒金字塔层级） |
 | P4 | `slides/04-timeline.html` | 核心政策时间线 |
 | P5 | `slides/05-kpi-cards.html` | 央企AI考核指标体系 |
-| P6 | `slides/14-qa.html` | 你可能在想什么（单卡过渡） |
+| P6 | `slides/06-data.html` | 数据冲击（国内信号+全球信号+对比表） |
+| P7 | `slides/14-qa.html` | 你可能在想什么（单卡过渡） |
 
 ### Part 2：技术祛魅（6页）
 | 页码 | 文件 | 内容 |
 |-----|------|------|
 | — | `slides/part2-cover.html` | Part 2 过渡页 |
-| P7 | `slides/15-ai-history.html` | AI 60年为什么最近爆发 |
-| P8 | `slides/16-three-forms.html` | 大模型三种形态 |
-| P9 | `slides/17-four-powers.html` | LLM 四种能力升级 |
-| P10 | `slides/18-four-modes.html` | LLM 四种工作模式 |
-| P11 | `slides/19-evolution.html` | 技术演进路线 |
+| P8 | `slides/15-ai-history.html` | AI 60年为什么最近爆发 |
+| P9 | `slides/16-three-forms.html` | 大模型三种形态 |
+| P10 | `slides/17-four-powers.html` | LLM 四种能力升级 |
+| P11 | `slides/18-four-modes.html` | LLM 四种工作模式 |
+| P12 | `slides/19-evolution.html` | 技术演进路线 |
 
 ### Part 3：同行压力（9页）
 | 页码 | 文件 | 内容 |
 |-----|------|------|
 | — | `slides/part3-cover.html` | Part 3 过渡页 |
-| P12 | `slides/20-global-cases.html` | 全球非科技企业AI实践 |
-| P13 | `slides/21-industry-chart.html` | 全球传统企业AI转型 |
-| P14 | `slides/22-auto-to-ai.html` | 从自动化到AI |
-| P15 | `slides/23-energy.html` | 能源央企 |
-| P16 | `slides/24-mfg-finance.html` | 制造业与金融业 |
-| P17 | `slides/25-construction.html` | 国内建筑央企 |
-| P18 | `slides/26-cscec.html` | 中建系兄弟单位成果 |
-| P19 | `slides/27-yunzhu.html` | 中建电商·云筑网 |
-| P20 | `slides/28-eco.html` | 生态·碳科技·环能 |
+| P13 | `slides/20-global-cases.html` | 全球非科技企业AI实践 |
+| P14 | `slides/21-industry-chart.html` | 全球传统企业AI转型 |
+| P15 | `slides/22-auto-to-ai.html` | 从自动化到AI |
+| P16 | `slides/23-energy.html` | 能源央企 |
+| P17 | `slides/24-mfg-finance.html` | 制造业与金融业 |
+| P18 | `slides/25-construction.html` | 国内建筑央企 |
+| P19 | `slides/26-cscec.html` | 中建系兄弟单位成果 |
+| P20 | `slides/27-yunzhu.html` | 中建电商·云筑网 |
+| P21 | `slides/28-eco.html` | 生态·碳科技·环能 |
 
-### Part 4：中建智能实践（10页）
+### Part 4：中建智能实践（9页）
 | 页码 | 文件 | 内容 |
 |-----|------|------|
 | — | `slides/part4-cover.html` | Part 4 过渡页 |
-| P21 | `slides/06-data.html` | 数据冲击（全球信号+过渡引入） |
 | P22 | `slides/07-case-overview.html` | 五个案例速览表 |
 | P23 | `slides/08-case-huang.html` | 案例一·黄天赐 |
 | P24 | `slides/09-case-wang-gp.html` | 案例二·王桂平 |
