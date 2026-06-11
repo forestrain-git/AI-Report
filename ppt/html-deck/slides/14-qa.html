@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>P14 · 你可能在想什么</title>
+<title>P06 · 你可能在想什么</title>
 <link rel="stylesheet" href="../shared/tokens.css">
 <link rel="stylesheet" href="../shared/slide-system.css">
 <style>
@@ -18,24 +18,20 @@
     margin-bottom: 40px;
   }
 
-  /* 三列问答卡片 */
-  .qa-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    flex: 1;
-  }
-
+  /* 单张大卡片居中 */
   .qa-card {
     background: #fff;
     border: 2px solid #e2e8f0;
     border-radius: 16px;
-    padding: 32px 28px;
+    padding: 48px 56px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     position: relative;
     overflow: hidden;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .qa-card::before {
@@ -48,31 +44,22 @@
     background: linear-gradient(90deg, #1e40af, #2563eb);
   }
 
-  .qa-card:nth-child(2)::before {
-    background: linear-gradient(90deg, #0891b2, #0ea5e9);
-  }
-
-  .qa-card:nth-child(3)::before {
-    background: linear-gradient(90deg, #059669, #10b981);
-  }
-
   .qa-card .qa-emoji {
-    font-size: 48px;
+    font-size: 56px;
     line-height: 1;
   }
 
   .qa-card .qa-q {
-    font-size: 24px;
+    font-size: 36px;
     font-weight: 800;
     color: #0f172a;
     line-height: 1.4;
   }
 
   .qa-card .qa-a {
-    font-size: 19px;
+    font-size: 22px;
     color: #475569;
-    line-height: 1.7;
-    flex: 1;
+    line-height: 1.8;
   }
 
   .qa-card .qa-a b {
@@ -83,9 +70,9 @@
   /* 底部金句 */
   .foot-kicker {
     text-align: center;
-    padding: 28px 0;
+    padding: 32px 0;
     border-top: 2px solid #e2e8f0;
-    margin-top: 32px;
+    margin-top: auto;
   }
 
   .foot-kicker .line {
@@ -100,35 +87,29 @@
   .foot-kicker .line .hl {
     color: var(--brand-blue);
   }
+
+  .page-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-xs);
+    color: var(--ink-subtle);
+    margin-top: 20px;
+  }
+  .page-footer .part-label { color: var(--brand-blue); font-weight: 600; }
+  .page-footer .page-num { color: var(--ink-dim); }
 </style>
 </head>
 <body>
 
 <div class="slide-title">你可能在想什么</div>
 
-<div class="qa-grid">
-  <div class="qa-card">
-    <div class="qa-emoji">🤔</div>
-    <div class="qa-q">"AI 会不会替代我的岗位？"</div>
-    <div class="qa-a">
-      不会替代你的岗位，但会替代<b>不会用 AI 的你</b>。AI 是能力的放大器，不是岗位的替代者。会用 AI 的人，正在快速拉开与不会用的人之间的差距。
-    </div>
-  </div>
-
-  <div class="qa-card">
-    <div class="qa-emoji">🤔</div>
-    <div class="qa-q">"这又是领导拍脑袋的项目吧？"</div>
-    <div class="qa-a">
-      <b>中建五局 4 万人已经在用</b>，活跃率 94%。这不是试点，是规模化的日常工具。从"试试"到"离不开"，只需要两周。
-    </div>
-  </div>
-
-  <div class="qa-card">
-    <div class="qa-emoji">🤔</div>
-    <div class="qa-q">"我是做 XX 的，怎么用 AI？"</div>
-    <div class="qa-a">
-      <b>不需要懂技术，只需要会打字、会提问</b>。王佳男（商务经理）用无代码搭系统，刘力（产品经理）用 AI 写前端——他们都不写代码。
-    </div>
+<div class="qa-card">
+  <div class="qa-emoji">🤔</div>
+  <div class="qa-q">"AI 会不会替代我的岗位？"</div>
+  <div class="qa-a">
+    不会替代你的岗位，但会替代<b>不会用 AI 的你</b>。AI 是能力的放大器，不是岗位的替代者。会用 AI 的人，正在快速拉开与不会用的人之间的差距。
+    <br><br>
+    要回答这个问题，你得先知道 AI 到底是什么——往下看。
   </div>
 </div>
 
@@ -138,7 +119,7 @@
 
 <div class="page-footer">
   <span class="part-label">Part 1 · 政策锚定</span>
-  <span class="page-num">14 / 47</span>
+  <span class="page-num">6 / 53</span>
 </div>
 
 </body>
