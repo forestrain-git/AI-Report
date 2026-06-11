@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封面 E · 建筑蓝图</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #FAFBFC;
+    font-family: "SF Mono", "Fira Code", "PingFang SC", monospace;
+    color: #0F172A;
+  }
+  .slide {
+    width: 100%; height: 100%;
+    position: relative;
+    padding: 80px 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  /* 蓝图网格 */
+  .blueprint-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  /* 对角线辅助线 */
+  .blueprint-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(45deg, transparent 49.8%, rgba(0,0,0,0.04) 49.8%, rgba(0,0,0,0.04) 50.2%, transparent 50.2%),
+      linear-gradient(-45deg, transparent 49.8%, rgba(0,0,0,0.04) 49.8%, rgba(0,0,0,0.04) 50.2%, transparent 50.2%);
+    background-size: 200px 200px;
+  }
+
+  /* 顶部工程标注 */
+  .header-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.1em;
+    z-index: 1;
+  }
+  .header-bar span {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 4px 12px;
+  }
+
+  /* 中部标题区 */
+  .center-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  /* 工程图框 */
+  .title-frame {
+    position: relative;
+    padding: 60px 80px;
+    border: 1px solid rgba(37,99,235,0.3);
+  }
+  .title-frame::before, .title-frame::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border: 2px solid rgba(30,58,95,0.6);
+  }
+  .title-frame::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .title-frame::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .title-frame h1 {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 88px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    color: #0F172A;
+  }
+  .title-frame h1 .gold { color: #1E3A5F; }
+  .title-frame .sub {
+    margin-top: 24px;
+    font-size: 22px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.15em;
+    font-family: "PingFang SC", sans-serif;
+  }
+
+  /* 右侧标注线 */
+  .dim-line {
+    position: absolute;
+    right: -120px;
+    top: 50%;
+    width: 100px;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+  }
+  .dim-line::after {
+    content: '1920×1080';
+    position: absolute;
+    right: -100px;
+    top: -8px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    white-space: nowrap;
+  }
+
+  /* 底部 */
+  .footer-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    z-index: 1;
+  }
+  .footer-bar .scale {
+    font-size: 11px;
+    color: rgba(37,99,235,0.5);
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="blueprint-grid"></div>
+
+  <div class="header-bar">
+    <span>PROJECT: AI-AWAKENING-2026</span>
+    <span>DEPT: CSCEC INTELLIGENT</span>
+    <span>CLASS: INTERNAL SHARE</span>
+  </div>
+
+  <div class="center-area">
+    <div class="title-frame">
+      <h1>AI <span class="gold">觉醒</span><br>经历分享</h1>
+      <p class="sub">一个老程序员两个月的记录</p>
+      <div class="dim-line"></div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>中建智能技术有限公司</span>
+    <span class="scale">SCALE 1:1  |  70 MIN PRESENTATION</span>
+  </div>
+</div>
+</body>
+</html>

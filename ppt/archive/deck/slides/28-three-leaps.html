@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P28 能力边界拓展——三个跃迁</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #FAFBFC; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(37,99,235,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(30,58,95,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(30,58,95,0.6); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #1E3A5F; box-shadow: 0 0 12px rgba(30,58,95,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; z-index: 1; }
+  .cards { display: flex; gap: 32px; margin-bottom: 48px; }
+  .card { flex: 1; padding: 40px; border: 1px solid rgba(37,99,235,0.15); position: relative; }
+  .card.highlight { border-color: rgba(30,58,95,0.6); background: rgba(30,58,95,0.04); }
+  .card .num { font-family: var(--font-display); font-size: 48px; font-weight: 700; color: rgba(30,58,95,0.25); line-height: 1; margin-bottom: 16px; }
+  .card .title { font-size: 26px; font-weight: 600; color: var(--ink-primary); margin-bottom: 16px; }
+  .card .title strong { color: #1E3A5F; }
+  .card .desc { font-size: 18px; color: var(--ink-secondary); line-height: 1.6; margin-bottom: 20px; }
+  .card .link { font-family: var(--font-mono); font-size: 13px; color: rgba(37,99,235,0.6); word-break: break-all; }
+  .card .link a { color: rgba(37,99,235,0.8); text-decoration: none; }
+  .bottom-line { text-align: center; font-size: 22px; color: var(--ink-secondary); }
+  .bottom-line strong { color: #1E3A5F; }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(15,23,42,0.5); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(30,58,95,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 1 · 阶段四</span>
+    <span class="badge" style="border:1px solid rgba(30,58,95,0.4);padding:3px 12px;color:rgba(30,58,95,0.8);background:rgba(30,58,95,0.04)">跃迁</span>
+    <span>28 / 39</span>
+  </div>
+  <div class="header">
+    <h1>能力边界拓展 —— 三个跃迁</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="cards">
+      <div class="card">
+        <div class="num">01</div>
+        <div class="title"><strong>看到</strong>即占有</div>
+        <div class="desc">GitHub 上的 AI 最佳教程，看到了就 git clone 下来，就占有了</div>
+        <div class="link"><a href="https://github.com/microsoft/generative-ai-for-beginners">generative-ai-for-beginners</a></div>
+      </div>
+      <div class="card highlight">
+        <div class="num">02</div>
+        <div class="title"><strong>想到</strong>即实现</div>
+        <div class="desc">中建智能主页，从想法到上线，不再是周级而是小时级</div>
+        <div class="link"><a href="https://forestrain-git.github.io/CCIC-MainpageDesign/">CCIC-MainpageDesign</a></div>
+      </div>
+      <div class="card">
+        <div class="num">03</div>
+        <div class="title"><strong>获知</strong>即学会</div>
+        <div class="desc">Vue 大屏的使用，从了解到部署，学习周期被极度压缩</div>
+        <div class="link"><a href="https://forestrain-git.github.io/vue-big-screen/#/">vue-big-screen</a></div>
+      </div>
+    </div>
+    <div class="bottom-line">底层逻辑：<strong>领域知识 + 判断力 + AI 执行力</strong> = 超能力</div>
+  </div>
+  <div class="hud-bot">
+    <span>[45:00] 累计</span>
+    <span>现场打开链接 · 全场高潮</span>
+  </div>
+</div>
+</body>
+</html>

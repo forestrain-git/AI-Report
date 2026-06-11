@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封面 F · 电影字幕</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #050505;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    color: #0F172A;
+  }
+  .slide {
+    width: 100%; height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  /* 电影感暗角 */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.6) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* 颗粒感 */
+  .grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* 顶部细线（像银幕边框） */
+  .screen-border-top {
+    position: absolute;
+    top: 60px;
+    left: 120px; right: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(30,58,95,0.3), transparent);
+  }
+  .screen-border-bot {
+    position: absolute;
+    bottom: 60px;
+    left: 120px; right: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(30,58,95,0.3), transparent);
+  }
+
+  .content {
+    text-align: center;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* 出品公司字样 */
+  .studio {
+    font-size: 14px;
+    color: rgba(30,58,95,0.5);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    font-size: 110px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    color: #0F172A;
+  }
+  .title .gold {
+    color: #1E3A5F;
+  }
+
+  /* 分隔菱形 */
+  .diamond {
+    width: 8px;
+    height: 8px;
+    background: #1E3A5F;
+    transform: rotate(45deg);
+    margin: 20px 0;
+    box-shadow: 0 0 12px rgba(30,58,95,0.4);
+  }
+
+  .subtitle {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 28px;
+    color: rgba(15,23,42,0.5);
+    letter-spacing: 0.2em;
+  }
+
+  .credits {
+    margin-top: 60px;
+    font-size: 14px;
+    color: rgba(15,23,42,0.3);
+    letter-spacing: 0.15em;
+    line-height: 2;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="vignette"></div>
+  <div class="grain"></div>
+  <div class="screen-border-top"></div>
+  <div class="screen-border-bot"></div>
+
+  <div class="content">
+    <div class="studio">中建智能技术有限公司 呈现</div>
+    <h1 class="title">AI <span class="gold">觉醒</span><br>经历分享</h1>
+    <div class="diamond"></div>
+    <p class="subtitle">一个老程序员两个月的记录</p>
+    <div class="credits">
+      2026年5月 · 北京
+    </div>
+  </div>
+</div>
+</body>
+</html>

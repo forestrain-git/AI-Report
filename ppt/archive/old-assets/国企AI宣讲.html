@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI时代：国企的选择与行动</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: #050a14;
+    overflow: hidden;
+    font-family: "Noto Serif SC", "PingFang SC", -apple-system, sans-serif;
+  }
+
+  /* ===== deck-stage shadow styles ===== */
+  deck-stage > section {
+    background: #0a1628;
+    overflow: hidden;
+    position: relative;
+    /* display handled by active class */
+  }
+  deck-stage > section:not(.active) {
+    display: none !important;
+  }
+  deck-stage > section.active {
+    display: block;
+  }
+
+  /* ===== Design Tokens ===== */
+  :root {
+    --navy-900: #050a14;
+    --navy-800: #0a1628;
+    --navy-700: #0d1f3c;
+    --navy-600: #132a4a;
+    --navy-500: #1a3a5c;
+    --gold-400: #c9a84c;
+    --gold-300: #d4b76a;
+    --gold-200: #e8c96a;
+    --gold-100: #f5e6a3;
+    --text-primary: #f0f0f0;
+    --text-secondary: #a0aec0;
+    --text-muted: #6b7a94;
+    --accent-red: #c94a4a;
+    --accent-green: #4ac98a;
+  }
+
+  /* ===== Slide Base ===== */
+  .slide-wrap {
+    width: 1920px;
+    height: 1080px;
+    padding: 80px 120px;
+    position: relative;
+    color: var(--text-primary);
+  }
+
+  /* ===== Common Elements ===== */
+  .slide-num {
+    position: absolute;
+    top: 36px;
+    right: 60px;
+    font-size: 14px;
+    color: var(--gold-400);
+    font-family: system-ui, sans-serif;
+    letter-spacing: 2px;
+  }
+  .slide-num::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold-400);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+
+  .gold-line {
+    width: 60px;
+    height: 3px;
+    background: var(--gold-400);
+    margin: 20px 0;
+  }
+  .gold-line-long {
+    width: 120px;
+    height: 2px;
+    background: var(--gold-400);
+    margin: 24px 0;
+  }
+
+  .section-label {
+    font-size: 16px;
+    color: var(--gold-400);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-family: system-ui, sans-serif;
+    font-weight: 500;
+  }
+
+  h1.slide-title {
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin: 16px 0 24px;
+  }
+  h1.slide-title .highlight {
+    color: var(--gold-200);
+  }
+
+  h2.slide-subtitle {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin: 12px 0 20px;
+  }
+
+  p.body-text {
+    font-size: 26px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 1400px;
+  }
+
+  .big-quote {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.5;
+    border-left: 4px solid var(--gold-400);
+    padding-left: 32px;
+    margin: 32px 0;
+  }
+
+  /* ===== Cards ===== */
+  .card {
+    background: rgba(19, 42, 74, 0.6);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 8px;
+    padding: 28px 32px;
+  }
+  .card-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-200);
+    margin-bottom: 12px;
+  }
+  .card-text {
+    font-size: 20px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ===== Tables ===== */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 20px;
+    margin: 20px 0;
+  }
+  .data-table th {
+    background: rgba(201, 168, 76, 0.15);
+    color: var(--gold-200);
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--gold-400);
+  }
+  .data-table td {
+    padding: 14px 20px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  }
+  .data-table tr:hover td {
+    background: rgba(201, 168, 76, 0.05);
+  }
+
+  /* ===== Lists ===== */
+  .styled-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  .styled-list li {
+    font-size: 24px;
+    color: var(--text-secondary);
+    padding: 12px 0 12px 36px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .styled-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 8px;
+    height: 8px;
+    background: var(--gold-400);
+    border-radius: 50%;
+  }
+
+  /* ===== Big Numbers ===== */
+  .big-number {
+    font-size: 96px;
+    font-weight: 900;
+    color: var(--gold-200);
+    line-height: 1;
+    font-family: system-ui, sans-serif;
+  }
+  .big-number-label {
+    font-size: 22px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* ===== Speaker Notes ===== */
+  .speaker-notes {
+    position: absolute;
+    bottom: 16px;
+    left: 60px;
+    right: 60px;
+    font-size: 13px;
+    color: var(--text-muted);
+    opacity: 0.5;
+    line-height: 1.5;
+    font-family: system-ui, sans-serif;
+  }
+
+  /* ===== Two Column ===== */
+  .two-col {
+    display: flex;
+    gap: 60px;
+    margin-top: 24px;
+  }
+  .two-col > div {
+    flex: 1;
+  }
+
+  /* ===== Three Column ===== */
+  .three-col {
+    display: flex;
+    gap: 40px;
+    margin-top: 24px;
+  }
+  .three-col > div {
+    flex: 1;
+  }
+
+  /* ===== Grid ===== */
+  .grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  /* ===== Timeline / Steps ===== */
+  .step-box {
+    background: rgba(19, 42, 74, 0.5);
+    border-left: 3px solid var(--gold-400);
+    padding: 20px 28px;
+    margin: 12px 0;
+  }
+  .step-box .step-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold-200);
+    margin-bottom: 8px;
+  }
+  .step-box .step-desc {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ===== Decorative ===== */
+  .deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    pointer-events: none;
+  }
+  .deco-line-h {
+    height: 1px;
+    background: rgba(201, 168, 76, 0.2);
+  }
+
+  /* ===== Print ===== */
+  @media print {
+    deck-stage > section { display: block !important; position: relative !important; width: 1920px !important; height: 1080px !important; page-break-after: always; overflow: hidden; }
+    deck-stage > section:last-child { page-break-after: auto; }
+    .speaker-notes { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+<!-- ==================== P1 封面 ==================== -->
+<section data-screen-label="封面">
+  <div class="slide-wrap" style="padding:0; display:flex; align-items:center; justify-content:center; text-align:center;">
+    <div class="deco-circle" style="width:600px;height:600px;top:-100px;right:-100px;"></div>
+    <div class="deco-circle" style="width:400px;height:400px;bottom:-80px;left:-80px;"></div>
+    <div style="position:relative; z-index:2;">
+      <div style="font-size:18px; color:var(--gold-400); letter-spacing:8px; margin-bottom:40px;">人工智能 · 国企转型</div>
+      <h1 style="font-size:120px; font-weight:900; color:var(--text-primary); line-height:1.1; margin-bottom:32px;">
+        AI 时代
+      </h1>
+      <div style="font-size:56px; font-weight:700; color:var(--gold-200); margin-bottom:48px;">
+        国企的选择与行动
+      </div>
+      <div class="gold-line" style="width:160px; margin:0 auto 40px;"></div>
+      <p style="font-size:28px; color:var(--text-secondary);">从认知到落地的实践指南</p>
+      <p style="font-size:20px; color:var(--text-muted); margin-top:60px;">2026年6月</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== P2 目录 ==================== -->
+<section data-screen-label="目录">
+  <div class="slide-wrap">
+    <div class="slide-num">02 / 36</div>
+    <div class="section-label">CONTENTS</div>
+    <h2 class="slide-subtitle" style="margin-bottom:48px;">今天讲什么</h2>
+    <div class="grid-2x2" style="gap:32px;">
+      <div class="card"><div class="card-title">01</div><div class="card-text">开场钩子 — 为什么必须现在行动</div></div>
+      <div class="card"><div class="card-title">02</div><div class="card-text">政策锚定 — 国家战略与考核压力</div></div>
+      <div class="card"><div class="card-title">03</div><div class="card-text">技术祛魅 — AI到底能做什么</div></div>
+      <div class="card"><div class="card-title">04</div><div class="card-text">同行压力 — 央企都在做什么</div></div>
+      <div class="card"><div class="card-title">05</div><div class="card-text">落地路径 — 怎么从零开始</div></div>
+      <div class="card"><div class="card-title">06</div><div class="card-text">组织保障 — 谁来推、谁担责</div></div>
+      <div class="card"><div class="card-title">07</div><div class="card-text">风险预判 — 怎么避坑</div></div>
+      <div class="card"><div class="card-title">08</div><div class="card-text">行动倡议 — 从今天开始做什么</div></div>
+    </div>
+    <div class="speaker-notes">今天用60分钟，从政策、技术、案例、路径、组织、风险、行动八个维度，帮大家建立对AI转型的完整认知框架。</div>
+  </div>
+</section>
+
+<!-- ==================== P3 开场金句 ==================== -->
+<section data-screen-label="开场金句">
+  <div class="slide-wrap" style="display:flex; align-items:center; justify-content:center;">
+    <div class="slide-num">03 / 36</div>
+    <div style="text-align:center; max-width:1400px;">
+      <div style="font-size:200px; color:var(--gold-400); opacity:0.15; line-height:0.5; margin-bottom:40px;">"</div>
+      <p style="font-size:56px; font-weight:700; color:var(--text-primary); line-height:1.5; margin-bottom:40px;">
+        这不是技术选项，这是<span style="color:var(--gold-200);">政治任务</span>。
+      </p>
+      <div class="gold-line" style="width:100px; margin:0 auto 32px;"></div>
+      <p style="font-size:28px; color:var(--text-secondary);">AI推进力度已纳入央企负责人经营业绩考核</p>
+    </div>
+    <div class="speaker-notes">先声夺人。不是"AI很火"，而是"不做AI的国企正在被重构"。让听众从第一分钟就知道这事跟他的考核挂钩。</div>
+  </div>
+</section>
+
+<!-- ==================== P4 竞争态势 ==================== -->
+<section data-screen-label="竞争态势">
+  <div class="slide-wrap">
+    <div class="slide-num">04 / 36</div>
+    <div class="section-label">竞争态势</div>
+    <h2 class="slide-subtitle">不做AI的国企正在被<span class="highlight">重构</span></h2>
+    <div class="two-col" style="margin-top:40px;">
+      <div class="card" style="border-color:rgba(74,201,138,0.3);">
+        <div class="card-title" style="color:var(--accent-green);">先行央企</div>
+        <ul class="styled-list">
+          <li>被树为典型，获得政策倾斜</li>
+          <li>吸引AI人才，形成技术壁垒</li>
+          <li>降本增效，报价更有优势</li>
+          <li>数字化指标加分</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(201,74,74,0.3);">
+        <div class="card-title" style="color:var(--accent-red);">滞后企业</div>
+        <ul class="styled-list">
+          <li>只能交作业，被动追赶</li>
+          <li>人才流失，技术代差扩大</li>
+          <li>成本居高不下，招投标失利</li>
+          <li>考核扣分，领导责任</li>
+        </ul>
+      </div>
+    </div>
+    <div class="speaker-notes">制造紧迫感。先建的被树为典型，后建的只能交作业。这不是危言耸听，是正在发生的事。</div>
+  </div>
+</section>
+
+<!-- ==================== P5 数据冲击 ==================== -->
+<section data-screen-label="数据冲击">
+  <div class="slide-wrap">
+    <div class="slide-num">05 / 36</div>
+    <div class="section-label">数据冲击</div>
+    <h2 class="slide-subtitle">AI已经不是未来，是<span class="highlight">现在</span></h2>
+    <div class="three-col" style="margin-top:48px;">
+      <div style="text-align:center;">
+        <div class="big-number">152</div>
+        <div class="big-number-label">中国石油昆仑大模型<br>覆盖场景数</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:12px;">3000亿参数</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="big-number">80%</div>
+        <div class="big-number-label">南方电网"大瓦特"<br>人工替代率</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:12px;">80余个场景</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="big-number">4万</div>
+        <div class="big-number-label">中建五局培训人数<br>活跃率94%</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:12px;">黑龙江交投1.6万人全员覆盖</div>
+      </div>
+    </div>
+    <div class="speaker-notes">用数字说话。152个场景、80%替代率、4万人培训——这些不是概念，是已验证的事实。</div>
+  </div>
+</section>
+
+<!-- ==================== P6 政策逻辑链 ==================== -->
+<section data-screen-label="政策逻辑链">
+  <div class="slide-wrap">
+    <div class="slide-num">06 / 36</div>
+    <div class="section-label">政策锚定</div>
+    <h2 class="slide-subtitle">从国家意志到<span class="highlight">个人责任</span></h2>
+    <div style="margin-top:40px; padding-left:40px;">
+      <div class="step-box" style="margin:16px 0; border-left-width:4px;">
+        <div class="step-title">国家意志 — 2025两会"人工智能+"行动</div>
+      </div>
+      <div style="padding-left:40px; border-left:2px solid rgba(201,168,76,0.2); margin-left:20px;">
+        <div class="step-box" style="margin:16px 0;">
+          <div class="step-title">新质生产力 — 科技创新驱动产业升级</div>
+        </div>
+        <div style="padding-left:40px; border-left:2px solid rgba(201,168,76,0.2); margin-left:20px;">
+          <div class="step-box" style="margin:16px 0;">
+            <div class="step-title">国资委 — "AI+"专项行动 + 数字化转型考核</div>
+          </div>
+          <div style="padding-left:40px; border-left:2px solid rgba(201,168,76,0.2); margin-left:20px;">
+            <div class="step-box" style="margin:16px 0;">
+              <div class="step-title">央企负责人 — 经营业绩考核纳入AI指标</div>
+            </div>
+            <div style="padding-left:40px; margin-left:20px;">
+              <div style="font-size:28px; font-weight:700; color:var(--gold-200); margin-top:24px;">
+                → 你：不是做不做，是怎么做的问题
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">政策逻辑链。让听众明白：这是从上到下的传导，不是某个部门的一厢情愿。</div>
+  </div>
+</section>
+
+<!-- ==================== P7 政策时间线 ==================== -->
+<section data-screen-label="政策时间线">
+  <div class="slide-wrap">
+    <div class="slide-num">07 / 36</div>
+    <div class="section-label">政策锚定</div>
+    <h2 class="slide-subtitle">核心政策<span class="highlight">时间线</span></h2>
+    <div style="margin-top:48px; position:relative; padding-left:200px;">
+      <div style="position:absolute; left:60px; top:0; bottom:0; width:2px; background:rgba(201,168,76,0.3);"></div>
+      <div style="margin-bottom:36px;">
+        <div style="position:absolute; left:36px; font-size:20px; font-weight:700; color:var(--gold-400); font-family:system-ui;">2020</div>
+        <div style="font-size:22px; color:var(--text-primary); font-weight:600;">国资委《关于加快推进国有企业数字化转型工作的通知》</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:6px;">首次系统部署国企数字化转型</div>
+      </div>
+      <div style="margin-bottom:36px;">
+        <div style="position:absolute; left:36px; font-size:20px; font-weight:700; color:var(--gold-400); font-family:system-ui;">2023</div>
+        <div style="font-size:22px; color:var(--text-primary); font-weight:600;">AI列为战略性新兴产业重要方向</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:6px;">中央企业加快发展战略性新兴产业</div>
+      </div>
+      <div style="margin-bottom:36px;">
+        <div style="position:absolute; left:36px; font-size:20px; font-weight:700; color:var(--gold-400); font-family:system-ui;">2024-25</div>
+        <div style="font-size:22px; color:var(--text-primary); font-weight:600;">国资委"AI+"专项行动，数字化转型纳入经营业绩考核</div>
+      </div>
+      <div style="margin-bottom:36px;">
+        <div style="position:absolute; left:36px; font-size:20px; font-weight:700; color:var(--gold-400); font-family:system-ui;">2025</div>
+        <div style="font-size:22px; color:var(--text-primary); font-weight:600;">两会"人工智能+"行动，新质生产力核心概念</div>
+      </div>
+      <div>
+        <div style="position:absolute; left:36px; font-size:20px; font-weight:700; color:var(--gold-400); font-family:system-ui;">2026</div>
+        <div style="font-size:22px; color:var(--text-primary); font-weight:600;">新《网络安全法》生效 — 罚款上限1000万 + 负责人个人责任</div>
+      </div>
+    </div>
+    <div class="speaker-notes">时间线展示政策连续性。从2020年到2026年，政策越来越具体、考核越来越硬。</div>
+  </div>
+</section>
+
+<!-- ==================== P8 考核指标体系 ==================== -->
+<section data-screen-label="考核指标">
+  <div class="slide-wrap">
+    <div class="slide-num">08 / 36</div>
+    <div class="section-label">政策锚定</div>
+    <h2 class="slide-subtitle">央企AI<span class="highlight">考核指标体系</span></h2>
+    <p class="body-text" style="margin-bottom:32px;">AI推进力度已正式纳入央企负责人经营业绩考核 — 不是"可做可不做"，而是做了加分、不做扣分。</p>
+    <table class="data-table">
+      <tr><th>考核维度</th><th>具体指标</th><th>说明</th></tr>
+      <tr><td>研发投入</td><td>AI相关研发经费投入强度</td><td>衡量企业对AI的投入力度</td></tr>
+      <tr><td>场景落地</td><td>AI技术在核心业务场景的应用数量和覆盖率</td><td>衡量AI的落地深度</td></tr>
+      <tr><td>数字化程度</td><td>业务流程数字化覆盖率、数据共享率</td><td>量化数字化转型进展</td></tr>
+      <tr><td>人才建设</td><td>AI领域专业人才引进和培养情况</td><td>人才储备指标</td></tr>
+      <tr><td>创新成效</td><td>AI相关专利、标准、成果转化情况</td><td>创新产出指标</td></tr>
+      <tr><td>数据治理</td><td>数据资产管理和数据治理能力</td><td>数据基础设施水平</td></tr>
+    </table>
+    <div class="speaker-notes">考核是硬约束。六个维度覆盖了从投入到产出的完整链条，不是单一指标。</div>
+  </div>
+</section>
+
+<!-- ==================== P9 央企先行者 ==================== -->
+<section data-screen-label="央企先行者">
+  <div class="slide-wrap">
+    <div class="slide-num">09 / 36</div>
+    <div class="section-label">政策锚定</div>
+    <h2 class="slide-subtitle">央企先行者的<span class="highlight">行动方案</span></h2>
+    <table class="data-table" style="margin-top:32px;">
+      <tr><th>企业</th><th>行动方案</th><th>关键内容</th></tr>
+      <tr><td>中国能建</td><td>《人工智能三年行动方案》</td><td>任务书、路线图、责任单、时间表</td></tr>
+      <tr><td>中国海油</td><td>数字化率目标</td><td>"十五五"末数字化率达80%以上</td></tr>
+      <tr><td>南钢×华为</td><td>"钢铁大模型百日会战"</td><td>董事长亲任总指挥，12个场景纵队</td></tr>
+      <tr><td>国家电网</td><td>"光明"电力大模型</td><td>首个能源电力千亿参数多模态大模型</td></tr>
+      <tr><td>中国石油</td><td>"数智石油"第五大战略</td><td>全产业链152个场景，全面自主可控</td></tr>
+    </table>
+    <div class="speaker-notes">同行不是观望者，是行动者。百日会战、三年行动方案——这些都在说明AI已从"研究"进入"打仗"阶段。</div>
+  </div>
+</section>
+
+<!-- ==================== P10 技术祛魅引言 ==================== -->
+<section data-screen-label="技术祛魅">
+  <div class="slide-wrap" style="display:flex; align-items:center; justify-content:center;">
+    <div class="slide-num">10 / 36</div>
+    <div style="text-align:center;">
+      <div class="section-label">技术祛魅</div>
+      <h2 class="slide-subtitle" style="font-size:64px; margin-top:24px;">AI不是科幻，是<span class="highlight">工具</span></h2>
+      <p style="font-size:32px; color:var(--text-secondary); margin-top:32px;">不讲公式 · 不讲代码 · 只用类比</p>
+      <div class="gold-line" style="width:80px; margin:40px auto 0;"></div>
+    </div>
+    <div class="speaker-notes">转场页。告诉听众接下来不用怕技术，我们用三个类比讲清楚AI是什么。</div>
+  </div>
+</section>
+
+<!-- ==================== P11 大模型类比 ==================== -->
+<section data-screen-label="大模型">
+  <div class="slide-wrap">
+    <div class="slide-num">11 / 36</div>
+    <div class="section-label">技术祛魅</div>
+    <h2 class="slide-subtitle">大模型 = "读过全世界书的<span class="highlight">实习生</span>"</h2>
+    <div class="two-col" style="margin-top:48px; align-items:center;">
+      <div>
+        <div class="card" style="margin-bottom:24px;">
+          <div class="card-title">特点</div>
+          <div class="card-text">博学但随性，会说但不会做。你问他什么都知道，但你让他独立完成任务，他可能搞砸。</div>
+        </div>
+        <div class="card">
+          <div class="card-title">示例</div>
+          <div class="card-text">你告诉他"帮我写一份差旅报销说明"→ 他生成一段文字给你。<br><br>关键差异：<span style="color:var(--gold-200);">只会"说"</span></div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:180px; color:var(--gold-400); opacity:0.2;">👤</div>
+        <div style="font-size:28px; color:var(--text-secondary); margin-top:20px;">天才实习生</div>
+        <div style="font-size:20px; color:var(--text-muted);">知识丰富 · 需要指导 · 不能独立执行</div>
+      </div>
+    </div>
+    <div class="speaker-notes">第一个类比：大模型。让高管理解AI的边界——它很聪明，但需要人带着。</div>
+  </div>
+</section>
+
+<!-- ==================== P12 Agent类比 ==================== -->
+<section data-screen-label="Agent">
+  <div class="slide-wrap">
+    <div class="slide-num">12 / 36</div>
+    <div class="section-label">技术祛魅</div>
+    <h2 class="slide-subtitle">Agent = "能自己查资料、写报告、<br>走流程的<span class="highlight">员工</span>"</h2>
+    <div class="two-col" style="margin-top:40px; align-items:center;">
+      <div>
+        <div class="big-quote" style="font-size:36px; border-left-width:3px;">
+          大模型给你答案，Agent给你结果。
+        </div>
+        <div style="margin-top:32px; font-size:22px; color:var(--text-secondary); line-height:1.8;">
+          你告诉他"帮我把这个月的差旅报销整理了"<br>
+          → 他打开邮箱 → 读取发票 → 核对标准 → 填写表单 → 发送审批
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:180px; color:var(--gold-400); opacity:0.2;">🤖</div>
+        <div style="font-size:28px; color:var(--text-secondary); margin-top:20px;">全能员工</div>
+        <div style="font-size:20px; color:var(--text-muted);">大脑+手脚+工具+记忆</div>
+      </div>
+    </div>
+    <div class="speaker-notes">第二个类比：Agent。这是2025年的关键概念——AI从"聊天"进化到"做事"。</div>
+  </div>
+</section>
+
+<!-- ==================== P13 RAG类比 ==================== -->
+<section data-screen-label="RAG">
+  <div class="slide-wrap">
+    <div class="slide-num">13 / 36</div>
+    <div class="section-label">技术祛魅</div>
+    <h2 class="slide-subtitle">RAG = "给企业大脑装上<span class="highlight">记忆</span>"</h2>
+    <div class="two-col" style="margin-top:48px;">
+      <div class="card" style="border-color:rgba(201,74,74,0.3);">
+        <div class="card-title" style="color:var(--accent-red);">问题</div>
+        <div class="card-text">大模型的局限：不知道你公司的制度、合同、数据。它只能回答通用知识，回答不了"我们公司的XX制度怎么说"。</div>
+      </div>
+      <div class="card" style="border-color:rgba(74,201,138,0.3);">
+        <div class="card-title" style="color:var(--accent-green);">解法</div>
+        <div class="card-text">RAG的作用：让AI能检索企业内部知识库。类比：给实习生配了一个<span style="color:var(--gold-200);">专属图书管理员</span>。</div>
+      </div>
+    </div>
+    <div style="margin-top:40px; text-align:center;">
+      <div style="display:inline-block; background:rgba(19,42,74,0.6); border:1px solid rgba(201,168,76,0.2); border-radius:8px; padding:24px 48px;">
+        <div style="font-size:24px; color:var(--text-secondary);">通用大模型 + 企业知识库 = <span style="color:var(--gold-200); font-weight:700;">懂业务的AI</span></div>
+      </div>
+    </div>
+    <div class="speaker-notes">第三个类比：RAG。这是国企最需要的——让AI懂自己的制度、流程、数据。</div>
+  </div>
+</section>
+
+<!-- ==================== P14 技术演进 ==================== -->
+<section data-screen-label="技术演进">
+  <div class="slide-wrap">
+    <div class="slide-num">14 / 36</div>
+    <div class="section-label">技术祛魅</div>
+    <h2 class="slide-subtitle">技术<span class="highlight">演进路线</span></h2>
+    <div style="margin-top:60px; display:flex; align-items:center; justify-content:center; gap:0;">
+      <div style="text-align:center; padding:32px; background:rgba(19,42,74,0.5); border-radius:8px; width:320px;">
+        <div style="font-size:18px; color:var(--gold-400); font-weight:700;">2023</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700; margin-top:12px;">聊天机器人</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:8px;">能对话</div>
+      </div>
+      <div style="font-size:40px; color:var(--gold-400); padding:0 20px;">→</div>
+      <div style="text-align:center; padding:32px; background:rgba(19,42,74,0.5); border-radius:8px; width:320px;">
+        <div style="font-size:18px; color:var(--gold-400); font-weight:700;">2024</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700; margin-top:12px;">知识助手</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:8px;">能查资料、写文档</div>
+      </div>
+      <div style="font-size:40px; color:var(--gold-400); padding:0 20px;">→</div>
+      <div style="text-align:center; padding:32px; background:rgba(19,42,74,0.7); border:2px solid var(--gold-400); border-radius:8px; width:320px;">
+        <div style="font-size:18px; color:var(--gold-400); font-weight:700;">2025</div>
+        <div style="font-size:28px; color:var(--gold-200); font-weight:700; margin-top:12px;">智能体</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:8px;">能自主执行任务</div>
+      </div>
+      <div style="font-size:40px; color:var(--gold-400); padding:0 20px;">→</div>
+      <div style="text-align:center; padding:32px; background:rgba(19,42,74,0.5); border-radius:8px; width:320px;">
+        <div style="font-size:18px; color:var(--gold-400); font-weight:700;">2026</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700; margin-top:12px;">多智能体协同</div>
+        <div style="font-size:18px; color:var(--text-muted); margin-top:8px;">能团队作战</div>
+      </div>
+    </div>
+    <div style="margin-top:48px; text-align:center; font-size:22px; color:var(--text-secondary);">
+      南方电网案例：巡检机器狗"吠云"，效率提升近 <span style="color:var(--gold-200); font-weight:700;">80倍</span>
+    </div>
+    <div class="speaker-notes">技术演进时间线。2025年是智能体元年，从"说"到"做"的跨越。</div>
+  </div>
+</section>
+
+<!-- ==================== P15 能源电力案例 ==================== -->
+<section data-screen-label="能源电力">
+  <div class="slide-wrap">
+    <div class="slide-num">15 / 36</div>
+    <div class="section-label">同行压力</div>
+    <h2 class="slide-subtitle">能源电力 — AI已进入"<span class="highlight">自主可控</span>"深水区</h2>
+    <div class="three-col" style="margin-top:40px;">
+      <div class="card">
+        <div class="card-title">中国石油</div>
+        <div style="font-size:48px; font-weight:900; color:var(--gold-200); margin:16px 0;">152</div>
+        <div class="card-text">昆仑大模型覆盖全产业链152个场景，3000亿参数，21款大模型在昇腾国产芯片适配</div>
+      </div>
+      <div class="card">
+        <div class="card-title">国家电网</div>
+        <div style="font-size:48px; font-weight:900; color:var(--gold-200); margin:16px 0;">85%</div>
+        <div class="card-text">设备运维知识助手，检修准备时间从20分钟→3分钟，效率提升85%</div>
+      </div>
+      <div class="card">
+        <div class="card-title">南方电网</div>
+        <div style="font-size:48px; font-weight:900; color:var(--gold-200); margin:16px 0;">80%</div>
+        <div class="card-text">"大瓦特"任务耗时降低80%，日均释放2小时，80余个场景落地</div>
+      </div>
+    </div>
+    <div class="speaker-notes">能源电力是最先行动的领域。152个场景、85%效率提升——这些数字说明AI不是概念。</div>
+  </div>
+</section>
+
+<!-- ==================== P16 制造业案例 ==================== -->
+<section data-screen-label="制造业">
+  <div class="slide-wrap">
+    <div class="slide-num">16 / 36</div>
+    <div class="section-label">同行压力</div>
+    <h2 class="slide-subtitle">制造业 — AI直接带来<span class="highlight">降本增效</span></h2>
+    <div class="two-col" style="margin-top:48px; align-items:stretch;">
+      <div class="card" style="display:flex; flex-direction:column; justify-content:center;">
+        <div class="card-title">厦门银华机械</div>
+        <div style="margin:24px 0;">
+          <div style="display:flex; justify-content:space-between; margin:16px 0;">
+            <span style="font-size:22px; color:var(--text-secondary);">人均效能</span>
+            <span style="font-size:32px; font-weight:700; color:var(--accent-green);">+30%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin:16px 0;">
+            <span style="font-size:22px; color:var(--text-secondary);">运营成本</span>
+            <span style="font-size:32px; font-weight:700; color:var(--accent-green);">-12%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin:16px 0;">
+            <span style="font-size:22px; color:var(--text-secondary);">行政助手效率</span>
+            <span style="font-size:32px; font-weight:700; color:var(--accent-green);">+30倍</span>
+          </div>
+        </div>
+        <div style="font-size:18px; color:var(--text-muted);">获2024-2025央企数字化转型优秀案例</div>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; justify-content:center;">
+        <div class="card-title">美的集团</div>
+        <div style="text-align:center; margin:32px 0;">
+          <div style="font-size:28px; color:var(--text-secondary);">物料排产</div>
+          <div style="font-size:80px; font-weight:900; color:var(--gold-200); margin:16px 0;">10h → 1h</div>
+          <div style="font-size:32px; font-weight:700; color:var(--accent-green);">效率提升90%</div>
+        </div>
+        <div style="font-size:18px; color:var(--text-muted);">四层架构方法论，IT与业务直接对话</div>
+      </div>
+    </div>
+    <div class="speaker-notes">制造业国企的案例与中建发展最接近。人均效能+30%、运营成本-12%——这些数字高管听得懂。</div>
+  </div>
+</section>
+
+<!-- ==================== P17 职能部门案例 ==================== -->
+<section data-screen-label="职能部门">
+  <div class="slide-wrap">
+    <div class="slide-num">17 / 36</div>
+    <div class="section-label">同行压力</div>
+    <h2 class="slide-subtitle">职能部门 — AI不是<span class="highlight">技术部门</span>的事</h2>
+    <div class="three-col" style="margin-top:48px;">
+      <div class="card" style="text-align:center;">
+        <div class="card-title">中智集团</div>
+        <div style="font-size:64px; font-weight:900; color:var(--gold-200); margin:20px 0;">+40%</div>
+        <div class="card-text">党务效率提升40%<br>人才匹配效率提升30%</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-title">南方电网95598</div>
+        <div style="font-size:64px; font-weight:900; color:var(--gold-200); margin:20px 0;">90%</div>
+        <div class="card-text">高频咨询机器代人率超90%</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="card-title">中石化/国家电网</div>
+        <div style="font-size:36px; font-weight:700; color:var(--gold-200); margin:20px 0;">采购数字化<br>三阶段</div>
+        <div class="card-text">电子化 → 平台化 → 智能化<br>围串标预警、智能编标</div>
+      </div>
+    </div>
+    <div class="speaker-notes">职能部门最容易被忽视，但最容易见效。党务、客服、采购——这些场景不需要技术背景。</div>
+  </div>
+</section>
+
+<!-- ==================== P18 培训案例 ==================== -->
+<section data-screen-label="培训与人才">
+  <div class="slide-wrap">
+    <div class="slide-num">18 / 36</div>
+    <div class="section-label">同行压力</div>
+    <h2 class="slide-subtitle">培训与人才 — 大规模AI培训已<span class="highlight">验证可行</span></h2>
+    <div class="two-col" style="margin-top:48px; align-items:stretch;">
+      <div class="card">
+        <div class="card-title">中建五局</div>
+        <div style="text-align:center; margin:32px 0;">
+          <div style="font-size:96px; font-weight:900; color:var(--gold-200);">4万</div>
+          <div style="font-size:28px; color:var(--text-secondary); margin-top:16px;">培训人数</div>
+          <div style="font-size:64px; font-weight:900; color:var(--accent-green); margin-top:24px;">94%</div>
+          <div style="font-size:28px; color:var(--text-secondary); margin-top:16px;">活跃率</div>
+        </div>
+        <div style="font-size:20px; color:var(--text-muted); text-align:center;">"中建系"的成功，战略引领</div>
+      </div>
+      <div class="card">
+        <div class="card-title">黑龙江交投</div>
+        <div style="text-align:center; margin:32px 0;">
+          <div style="font-size:96px; font-weight:900; color:var(--gold-200);">1.6万</div>
+          <div style="font-size:28px; color:var(--text-secondary); margin-top:16px;">员工全员覆盖</div>
+          <div style="font-size:64px; font-weight:900; color:var(--accent-green); margin-top:24px;">50</div>
+          <div style="font-size:28px; color:var(--text-secondary); margin-top:16px;">个岗位助手</div>
+        </div>
+        <div style="font-size:20px; color:var(--text-muted); text-align:center;">不是试点，是全员铺开</div>
+      </div>
+    </div>
+    <div style="margin-top:32px; text-align:center; font-size:26px; color:var(--gold-200); font-weight:700;">
+      关键教训：不是试点，是全员铺开；不是技术部的事，是战略工程
+    </div>
+    <div class="speaker-notes">大规模培训已验证可行。中建五局4万人94%活跃率——说明这事能成。</div>
+  </div>
+</section>
+
+<!-- ==================== P19 场景速查表 ==================== -->
+<section data-screen-label="场景速查">
+  <div class="slide-wrap">
+    <div class="slide-num">19 / 36</div>
+    <div class="section-label">同行压力</div>
+    <h2 class="slide-subtitle">场景速查表 — 你的部门能用AI<span class="highlight">做什么</span></h2>
+    <table class="data-table" style="margin-top:32px; font-size:22px;">
+      <tr><th style="width:35%;">你要说明的问题</th><th style="width:35%;">推荐案例</th><th>关键数字</th></tr>
+      <tr><td>AI能提高办公效率</td><td>中智集团</td><td>效率+30%~40%</td></tr>
+      <tr><td>AI能改善客户服务</td><td>南方电网</td><td>投诉率↓40%</td></tr>
+      <tr><td>AI能释放员工时间</td><td>南方电网"大瓦特"</td><td>日均释放2h</td></tr>
+      <tr><td>AI能加强安全管控</td><td>厦门银华机械</td><td>获央企优秀案例</td></tr>
+      <tr><td>AI能优化采购合规</td><td>中石化/国家电网</td><td>围串标预警</td></tr>
+      <tr><td>AI培训可大规模成功</td><td>中建五局</td><td>4万人，94%活跃</td></tr>
+    </table>
+    <div class="speaker-notes">速查表让听众对号入座。每个问题都有案例+数字，可以直接引用。</div>
+  </div>
+</section>
+
+<!-- ==================== P20 吴恩达五步法 ==================== -->
+<section data-screen-label="吴恩达五步法">
+  <div class="slide-wrap">
+    <div class="slide-num">20 / 36</div>
+    <div class="section-label">落地路径</div>
+    <h2 class="slide-subtitle">吴恩达五步法 — <span class="highlight">战略不是第一步</span></h2>
+    <div style="margin-top:48px; padding-left:60px;">
+      <div style="display:flex; align-items:flex-start; margin:20px 0;">
+        <div style="width:48px; height:48px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--navy-900); flex-shrink:0; margin-right:24px;">1</div>
+        <div style="font-size:24px; color:var(--text-secondary); padding-top:8px;">开展试点项目以获得动力</div>
+      </div>
+      <div style="display:flex; align-items:flex-start; margin:20px 0;">
+        <div style="width:48px; height:48px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--navy-900); flex-shrink:0; margin-right:24px;">2</div>
+        <div style="font-size:24px; color:var(--text-secondary); padding-top:8px;">组建内部AI团队</div>
+      </div>
+      <div style="display:flex; align-items:flex-start; margin:20px 0;">
+        <div style="width:48px; height:48px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--navy-900); flex-shrink:0; margin-right:24px;">3</div>
+        <div style="font-size:24px; color:var(--text-secondary); padding-top:8px;">开展广泛的AI培训</div>
+      </div>
+      <div style="display:flex; align-items:flex-start; margin:20px 0;">
+        <div style="width:48px; height:48px; background:var(--accent-red); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--text-primary); flex-shrink:0; margin-right:24px;">4</div>
+        <div style="font-size:28px; color:var(--gold-200); font-weight:700; padding-top:4px;">制定AI战略 ← 注意：这是第四步！</div>
+      </div>
+      <div style="display:flex; align-items:flex-start; margin:20px 0;">
+        <div style="width:48px; height:48px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--navy-900); flex-shrink:0; margin-right:24px;">5</div>
+        <div style="font-size:24px; color:var(--text-secondary); padding-top:8px;">协调内外部沟通</div>
+      </div>
+    </div>
+    <div style="margin-top:32px; padding:20px 32px; background:rgba(201,168,76,0.1); border-left:4px solid var(--gold-400); border-radius:0 8px 8px 0;">
+      <div style="font-size:24px; color:var(--gold-200); font-weight:700;">关键洞察：先通过试点了解AI能做什么，再制定战略</div>
+    </div>
+    <div class="speaker-notes">反直觉但正确的顺序。很多企业一上来就写三年战略规划，结果发现AI根本干不了他们想干的事。</div>
+  </div>
+</section>
+
+<!-- ==================== P21 四阶段模型 ==================== -->
+<section data-screen-label="四阶段模型">
+  <div class="slide-wrap">
+    <div class="slide-num">21 / 36</div>
+    <div class="section-label">落地路径</div>
+    <h2 class="slide-subtitle">四阶段<span class="highlight">推进模型</span></h2>
+    <div style="margin-top:40px; display:flex; gap:24px;">
+      <div style="flex:1; background:rgba(19,42,74,0.5); border-radius:8px; padding:28px; border-top:4px solid var(--gold-400);">
+        <div style="font-size:18px; color:var(--gold-400); font-weight:700; margin-bottom:12px;">第一阶段 · 0-6个月</div>
+        <div style="font-size:26px; color:var(--text-primary); font-weight:700; margin-bottom:12px;">筑基破冰期</div>
+        <div style="font-size:20px; color:var(--text-secondary); line-height:1.6;">基础搭建、轻量化试点、风险可控</div>
+      </div>
+      <div style="flex:1; background:rgba(19,42,74,0.5); border-radius:8px; padding:28px; border-top:4px solid var(--gold-300);">
+        <div style="font-size:18px; color:var(--gold-300); font-weight:700; margin-bottom:12px;">第二阶段 · 6-12个月</div>
+        <div style="font-size:26px; color:var(--text-primary); font-weight:700; margin-bottom:12px;">迭代增效期</div>
+        <div style="font-size:20px; color:var(--text-secondary); line-height:1.6;">模型适配、场景扩容、正向ROI成型</div>
+      </div>
+      <div style="flex:1; background:rgba(19,42,74,0.5); border-radius:8px; padding:28px; border-top:4px solid var(--text-secondary);">
+        <div style="font-size:18px; color:var(--text-secondary); font-weight:700; margin-bottom:12px;">第三阶段 · 1-2年</div>
+        <div style="font-size:26px; color:var(--text-primary); font-weight:700; margin-bottom:12px;">全域规模化期</div>
+        <div style="font-size:20px; color:var(--text-secondary); line-height:1.6;">全场景覆盖、数字孪生、规模化价值释放</div>
+      </div>
+      <div style="flex:1; background:rgba(19,42,74,0.5); border-radius:8px; padding:28px; border-top:4px solid var(--text-muted);">
+        <div style="font-size:18px; color:var(--text-muted); font-weight:700; margin-bottom:12px;">第四阶段 · 2-3年</div>
+        <div style="font-size:26px; color:var(--text-primary); font-weight:700; margin-bottom:12px;">标杆领跑期</div>
+        <div style="font-size:20px; color:var(--text-secondary); line-height:1.6;">自主可控、全流程智能、行业标准输出</div>
+      </div>
+    </div>
+    <div class="speaker-notes">四阶段模型给出清晰的时间预期。不要指望三个月翻天覆地，但要让听众看到三年后的图景。</div>
+  </div>
+</section>
+
+<!-- ==================== P22 美的四层架构 ==================== -->
+<section data-screen-label="美的架构">
+  <div class="slide-wrap">
+    <div class="slide-num">22 / 36</div>
+    <div class="section-label">落地路径</div>
+    <h2 class="slide-subtitle">美的四层架构 — 技术落地的<span class="highlight">方法论</span></h2>
+    <div style="margin-top:40px;">
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="background:rgba(201,168,76,0.15); border:1px solid rgba(201,168,76,0.3); border-radius:8px; padding:24px 32px;">
+          <div style="font-size:18px; color:var(--gold-400); font-weight:700;">第四层 · 业务应用层</div>
+          <div style="font-size:24px; color:var(--text-primary); margin-top:8px;">IT经理直接对接业务，推动场景落地</div>
+        </div>
+        <div style="background:rgba(19,42,74,0.6); border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:24px 32px;">
+          <div style="font-size:18px; color:var(--gold-300); font-weight:700;">第三层 · 应用集成层</div>
+          <div style="font-size:24px; color:var(--text-primary); margin-top:8px;">标准化工具，降低AI应用开发门槛</div>
+        </div>
+        <div style="background:rgba(19,42,74,0.6); border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:24px 32px;">
+          <div style="font-size:18px; color:var(--gold-300); font-weight:700;">第二层 · 算法平台层</div>
+          <div style="font-size:24px; color:var(--text-primary); margin-top:8px;">统一管理AI模型，模型资产集中化治理</div>
+        </div>
+        <div style="background:rgba(19,42,74,0.6); border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:24px 32px;">
+          <div style="font-size:18px; color:var(--gold-300); font-weight:700;">第一层 · 基础设施层</div>
+          <div style="font-size:24px; color:var(--text-primary); margin-top:8px;">算力资源，提供底层计算支撑</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:24px; font-size:22px; color:var(--text-secondary);">
+      关键设计思想：<span style="color:var(--gold-200); font-weight:700;">IT与业务直接对话</span> · <span style="color:var(--gold-200); font-weight:700;">ROI驱动</span> · <span style="color:var(--gold-200); font-weight:700;">模型资产化</span>
+    </div>
+    <div class="speaker-notes">美的四层架构是可复用的框架。核心是让IT和业务直接对话，不是层层传递需求。</div>
+  </div>
+</section>
+
+<!-- ==================== P23 教-学-管-评 ==================== -->
+<section data-screen-label="人才培养">
+  <div class="slide-wrap">
+    <div class="slide-num">23 / 36</div>
+    <div class="section-label">落地路径</div>
+    <h2 class="slide-subtitle">"教-学-管-评" — 人才培养的<span class="highlight">闭环</span></h2>
+    <div style="margin-top:48px; display:flex; gap:32px;">
+      <div style="flex:1; text-align:center;">
+        <div style="width:80px; height:80px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+          <span style="font-size:36px; font-weight:900; color:var(--navy-900);">教</span>
+        </div>
+        <div style="font-size:24px; font-weight:700; color:var(--text-primary); margin-bottom:12px;">分层分类课程</div>
+        <div style="font-size:18px; color:var(--text-secondary); line-height:1.6;">领导班子/中层/骨干/技术/全员</div>
+      </div>
+      <div style="flex:1; text-align:center;">
+        <div style="width:80px; height:80px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+          <span style="font-size:36px; font-weight:900; color:var(--navy-900);">学</span>
+        </div>
+        <div style="font-size:24px; font-weight:700; color:var(--text-primary); margin-bottom:12px;">混合式学习</div>
+        <div style="font-size:18px; color:var(--text-secondary); line-height:1.6;">线上+线下+导师带教+实战项目</div>
+      </div>
+      <div style="flex:1; text-align:center;">
+        <div style="width:80px; height:80px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+          <span style="font-size:36px; font-weight:900; color:var(--navy-900);">管</span>
+        </div>
+        <div style="font-size:24px; font-weight:700; color:var(--text-primary); margin-bottom:12px;">场景牵引</div>
+        <div style="font-size:18px; color:var(--text-secondary); line-height:1.6;">激励机制+组织保障</div>
+      </div>
+      <div style="flex:1; text-align:center;">
+        <div style="width:80px; height:80px; background:var(--gold-400); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+          <span style="font-size:36px; font-weight:900; color:var(--navy-900);">评</span>
+        </div>
+        <div style="font-size:24px; font-weight:700; color:var(--text-primary); margin-bottom:12px;">效果评估</div>
+        <div style="font-size:18px; color:var(--text-secondary); line-height:1.6;">从"学完"到"用好"</div>
+      </div>
+    </div>
+    <div style="margin-top:48px; text-align:center;">
+      <div style="display:inline-block; padding:20px 48px; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2); border-radius:8px;">
+        <div style="font-size:28px; color:var(--gold-200); font-weight:700;">"技术是底座，人才是天花板。"</div>
+      </div>
+    </div>
+    <div class="speaker-notes">人才闭环。教-学-管-评四个字缺一个都不行。只教不评等于白教，只学不管等于没学。</div>
+  </div>
+</section>
+
+<!-- ==================== P24 组织架构 ==================== -->
+<section data-screen-label="组织架构">
+  <div class="slide-wrap">
+    <div class="slide-num">24 / 36</div>
+    <div class="section-label">组织保障</div>
+    <h2 class="slide-subtitle">三层组织架构 — <span class="highlight">一把手工程</span></h2>
+    <div style="margin-top:48px; display:flex; flex-direction:column; gap:20px;">
+      <div style="background:rgba(201,168,76,0.2); border:2px solid var(--gold-400); border-radius:8px; padding:32px 40px;">
+        <div style="font-size:20px; color:var(--gold-400); font-weight:700; margin-bottom:8px;">核心决策层 · AI领导小组</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700;">董事长/总经理挂帅</div>
+        <div style="font-size:20px; color:var(--text-secondary); margin-top:8px;">整体战略规划和最终决策，统筹全局</div>
+      </div>
+      <div style="background:rgba(19,42,74,0.6); border:1px solid rgba(201,168,76,0.2); border-radius:8px; padding:28px 40px;">
+        <div style="font-size:20px; color:var(--gold-300); font-weight:700; margin-bottom:8px;">执行协调层 · AI工作小组</div>
+        <div style="font-size:26px; color:var(--text-primary); font-weight:700;">技术 + 业务 + 数据 跨部门</div>
+        <div style="font-size:20px; color:var(--text-secondary); margin-top:8px;">需求收集、方案实施、流程优化</div>
+      </div>
+      <div style="background:rgba(19,42,74,0.6); border:1px solid rgba(201,168,76,0.15); border-radius:8px; padding:24px 40px;">
+        <div style="font-size:20px; color:var(--text-secondary); font-weight:700; margin-bottom:8px;">支撑保障层 · 领导小组办公室</div>
+        <div style="font-size:24px; color:var(--text-primary); font-weight:700;">专职人员日常运营与项目管理</div>
+      </div>
+    </div>
+    <div style="margin-top:24px; font-size:22px; color:var(--gold-200); font-weight:700;">
+      标杆：南钢×华为"百日会战" —— 董事长亲任总指挥，12个场景纵队
+    </div>
+    <div class="speaker-notes">组织架构。AI推进必须是"一把手工程"，这是所有成功案例的共同点。</div>
+  </div>
+</section>
+
+<!-- ==================== P25 考核KPI ==================== -->
+<section data-screen-label="考核KPI">
+  <div class="slide-wrap">
+    <div class="slide-num">25 / 36</div>
+    <div class="section-label">组织保障</div>
+    <h2 class="slide-subtitle">考核绑定与<span class="highlight">差异化KPI</span></h2>
+    <table class="data-table" style="margin-top:40px;">
+      <tr><th>部门类型</th><th>考核重点</th></tr>
+      <tr><td>职能部门</td><td>AI技术在业务流程中的应用成效</td></tr>
+      <tr><td>生产部门</td><td>智能系统建设质量、数字化率</td></tr>
+      <tr><td>技术部门</td><td>核心技术突破、自主创新能力</td></tr>
+    </table>
+    <div style="margin-top:40px;">
+      <div class="card" style="display:inline-block; margin-right:24px;">
+        <div class="card-title">创新容错机制</div>
+        <div class="card-text">明确"创新容错"边界，让中层敢试、敢闯、敢担当</div>
+      </div>
+      <div class="card" style="display:inline-block;">
+        <div class="card-title">目标设定参考</div>
+        <div class="card-text">中国海油：力争"十五五"末数字化率达80%以上</div>
+      </div>
+    </div>
+    <div class="speaker-notes">考核是抓手。差异化KPI让不同部门有各自的发力点，不是一刀切。</div>
+  </div>
+</section>
+
+<!-- ==================== P26 ROI ==================== -->
+<section data-screen-label="ROI">
+  <div class="slide-wrap">
+    <div class="slide-num">26 / 36</div>
+    <div class="section-label">组织保障</div>
+    <h2 class="slide-subtitle">投入产出与<span class="highlight">ROI</span></h2>
+    <div class="two-col" style="margin-top:40px;">
+      <div>
+        <div style="font-size:24px; font-weight:700; color:var(--gold-200); margin-bottom:20px;">试点期投入端</div>
+        <ul class="styled-list" style="font-size:20px;">
+          <li>制度建设</li>
+          <li>私有化平台部署</li>
+          <li>数据治理</li>
+          <li>轻量化模型部署</li>
+          <li>运维人力</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:24px; font-weight:700; color:var(--gold-200); margin-bottom:20px;">试点期产出端</div>
+        <ul class="styled-list" style="font-size:20px;">
+          <li>异常预警准确率 ≥85%</li>
+          <li>人工工作量减少 20%+</li>
+          <li>数据安全体系建成</li>
+          <li>合规留痕、审计可追溯</li>
+          <li>政绩加分项</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:32px; padding:24px 32px; background:rgba(74,201,138,0.1); border:1px solid rgba(74,201,138,0.2); border-radius:8px;">
+      <div style="font-size:24px; color:var(--accent-green); font-weight:700;">隐性收益（国企特别看重）</div>
+      <div style="font-size:20px; color:var(--text-secondary); margin-top:12px;">合规留痕 · 审计可追溯 · 风险预警 · 政绩加分</div>
+    </div>
+    <div class="speaker-notes">ROI要算两笔账：显性的效率提升，隐性的合规和政绩。后者在国企里价值极高。</div>
+  </div>
+</section>
+
+<!-- ==================== P27 失败率 ==================== -->
+<section data-screen-label="失败率">
+  <div class="slide-wrap">
+    <div class="slide-num">27 / 36</div>
+    <div class="section-label">风险预判</div>
+    <h2 class="slide-subtitle">AI项目失败率 — <span class="highlight">85%</span>没有商业价值</h2>
+    <div class="three-col" style="margin-top:48px;">
+      <div style="text-align:center;">
+        <div class="big-number" style="color:var(--accent-red);">85%</div>
+        <div class="big-number-label">未能交付商业价值<br><span style="font-size:16px;">Gartner</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div class="big-number" style="color:var(--accent-red);">73%</div>
+        <div class="big-number-label">因数据问题受阻<br><span style="font-size:16px;">Gartner</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div class="big-number" style="color:var(--accent-red);">28%</div>
+        <div class="big-number-label">实现预期投资回报<br><span style="font-size:16px;">Gartner</span></div>
+      </div>
+    </div>
+    <div style="margin-top:48px; text-align:center;">
+      <div style="display:inline-block; padding:20px 48px; background:rgba(201,74,74,0.1); border-left:4px solid var(--accent-red); border-radius:0 8px 8px 0;">
+        <div style="font-size:24px; color:var(--text-primary); font-weight:700;">"AI项目不是投了钱就有回报——关键是<span style="color:var(--gold-200);">选对场景、量化目标、步步为营</span>。"</div>
+      </div>
+    </div>
+    <div class="speaker-notes">用数据制造危机感。85%失败率不是吓唬人，是提醒听众：AI项目有方法，不能蛮干。</div>
+  </div>
+</section>
+
+<!-- ==================== P28 五大失败原因 ==================== -->
+<section data-screen-label="失败原因">
+  <div class="slide-wrap">
+    <div class="slide-num">28 / 36</div>
+    <div class="section-label">风险预判</div>
+    <h2 class="slide-subtitle">五大核心<span class="highlight">失败原因</span></h2>
+    <div style="margin-top:40px;">
+      <div style="display:flex; align-items:center; margin:16px 0; padding:20px 28px; background:rgba(19,42,74,0.5); border-radius:8px; border-left:4px solid var(--accent-red);">
+        <div style="width:40px; height:40px; background:var(--accent-red); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--text-primary); flex-shrink:0; margin-right:20px;">1</div>
+        <div style="font-size:24px; color:var(--text-primary); font-weight:700;">问题定义不清</div>
+      </div>
+      <div style="display:flex; align-items:center; margin:16px 0; padding:20px 28px; background:rgba(19,42,74,0.5); border-radius:8px; border-left:4px solid var(--accent-red);">
+        <div style="width:40px; height:40px; background:var(--accent-red); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--text-primary); flex-shrink:0; margin-right:20px;">2</div>
+        <div style="font-size:24px; color:var(--text-primary); font-weight:700;">数据战略缺失</div>
+      </div>
+      <div style="display:flex; align-items:center; margin:16px 0; padding:20px 28px; background:rgba(19,42,74,0.5); border-radius:8px; border-left:4px solid var(--accent-red);">
+        <div style="width:40px; height:40px; background:var(--accent-red); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--text-primary); flex-shrink:0; margin-right:20px;">3</div>
+        <div style="font-size:24px; color:var(--text-primary); font-weight:700;">IT基础设施不足</div>
+      </div>
+      <div style="display:flex; align-items:center; margin:16px 0; padding:20px 28px; background:rgba(19,42,74,0.5); border-radius:8px; border-left:4px solid var(--accent-red);">
+        <div style="width:40px; height:40px; background:var(--accent-red); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--text-primary); flex-shrink:0; margin-right:20px;">4</div>
+        <div style="font-size:24px; color:var(--text-primary); font-weight:700;">技术与业务脱节</div>
+      </div>
+      <div style="display:flex; align-items:center; margin:16px 0; padding:20px 28px; background:rgba(19,42,74,0.5); border-radius:8px; border-left:4px solid var(--accent-red);">
+        <div style="width:40px; height:40px; background:var(--accent-red); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:var(--text-primary); flex-shrink:0; margin-right:20px;">5</div>
+        <div style="font-size:24px; color:var(--text-primary); font-weight:700;">合规与风险失控</div>
+      </div>
+    </div>
+    <div class="speaker-notes">五大失败原因。每一条都是血泪教训，建议听众对照自查。</div>
+  </div>
+</section>
+
+<!-- ==================== P29 合规高压线 ==================== -->
+<section data-screen-label="合规高压线">
+  <div class="slide-wrap">
+    <div class="slide-num">29 / 36</div>
+    <div class="section-label">风险预判</div>
+    <h2 class="slide-subtitle">合规"<span class="highlight">高压线</span>"清单</h2>
+    <table class="data-table" style="margin-top:32px; font-size:20px;">
+      <tr><th>风险点</th><th>后果</th><th>应对策略</th></tr>
+      <tr><td>核心数据用于开放模型训练</td><td>数据泄露</td><td>私有化部署优先</td></tr>
+      <tr><td>未通过等保三级认证</td><td>无法上线</td><td>提前规划等保测评</td></tr>
+      <tr><td>使用未备案的境外AI服务</td><td>合规风险</td><td>优先国产大模型</td></tr>
+      <tr><td>AI生成内容未标识</td><td>最高500万元罚款</td><td>双重标识机制</td></tr>
+      <tr><td>供应商单一锁定</td><td>议价能力丧失</td><td>多模型网关+开放架构</td></tr>
+      <tr><td>忽视信创要求</td><td>无法通过验收</td><td>全栈国产化适配</td></tr>
+    </table>
+    <div class="speaker-notes">六条高压线。国企最敏感的是数据安全和信创，这两条必须首先满足。</div>
+  </div>
+</section>
+
+<!-- ==================== P30 国产选型 ==================== -->
+<section data-screen-label="国产选型">
+  <div class="slide-wrap">
+    <div class="slide-num">30 / 36</div>
+    <div class="section-label">风险预判</div>
+    <h2 class="slide-subtitle">国产大模型<span class="highlight">选型决策树</span></h2>
+    <div style="margin-top:40px; padding:40px; background:rgba(19,42,74,0.5); border-radius:8px;">
+      <div style="font-size:28px; font-weight:700; color:var(--gold-200); margin-bottom:32px;">是否需要私有化部署？</div>
+      <div class="two-col">
+        <div>
+          <div style="font-size:24px; font-weight:700; color:var(--accent-green); margin-bottom:16px;">是（金融/军工/政务/医疗）</div>
+          <div style="font-size:20px; color:var(--text-secondary); line-height:2;">
+            • 信创要求极高 → <span style="color:var(--gold-200);">华为盘古 + 昇腾芯片</span><br>
+            • 需要丰富生态 → <span style="color:var(--gold-200);">文心一言 + 千帆平台</span><br>
+            • 成本敏感+开源 → <span style="color:var(--gold-200);">DeepSeek + 自研运维</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:24px; font-weight:700; color:var(--text-secondary); margin-bottom:16px;">否（非核心业务/快速验证）</div>
+          <div style="font-size:20px; color:var(--text-secondary); line-height:2;">
+            • 阿里云生态 → <span style="color:var(--gold-200);">通义千问API</span><br>
+            • 多模型需求 → <span style="color:var(--gold-200);">OneAPI统一网关</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:32px;">
+      <div style="font-size:24px; font-weight:700; color:var(--gold-200); margin-bottom:16px;">五要五不要</div>
+      <div class="two-col" style="gap:40px;">
+        <div>
+          <div style="font-size:20px; color:var(--accent-green); font-weight:700; margin-bottom:12px;">五要</div>
+          <div style="font-size:18px; color:var(--text-secondary); line-height:1.8;">要从业务痛点出发<br>要先治理数据<br>要选择容错率高的场景<br>要建立供应商退出机制<br>要落实合规审计</div>
+        </div>
+        <div>
+          <div style="font-size:20px; color:var(--accent-red); font-weight:700; margin-bottom:12px;">五不要</div>
+          <div style="font-size:18px; color:var(--text-secondary); line-height:1.8;">不要盲目追大模型<br>不要忽视数据质量<br>不要在核心系统直接替代<br>不要与单一供应商绑定<br>不要等出事了才补合规</div>
+        </div>
+      </div>
+    </div>
+    <div class="speaker-notes">选型决策树。给听众一个可操作的框架，不是空泛的建议。</div>
+  </div>
+</section>
+
+<!-- ==================== P31 30/60/90天 ==================== -->
+<section data-screen-label="30/60/90天">
+  <div class="slide-wrap">
+    <div class="slide-num">31 / 36</div>
+    <div class="section-label">行动倡议</div>
+    <h2 class="slide-subtitle">30/60/90天<span class="highlight">行动计划</span></h2>
+    <div style="margin-top:48px; display:flex; gap:32px;">
+      <div style="flex:1; background:rgba(201,168,76,0.15); border:2px solid var(--gold-400); border-radius:8px; padding:32px;">
+        <div style="font-size:18px; color:var(--gold-400); font-weight:700; margin-bottom:12px;">第一阶段 · 0-30天</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700; margin-bottom:16px;">基线建立</div>
+        <div style="font-size:20px; color:var(--text-secondary); line-height:1.8;">选3个高频业务场景<br>制定数据分类分级策略<br>选定试点产品与集成方式</div>
+      </div>
+      <div style="flex:1; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3); border-radius:8px; padding:32px;">
+        <div style="font-size:18px; color:var(--gold-300); font-weight:700; margin-bottom:12px;">第二阶段 · 30-60天</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700; margin-bottom:16px;">试点运行</div>
+        <div style="font-size:20px; color:var(--text-secondary); line-height:1.8;">启动1-2个试点<br>数据对接、模型部署<br>验证业务价值</div>
+      </div>
+      <div style="flex:1; background:rgba(19,42,74,0.5); border:1px solid rgba(201,168,76,0.2); border-radius:8px; padding:32px;">
+        <div style="font-size:18px; color:var(--text-secondary); font-weight:700; margin-bottom:12px;">第三阶段 · 60-90天</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700; margin-bottom:16px;">优化推广</div>
+        <div style="font-size:20px; color:var(--text-secondary); line-height:1.8;">总结经验形成模板<br>启动第二批场景复制<br>建立最佳实践库</div>
+      </div>
+    </div>
+    <div class="speaker-notes">三个月就能看到效果。不是三年规划，是三个月见效。</div>
+  </div>
+</section>
+
+<!-- ==================== P32 第一阶段详细路径 ==================== -->
+<section data-screen-label="详细路径">
+  <div class="slide-wrap">
+    <div class="slide-num">32 / 36</div>
+    <div class="section-label">行动倡议</div>
+    <h2 class="slide-subtitle">第一阶段详细路径（<span class="highlight">0-6个月</span>）</h2>
+    <table class="data-table" style="margin-top:40px; font-size:22px;">
+      <tr><th style="width:18%;">时间</th><th style="width:35%;">关键任务</th><th>交付物</th></tr>
+      <tr>
+        <td><span style="color:var(--gold-400); font-weight:700;">第1-2月</span></td>
+        <td>顶层定标、组织搭建</td>
+        <td>《AI转型总体规划》《数据安全管理办法》</td>
+      </tr>
+      <tr>
+        <td><span style="color:var(--gold-400); font-weight:700;">第3-4月</span></td>
+        <td>私有化底座、数据治理</td>
+        <td>数据平台上线、数据合格率≥98%</td>
+      </tr>
+      <tr>
+        <td><span style="color:var(--gold-400); font-weight:700;">第5-6月</span></td>
+        <td>轻量化AI场景试点</td>
+        <td>2个场景稳定运行、运行台账</td>
+      </tr>
+    </table>
+    <div class="speaker-notes">六个月的时间表。每一步都有明确的交付物，不是空话。</div>
+  </div>
+</section>
+
+<!-- ==================== P33 工作组模板 ==================== -->
+<section data-screen-label="工作组模板">
+  <div class="slide-wrap">
+    <div class="slide-num">33 / 36</div>
+    <div class="section-label">行动倡议</div>
+    <h2 class="slide-subtitle">工作组组建<span class="highlight">方案模板</span></h2>
+    <div style="margin-top:40px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div class="step-box"><div class="step-title">一、指导思想与目标</div></div>
+        <div class="step-box"><div class="step-title">二、组织架构</div><div class="step-desc">领导小组 + 工作小组 + 办公室</div></div>
+        <div class="step-box"><div class="step-title">三、主要职责分工</div><div class="step-desc">战略研究 / 技术研发 / 数据治理 / 应用推广 / 安全保障</div></div>
+        <div class="step-box"><div class="step-title">四、工作机制</div><div class="step-desc">会议制度 + 考核激励 + 人才培养</div></div>
+        <div class="step-box"><div class="step-title">五、实施步骤与时间表</div></div>
+        <div class="step-box"><div class="step-title">六、保障措施</div></div>
+      </div>
+    </div>
+    <div style="margin-top:24px; font-size:22px; color:var(--gold-200);">
+      标杆参考：南钢"百日会战" — 指挥部 + 作战部 + 三大横队 + 12个场景纵队
+    </div>
+    <div class="speaker-notes">给听众一个可直接套用的模板。不是让他们从零想，是给他们一个起点。</div>
+  </div>
+</section>
+
+<!-- ==================== P34 Quick Wins ==================== -->
+<section data-screen-label="Quick Wins">
+  <div class="slide-wrap">
+    <div class="slide-num">34 / 36</div>
+    <div class="section-label">行动倡议</div>
+    <h2 class="slide-subtitle">Quick Wins — 第一个月就能<span class="highlight">见效</span></h2>
+    <div style="margin-top:48px; display:flex; gap:32px;">
+      <div style="flex:1; text-align:center; padding:40px 24px; background:rgba(201,168,76,0.15); border:2px solid var(--gold-400); border-radius:8px;">
+        <div style="font-size:24px; color:var(--gold-400); font-weight:700; margin-bottom:16px;">第1周</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700;">高管团队试用</div>
+        <div style="font-size:20px; color:var(--text-secondary); margin-top:12px;">文心一言 / 通义千问 / Kimi</div>
+      </div>
+      <div style="flex:1; text-align:center; padding:40px 24px; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3); border-radius:8px;">
+        <div style="font-size:24px; color:var(--gold-300); font-weight:700; margin-bottom:16px;">第2-3周</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700;">选定零抵触场景</div>
+        <div style="font-size:20px; color:var(--text-secondary); margin-top:12px;">会议纪要 / 制度问答 / PPT辅助</div>
+      </div>
+      <div style="flex:1; text-align:center; padding:40px 24px; background:rgba(19,42,74,0.5); border:1px solid rgba(201,168,76,0.2); border-radius:8px;">
+        <div style="font-size:24px; color:var(--text-secondary); font-weight:700; margin-bottom:16px;">第4周</div>
+        <div style="font-size:28px; color:var(--text-primary); font-weight:700;">形成最佳实践</div>
+        <div style="font-size:20px; color:var(--text-secondary); margin-top:12px;">启动规模化培训</div>
+      </div>
+    </div>
+    <div style="margin-top:48px; text-align:center;">
+      <div style="display:inline-block; padding:20px 48px; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2); border-radius:8px;">
+        <div style="font-size:28px; color:var(--gold-200); font-weight:700;">"先让基层尝到甜头，再谈战略转型。"</div>
+      </div>
+    </div>
+    <div class="speaker-notes">Quick Wins是关键。第一个月必须让听众看到效果，否则热情会消退。</div>
+  </div>
+</section>
+
+<!-- ==================== P35 八模块总结 ==================== -->
+<section data-screen-label="总结">
+  <div class="slide-wrap">
+    <div class="slide-num">35 / 36</div>
+    <div class="section-label">总结</div>
+    <h2 class="slide-subtitle">八个模块<span class="highlight">一页总结</span></h2>
+    <div style="margin-top:32px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">开场</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">不做AI的国企正在被重构</div></div>
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">政策锚定</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">已纳入经营业绩考核，不是可选项</div></div>
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">技术祛魅</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">大模型=实习生，Agent=员工，RAG=记忆</div></div>
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">同行压力</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">11家央企已全面行动</div></div>
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">落地路径</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">五步法+四阶段模型+美的架构</div></div>
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">组织保障</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">一把手工程+三层架构+差异化KPI</div></div>
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">风险预判</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">85%失败率，五大原因，六条高压线</div></div>
+      <div class="card" style="padding:20px 24px;"><div style="font-size:18px; color:var(--gold-400); font-weight:700;">行动倡议</div><div style="font-size:20px; color:var(--text-secondary); margin-top:6px;">30/60/90天计划，第一个月就能见效</div></div>
+    </div>
+    <div class="speaker-notes">一页回顾八个模块。让听众带走一个完整的认知框架。</div>
+  </div>
+</section>
+
+<!-- ==================== P36 结尾号召 ==================== -->
+<section data-screen-label="结尾号召">
+  <div class="slide-wrap" style="display:flex; align-items:center; justify-content:center; text-align:center;">
+    <div class="deco-circle" style="width:700px;height:700px;top:-150px;right:-150px;"></div>
+    <div class="deco-circle" style="width:500px;height:500px;bottom:-100px;left:-100px;"></div>
+    <div style="position:relative; z-index:2; max-width:1200px;">
+      <div style="font-size:200px; color:var(--gold-400); opacity:0.1; line-height:0.3;">"</div>
+      <p style="font-size:42px; font-weight:700; color:var(--text-primary); line-height:1.6; margin-bottom:24px;">
+        AI转型最大的风险不是技术失败，<br>是人的<span style="color:var(--gold-200);">信任破产</span>。
+      </p>
+      <div class="gold-line" style="width:120px; margin:0 auto 32px;"></div>
+      <p style="font-size:28px; color:var(--text-secondary); margin-bottom:16px;">技术是底座，人才是天花板。</p>
+      <p style="font-size:28px; color:var(--text-secondary); margin-bottom:48px;">教-学-管-评，四个字缺一个都不行。</p>
+      <div style="display:flex; justify-content:center; gap:40px; margin-bottom:48px;">
+        <div style="text-align:center;">
+          <div style="font-size:20px; color:var(--gold-400); font-weight:700;">立即行动</div>
+          <div style="font-size:18px; color:var(--text-secondary); margin-top:8px;">本月内成立AI专项工作组</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:20px; color:var(--gold-400); font-weight:700;">本季度</div>
+          <div style="font-size:18px; color:var(--text-secondary); margin-top:8px;">选定1-2个低风险场景试点</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:20px; color:var(--gold-400); font-weight:700;">本年度</div>
+          <div style="font-size:18px; color:var(--text-secondary); margin-top:8px;">形成可复制的AI应用模板</div>
+        </div>
+      </div>
+      <div style="font-size:24px; color:var(--text-muted);">感谢聆听 · 欢迎交流</div>
+    </div>
+    <div class="speaker-notes">结尾金句+三阶段行动号召。让听众带着明确的下一步离开。</div>
+  </div>
+</section>
+
+</deck-stage>
+
+<!-- ===== deck_stage.js ===== -->
+<script>
+(function() {
+  const STORAGE_KEY_PREFIX = 'deck-stage-slide-';
+  class DeckStage extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+      this._currentSlide = 0;
+      this._slides = [];
+      this._storageKey = STORAGE_KEY_PREFIX + (location.pathname || 'default');
+    }
+    connectedCallback() {
+      this._width = parseInt(this.getAttribute('width')) || 1920;
+      this._height = parseInt(this.getAttribute('height')) || 1080;
+      this._render();
+      const init = () => {
+        this._collectSlides();
+        this._setupEventListeners();
+        this._restoreSlide();
+        this._updateDisplay();
+        this._setupPrintStyles();
+      };
+      if (this.ownerDocument.readyState === 'loading') {
+        this.ownerDocument.addEventListener('DOMContentLoaded', init, { once: true });
+      } else {
+        requestAnimationFrame(init);
+      }
+    }
+    _render() {
+      this.shadowRoot.innerHTML = `
+        <style>
+          :host { display: block; position: fixed; inset: 0; background: #000; overflow: hidden; font-family: "Noto Serif SC", "PingFang SC", -apple-system, sans-serif; }
+          :host([noscale]) .stage { transform: none !important; top: 0 !important; left: 0 !important; }
+          .stage { position: absolute; top: 50%; left: 50%; transform-origin: top left; will-change: transform; background: #fff; }
+          .slide-wrapper { width: 100%; height: 100%; position: relative; }
+          ::slotted(section) { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; overflow: hidden; }
+          ::slotted(section.active) { display: block; }
+          .counter { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.6); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-variant-numeric: tabular-nums; z-index: 100; user-select: none; opacity: 0.6; transition: opacity 0.2s; font-family: system-ui, sans-serif; }
+          .counter:hover { opacity: 1; }
+          .nav-zone { position: fixed; top: 0; bottom: 0; width: 15%; cursor: pointer; z-index: 50; }
+          .nav-zone.left { left: 0; }
+          .nav-zone.right { right: 0; }
+          .nav-hint { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 999px; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; font-size: 24px; opacity: 0; transition: opacity 0.2s; }
+          .nav-zone.left .nav-hint { left: 20px; }
+          .nav-zone.right .nav-hint { right: 20px; }
+          .nav-zone:hover .nav-hint { opacity: 1; }
+          @media print {
+            :host { position: static; background: #fff; }
+            .counter, .nav-zone { display: none !important; }
+            .stage { position: static; transform: none !important; page-break-after: always; }
+            ::slotted(section) { display: block !important; position: relative !important; page-break-after: always; width: 100%; height: 100%; }
+          }
+        </style>
+        <div class="stage" id="stage" style="width: ${this._width}px; height: ${this._height}px;">
+          <div class="slide-wrapper"><slot></slot></div>
+        </div>
+        <div class="nav-zone left" id="navLeft"><div class="nav-hint">‹</div></div>
+        <div class="nav-zone right" id="navRight"><div class="nav-hint">›</div></div>
+        <div class="counter" id="counter">1 / 1</div>
+      `;
+    }
+    _collectSlides() {
+      this._slides = Array.from(this.querySelectorAll(':scope > section'));
+      this._slides.forEach((slide, idx) => {
+        if (!slide.hasAttribute('data-screen-label')) {
+          slide.setAttribute('data-screen-label', String(idx + 1).padStart(2, '0'));
+        }
+      });
+    }
+    _setupEventListeners() {
+      window.addEventListener('resize', () => this._updateScale());
+      document.addEventListener('keydown', (e) => {
+        if (e.target.matches('input, textarea, [contenteditable]')) return;
+        switch (e.key) {
+          case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); this.next(); break;
+          case 'ArrowLeft': case 'PageUp': e.preventDefault(); this.prev(); break;
+          case 'Home': e.preventDefault(); this.goTo(0); break;
+          case 'End': e.preventDefault(); this.goTo(this._slides.length - 1); break;
+        }
+      });
+      this.shadowRoot.getElementById('navLeft').addEventListener('click', () => this.prev());
+      this.shadowRoot.getElementById('navRight').addEventListener('click', () => this.next());
+      window.addEventListener('hashchange', () => this._handleHash());
+      if (location.hash) setTimeout(() => this._handleHash(), 0);
+    }
+    _handleHash() {
+      const match = location.hash.match(/^#slide-(\d+)$/);
+      if (match) { const idx = parseInt(match[1]) - 1; if (idx >= 0 && idx < this._slides.length) this.goTo(idx); }
+    }
+    _restoreSlide() {
+      try {
+        const stored = localStorage.getItem(this._storageKey);
+        if (stored !== null) { const idx = parseInt(stored); if (idx >= 0 && idx < this._slides.length) this._currentSlide = idx; }
+      } catch (e) {}
+    }
+    _saveSlide() { try { localStorage.setItem(this._storageKey, String(this._currentSlide)); } catch (e) {} }
+    _updateScale() {
+      if (this.hasAttribute('noscale')) {
+        const stage = this.shadowRoot.getElementById('stage');
+        stage.style.transform = 'none'; stage.style.top = '0'; stage.style.left = '0';
+        return;
+      }
+      const stage = this.shadowRoot.getElementById('stage');
+      if (!stage) return;
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+      const scale = Math.min(viewportW / this._width, viewportH / this._height);
+      const scaledW = this._width * scale;
+      const scaledH = this._height * scale;
+      const offsetX = (viewportW - scaledW) / 2;
+      const offsetY = (viewportH - scaledH) / 2;
+      stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+      stage.style.top = '0'; stage.style.left = '0';
+    }
+    _updateDisplay() {
+      this._slides.forEach((slide, idx) => { slide.classList.toggle('active', idx === this._currentSlide); });
+      const counter = this.shadowRoot.getElementById('counter');
+      if (counter) counter.textContent = `${this._currentSlide + 1} / ${this._slides.length}`;
+      this._updateScale();
+    }
+    _setupPrintStyles() {
+      const printStyle = document.createElement('style');
+      printStyle.textContent = `
+        @media print {
+          @page { size: ${this._width}px ${this._height}px; margin: 0; }
+          body { margin: 0; padding: 0; }
+          deck-stage { position: static !important; }
+          deck-stage > section { display: block !important; position: relative !important; width: ${this._width}px !important; height: ${this._height}px !important; page-break-after: always; overflow: hidden; }
+          deck-stage > section:last-child { page-break-after: auto; }
+        }
+      `;
+      document.head.appendChild(printStyle);
+    }
+    next() { if (this._currentSlide < this._slides.length - 1) { this._currentSlide++; this._saveSlide(); this._updateDisplay(); } }
+    prev() { if (this._currentSlide > 0) { this._currentSlide--; this._saveSlide(); this._updateDisplay(); } }
+    goTo(idx) { if (idx >= 0 && idx < this._slides.length) { this._currentSlide = idx; this._saveSlide(); this._updateDisplay(); } }
+    get currentSlide() { return this._currentSlide; }
+    get totalSlides() { return this._slides.length; }
+  }
+  customElements.define('deck-stage', DeckStage);
+  window.DeckStage = DeckStage;
+})();
+</script>
+
+</body>
+</html>

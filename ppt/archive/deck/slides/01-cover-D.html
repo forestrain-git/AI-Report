@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封面 D · 水墨科技</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    color: #0F172A;
+  }
+  .slide {
+    width: 100%; height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* 水墨晕染效果 */
+  .ink-wash {
+    position: absolute;
+    top: 10%; right: 5%;
+    width: 900px; height: 700px;
+    background: radial-gradient(ellipse at 60% 40%, rgba(80,80,80,0.15) 0%, rgba(40,40,40,0.08) 40%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  /* 金色墨点 */
+  .ink-splash {
+    position: absolute;
+    bottom: 15%; left: 8%;
+    width: 400px; height: 300px;
+    background: radial-gradient(ellipse at 40% 60%, rgba(30,58,95,0.12) 0%, transparent 60%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  /* 竖线 */
+  .vertical-line {
+    position: absolute;
+    left: 140px;
+    top: 120px; bottom: 120px;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, rgba(30,58,95,0.3) 20%, rgba(30,58,95,0.3) 80%, transparent 100%);
+  }
+  /* 极细横线装饰 */
+  .hairline-deco {
+    position: absolute;
+    top: 50%;
+    right: 140px;
+    width: 200px;
+    height: 1px;
+    background: rgba(15,23,42,0.1);
+  }
+  .content {
+    text-align: left;
+    padding-left: 200px;
+    z-index: 1;
+  }
+  .eyebrow {
+    font-size: 16px;
+    color: rgba(30,58,95,0.6);
+    letter-spacing: 0.3em;
+    margin-bottom: 48px;
+    font-family: "SF Mono", monospace;
+  }
+  .title {
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    font-size: 120px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    color: #0F172A;
+    margin-bottom: 24px;
+  }
+  .title .gold {
+    color: #1E3A5F;
+    text-shadow: 0 0 60px rgba(30,58,95,0.2);
+  }
+  .subtitle {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 32px;
+    color: rgba(15,23,42,0.45);
+    letter-spacing: 0.15em;
+    margin-bottom: 80px;
+  }
+  .meta {
+    font-size: 16px;
+    color: rgba(15,23,42,0.3);
+    letter-spacing: 0.2em;
+  }
+  /* 右下角小字 */
+  .corner-text {
+    position: absolute;
+    bottom: 100px; right: 140px;
+    font-size: 13px;
+    color: rgba(15,23,42,0.2);
+    writing-mode: vertical-rl;
+    letter-spacing: 0.3em;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="ink-wash"></div>
+  <div class="ink-splash"></div>
+  <div class="vertical-line"></div>
+  <div class="hairline-deco"></div>
+
+  <div class="content">
+    <div class="eyebrow">CSCEC INTELLIGENT</div>
+    <h1 class="title">AI <span class="gold">觉醒</span><br>经历分享</h1>
+    <p class="subtitle">一个老程序员两个月的记录</p>
+    <div class="meta">中建智能技术有限公司</div>
+  </div>
+
+  <div class="corner-text">二〇二六年五月</div>
+</div>
+</body>
+</html>

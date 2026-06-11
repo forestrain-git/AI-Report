@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P35 · 龙虾</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 64px;
+    font-weight: 900;
+    margin: 0 0 48px 0;
+  }
+  .position {
+    font-size: 28px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .position strong {
+    color: var(--primary);
+  }
+  .tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .task {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 28px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(15,23,42,0.03);
+    font-size: 22px;
+    color: var(--ink);
+  }
+  .task-check {
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .warning {
+    padding: 28px 40px;
+    background: var(--primary-light);
+    border-radius: 4px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Part 2 &middot; 工具矩阵</div>
+    <h1>龙虾</h1>
+    <div class="position">
+      <strong>自动信息采集、日报生成、文件分发</strong>——一个 7&times;24 小时不下班的数字助理。
+    </div>
+    <div class="tasks">
+      <div class="task">
+        <div class="task-check">&#10003;</div>
+        每天早上自动汇总行业资讯、大模型动态、GitHub 高星标项目
+      </div>
+      <div class="task">
+        <div class="task-check">&#10003;</div>
+        自动监控几个关心的来源
+      </div>
+      <div class="task">
+        <div class="task-check">&#10003;</div>
+        自动归档、分类、打标签
+      </div>
+    </div>
+    <div class="warning">
+      它像一个勤快但不靠谱的实习生。任务你可以交给它，但产出，必须复核。
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">Part 2：工具矩阵</span>
+    <span class="page-num">35 / 39</span>
+  </div>
+</body>
+</html>

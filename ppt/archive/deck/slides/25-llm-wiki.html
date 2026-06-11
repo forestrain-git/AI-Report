@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P25 LLM + Wiki 范式</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #FAFBFC; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(37,99,235,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(30,58,95,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(30,58,95,0.6); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #1E3A5F; box-shadow: 0 0 12px rgba(30,58,95,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; }
+  .concept { text-align: center; margin-bottom: 48px; }
+  .concept .source { font-family: var(--font-mono); font-size: 12px; color: rgba(30,58,95,0.6); letter-spacing: 0.2em; margin-bottom: 16px; }
+  .concept .title { font-size: 32px; color: var(--ink-primary); letter-spacing: 0.05em; }
+  .concept .title strong { color: #1E3A5F; }
+  .diagram { display: flex; gap: 48px; align-items: center; margin-bottom: 48px; }
+  .box { width: 320px; padding: 48px; border: 1px solid rgba(37,99,235,0.2); text-align: center; }
+  .box .label { font-family: var(--font-mono); font-size: 12px; color: rgba(37,99,235,0.5); letter-spacing: 0.15em; margin-bottom: 16px; }
+  .box .name { font-size: 28px; font-weight: 600; color: var(--ink-primary); margin-bottom: 12px; }
+  .box .desc { font-size: 16px; color: var(--ink-secondary); line-height: 1.6; }
+  .arrow-box { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .arrow-box .arr { font-size: 32px; color: rgba(30,58,95,0.6); }
+  .arrow-box .text { font-size: 14px; color: rgba(30,58,95,0.5); font-family: var(--font-mono); }
+  .fusion { text-align: center; padding: 32px 80px; border: 2px solid rgba(30,58,95,0.4); background: rgba(30,58,95,0.04); }
+  .fusion .label { font-family: var(--font-mono); font-size: 12px; color: rgba(30,58,95,0.5); letter-spacing: 0.2em; margin-bottom: 12px; }
+  .fusion .text { font-size: 28px; font-weight: 600; color: #1E3A5F; }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(15,23,42,0.5); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(30,58,95,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 1 · 阶段四</span>
+    <span class="badge" style="border:1px solid rgba(30,58,95,0.4);padding:3px 12px;color:rgba(30,58,95,0.8);background:rgba(30,58,95,0.04)">范式</span>
+    <span>25 / 39</span>
+  </div>
+  <div class="header">
+    <h1>LLM + Wiki 范式</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="concept">
+      <div class="source">KARPATHY · LLM + WIKI PARADIGM</div>
+      <div class="title">大语言模型 <strong>+</strong> 结构化知识库</div>
+    </div>
+    <div class="diagram">
+      <div class="box">
+        <div class="label">WHY LLM</div>
+        <div class="name">推理引擎</div>
+        <div class="desc">知识库本身不会思考<br>LLM 提供推理与生成能力</div>
+      </div>
+      <div class="arrow-box">
+        <div class="arr">↔</div>
+        <div class="text">互补</div>
+        <div class="arr">↔</div>
+      </div>
+      <div class="box">
+        <div class="label">WHY WIKI</div>
+        <div class="name">持久记忆</div>
+        <div class="desc">LLM 有上下文限制<br>知识库提供长期持久记忆</div>
+      </div>
+    </div>
+    <div class="fusion">
+      <div class="label">FUSION</div>
+      <div class="text">有记忆的推理 · 有推理的记忆</div>
+    </div>
+  </div>
+  <div class="hud-bot">
+    <span>[39:00] 累计</span>
+    <span>范式认知 · 架构基础</span>
+  </div>
+</div>
+</body>
+</html>

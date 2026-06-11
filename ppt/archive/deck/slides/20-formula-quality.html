@@ -1,0 +1,71 @@
+﻿
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P20 阶段三反思</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #FAFBFC; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(37,99,235,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(30,58,95,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(30,58,95,0.6); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #1E3A5F; box-shadow: 0 0 12px rgba(30,58,95,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; }
+  .lesson { font-size: 24px; color: var(--ink-secondary); margin-bottom: 48px; letter-spacing: 0.05em; }
+  .formula-box { text-align: center; padding: 60px 100px; border: 2px solid rgba(30,58,95,0.3); background: rgba(30,58,95,0.08); }
+  .formula-box .label { font-family: var(--font-mono); font-size: 12px; color: rgba(30,58,95,0.5); letter-spacing: 0.2em; margin-bottom: 24px; }
+  .formula-box .formula { font-family: var(--font-display); font-size: 56px; font-weight: 700; color: #1E3A5F; letter-spacing: 0.05em; }
+  .formula-box .formula .dim { color: rgba(15,23,42,0.3); }
+  .explain { margin-top: 48px; text-align: center; font-size: 22px; color: var(--ink-secondary); line-height: 2; }
+  .explain strong { color: var(--ink-primary); }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(15,23,42,0.5); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(30,58,95,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 1 · 阶段三</span>
+    <span class="badge" style="border:1px solid rgba(30,58,95,0.4);padding:3px 12px;color:rgba(30,58,95,0.8);background:rgba(30,58,95,0.04)">第二课</span>
+    <span>20 / 39</span>
+  </div>
+  <div class="header">
+    <h1>阶段三反思</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="lesson">AI 能大幅提升效率，<strong style="color:#1E3A5F">但它不能替代专业判断</strong></div>
+    <div class="formula-box">
+      <div class="label">FORMULA</div>
+      <div class="formula">输出质量 <span class="dim">=</span> AI 能力 <span class="dim">×</span> 使用者的管理能力</div>
+    </div>
+    <div class="explain">
+      你懂，他会让你更懂，然后<strong>飞快出活</strong><br>
+      你不懂，他会替你懂，然后<strong>飞快搞砸</strong>
+    </div>
+  </div>
+  <div class="hud-bot">
+    <span>[30:00] 累计</span>
+    <span>公式页 · 停 3 秒</span>
+  </div>
+</div>
+</body>
+</html>

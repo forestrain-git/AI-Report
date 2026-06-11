@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P15 陌生业态的可研设计</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #FAFBFC; font-family: var(--font-body); color: var(--ink-primary); }
+  .slide { width: 100%; height: 100%; position: relative; padding: 80px 120px; display: flex; flex-direction: column; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .frame { position: absolute; inset: 48px; border: 1px solid rgba(37,99,235,0.12); pointer-events: none; }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(30,58,95,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: rgba(30,58,95,0.6); letter-spacing: 0.08em; margin-bottom: 48px; z-index: 1; }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 { font-family: var(--font-display); font-size: 72px; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px; }
+  .header .underline { width: 60px; height: 4px; background: #1E3A5F; box-shadow: 0 0 12px rgba(30,58,95,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; z-index: 1; }
+  .dilemma { text-align: center; margin-bottom: 48px; }
+  .dilemma .big { font-size: 48px; color: var(--ink-primary); letter-spacing: 0.05em; margin-bottom: 24px; }
+  .dilemma .big strong { color: #1E3A5F; }
+  .dilemma .sub { font-size: 24px; color: var(--ink-secondary); }
+  .paths { display: flex; gap: 48px; justify-content: center; margin-bottom: 48px; }
+  .path { flex: 1; max-width: 400px; padding: 36px; border: 1px solid rgba(37,99,235,0.15); text-align: center; }
+  .path .label { font-family: var(--font-mono); font-size: 12px; color: rgba(37,99,235,0.5); letter-spacing: 0.15em; margin-bottom: 16px; }
+  .path .title { font-size: 24px; font-weight: 600; color: var(--ink-primary); margin-bottom: 12px; }
+  .path .desc { font-size: 18px; color: var(--ink-secondary); }
+  .path.x { border-color: rgba(30,58,95,0.2); background: rgba(30,58,95,0.04); }
+  .path.x .label { color: rgba(30,58,95,0.5); }
+  .forced { text-align: center; font-size: 28px; color: var(--ink-primary); letter-spacing: 0.05em; }
+  .forced strong { color: #1E3A5F; }
+  .hud-bot { display: flex; justify-content: space-between; font-size: 12px; color: rgba(15,23,42,0.5); letter-spacing: 0.08em; margin-top: 24px; z-index: 1; }
+  .hud-bot span { color: rgba(30,58,95,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 1 · 阶段三</span>
+    <span class="badge" style="border:1px solid rgba(30,58,95,0.4);padding:3px 12px;color:rgba(30,58,95,0.8);background:rgba(30,58,95,0.04)">骑虎难下</span>
+    <span>15 / 39</span>
+  </div>
+  <div class="header">
+    <h1>陌生业态的可研设计</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="dilemma">
+      <div class="big">这个业态，我们团队<strong>从来没碰过</strong></div>
+      <div class="sub">零经验 · 时间窗口不等人</div>
+    </div>
+    <div class="paths">
+      <div class="path">
+        <div class="label">TRADITIONAL PATH</div>
+        <div class="title">传统路径</div>
+        <div class="desc">聘请专家 → 查阅资料 → 几个月学习</div>
+      </div>
+      <div class="path x">
+        <div class="label">REALITY</div>
+        <div class="title">现实</div>
+        <div class="desc">话已说出 ——「AI 时代咱们什么都能干」</div>
+      </div>
+    </div>
+    <div class="forced">那就硬着头皮上工具 —— <strong>上龙虾</strong></div>
+  </div>
+  <div class="hud-bot">
+    <span>[20:30] 累计</span>
+    <span>被逼的 · 压力测试</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P18 · 反转</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 0 0 48px 0;
+  }
+  .pits {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .pit {
+    display: flex;
+    gap: 32px;
+    padding: 32px 40px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+    align-items: flex-start;
+  }
+  .pit-num {
+    font-family: "Inter", sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--primary);
+    width: 60px;
+    flex-shrink: 0;
+  }
+  .pit-body {
+    flex: 1;
+  }
+  .pit-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pit-desc {
+    font-size: 20px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .lesson {
+    padding: 32px 40px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Stage 3 &middot; 反转</div>
+    <h1>规矩约束不住龙虾</h1>
+    <div class="pits">
+      <div class="pit">
+        <div class="pit-num">01</div>
+        <div class="pit-body">
+          <div class="pit-title">你让他不准自己干活，他一不小心就自己上手了</div>
+          <div class="pit-desc">道歉说"对不起，我应该交给工部去做"，下次还是冷不丁犯一次。</div>
+        </div>
+      </div>
+      <div class="pit">
+        <div class="pit-num">02</div>
+        <div class="pit-body">
+          <div class="pit-title">把内部架构直接写进了交付文件</div>
+          <div class="pit-desc">智能化方案里出现大量"户部""兵部"字样——啼笑皆非。这一段改了，下一段又冒出来。</div>
+        </div>
+      </div>
+      <div class="pit">
+        <div class="pit-num">03</div>
+        <div class="pit-body">
+          <div class="pit-title">你说"局部精修"，他给你"全盘重构"</div>
+          <div class="pit-desc">说"第三章调一下措辞"，结果吭哧吭哧安排一堆部门干半天——把整个项目又重构了一遍。之前调好的细节，全没了。</div>
+        </div>
+      </div>
+    </div>
+    <div class="lesson">自动化工具，最大的成本不是 token，<br>是你信任它之后没复核的代价。</div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">阶段三：龙虾依赖期</span>
+    <span class="page-num">18 / 39</span>
+  </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P8 Windsurf 的震惊</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #FAFBFC;
+    font-family: var(--font-body);
+    color: var(--ink-primary);
+  }
+  .slide {
+    width: 100%; height: 100%;
+    position: relative;
+    padding: 80px 120px;
+    display: flex;
+    flex-direction: column;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .frame {
+    position: absolute; inset: 48px;
+    border: 1px solid rgba(37,99,235,0.12);
+    pointer-events: none;
+  }
+  .corner { position: absolute; width: 20px; height: 20px; border: 2px solid rgba(30,58,95,0.4); }
+  .corner.tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  .hud-top {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 11px;
+    color: rgba(30,58,95,0.6); letter-spacing: 0.08em;
+    margin-bottom: 48px; z-index: 1;
+  }
+  .header { margin-bottom: 48px; z-index: 1; }
+  .header h1 {
+    font-family: var(--font-display); font-size: 72px;
+    font-weight: 700; letter-spacing: 0.06em; color: var(--ink-primary); margin-bottom: 16px;
+  }
+  .header .underline { width: 60px; height: 4px; background: #1E3A5F; box-shadow: 0 0 12px rgba(30,58,95,0.3); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; z-index: 1; }
+  .compare-wrap {
+    display: flex; gap: 48px; margin-bottom: 48px;
+  }
+  .compare-box {
+    flex: 1; padding: 40px;
+    border: 1px solid rgba(37,99,235,0.15);
+    background: rgba(37,99,235,0.03);
+  }
+  .compare-box.highlight {
+    border-color: rgba(30,58,95,0.3);
+    background: rgba(30,58,95,0.08);
+  }
+  .compare-box .label {
+    font-family: var(--font-mono); font-size: 12px;
+    color: rgba(30,58,95,0.5); letter-spacing: 0.15em;
+    margin-bottom: 16px;
+  }
+  .compare-box .title {
+    font-size: 28px; font-weight: 600; color: var(--ink-primary);
+    margin-bottom: 12px; letter-spacing: 0.04em;
+  }
+  .compare-box .desc {
+    font-size: 18px; color: var(--ink-secondary); line-height: 1.6;
+  }
+  .big-number {
+    text-align: center; margin: 32px 0;
+  }
+  .big-number .num {
+    font-family: var(--font-display); font-size: 120px; font-weight: 700;
+    color: #1E3A5F; text-shadow: 0 0 40px rgba(30,58,95,0.2);
+    line-height: 1;
+  }
+  .big-number .label {
+    font-size: 22px; color: var(--ink-secondary); letter-spacing: 0.1em; margin-top: 16px;
+  }
+  .link-box {
+    text-align: center; margin-top: 32px;
+  }
+  .link-box a {
+    display: inline-block; padding: 16px 48px;
+    border: 1px solid rgba(30,58,95,0.4);
+    color: #1E3A5F; font-size: 18px; letter-spacing: 0.1em;
+    text-decoration: none; font-family: var(--font-mono);
+    background: rgba(30,58,95,0.08);
+    transition: all 0.2s;
+  }
+  .link-box a:hover { background: rgba(30,58,95,0.1); }
+  .hud-bot {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: rgba(15,23,42,0.5);
+    letter-spacing: 0.08em; margin-top: 24px; z-index: 1;
+  }
+  .hud-bot span { color: rgba(30,58,95,0.5); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+  </div>
+  <div class="hud-top">
+    <span>PART 1 · 阶段二</span>
+    <span class="badge" style="border:1px solid rgba(30,58,95,0.4);padding:3px 12px;color:rgba(30,58,95,0.8);background:rgba(30,58,95,0.04)">小高潮 · 开链接</span>
+    <span>08 / 39</span>
+  </div>
+  <div class="header">
+    <h1>Windsurf 的震惊</h1>
+    <div class="underline"></div>
+  </div>
+  <div class="body">
+    <div class="compare-wrap">
+      <div class="compare-box">
+        <div class="label">BEFORE</div>
+        <div class="title">传统辅助编程</div>
+        <div class="desc">你写代码，按 Tab，编辑器跳出选项，你选择补全</div>
+      </div>
+      <div class="compare-box highlight">
+        <div class="label">AFTER</div>
+        <div class="title">AI 编程工具</div>
+        <div class="desc">用自然语言描述需求，AI 独立完成全部编码</div>
+      </div>
+    </div>
+    <div class="big-number">
+      <div class="num">10 分钟</div>
+      <div class="label">从空文件夹到可运行界面 · 以前至少 1 周</div>
+    </div>
+    <div class="link-box">
+      <a href="https://forestrain-git.github.io/IWMS/">> 现场打开 IWMS 演示</a>
+    </div>
+  </div>
+  <div class="hud-bot">
+    <span>[08:30] 累计</span>
+    <span>第一个小高潮 · 现场演示</span>
+  </div>
+</div>
+</body>
+</html>

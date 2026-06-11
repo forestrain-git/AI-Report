@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI 学习资源包 - 中建发展</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    min-height: 100vh;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+  .header .subtitle { font-size: 15px; opacity: 0.85; line-height: 1.6; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .container { max-width: 560px; margin: 0 auto; padding: 0 16px; }
+
+  /* Section divider */
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 28px 0 16px; padding: 0 4px;
+    color: #0f3460; font-size: 18px; font-weight: 700;
+  }
+  .divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, #c0cdda, transparent);
+  }
+  .divider .icon { font-size: 22px; }
+
+  /* Part label */
+  .part-label {
+    display: inline-block;
+    background: #0f3460;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* Step cards */
+  .step {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border: 1px solid #eef0f4;
+  }
+  .step-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    background: #0f3460; color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .step-title { font-size: 16px; font-weight: 700; color: #0f3460; }
+  .step-time { font-size: 12px; color: #999; margin-left: auto; white-space: nowrap; }
+  .step p { margin-bottom: 6px; }
+  .step p:last-child { margin-bottom: 0; }
+  .step ol, .step ul { padding-left: 20px; margin-bottom: 6px; }
+  .step li { margin-bottom: 3px; }
+  .step li:last-child { margin-bottom: 0; }
+
+  .code-block {
+    background: #f0f2f5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: "Courier New", "Cascadia Code", monospace;
+    font-size: 12px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 6px 0;
+    border: 1px solid #e0e3e8;
+    color: #333;
+    line-height: 1.5;
+  }
+  .highlight {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+  .tip {
+    background: #e3f2fd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+  .tip strong { color: #1565c0; }
+
+  /* Role section */
+  .role-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border: 1px solid #eef0f4;
+  }
+  .role-section h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .role-desc { font-size: 13px; color: #666; margin-bottom: 10px; }
+  .timeline { padding-left: 16px; border-left: 2px solid #e8f4f8; }
+  .timeline-item {
+    position: relative; padding: 6px 0 6px 14px;
+    font-size: 14px; color: #444; line-height: 1.5;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -20px; top: 11px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #0f3460; border: 2px solid white;
+    box-shadow: 0 0 0 2px #c0cdda;
+  }
+  .timeline-item strong { color: #1a1a2e; }
+  .tool-tag {
+    background: #fff3e0; color: #e65100;
+    font-size: 10px; padding: 1px 5px; border-radius: 4px; margin-left: 4px;
+  }
+
+  .tools-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;
+  }
+  .tool-chip {
+    background: #f8f9fa; border-radius: 10px;
+    padding: 10px; text-align: center; font-size: 13px;
+  }
+  .tool-chip .tool-name { font-weight: 600; color: #1a1a2e; }
+  .tool-chip .tool-desc { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .link-card {
+    display: block;
+    background: #fff; border-radius: 12px; padding: 16px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border: 1px solid #eef0f4;
+    text-decoration: none; color: inherit;
+    transition: transform 0.2s;
+  }
+  .link-card:hover { transform: translateY(-2px); }
+  .link-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .link-card p { font-size: 13px; color: #666; }
+  .link-card .tag {
+    display: inline-block;
+    background: #e8f4f8; color: #0f3460;
+    font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-top: 6px;
+  }
+
+  /* Troubleshoot */
+  .troubleshoot {
+    background: #fff; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border: 1px solid #eef0f4; margin-bottom: 10px;
+  }
+  .ts-row {
+    display: flex; border-bottom: 1px solid #eef0f4; font-size: 14px;
+  }
+  .ts-row:last-child { border-bottom: none; }
+  .ts-label {
+    width: 80px; flex-shrink: 0;
+    background: #f8f9fb; padding: 10px;
+    font-weight: 600; color: #0f3460; font-size: 13px;
+  }
+  .ts-content { padding: 10px; flex: 1; }
+  .ts-content p { margin-bottom: 2px; }
+
+  .footer {
+    text-align: center; padding: 32px 16px 48px;
+    font-size: 13px; color: #999; line-height: 1.8;
+  }
+  .footer strong { color: #666; }
+
+  /* Green step variant for action card */
+  .step.action { background: #e8f5e9; border-color: #c8e6c9; }
+
+  @media print {
+    body { background: white; }
+    .header { padding: 24px; }
+    .step, .role-section, .link-card, .troubleshoot { box-shadow: none; border: 1px solid #eee; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚀 AI 学习资源包</h1>
+  <p class="subtitle">今晚就动手 · 明天就用上 · 一直玩下去</p>
+  <div class="badge">中建发展 · AI 转型工作组</div>
+</div>
+
+<div class="container">
+
+  <!-- ==================== Part 1: 今晚就动手 ==================== -->
+  <div class="divider">
+    <span class="part-label">PART 1</span> 今晚就动手
+  </div>
+
+  <!-- 三个工具 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-title">打开这三个工具（网页版，无需安装）</div>
+      <div class="step-time">2 分钟</div>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-chip"><div class="tool-name">🫘 豆包</div><div class="tool-desc">写邮件/报告/文案<br>doubao.com</div></div>
+      <div class="tool-chip"><div class="tool-name">🌙 Kimi</div><div class="tool-desc">读长文档/提取要点<br>kimi.moonshot.cn</div></div>
+      <div class="tool-chip"><div class="tool-name">🎙 通义听悟</div><div class="tool-desc">会议录音→纪要<br>tingwu.aliyun.com</div></div>
+      <div class="tool-chip"><div class="tool-name">🧠 Claude</div><div class="tool-desc">深度对话/分析<br>claude.ai</div></div>
+    </div>
+    <p style="font-size:13px;color:#888;margin-top:8px;">用手机号/钉钉直接登录，不用单独注册。</p>
+  </div>
+
+  <!-- 两个提示词模板 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-title">复制这两个提示词，马上能用</div>
+      <div class="step-time">即用</div>
+    </div>
+    <p style="font-weight:600;font-size:14px;margin-top:8px;">📋 模板 1：会议纪要整理</p>
+    <p style="font-size:13px;color:#888;">适用于通义听悟 / Kimi / 豆包</p>
+    <div class="code-block">请将以下会议内容整理成结构化纪要，包含以下要素：
+
+1. 决议事项：今天定了什么
+2. 待办任务：具体要做什么
+3. 责任人：谁负责
+4. 时间节点：什么时候完成
+5. 需要进一步讨论的问题：今天没定下来的
+
+要求：
+- 用 bullet points，条理清晰
+- 保留关键数据和金额
+- 删除口头禅和重复内容
+- 输出格式：先总结，再分条</div>
+
+    <p style="font-weight:600;font-size:14px;margin-top:14px;">📑 模板 2：政策文件/长报告快速解读</p>
+    <p style="font-size:13px;color:#888;">适用于 Kimi（支持上传 PDF）</p>
+    <div class="code-block">请阅读这份文件，帮我提取以下内容：
+
+1. 核心结论：用 3 句话概括
+2. 关键数据：所有出现的数字、比例、金额
+3. 与我相关：哪些内容需要我关注/行动
+4. 疑问点：哪些地方说得不清楚
+
+输出格式：先给核心结论，再分条展开。</div>
+  </div>
+
+  <!-- 今晚行动清单 -->
+  <div class="step action">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-title">今晚就做这三件事</div>
+      <div class="step-time">今晚</div>
+    </div>
+    <ol>
+      <li><strong>打开 doubao.com</strong>，让它帮你写一封你一直在拖的邮件</li>
+      <li><strong>打开 kimi.moonshot.cn</strong>，上传一份 50 页以内的 PDF，让它 10 分钟提取要点</li>
+      <li><strong>挑一件你这周最常做的活</strong>，用 AI 干一遍，对比一下时间和质量</li>
+    </ol>
+  </div>
+
+  <!-- 避坑提醒 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">⚠</div>
+      <div class="step-title">三个避坑提醒（先看再动手）</div>
+    </div>
+    <ol>
+      <li><strong>不要把机密文件上传到公开 AI 工具</strong>——涉及商业秘密、人事、财务敏感数据的，先在内部脱敏</li>
+      <li><strong>AI 生成的内容一定要自己看一遍再发</strong>——它可能编数据、编人名、编政策条文。AI 是助手，你是负责人</li>
+      <li><strong>不要一开始就追求"完美提示词"</strong>——用大白话说清楚需求就行，先用起来再优化</li>
+    </ol>
+  </div>
+
+  <!-- ==================== Part 2: 进阶玩法 ==================== -->
+  <div class="divider">
+    <span class="part-label">PART 2</span> 进阶玩法
+  </div>
+
+  <!-- 工具速查 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">🛠</div>
+      <div class="step-title">5 个进阶工具</div>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-chip"><div class="tool-name">🫘 豆包</div><div class="tool-desc">字节系，适合日常文案</div></div>
+      <div class="tool-chip"><div class="tool-name">🌙 Kimi</div><div class="tool-desc">月之暗面，读长文最强</div></div>
+      <div class="tool-chip"><div class="tool-name">🎙 通义听悟</div><div class="tool-desc">阿里系，会议纪要首选</div></div>
+      <div class="tool-chip"><div class="tool-name">🤖 WorkBuddy</div><div class="tool-desc">无代码搭建业务系统</div></div>
+      <div class="tool-chip" style="grid-column:1/-1;"><div class="tool-name">🧠 Claude</div><div class="tool-desc">深度分析/编程/长文——AI 中的"最强大脑"</div></div>
+    </div>
+  </div>
+
+  <!-- Claudian 安装指南 -->
+  <div class="divider" style="margin-top:24px;">
+    <span class="part-label">NEW</span> 装一个自己的 AI 助手
+  </div>
+
+  <p style="font-size:14px;color:#666;padding:0 4px;margin-bottom:8px;">
+    在 Obsidian 笔记软件里装上 Claudian 插件，你就有了一个<strong>能读你的文件、帮你整理知识库、听你指挥的 AI 助手</strong>。全程约 30 分钟，不需要 IT 基础。
+  </p>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">0</div>
+      <div class="step-title">准备一个邮箱</div>
+      <div class="step-time">1分钟</div>
+    </div>
+    <p>后面注册 DeepSeek 要用。QQ邮箱、163邮箱、Gmail 都行。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-title">装 Obsidian</div>
+      <div class="step-time">5 分钟</div>
+    </div>
+    <ol>
+      <li>打开 <strong>obsidian.md</strong>，点黄色 <strong>Download</strong></li>
+      <li>双击安装，一路下一步</li>
+      <li>打开后选"创建新库"，给笔记取个名字</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-title">申请 DeepSeek API Key</div>
+      <div class="step-time">10 分钟</div>
+    </div>
+    <ol>
+      <li>去 <strong>platform.deepseek.com</strong>，点 Sign Up 注册</li>
+      <li>登录后左侧找 <strong>API Keys</strong>，点 Create new key</li>
+      <li>复制那串 <strong>sk-</strong> 开头的密钥，<strong>立刻存好</strong>（发到微信文件传输助手）</li>
+      <li>左侧点 <strong>Top Up</strong>，充 10 块钱够用很久</li>
+    </ol>
+    <div class="highlight">💡 没有海外信用卡？淘宝搜"DeepSeek API充值"，找店家帮忙充。</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-title">装 Node.js</div>
+      <div class="step-time">5 分钟</div>
+    </div>
+    <ol>
+      <li>去 <strong>nodejs.org</strong>，点绿色 <strong>LTS</strong> 按钮下载</li>
+      <li>双击安装，一路 Next，最后 Install</li>
+      <li><strong>重启电脑</strong></li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div class="step-title">装 Claude Code</div>
+      <div class="step-time">3 分钟</div>
+    </div>
+    <ol>
+      <li>按 <strong>Win 键</strong>，输入 <strong>cmd</strong>，右键"以管理员身份运行"</li>
+      <li>在黑窗口输入下面这行，按回车：</li>
+    </ol>
+    <div class="code-block">npm install -g @anthropic-ai/claude-code</div>
+    <ol start="3">
+      <li>等它跑完，输入 <strong>claude</strong> 回车，看到文字出来说明启动成功</li>
+      <li>输入 <strong>/exit</strong> 退出，关掉黑窗口</li>
+    </ol>
+    <div class="tip"><strong>💡 为什么要做这一步：</strong>运行一次 claude 后，系统会自动创建 .claude 文件夹，下一步直接往里填配置。</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div class="step-title">创建配置文件</div>
+      <div class="step-time">2 分钟</div>
+    </div>
+    <ol>
+      <li>桌面右键 → 新建 → 文本文档 → 改名为 <strong>settings.json</strong></li>
+      <li>粘贴以下内容：</li>
+    </ol>
+    <div class="code-block">{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "你的apikey贴这里",
+    "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash[1M]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro[1M]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-flash[1M]"
+  }
+}</div>
+    <div class="highlight">⚠️ 把 "你的apikey贴这里" 换成第 2 步申请的 sk- 开头的真实密钥</div>
+    <ol start="3">
+      <li>按 Win 键，输入 <strong>%USERPROFILE%</strong> 回车</li>
+      <li>找到 <strong>.claude</strong> 文件夹，把 settings.json 剪切进去覆盖</li>
+    </ol>
+    <div class="tip"><strong>💡 .claude 是隐藏文件夹。</strong>如果看不到，在文件夹顶部点"查看" → 勾上"隐藏的项目"。</div>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <div class="step-title">装 Claudian 插件</div>
+      <div class="step-time">2 分钟</div>
+    </div>
+    <ol>
+      <li>打开 Obsidian → 左下角齿轮（设置）</li>
+      <li>左侧找 <strong>"第三方插件"</strong> → 点<strong>"浏览"</strong></li>
+      <li>搜索 <strong>Claudian</strong> → 安装 → 启用</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">7</div>
+      <div class="step-title">配置 Claudian</div>
+      <div class="step-time">2 分钟</div>
+    </div>
+    <ol>
+      <li>Obsidian 设置里找到 <strong>Claudian</strong></li>
+      <li><strong>Settings Provider</strong> 选 <strong>Claude Code</strong></li>
+      <li><strong>Permission Mode</strong> 选 <strong>Accept All Edits</strong></li>
+      <li><strong>语言（Locale）</strong> 选 <strong>中文</strong></li>
+      <li>把 <strong>1M上下文窗口</strong>（Enable Sonnet 1M / Enable Opus 1M）<strong>打开</strong></li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">+</div>
+      <div class="step-title">设置 Obsidian：监测所有类型文件</div>
+      <div class="step-time">1 分钟</div>
+    </div>
+    <ol>
+      <li>Obsidian 设置 → <strong>"文件与链接"</strong></li>
+      <li>把 <strong>"监测所有类型文件"</strong> 打开</li>
+    </ol>
+  </div>
+
+  <div class="step action">
+    <div class="step-header">
+      <div class="step-num">8</div>
+      <div class="step-title">开始用</div>
+    </div>
+    <ol>
+      <li>Obsidian 右侧应该能看到 Claudian 面板</li>
+      <li>底部输入框打字，按 <strong>Ctrl + Enter</strong> 发送</li>
+      <li>等几秒到一分钟，AI 回复就出来了</li>
+    </ol>
+    <div class="tip"><strong>💡 如果没看到面板：</strong>按 Ctrl+P，输入 Claudian，选"Toggle chat view"。</div>
+  </div>
+
+  <!-- Claudian 使用技巧 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">💡</div>
+      <div class="step-title">Claudian 怎么帮你建知识库</div>
+    </div>
+    <p>装好 Claudian 之后，试试这三句话：</p>
+    <ol>
+      <li><strong>"按照 claude-kb.md 的要求，构建文件夹体系"</strong> —— Claudian 会自动创建 inbox/raw/wiki 等目录结构</li>
+      <li><strong>"处理 inbox"</strong> —— 把有价值的文件拖进 inbox 文件夹，说这句话，Claudian 自动分类、生成摘要、更新索引</li>
+      <li><strong>直接聊天</strong> —— 比如"帮我整理一份 AI 工具对比表""把这个报告的核心结论提炼出来"</li>
+    </ol>
+  </div>
+
+  <!-- 常见问题 -->
+  <div class="divider" style="margin-top:20px;">❓ Claudian 常见问题</div>
+
+  <div class="troubleshoot">
+    <div class="ts-row">
+      <div class="ts-label">点发送没反应</div>
+      <div class="ts-content"><p>Claude Code 没装好 → 重新走一遍第 4 步</p></div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-label">提示"未授权"</div>
+      <div class="ts-content"><p>API Key 没填对 → 重新走一遍第 5 步</p></div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-label">右侧没有面板</div>
+      <div class="ts-content"><p>插件没启用 → 检查第 6 步的"启用"点了没</p></div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-label">回答很慢</div>
+      <div class="ts-content"><p>额度用完了 → 去 DeepSeek 平台充值</p></div>
+    </div>
+    <div class="ts-row">
+      <div class="ts-label">回答全是英文</div>
+      <div class="ts-content"><p>不用管，你用中文问就行</p></div>
+    </div>
+    <div class="ts-row" style="background:#fff8e1;">
+      <div class="ts-label">还是搞不定</div>
+      <div class="ts-content"><p>截图发给周春霖</p></div>
+    </div>
+  </div>
+
+  <!-- 角色学习路径 -->
+  <div class="divider" style="margin-top:20px;">按你的角色 · 长期提升路径</div>
+
+  <div class="role-section">
+    <h4>👔 班子成员 / 决策层</h4>
+    <p class="role-desc">核心问题：AI 对我的业务意味着什么？怎么决策？</p>
+    <div class="timeline">
+      <div class="timeline-item"><strong>第 1 周</strong>：完成吴恩达《AI For Everyone》<span class="tool-tag">Coursera</span></div>
+      <div class="timeline-item"><strong>第 2 周</strong>：用豆包处理 3 件日常事务（邮件/报告/摘要）</div>
+      <div class="timeline-item"><strong>第 3 周</strong>：让助理用 Kimi 整理一份 50 页行业报告</div>
+      <div class="timeline-item"><strong>第 4 周</strong>：在部门会上分享你的 AI 体验</div>
+    </div>
+  </div>
+
+  <div class="role-section">
+    <h4>🏢 本部职能岗</h4>
+    <p class="role-desc">核心问题：AI 能帮我提高哪些工作效率？</p>
+    <div class="timeline">
+      <div class="timeline-item"><strong>第 1 天</strong>：用豆包写一封邮件 <span class="tool-tag">豆包</span></div>
+      <div class="timeline-item"><strong>第 3 天</strong>：用 Kimi 读 PDF，10 分钟提取要点 <span class="tool-tag">Kimi</span></div>
+      <div class="timeline-item"><strong>第 5 天</strong>：用通义听悟整理会议录音 <span class="tool-tag">通义听悟</span></div>
+      <div class="timeline-item"><strong>第 7 天</strong>：AI 生成周报初稿——从"写"变成"改"</div>
+      <div class="timeline-item"><strong>第 14 天</strong>：进入 30 天挑战，系统提升</div>
+    </div>
+  </div>
+
+  <div class="role-section">
+    <h4>💻 信息化系统条线</h4>
+    <p class="role-desc">核心问题：怎么把 AI 集成到系统和工作流中？</p>
+    <div class="timeline">
+      <div class="timeline-item"><strong>第 1 周</strong>：完成 Elements of AI（含中文版）<span class="tool-tag">免费</span></div>
+      <div class="timeline-item"><strong>第 2 周</strong>：Claude Code 写数据处理脚本 <span class="tool-tag">Claude Code</span></div>
+      <div class="timeline-item"><strong>第 3 周</strong>：用 Cursor 搭建数据看板 <span class="tool-tag">Cursor</span></div>
+      <div class="timeline-item"><strong>第 4 周</strong>：把经验分享给一个本部同事——传播 AI 文化</div>
+    </div>
+  </div>
+
+  <!-- 推荐课程 -->
+  <a class="link-card" href="https://www.coursera.org/learn/ai-for-everyone" target="_blank">
+    <h4>🎓 吴恩达《AI For Everyone》</h4>
+    <p>全球公认的 AI 入门第一课。零技术要求，6 小时带你理解 AI 能做什么、不能做什么、企业如何拥抱 AI。</p>
+    <div class="tag">⏱ 6 小时 · 免费旁听 · 4.8/5</div>
+  </a>
+
+  <a class="link-card" href="https://example.com/ai-30day" target="_blank">
+    <h4>🔥 30 天 AI 实战挑战</h4>
+    <p>每天 15 分钟，4 周渐进：初体验 → 效率提升 → 深度应用 → 建立习惯。</p>
+    <div class="tag">⏱ 每天 15 分钟 · 4 周</div>
+  </a>
+
+</div>
+
+<div class="footer">
+  <strong>扫码即学 · 学了就用 · 用了再学</strong><br>
+  本页面持续更新，建议收藏<br><br>
+  <span style="font-size:11px;">中建发展 AI 转型工作组 · 2026年6月</span>
+</div>
+
+</body>
+</html>

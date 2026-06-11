@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封面 A · Apple Keynote 风格</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    color: #0F172A;
+  }
+  .slide {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 160px 160px 160px;
+    position: relative;
+  }
+  /* 极淡的径向光晕 */
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: -20%; left: -10%;
+    width: 60%; height: 80%;
+    background: radial-gradient(ellipse at 30% 30%, rgba(30,58,95,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* 金色细线从左侧渐入 */
+  .accent-line {
+    width: 120px;
+    height: 3px;
+    background: #1E3A5F;
+    margin-bottom: 48px;
+    box-shadow: 0 0 20px rgba(30,58,95,0.3);
+  }
+  .title {
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    font-size: 120px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+    color: #0F172A;
+    margin-bottom: 32px;
+  }
+  .title .gold { color: #1E3A5F; }
+  .subtitle {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 36px;
+    color: rgba(15,23,42,0.55);
+    letter-spacing: 0.15em;
+    font-weight: 400;
+  }
+  .meta {
+    position: absolute;
+    bottom: 80px;
+    right: 160px;
+    font-size: 18px;
+    color: rgba(15,23,42,0.35);
+    letter-spacing: 0.2em;
+  }
+  /* 角落 tiny 标记 */
+  .corner-tl {
+    position: absolute;
+    top: 80px; left: 160px;
+    font-size: 13px;
+    color: rgba(15,23,42,0.5);
+    font-family: "SF Mono", monospace;
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="corner-tl">CSCEC INTELLIGENT</div>
+  <div class="accent-line"></div>
+  <h1 class="title">AI <span class="gold">觉醒</span><br>经历分享</h1>
+  <p class="subtitle">一个老程序员两个月的记录</p>
+  <div class="meta">中建智能技术有限公司</div>
+</div>
+</body>
+</html>

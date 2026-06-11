@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P1 · 封面</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 200px;
+    background: var(--bg);
+  }
+  .top-bar {
+    background: var(--primary);
+  }
+  .deco-square {
+    width: 480px;
+    height: 480px;
+    border-color: var(--grid);
+  }
+  .deco-square-inner {
+    width: 340px;
+    height: 340px;
+    border-color: var(--grid);
+  }
+  .content {
+    position: relative;
+    z-index: 2;
+  }
+  .kicker {
+    font-size: 18px;
+    letter-spacing: 0.3em;
+    margin-bottom: 48px;
+  }
+  h1 {
+    font-size: 120px;
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0 0 32px 0;
+  }
+  h1 .highlight {
+    color: var(--primary);
+  }
+  .subtitle {
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-bottom: 100px;
+  }
+  .meta {
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .meta strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .page-num {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="deco-square"></div>
+  <div class="deco-square-inner"></div>
+
+  <div class="content">
+    <div class="kicker">Experience Sharing</div>
+    <h1>AI <span class="highlight">觉醒</span><br>经历分享</h1>
+    <div class="subtitle">一个老程序员两个月的记录</div>
+    <div class="meta"><strong>中建智能技术有限公司</strong> &nbsp;&middot;&nbsp; 2026年5月</div>
+  </div>
+
+  <div class="page-num">70 MIN &nbsp;/&nbsp; 39 SLIDES</div>
+</body>
+</html>

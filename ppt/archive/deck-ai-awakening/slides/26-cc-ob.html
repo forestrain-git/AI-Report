@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P27 · CC + OB 具体实现</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 0 0 40px 0;
+  }
+  .tools {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+  .tool {
+    flex: 1;
+    padding: 36px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+  }
+  .tool-name {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+  .tool-role {
+    font-size: 20px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .tool-desc {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+  }
+  .compare-table th,
+  .compare-table td {
+    padding: 20px 24px;
+    text-align: left;
+    font-size: 22px;
+  }
+  .compare-table th {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+  }
+  .compare-table td {
+    background: #fff;
+    border-bottom: 1px solid var(--primary-light);
+  }
+  .compare-table td:first-child {
+    font-weight: 700;
+    color: var(--primary);
+    width: 200px;
+  }
+  .highlight-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    padding: 24px;
+    background: var(--primary-light);
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Stage 4 &middot; 落地</div>
+    <h1>CC + OB 具体实现</h1>
+    <div class="tools">
+      <div class="tool">
+        <div class="tool-name">Claude Code</div>
+        <div class="tool-role">LLM 部分</div>
+        <div class="tool-desc">有文件系统操作能力——不只是聊天，能直接<strong>读文件、写文件、整理文件夹</strong>。</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">Obsidian</div>
+        <div class="tool-role">Wiki 部分</div>
+        <div class="tool-desc">本地笔记软件——<strong>所有数据都在自己电脑上</strong>，结构化、可检索、能长期积累。</div>
+      </div>
+    </div>
+    <table class="compare-table">
+      <tr><th>维度</th><th>网页聊天</th><th>CC + OB</th></tr>
+      <tr><td>状态</td><td>无状态</td><td><strong>有状态</strong></td></tr>
+      <tr><td>记忆</td><td>无记忆</td><td><strong>有记忆</strong></td></tr>
+      <tr><td>增长</td><td>每次从零</td><td><strong>持续积累</strong></td></tr>
+    </table>
+    <div class="highlight-text">今天教 AI 的东西，明天 AI 还记得。下次交互基于完整的历史，不是从零开始。</div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">阶段四：CC 依赖期</span>
+    <span class="page-num">27 / 39</span>
+  </div>
+</body>
+</html>

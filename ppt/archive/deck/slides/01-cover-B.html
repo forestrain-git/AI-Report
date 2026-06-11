@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>封面 B · HUD 科幻精密</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    background: #080c12;
+    font-family: "SF Mono", "Fira Code", "PingFang SC", monospace;
+    color: #0F172A;
+  }
+  .slide {
+    width: 100%; height: 100%;
+    position: relative;
+    padding: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  /* 外框 */
+  .frame {
+    position: absolute;
+    inset: 40px;
+    border: 1px solid rgba(37,99,235,0.15);
+    pointer-events: none;
+  }
+  .frame::before, .frame::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border: 2px solid rgba(30,58,95,0.5);
+  }
+  .frame::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .frame::after  { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+  /* 顶部 HUD 读数 */
+  .hud-top {
+    position: absolute;
+    top: 56px; left: 64px; right: 64px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(37,99,235,0.5);
+    letter-spacing: 0.1em;
+  }
+  /* 底部 HUD */
+  .hud-bot {
+    position: absolute;
+    bottom: 56px; left: 64px; right: 64px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(30,58,95,0.6);
+  }
+
+  /* 背景网格 */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+  /* 中心圆环 */
+  .rings {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    pointer-events: none;
+  }
+  .rings::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(37,99,235,0.1);
+    border-radius: 50%;
+  }
+  .rings::after {
+    content: '';
+    position: absolute;
+    inset: 80px;
+    border: 1px solid rgba(30,58,95,0.2);
+    border-radius: 50%;
+  }
+
+  /* 扫描线 */
+  .scanline {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: rgba(30,58,95,0.25);
+    animation: scan 6s linear infinite;
+  }
+  @keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* 标题 */
+  .title-group {
+    text-align: center;
+    z-index: 1;
+  }
+  .title-group h1 {
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 96px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #0F172A;
+    text-shadow: 0 0 40px rgba(30,58,95,0.2);
+  }
+  .title-group h1 .gold { color: #1E3A5F; }
+  .title-group .sub {
+    margin-top: 32px;
+    font-size: 24px;
+    color: rgba(15,23,42,0.5);
+    letter-spacing: 0.2em;
+    font-family: "PingFang SC", sans-serif;
+  }
+  .title-group .co {
+    margin-top: 80px;
+    font-size: 14px;
+    color: rgba(37,99,235,0.6);
+    letter-spacing: 0.15em;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="grid"></div>
+  <div class="frame"></div>
+  <div class="rings"></div>
+  <div class="scanline"></div>
+
+  <div class="hud-top">
+    <span>CSCEC.INTELLIGENT // SYS.ONLINE</span>
+    <span>LAT 39.9042 N // LNG 116.4074 E</span>
+  </div>
+
+  <div class="title-group">
+    <h1>AI <span class="gold">觉醒</span> 经历分享</h1>
+    <p class="sub">一个老程序员两个月的记录</p>
+    <p class="co">中建智能技术有限公司</p>
+  </div>
+
+  <div class="hud-bot">
+    <span>MODE: PRESENTATION</span>
+    <span>DURATION: 70 MIN</span>
+    <span>STATUS: READY</span>
+  </div>
+</div>
+</body>
+</html>

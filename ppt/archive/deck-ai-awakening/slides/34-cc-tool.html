@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P36 · CC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 140px 80px;
+    background: var(--bg);
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .kicker { margin-bottom: 20px; }
+  h1 {
+    font-size: 64px;
+    font-weight: 900;
+    margin: 0 0 40px 0;
+  }
+  .setup {
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  .setup strong {
+    color: var(--primary);
+  }
+  .mnemonic {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .mnemonic-card {
+    flex: 1;
+    padding: 32px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .mnemonic-char {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .mnemonic-label {
+    font-size: 20px;
+    opacity: 0.85;
+  }
+  .security {
+    padding: 28px 36px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+  }
+  .security-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+  .security-levels {
+    display: flex;
+    gap: 16px;
+  }
+  .level {
+    flex: 1;
+    padding: 16px;
+    background: var(--bg);
+    border-radius: 4px;
+    text-align: center;
+  }
+  .level-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .level-tool {
+    font-size: 18px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="kicker">Part 2 &middot; 工具矩阵</div>
+    <h1>Claude Code</h1>
+    <div class="setup">
+      搭配 <strong>Obsidian</strong> 做知识库，可同时调用 Claude、DeepSeek、MiMo 等多种模型——哪个模型擅长什么，根据任务切换。
+    </div>
+    <div class="mnemonic">
+      <div class="mnemonic-card">
+        <div class="mnemonic-char">快</div>
+        <div class="mnemonic-label">窗口解决"快"</div>
+      </div>
+      <div class="mnemonic-card">
+        <div class="mnemonic-char">全</div>
+        <div class="mnemonic-label">Kimi 解决"全"</div>
+      </div>
+      <div class="mnemonic-card">
+        <div class="mnemonic-char">勤</div>
+        <div class="mnemonic-label">龙虾解决"勤"</div>
+      </div>
+      <div class="mnemonic-card">
+        <div class="mnemonic-char">深</div>
+        <div class="mnemonic-label">CC 解决"深"</div>
+      </div>
+    </div>
+    <div class="security">
+      <div class="security-title">数据安全三级原则</div>
+      <div class="security-levels">
+        <div class="level">
+          <div class="level-label">公开信息</div>
+          <div class="level-tool">海外模型，能力最强</div>
+        </div>
+        <div class="level">
+          <div class="level-label">内部文档</div>
+          <div class="level-tool">国产模型，数据不出境</div>
+        </div>
+        <div class="level">
+          <div class="level-label">涉密信息</div>
+          <div class="level-tool">不上云端，本地处理</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span class="section-name">Part 2：工具矩阵</span>
+    <span class="page-num">36 / 39</span>
+  </div>
+</body>
+</html>
