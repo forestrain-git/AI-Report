@@ -42,8 +42,8 @@ const slides = manifest.map((item, idx) => {
   }
   let privateCss = styles.join('\n');
 
-  // 4. 从 privateCss 中提取多行 body { ... } 规则
-  const bodyRuleMatch = privateCss.match(/body\s*\{([\s\S]*?)\n\s*\}/);
+  // 4. 从 privateCss 中提取多行 body { ... } 规则（使用 ^ 锚点确保只匹配独立的 body 选择器）
+  const bodyRuleMatch = privateCss.match(/^[\s]*body\s*\{([\s\S]*?)\n\s*\}/m);
   let bodyStyle = bodyRuleMatch ? bodyRuleMatch[1].trim() : '';
 
   // 合并 body 内联 style 和 CSS 中的 body 样式
@@ -51,8 +51,8 @@ const slides = manifest.map((item, idx) => {
     bodyStyle = bodyStyle ? bodyInlineStyle + '; ' + bodyStyle : bodyInlineStyle;
   }
 
-  // 5. 从 privateCss 中移除 body 规则
-  privateCss = privateCss.replace(/body\s*\{[\s\S]*?\n\s*\}\s*\n?/g, '');
+  // 5. 从 privateCss 中移除 body 规则（使用 ^ 锚点避免误删 .case-body、.form-body 等）
+  privateCss = privateCss.replace(/^[\s]*body\s*\{[\s\S]*?\n\s*\}\s*\n?/gm, '');
 
   // 6. 清理空白行
   privateCss = privateCss.replace(/\n{3,}/g, '\n\n').trim();
