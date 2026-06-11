@@ -61,9 +61,16 @@ const slides = manifest.map((item, idx) => {
   bodyContent = bodyContent.replaceAll('../shared/', './shared/');
   privateCss = privateCss.replaceAll('../shared/', './shared/');
 
+  // 提取原始 display 值（默认 flex，来自共享 CSS 的 body { display: flex; }）
+  const displayMatch = bodyStyle.match(/display:\s*([^;]+)/);
+  const originalDisplay = displayMatch ? displayMatch[1].trim() : 'flex';
+  // 从 bodyStyle 中移除 display 声明，避免重复
+  bodyStyle = bodyStyle.replace(/display:\s*[^;]+;?\s*/g, '');
+
   return {
     label: item.label,
     bodyStyle,
+    originalDisplay,
     privateCss,
     bodyContent
   };
@@ -99,10 +106,6 @@ ${sharedCss}
   position: absolute;
   top: 0; left: 0;
   overflow: hidden;
-}
-
-.slide.active {
-  display: block;
 }
 
 /* 导航 UI */
@@ -166,7 +169,8 @@ ${sharedCss}
 parts.push('<div id="stage">');
 slides.forEach((slide, idx) => {
   const bodyStyle = slide.bodyStyle ? slide.bodyStyle + '; ' : '';
-  parts.push(`  <div class="slide${idx === 0 ? ' active' : ''}" id="slide-${idx}" style="${bodyStyle}display: ${idx === 0 ? 'block' : 'none'};">`);
+  const disp = idx === 0 ? slide.originalDisplay : 'none';
+  parts.push(`  <div class="slide${idx === 0 ? ' active' : ''}" id="slide-${idx}" data-display="${slide.originalDisplay}" style="${bodyStyle}display: ${disp};">`);
   if (slide.privateCss) {
     parts.push(`    <style>${slide.privateCss}</style>`);
   }
@@ -204,7 +208,7 @@ function show(idx) {
   slideEls[current].classList.remove('active');
   slideEls[current].style.display = 'none';
   slideEls[idx].classList.add('active');
-  slideEls[idx].style.display = 'block';
+  slideEls[idx].style.display = slideEls[idx].getAttribute('data-display') || 'flex';
   current = idx;
   counter.innerHTML = (idx + 1) + ' / ' + slideEls.length + ' <span class="label">' + (deck[idx].label || '') + '</span>';
   try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}

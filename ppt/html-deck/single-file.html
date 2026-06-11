@@ -802,10 +802,6 @@ blockquote.quote-accent {
   overflow: hidden;
 }
 
-.slide.active {
-  display: block;
-}
-
 /* 导航 UI */
 .counter {
   position: fixed;
@@ -863,10 +859,10 @@ blockquote.quote-accent {
 </head>
 <body>
 <div id="stage">
-  <div class="slide active" id="slide-0" style="background: #fff;
+  <div class="slide active" id="slide-0" data-display="flex" style="background: #fff;
     padding: 0;
     position: relative;
-    overflow: hidden;; display: block;">
+    overflow: hidden;; display: flex;">
     <style>/* ── 左半：纯白底文字区 ── */
   .cover-left {
     position: absolute;
@@ -1025,8 +1021,7 @@ blockquote.quote-accent {
 
 <div class="cover-org">中建发展 · 2026</div>
   </div>
-  <div class="slide" id="slide-1" style="background: linear-gradient(160deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
-    display: flex;
+  <div class="slide" id="slide-1" data-display="flex" style="background: linear-gradient(160deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
     flex-direction: column;
     height: 1080px;
     justify-content: center;
@@ -1129,9 +1124,8 @@ blockquote.quote-accent {
   <span class="page-num"></span>
 </div>
   </div>
-  <div class="slide" id="slide-2" style="padding: 60px 100px 40px;
+  <div class="slide" id="slide-2" data-display="flex" style="padding: 60px 100px 40px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     gap: 0;; display: none;">
@@ -1322,9 +1316,8 @@ blockquote.quote-accent {
   <span class="page-num">2 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-3" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-3" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -1454,9 +1447,8 @@ blockquote.quote-accent {
   <span class="page-num">3 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-4" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-4" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -1620,9 +1612,8 @@ blockquote.quote-accent {
   <span class="page-num">4 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-5" style="padding: 40px 80px 36px;
+  <div class="slide" id="slide-5" data-display="flex" style="padding: 40px 80px 36px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -1804,8 +1795,7 @@ blockquote.quote-accent {
   <span class="page-num">5 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-6" style="padding: 45px 80px 20px;
-    display: flex;
+  <div class="slide" id="slide-6" data-display="flex" style="padding: 45px 80px 20px;
     flex-direction: column;
     gap: 16px;
     background: #fff;
@@ -2015,9 +2005,8 @@ blockquote.quote-accent {
   <span class="page-num">6 / 53</span>
 </div>
   </div>
-  <div class="slide" id="slide-7" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-7" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -2124,8 +2113,7 @@ blockquote.quote-accent {
   <span class="page-num">6 / 53</span>
 </div>
   </div>
-  <div class="slide" id="slide-8" style="background: linear-gradient(160deg, #eef2ff 0%, #dbeafe 50%, #bfdbfe 100%);
-    display: flex;
+  <div class="slide" id="slide-8" data-display="flex" style="background: linear-gradient(160deg, #eef2ff 0%, #dbeafe 50%, #bfdbfe 100%);
     flex-direction: column;
     height: 1080px;
     justify-content: center;
@@ -2215,9 +2203,8 @@ blockquote.quote-accent {
   <span class="page-num"></span>
 </div>
   </div>
-  <div class="slide" id="slide-9" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-9" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>/* 垂直时间线容器 */
@@ -2367,9 +2354,8 @@ blockquote.quote-accent {
   <span class="page-num">15 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-10" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-10" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>/* 三列卡片 */
@@ -2545,9 +2531,8 @@ blockquote.quote-accent {
   <span class="page-num">16 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-11" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-11" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>/* 2x2 四宫格 */
@@ -2727,9 +2712,8 @@ blockquote.quote-accent {
   <span class="page-num">17 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-12" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-12" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>/* 四列模式卡片 */
@@ -2965,9 +2949,8 @@ blockquote.quote-accent {
   <span class="page-num">18 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-13" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-13" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>/* 五个台阶 */
@@ -3111,8 +3094,7 @@ blockquote.quote-accent {
   <span class="page-num">19 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-14" style="background: linear-gradient(160deg, #eef2ff 0%, #dbeafe 50%, #bfdbfe 100%);
-    display: flex;
+  <div class="slide" id="slide-14" data-display="flex" style="background: linear-gradient(160deg, #eef2ff 0%, #dbeafe 50%, #bfdbfe 100%);
     flex-direction: column;
     height: 1080px;
     justify-content: center;
@@ -3202,9 +3184,8 @@ blockquote.quote-accent {
   <span class="page-num"></span>
 </div>
   </div>
-  <div class="slide" id="slide-15" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-15" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.card-grid-2x2 {
@@ -3309,9 +3290,8 @@ blockquote.quote-accent {
   <span class="page-num">20 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-16" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-16" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.main-area {
@@ -3508,9 +3488,8 @@ blockquote.quote-accent {
   <span class="page-num">21 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-17" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-17" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.compare-area {
@@ -3690,9 +3669,8 @@ blockquote.quote-accent {
   <span class="page-num">22 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-18" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-18" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.card-row {
@@ -3822,9 +3800,8 @@ blockquote.quote-accent {
   <span class="page-num">23 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-19" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-19" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.card-row {
@@ -3977,9 +3954,8 @@ blockquote.quote-accent {
   <span class="page-num">24 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-20" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-20" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.card-row {
@@ -4137,9 +4113,8 @@ blockquote.quote-accent {
   <span class="page-num">25 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-21" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-21" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.card-row {
@@ -4292,9 +4267,8 @@ blockquote.quote-accent {
   <span class="page-num">26 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-22" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-22" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>/* 顶部荣誉标签 */
@@ -4475,9 +4449,8 @@ blockquote.quote-accent {
   <span class="page-num">27 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-23" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-23" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.card-table {
@@ -4653,9 +4626,8 @@ blockquote.quote-accent {
   <span class="page-num">28 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-24" style="padding: 0;
+  <div class="slide" id="slide-24" data-display="flex" style="padding: 0;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <div class="part-cover">
@@ -4667,9 +4639,8 @@ blockquote.quote-accent {
   <div class="deco-line"></div>
 </div>
   </div>
-  <div class="slide" id="slide-25" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-25" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -4880,9 +4851,8 @@ blockquote.quote-accent {
   <span class="page-num">7 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-26" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-26" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -5140,9 +5110,8 @@ blockquote.quote-accent {
   <span class="page-num">8 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-27" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-27" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -5396,9 +5365,8 @@ blockquote.quote-accent {
   <span class="page-num">9 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-28" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-28" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -5638,9 +5606,8 @@ blockquote.quote-accent {
   <span class="page-num">10 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-29" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-29" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -5895,9 +5862,8 @@ blockquote.quote-accent {
   <span class="page-num">11 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-30" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-30" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title {
@@ -6132,9 +6098,8 @@ blockquote.quote-accent {
   <span class="page-num">12 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-31" style="padding: 40px 80px 20px;
+  <div class="slide" id="slide-31" data-display="flex" style="padding: 40px 80px 20px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     gap: 18px;
     height: 1080px;; display: none;">
@@ -6337,9 +6302,8 @@ blockquote.quote-accent {
   <span class="page-num">13 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-32" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-32" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.card-row {
@@ -6583,9 +6547,8 @@ blockquote.quote-accent {
   <span class="page-num">29 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-33" style="padding: 50px 100px 30px;
+  <div class="slide" id="slide-33" data-display="flex" style="padding: 50px 100px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     align-items: center;
@@ -6788,9 +6751,8 @@ blockquote.quote-accent {
   <span class="page-num">30 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-34" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-34" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <div class="part-cover">
@@ -6802,9 +6764,8 @@ blockquote.quote-accent {
   <div class="deco-line"></div>
 </div>
   </div>
-  <div class="slide" id="slide-35" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-35" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.table-wrap {
@@ -6931,9 +6892,8 @@ blockquote.quote-accent {
   <span class="page-num">31 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-36" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-36" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     gap: 20px;; display: none;">
@@ -7127,9 +7087,8 @@ blockquote.quote-accent {
   <span class="page-num">32 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-37" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-37" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     gap: 20px;; display: none;">
@@ -7314,9 +7273,8 @@ blockquote.quote-accent {
   <span class="page-num">33 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-38" style="padding: 50px 100px 30px;
+  <div class="slide" id="slide-38" data-display="flex" style="padding: 50px 100px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     gap: 24px;; display: none;">
@@ -7534,9 +7492,8 @@ blockquote.quote-accent {
   <span class="page-num">34 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-39" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-39" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.support-grid {
@@ -7647,9 +7604,8 @@ blockquote.quote-accent {
   <span class="page-num">35 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-40" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-40" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.option-list {
@@ -7781,9 +7737,8 @@ blockquote.quote-accent {
   <span class="page-num">36 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-41" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-41" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     gap: 20px;; display: none;">
@@ -7923,9 +7878,8 @@ blockquote.quote-accent {
   <span class="page-num">37 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-42" style="padding: 0;
+  <div class="slide" id="slide-42" data-display="flex" style="padding: 0;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <div class="part-cover">
@@ -7937,9 +7891,8 @@ blockquote.quote-accent {
   <div class="deco-line"></div>
 </div>
   </div>
-  <div class="slide" id="slide-43" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-43" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title { margin-bottom: 16px; }
@@ -8189,9 +8142,8 @@ blockquote.quote-accent {
   <span class="page-num">38 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-44" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-44" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title { margin-bottom: 16px; }
@@ -8404,9 +8356,8 @@ blockquote.quote-accent {
   <span class="page-num">39 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-45" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-45" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title { margin-bottom: 16px; }
@@ -8562,9 +8513,8 @@ blockquote.quote-accent {
   <span class="page-num">40 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-46" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-46" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title { margin-bottom: 16px; }
@@ -8722,9 +8672,8 @@ blockquote.quote-accent {
   <span class="page-num">41 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-47" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-47" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title { margin-bottom: 16px; }
@@ -8902,9 +8851,8 @@ blockquote.quote-accent {
   <span class="page-num">42 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-48" style="padding: 36px 80px 24px;
+  <div class="slide" id="slide-48" data-display="flex" style="padding: 36px 80px 24px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     gap: 16px;
@@ -9139,9 +9087,8 @@ blockquote.quote-accent {
   <span class="page-num">43 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-49" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-49" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title { margin-bottom: 16px; }
@@ -9273,9 +9220,8 @@ blockquote.quote-accent {
   <span class="page-num">44 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-50" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-50" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;; display: none;">
     <style>.slide-title { margin-bottom: 12px; }
@@ -9538,9 +9484,8 @@ blockquote.quote-accent {
   <span class="page-num">45 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-51" style="padding: 50px 80px 30px;
+  <div class="slide" id="slide-51" data-display="flex" style="padding: 50px 80px 30px;
     background: #fff;
-    display: flex;
     flex-direction: column;
     height: 1080px;
     justify-content: center;
@@ -9603,12 +9548,11 @@ blockquote.quote-accent {
   <span class="page-num">46 / 47</span>
 </div>
   </div>
-  <div class="slide" id="slide-52" style="width: 1920px;
+  <div class="slide" id="slide-52" data-display="flex" style="width: 1920px;
     height: 1080px;
     overflow: hidden;
     font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
     background: #fff;
-    display: flex;
     flex-direction: column;
     padding: 50px 100px 30px;
     position: relative;; display: none;">
@@ -9801,7 +9745,7 @@ function show(idx) {
   slideEls[current].classList.remove('active');
   slideEls[current].style.display = 'none';
   slideEls[idx].classList.add('active');
-  slideEls[idx].style.display = 'block';
+  slideEls[idx].style.display = slideEls[idx].getAttribute('data-display') || 'flex';
   current = idx;
   counter.innerHTML = (idx + 1) + ' / ' + slideEls.length + ' <span class="label">' + (deck[idx].label || '') + '</span>';
   try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
