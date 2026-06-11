@@ -215,11 +215,11 @@
   document.addEventListener('keydown', onKey);
 
   // iframe 获得焦点后键盘事件不会冒泡到父页，需向每个 slide 内部也注入监听
+  // 只绑 window，document 的事件会冒泡上来；同时绑两者会导致一次按键触发两次
   function bindIframeKeys() {
     try {
       const iw = frame.contentWindow;
       if (!iw) return;
-      iw.document.addEventListener('keydown', onKey);
       iw.addEventListener('keydown', onKey);
     } catch (_) {}
   }
