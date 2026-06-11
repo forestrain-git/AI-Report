@@ -12,113 +12,208 @@ if (!manifestMatch) {
 }
 const manifest = eval(manifestMatch[1]);
 
-// 读取共享 CSS，并预处理掉 @import
+// 读取共享 CSS，预处理掉 @import
 const tokensCss = fs.readFileSync(path.join(DECK_DIR, 'shared', 'tokens.css'), 'utf8');
 const slideSystemCss = fs.readFileSync(path.join(DECK_DIR, 'shared', 'slide-system.css'), 'utf8')
   .replace(/@import\s+url\(["']?tokens\.css["']?\);?\s*\n?/g, '');
-const combinedCss = tokensCss + '\n' + slideSystemCss;
+const sharedCss = tokensCss + '\n' + slideSystemCss;
 
-// 读取每个 slide 的完整 HTML，用 JSON.stringify 安全编码
-const slides = manifest.map(item => {
+// 处理每个 slide
+const slides = manifest.map((item, idx) => {
   const slidePath = path.join(DECK_DIR, item.file);
-  let content = fs.readFileSync(slidePath, 'utf8');
-  // 1. 移除所有指向 shared/ 的 link 标签（CSS 将内联）
-  content = content.replace(/<link rel="stylesheet" href="[^"]*shared\/[^"]*"[^>]*>\s*\n?/g, '');
-  // 2. 在 </head> 之前插入内联共享 CSS
-  content = content.replace('<\/head>', '<style>' + combinedCss + '<\/style>\n<\/head>');
-  // 3. 修正图片路径：slide 在 slides/ 子目录，single-file.html 在 html-deck/ 根目录
-  content = content.replaceAll('../shared/', './shared/');
-  return JSON.stringify(content);
+  const html = fs.readFileSync(slidePath, 'utf8');
+
+  // 1. 提取 body 标签属性（如 style、class）
+  const bodyTagMatch = html.match(/<body([^>]*)>/i);
+  const bodyAttrs = bodyTagMatch ? bodyTagMatch[1] : '';
+  const bodyInlineStyleMatch = bodyAttrs.match(/style="([^"]*)"/i);
+  let bodyInlineStyle = bodyInlineStyleMatch ? bodyInlineStyleMatch[1].trim() : '';
+
+  // 2. 提取 body 内容
+  const bodyContentMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+  let bodyContent = bodyContentMatch ? bodyContentMatch[1].trim() : '';
+
+  // 3. 提取所有 <style> 标签内容
+  const styles = [];
+  const styleRegex = /<style>([\s\S]*?)<\/style>/g;
+  let styleMatch;
+  while ((styleMatch = styleRegex.exec(html)) !== null) {
+    styles.push(styleMatch[1]);
+  }
+  let privateCss = styles.join('\n');
+
+  // 4. 从 privateCss 中提取多行 body { ... } 规则
+  const bodyRuleMatch = privateCss.match(/body\s*\{([\s\S]*?)\n\s*\}/);
+  let bodyStyle = bodyRuleMatch ? bodyRuleMatch[1].trim() : '';
+
+  // 合并 body 内联 style 和 CSS 中的 body 样式
+  if (bodyInlineStyle) {
+    bodyStyle = bodyStyle ? bodyInlineStyle + '; ' + bodyStyle : bodyInlineStyle;
+  }
+
+  // 5. 从 privateCss 中移除 body 规则
+  privateCss = privateCss.replace(/body\s*\{[\s\S]*?\n\s*\}\s*\n?/g, '');
+
+  // 6. 清理空白行
+  privateCss = privateCss.replace(/\n{3,}/g, '\n\n').trim();
+
+  // 7. 修正路径（slide 在 slides/ 子目录，single-file.html 在 html-deck/ 根目录）
+  bodyContent = bodyContent.replaceAll('../shared/', './shared/');
+  privateCss = privateCss.replaceAll('../shared/', './shared/');
+
+  return {
+    label: item.label,
+    bodyStyle,
+    privateCss,
+    bodyContent
+  };
 });
 
 const parts = [];
 
-// HTML 头部
+// HTML 头部 + 共享 CSS + 主框架样式
 parts.push(`<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <title>AI时代：我们的选择与行动 · 宣讲PPT</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; background: #e2e8f0; overflow: hidden; font-family: -apple-system, "PingFang SC", sans-serif; }
-#stage { position: fixed; top: 50%; left: 50%; transform-origin: top left; will-change: transform; background: #fff; box-shadow: 0 10px 60px rgba(0,0,0,0.4); }
-iframe { width: 100%; height: 100%; border: 0; display: block; background: #0a1628; }
-.counter { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.65); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 13px; letter-spacing: 0.05em; font-variant-numeric: tabular-nums; z-index: 100; user-select: none; opacity: 0.7; transition: opacity 0.2s; }
+${sharedCss}
+
+/* 主框架 */
+#stage {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform-origin: top left;
+  will-change: transform;
+  background: #fff;
+  box-shadow: 0 10px 60px rgba(0,0,0,0.4);
+  width: 1920px;
+  height: 1080px;
+}
+
+.slide {
+  display: none;
+  width: 1920px;
+  height: 1080px;
+  position: absolute;
+  top: 0; left: 0;
+  overflow: hidden;
+}
+
+.slide.active {
+  display: block;
+}
+
+/* 导航 UI */
+.counter {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+  z-index: 100;
+  user-select: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
 .counter:hover { opacity: 1; }
 .counter .label { color: rgba(255,255,255,0.7); margin-left: 8px; }
-.nav-zone { position: fixed; top: 0; bottom: 0; width: 15%; cursor: pointer; z-index: 50; }
+
+.nav-zone {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 15%;
+  cursor: pointer;
+  z-index: 50;
+}
 .nav-zone.left  { left: 0; }
 .nav-zone.right { right: 0; }
-.nav-hint { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 999px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; font-size: 22px; opacity: 0; transition: opacity 0.2s; }
+.nav-hint {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
 .nav-zone.left  .nav-hint { left: 20px; }
 .nav-zone.right .nav-hint { right: 20px; }
 .nav-zone:hover .nav-hint { opacity: 1; }
+
 @media print {
   @page { size: 1920px 1080px; margin: 0; }
   html, body { background: #fff; overflow: visible; height: auto; }
   #stage { position: static; transform: none !important; box-shadow: none; }
   .counter, .nav-zone { display: none !important; }
-  .print-stack { display: block; }
-  .print-stack iframe { width: 1920px; height: 1080px; page-break-after: always; display: block; }
+  .slide { display: block !important; position: static; page-break-after: always; }
 }
 </style>
 </head>
-<body>
-<div id="stage"><iframe id="frame" src="about:blank"></iframe></div>
+<body>`);
+
+// 生成 slide divs
+parts.push('<div id="stage">');
+slides.forEach((slide, idx) => {
+  const bodyStyle = slide.bodyStyle ? slide.bodyStyle + '; ' : '';
+  parts.push(`  <div class="slide${idx === 0 ? ' active' : ''}" id="slide-${idx}" style="${bodyStyle}display: ${idx === 0 ? 'block' : 'none'};">`);
+  if (slide.privateCss) {
+    parts.push(`    <style>${slide.privateCss}</style>`);
+  }
+  parts.push(`    ${slide.bodyContent}`);
+  parts.push(`  </div>`);
+});
+parts.push('</div>');
+
+// 导航 UI + JS
+parts.push(`
 <div class="nav-zone left" id="navL"><div class="nav-hint">&#8249;</div></div>
 <div class="nav-zone right" id="navR"><div class="nav-hint">&#8250;</div></div>
-<div class="counter" id="counter">1 / 1</div>
-<div class="print-stack" id="printStack" style="display:none;"></div>
-<script>`);
+<div class="counter" id="counter">1 / ${slides.length}</div>
 
-// JS 数据
-parts.push('window.DECK_MANIFEST = ' + JSON.stringify(manifest, null, 2) + ';');
-parts.push('window.DECK_WIDTH = 1920;');
-parts.push('window.DECK_HEIGHT = 1080;');
-parts.push('window.SLIDE_HTML = [');
-for (let i = 0; i < slides.length; i++) {
-  parts.push('  // ' + manifest[i].label);
-  parts.push('  ' + slides[i] + (i < slides.length - 1 ? ',' : ''));
-}
-parts.push('];');
-
-// JS 逻辑
-parts.push(`
+<script>
+const deck = ${JSON.stringify(manifest)};
+const slideEls = document.querySelectorAll('.slide');
+const counter = document.getElementById('counter');
 const storageKey = 'deck-index-' + location.pathname;
 let current = 0;
 
-const W = window.DECK_WIDTH || 1920;
-const H = window.DECK_HEIGHT || 1080;
-const stage = document.getElementById('stage');
-const frame = document.getElementById('frame');
-const counter = document.getElementById('counter');
-const printStack = document.getElementById('printStack');
-
-stage.style.width = W + 'px';
-stage.style.height = H + 'px';
-
 function fit() {
+  const W = 1920, H = 1080;
   const s = Math.min(window.innerWidth / W, window.innerHeight / H);
   const x = (window.innerWidth - W * s) / 2;
   const y = (window.innerHeight - H * s) / 2;
+  const stage = document.getElementById('stage');
   stage.style.transform = 'translate(' + x + 'px, ' + y + 'px) scale(' + s + ')';
   stage.style.top = '0';
   stage.style.left = '0';
 }
 
 function show(idx) {
-  if (idx < 0 || idx >= window.SLIDE_HTML.length) return;
+  if (idx < 0 || idx >= slideEls.length) return;
+  slideEls[current].classList.remove('active');
+  slideEls[current].style.display = 'none';
+  slideEls[idx].classList.add('active');
+  slideEls[idx].style.display = 'block';
   current = idx;
-  frame.srcdoc = window.SLIDE_HTML[idx];
-  counter.innerHTML = (idx + 1) + ' / ' + window.SLIDE_HTML.length + ' <span class="label">' + (window.DECK_MANIFEST[idx].label || '') + '</span>';
+  counter.innerHTML = (idx + 1) + ' / ' + slideEls.length + ' <span class="label">' + (deck[idx].label || '') + '</span>';
   try { localStorage.setItem(storageKey, String(idx)); } catch (_) {}
   if (location.hash !== '#' + (idx + 1)) {
     history.replaceState(null, '', '#' + (idx + 1));
   }
 }
 
-function next() { show(Math.min(current + 1, window.SLIDE_HTML.length - 1)); }
+function next() { show(Math.min(current + 1, slideEls.length - 1)); }
 function prev() { show(Math.max(current - 1, 0)); }
 
 function onKey(e) {
@@ -127,28 +222,17 @@ function onKey(e) {
     case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
     case 'ArrowLeft': case 'PageUp': e.preventDefault(); prev(); break;
     case 'Home': e.preventDefault(); show(0); break;
-    case 'End': e.preventDefault(); show(window.SLIDE_HTML.length - 1); break;
+    case 'End': e.preventDefault(); show(slideEls.length - 1); break;
     case 'p': case 'P': window.print(); break;
     default:
       if (e.key >= '1' && e.key <= '9') {
         const i = parseInt(e.key, 10) - 1;
-        if (i < window.SLIDE_HTML.length) { e.preventDefault(); show(i); }
+        if (i < slideEls.length) { e.preventDefault(); show(i); }
       }
   }
 }
 
 document.addEventListener('keydown', onKey);
-
-// 只绑 window，避免重复触发
-function bindIframeKeys() {
-  try {
-    const iw = frame.contentWindow;
-    if (!iw) return;
-    iw.addEventListener('keydown', onKey);
-  } catch (_) {}
-}
-frame.addEventListener('load', bindIframeKeys);
-
 document.getElementById('navL').addEventListener('click', prev);
 document.getElementById('navR').addEventListener('click', next);
 window.addEventListener('resize', fit);
@@ -158,29 +242,14 @@ window.addEventListener('hashchange', function() {
 });
 
 const hashMatch = location.hash.match(/^#(\\d+)$/);
-if (hashMatch) current = Math.min(parseInt(hashMatch[1], 10) - 1, window.SLIDE_HTML.length - 1);
+if (hashMatch) current = Math.min(parseInt(hashMatch[1], 10) - 1, slideEls.length - 1);
 else try {
   const v = parseInt(localStorage.getItem(storageKey), 10);
-  if (!isNaN(v) && v >= 0 && v < window.SLIDE_HTML.length) current = v;
+  if (!isNaN(v) && v >= 0 && v < slideEls.length) current = v;
 } catch (_) {}
+
 fit();
 show(current);
-
-window.addEventListener('beforeprint', function() {
-  printStack.innerHTML = '';
-  window.SLIDE_HTML.forEach(function(html) {
-    const f = document.createElement('iframe');
-    f.srcdoc = html;
-    printStack.appendChild(f);
-  });
-  printStack.style.display = 'block';
-  document.getElementById('stage').style.display = 'none';
-});
-window.addEventListener('afterprint', function() {
-  printStack.innerHTML = '';
-  printStack.style.display = 'none';
-  document.getElementById('stage').style.display = '';
-});
 </script>
 </body>
 </html>`);
@@ -191,6 +260,6 @@ fs.writeFileSync(outPath, output, 'utf8');
 
 const stats = fs.statSync(outPath);
 console.log('Generated: ' + outPath);
-console.log('Slides:    ' + manifest.length);
+console.log('Slides:    ' + slides.length);
 console.log('Size:      ' + (stats.size / 1024).toFixed(1) + ' KB');
 console.log('Size:      ' + (stats.size / 1024 / 1024).toFixed(2) + ' MB');
