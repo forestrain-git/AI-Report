@@ -4,130 +4,178 @@
 <meta charset="UTF-8">
 <title>P47 · 会后学习资源包</title>
 <link rel="stylesheet" href="../shared/tokens.css">
-<link rel="stylesheet" href="../shared/slide-system.css">
 <style>
   body {
-    padding: 50px 80px 30px;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
+    width: 1920px;
     height: 1080px;
-  }
-  .slide-title { margin-bottom: 16px; }
-  .slide-lead { margin-bottom: 28px; }
-
-  /* 五列卡片 */
-  .resources-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
-    flex: 1;
-    min-height: 0;
-  }
-  .resource-card {
+    overflow: hidden;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
     background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding: 50px 100px 30px;
+    position: relative;
+  }
+
+  /* ========== 标题区 ========== */
+  .header {
     text-align: center;
-    gap: 12px;
-  }
-  .resource-card .res-num {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--brand-blue);
-    color: #fff;
-    font-size: 16px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .resource-card .res-qr {
-    width: 140px;
-    height: 140px;
-    background: #e2e8f0;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: var(--ink-subtle);
+    margin-bottom: 20px;
     flex-shrink: 0;
   }
-  .resource-card .res-name {
-    font-size: 18px;
-    font-weight: 700;
+  .header h1 {
+    font-size: 48px;
+    font-weight: 800;
     color: var(--ink-title);
-    line-height: 1.3;
+    margin-bottom: 8px;
   }
-  .resource-card .res-desc {
-    font-size: 14px;
+  .header p {
+    font-size: 22px;
     color: var(--ink-dim);
-    line-height: 1.5;
-  }
-  .resource-card.primary {
-    border-color: #93c5fd;
-    background: linear-gradient(180deg, #eff6ff, #fff);
-    box-shadow: 0 4px 16px rgba(30,64,175,0.08);
-  }
-  .resource-card.primary .res-num {
-    background: var(--red);
   }
 
-  /* 底部金句 */
-  .kicker.blue {
-    margin-top: 20px;
-    font-size: 24px;
+  /* ========== 二维码区 ========== */
+  .qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-shrink: 0;
   }
+  .qr-section img {
+    width: 280px;
+    height: 280px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+  }
+  .qr-label {
+    margin-top: 14px;
+    font-size: 20px;
+    color: var(--brand-blue);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* ========== 金句卡片区 ========== */
+  .quote-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 1600px;
+  }
+  .quote-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    transition: transform .2s, box-shadow .2s;
+    min-height: 120px;
+  }
+  .quote-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .quote-card .qmark {
+    font-size: 40px;
+    color: var(--brand-blue);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: 8px;
+    font-family: Georgia, serif;
+  }
+  .quote-card .text {
+    font-size: 22px;
+    color: var(--ink-body);
+    line-height: 1.55;
+    font-weight: 500;
+  }
+
+  /* ========== 页脚 ========== */
+  .page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--ink-subtle);
+    padding-top: 12px;
+    margin-top: auto;
+    flex-shrink: 0;
+    border-top: 1px solid #f1f5f9;
+  }
+  .page-footer .part-label { color: var(--brand-blue); font-weight: 600; letter-spacing: 0.1em; }
+  .page-footer .page-num { font-variant-numeric: tabular-nums; color: var(--ink-dim); }
 </style>
 </head>
 <body>
 
-<h1 class="slide-title">会后学习资源包</h1>
-<p class="slide-lead">扫码即学，学了就用，用了再学</p>
+<!-- 标题 -->
+<div class="header">
+  <h1>会后学习资源包</h1>
+  <p>扫码获取 AI 快速入门指南</p>
+</div>
 
-<div class="resources-grid">
-  <div class="resource-card primary">
-    <div class="res-num">1</div>
-    <div class="res-qr">二维码占位</div>
-    <div class="res-name">AI 快速入门指南</div>
-    <div class="res-desc">按角色定制，2 小时见效<br>推荐首选</div>
-  </div>
-  <div class="resource-card">
-    <div class="res-num">2</div>
-    <div class="res-qr">二维码占位</div>
-    <div class="res-name">吴恩达 AI 通识课</div>
-    <div class="res-desc">6 小时系统学习<br>Coursera 免费</div>
-  </div>
-  <div class="resource-card">
-    <div class="res-num">3</div>
-    <div class="res-qr">二维码占位</div>
-    <div class="res-name">30 天 AI 实战挑战</div>
-    <div class="res-desc">每天 15 分钟<br>养成 AI 工作习惯</div>
-  </div>
-  <div class="resource-card">
-    <div class="res-num">4</div>
-    <div class="res-qr">二维码占位</div>
-    <div class="res-name">工具速查卡</div>
-    <div class="res-desc">3 分钟上手<br>常用工具一览</div>
-  </div>
-  <div class="resource-card">
-    <div class="res-num">5</div>
-    <div class="res-qr">二维码占位</div>
-    <div class="res-name">AI 学习社群</div>
-    <div class="res-desc">持续更新<br>同行交流互助</div>
+<!-- 二维码 -->
+<div class="qr-section">
+  <img src="../../archive/old-assets/今晚动手包-二维码.png" alt="AI快速入门指南二维码">
+  <div class="qr-label">扫码即学，学了就用，用了再学</div>
+</div>
+
+<!-- 金句卡片 -->
+<div class="quote-area">
+  <div class="card-grid">
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">最懂业务的人，现在最懂 AI。</div>
+    </div>
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">限制你能力边界的，只有你的想象力。</div>
+    </div>
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">在 AI 时代，最大的成本不是钱——是"等"。</div>
+    </div>
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">AI 是放大器、是加速器，但不是魔术师。</div>
+    </div>
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">看到即占有。想到即实现。获知即学会。</div>
+    </div>
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">你的领域知识 × AI 的执行力 = 你的超能力</div>
+    </div>
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">专业的护城河在变浅，落地的速度在变快。</div>
+    </div>
+    <div class="quote-card">
+      <div class="qmark">"</div>
+      <div class="text">别光看，要用。别先学再用，直接用，在用中学。</div>
+    </div>
   </div>
 </div>
 
-<div class="kicker blue">
-  "最懂业务的人，现在最懂 AI。从今天开始。"
-</div>
-
+<!-- 页脚 -->
 <div class="page-footer">
   <span class="part-label">附录</span>
   <span class="page-num">47 / 47</span>
