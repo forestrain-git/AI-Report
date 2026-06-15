@@ -1,0 +1,239 @@
+[
+  {
+    "slide_id": "S01",
+    "role": "hook",
+    "title": "AI 安全帽：中建发展 AI 硬件战略的第一步",
+    "message": "AI 安全帽：中建发展 AI 硬件战略的第一步",
+    "visible_content": [
+      "AI 安全帽：中建发展 AI 硬件战略的第一步"
+    ],
+    "speaker_intent": "抓住注意力：先把观众从信息疲劳里拉出来。",
+    "media": {
+      "image": {
+        "needed": true,
+        "kind": "gpt-photo",
+        "purpose": "Set emotional anchor for the opening page",
+        "slot": "hook-image-16x9"
+      },
+      "diagram": {
+        "needed": false,
+        "kind": "none"
+      },
+      "video": {
+        "needed": false,
+        "kind": "none"
+      }
+    },
+    "layout_hint": "S01-cover-hero",
+    "recommended_renderer": "frontend-slides"
+  },
+  {
+    "slide_id": "S02",
+    "role": "context",
+    "title": "核心定位",
+    "message": "AI 安全帽是中建发展 AI 硬件版图中唯一一个\"政策强制 × 平台赋能 × 数据飞",
+    "visible_content": [
+      "AI 安全帽是中建发展 AI 硬件版图中唯一一个\"政策强制 × 平台赋能 × 数据飞",
+      "轮\"三者同时成立的方向。它不是一个硬件产品，而是智能班组的物理层、1400 万工人数据的采集终端、云筑网的标准化品类。 ---"
+    ],
+    "speaker_intent": "建立共同背景：说明为什么现在要听这件事。",
+    "media": {
+      "image": {
+        "needed": false,
+        "kind": "none"
+      },
+      "diagram": {
+        "needed": true,
+        "kind": "svg-html",
+        "purpose": "Show the system relationship or scope",
+        "slot": "context-diagram-21x9"
+      },
+      "video": {
+        "needed": false,
+        "kind": "none"
+      }
+    },
+    "layout_hint": "S04-context-system",
+    "recommended_renderer": "frontend-slides"
+  },
+  {
+    "slide_id": "S03",
+    "role": "tension",
+    "title": "第一步：政策锚定——为什么\"必须做\"",
+    "message": "政策信号是三层叠加的： 底层：安全生产法要求必须戴安全帽（刚需）——AI 安全帽是在",
+    "visible_content": [
+      "政策信号是三层叠加的： 底层：安全生产法要求必须戴安全帽（刚需）——AI 安全帽是在",
+      "\"必须买\"的基础上叠加\"智能化\"，不是新增采购，是升级采购 中层：国资委要求央企智能终端普及率 70%+（考核压力）——AI 安全帽是建筑行业最直接的\"智能终端\" 顶层：中建集团要求子企业找场景、出产品（业绩加分机会） "
+    ],
+    "speaker_intent": "制造认知张力：指出旧理解和真实问题之间的差距。",
+    "media": {
+      "image": {
+        "needed": true,
+        "kind": "svg-html",
+        "purpose": "Show before/after or contradiction visually",
+        "slot": "tension-image-16x9"
+      },
+      "diagram": {
+        "needed": false,
+        "kind": "none"
+      },
+      "video": {
+        "needed": false,
+        "kind": "none"
+      }
+    },
+    "layout_hint": "S06-tension-comparison",
+    "recommended_renderer": "frontend-slides"
+  },
+  {
+    "slide_id": "S04",
+    "role": "method",
+    "title": "第二步：场景匹配——AI 安全帽在中建发展体系里长什么样",
+    "message": "第二步：场景匹配——AI 安全帽在中建发展体系里长什么样",
+    "visible_content": [
+      "第二步：场景匹配——AI 安全帽在中建发展体系里长什么样"
+    ],
+    "speaker_intent": "给出方法：把复杂信息变成可执行路径。",
+    "media": {
+      "image": {
+        "needed": false,
+        "kind": "none"
+      },
+      "diagram": {
+        "needed": true,
+        "kind": "svg-html",
+        "purpose": "Diagram the process / decision tree / flow",
+        "slot": "method-diagram-21x9"
+      },
+      "video": {
+        "needed": true,
+        "kind": "remotion-clip",
+        "duration_s": 10,
+        "purpose": "8-12s process clip that walks through the method",
+        "slot": "method-video-16x9"
+      }
+    },
+    "layout_hint": "S07-process-21x9",
+    "recommended_renderer": "frontend-slides"
+  },
+  {
+    "slide_id": "S05",
+    "role": "proof",
+    "title": "单体功能",
+    "message": "| 功能 | 技术 | 说明 | |:---|:---|:---| | 实时定位 |",
+    "visible_content": [
+      "| 功能 | 技术 | 说明 | |:---|:---|:---| | 实时定位 |",
+      "UWB/蓝牙信标/GPS | 进入危险区域自动预警 | | 跌倒/碰撞检测 | 加速度计 + AI 算法 | 自动报警，缩短救援时间 | | 环境监测 | 气体传感器 | 有限空间有毒气体实时监测 | | 疲劳/健康监测"
+    ],
+    "speaker_intent": "给出证据：用案例、步骤或指标证明它不是口号。",
+    "media": {
+      "image": {
+        "needed": true,
+        "kind": "screenshot",
+        "purpose": "Screenshot evidence of the real UI or result",
+        "slot": "proof-image-16x9"
+      },
+      "diagram": {
+        "needed": true,
+        "kind": "svg-html",
+        "purpose": "Diagram the comparison or supporting structure",
+        "slot": "proof-diagram-21x9"
+      },
+      "video": {
+        "needed": true,
+        "kind": "remotion-clip",
+        "duration_s": 8,
+        "purpose": "Short before/after or result clip",
+        "slot": "proof-video-16x9"
+      }
+    },
+    "layout_hint": "S12-proof-metrics",
+    "recommended_renderer": "frontend-slides"
+  },
+  {
+    "slide_id": "S06",
+    "role": "takeaway",
+    "title": "接入平台后的价值倍增",
+    "message": "接入云筑网 + 智能班组后，AI 安全帽从\"终端设备\"变成了数据采集节点 + 分发产",
+    "visible_content": [
+      "接入云筑网 + 智能班组后，AI 安全帽从\"终端设备\"变成了数据采集节点 + 分发产",
+      "品 + 生态入口： 数据回流智能班组：工人实时位置→排班优化，健康数据→疲劳预警，考勤数据→工资自动化，行为数据→工人信用体系 数据回流云筑网：设备使用数据→供应商评价，采购数据→行业基准 反向赋能：保险公司工伤风险定价"
+    ],
+    "speaker_intent": "收束行动：让观众带走一句可复述的方法。",
+    "media": {
+      "image": {
+        "needed": true,
+        "kind": "svg-html",
+        "purpose": "Visual summary that reinforces the closing judgment",
+        "slot": "takeaway-image-16x9"
+      },
+      "diagram": {
+        "needed": false,
+        "kind": "none"
+      },
+      "video": {
+        "needed": false,
+        "kind": "none"
+      }
+    },
+    "layout_hint": "S22-takeaway",
+    "recommended_renderer": "frontend-slides"
+  },
+  {
+    "slide_id": "S07",
+    "role": "takeaway",
+    "title": "第三步：资源盘点——手里有什么牌",
+    "message": "第三步：资源盘点——手里有什么牌",
+    "visible_content": [
+      "第三步：资源盘点——手里有什么牌"
+    ],
+    "speaker_intent": "收束行动：让观众带走一句可复述的方法。",
+    "media": {
+      "image": {
+        "needed": true,
+        "kind": "svg-html",
+        "purpose": "Visual summary that reinforces the closing judgment",
+        "slot": "takeaway-image-16x9"
+      },
+      "diagram": {
+        "needed": false,
+        "kind": "none"
+      },
+      "video": {
+        "needed": false,
+        "kind": "none"
+      }
+    },
+    "layout_hint": "S22-takeaway",
+    "recommended_renderer": "frontend-slides"
+  },
+  {
+    "slide_id": "S08",
+    "role": "takeaway",
+    "title": "已有资源",
+    "message": "| 资源 | 对 AI 安全帽的作用 | |:---|:---| | 1400 万工",
+    "visible_content": [
+      "| 资源 | 对 AI 安全帽的作用 | |:---|:---| | 1400 万工",
+      "人实名制数据 | 部署目标用户——知道谁在哪个项目、什么工种 | | 4100+ 智慧工地接入项目 | 部署场景——知道哪些项目在施工 | | 云筑网 110 万+ 供应商 | 分发渠道——AI 安全帽厂商可入库面向全行"
+    ],
+    "speaker_intent": "收束行动：让观众带走一句可复述的方法。",
+    "media": {
+      "image": {
+        "needed": true,
+        "kind": "svg-html",
+        "purpose": "Visual summary that reinforces the closing judgment",
+        "slot": "takeaway-image-16x9"
+      },
+      "diagram": {
+        "needed": false,
+        "kind": "none"
+      },
+      "video": {
+        "needed": false,
+        "kind": "none"
+      }
+    },
+    "layout_hint": "S22-takeaway",
+    "recommended_renderer": "frontend-slides"
+  }
+]

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 安全帽：五步法分析</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* === VIEWPORT BASE === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#f8f9fb;font-family:'Noto Sans SC','Inter',system-ui,sans-serif}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:#f8f9fb}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none}
+.slide.active,.slide.visible{visibility:visible;opacity:1;pointer-events:auto;z-index:1}
+img,video,canvas,svg{max-width:100%;max-height:100%}
+@media print{html,body{width:1920px;height:auto;overflow:visible;background:#fff}.deck-viewport{position:static;overflow:visible}.deck-stage{position:static;width:auto;height:auto;transform:none!important}.slide{position:relative;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;width:1920px;height:1080px;break-after:page;page-break-after:always}.slide:last-child{break-after:auto}.deck-controls,.progress-bar,.slide-num{display:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,**::after{animation-duration:.01ms!important;transition-duration:.15s!important}}
+
+/* === PALETTE === */
+:root{
+  --white:#ffffff;--bg:#f8f9fb;--bg-alt:#f0f2f5;
+  --ink:#1a1a2e;--ink-2:#3d3d56;--ink-3:#6b6b80;
+  --blue:#2563eb;--blue-light:#dbeafe;--blue-dark:#1e40af;
+  --emerald:#059669;--emerald-light:#d1fae5;
+  --amber:#d97706;--amber-light:#fef3c7;
+  --rose:#e11d48;--rose-light:#ffe4e6;
+  --violet:#7c3aed;--violet-light:#ede9fe;
+  --border:#e2e5ea;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-lg:0 4px 16px rgba(0,0,0,.08);
+  --radius:16px;
+}
+
+/* === TYPOGRAPHY === */
+h1{font-size:60px;font-weight:900;line-height:1.15;color:var(--ink);letter-spacing:-1px}
+h2{font-size:44px;font-weight:800;line-height:1.2;color:var(--ink);letter-spacing:-0.5px}
+h3{font-size:28px;font-weight:700;line-height:1.3;color:var(--ink)}
+p{font-size:24px;font-weight:400;line-height:1.6;color:var(--ink-2)}
+small{font-size:18px;color:var(--ink-3)}
+.tag{display:inline-block;padding:5px 14px;border-radius:6px;font-size:15px;font-weight:600;letter-spacing:0.5px}
+.tag-blue{background:var(--blue-light);color:var(--blue-dark)}
+.tag-emerald{background:var(--emerald-light);color:#047857}
+.tag-amber{background:var(--amber-light);color:#92400e}
+.tag-rose{background:var(--rose-light);color:#9f1239}
+.tag-violet{background:var(--violet-light);color:#5b21b6}
+
+/* === LAYOUT === */
+.si{width:100%;height:100%;padding:72px 96px;display:flex;flex-direction:column;justify-content:center}
+.si-top{justify-content:flex-start;padding-top:56px}
+.si-center{align-items:center;text-align:center}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.g4{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.g5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:16px}
+.row{display:flex;gap:20px;align-items:stretch}
+.row-c{display:flex;gap:20px;align-items:center}
+.flex-col{display:flex;flex-direction:column;gap:16px}
+.mt-1{margin-top:12px}.mt-2{margin-top:24px}.mt-3{margin-top:36px}.mt-4{margin-top:48px}
+
+/* === CARDS === */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+.card-hl{background:var(--white);border:2px solid var(--blue);border-radius:var(--radius);padding:28px;box-shadow:0 0 0 4px rgba(37,99,235,.08)}
+
+/* === STEP HEADER === */
+.step-hd{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.step-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--white);flex-shrink:0}
+.step-num-1{background:var(--blue)}.step-num-2{background:var(--emerald)}.step-num-3{background:var(--amber)}
+.step-num-4{background:var(--violet)}.step-num-5{background:var(--rose)}
+
+/* === QUESTION BOX === */
+.q-box{background:var(--bg-alt);border:1px solid var(--border);border-radius:12px;padding:20px 28px;margin-bottom:28px;border-left:4px solid var(--blue)}
+.q-box h3{font-size:22px;font-weight:600;color:var(--ink-2)}
+
+/* === PROCESS / FLOW === */
+.flow{display:flex;align-items:center;gap:0}
+.flow-node{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 22px;font-size:20px;font-weight:600;color:var(--ink);text-align:center;box-shadow:var(--shadow);flex:1}
+.flow-arrow{font-size:24px;color:var(--ink-3);padding:0 8px;flex-shrink:0}
+
+/* === TABLE === */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:20px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.tbl th{background:var(--bg-alt);color:var(--ink);font-weight:700;padding:14px 20px;text-align:left;border-bottom:2px solid var(--border)}
+.tbl td{padding:12px 20px;border-bottom:1px solid var(--border);color:var(--ink-2);background:var(--white)}
+.tbl tr:last-child td{border-bottom:none}
+
+/* === CONCLUSION BOX === */
+.c-box{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:2px solid var(--blue);border-radius:var(--radius);padding:24px 32px;margin-top:24px}
+.c-box p{font-size:22px;font-weight:600;color:var(--ink)}
+
+/* === BAR CHART === */
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bar-label{width:60px;font-size:18px;font-weight:600;color:var(--ink-2);text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:36px;background:var(--bg-alt);border-radius:8px;overflow:hidden;position:relative}
+.bar-fill{height:100%;border-radius:8px;display:flex;align-items:center;padding-left:12px;font-size:16px;font-weight:700;color:var(--white)}
+
+/* === PROGRESS & NUMBER === */
+.pbar{position:fixed;top:0;left:0;height:3px;background:var(--blue);transition:width .3s;z-index:1001;border-radius:0 2px 2px 0}
+.snum{position:fixed;bottom:24px;right:36px;font-size:15px;font-weight:600;color:var(--ink-3);z-index:1000;font-family:'Inter',monospace}
+
+/* === ANIMATIONS === */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.a1{animation:fadeUp .5s ease both .1s}.a2{animation:fadeUp .5s ease both .2s}.a3{animation:fadeUp .5s ease both .3s}
+.a4{animation:fadeUp .5s ease both .4s}.a5{animation:fadeUp .5s ease both .5s}.a6{animation:fadeUp .5s ease both .6s}
+</style>
+</head>
+<body>
+<div class="pbar" id="pbar"></div>
+<div class="snum" id="snum"></div>
+<div class="deck-viewport">
+<div class="deck-stage" id="stage">
+
+<!-- ===== S01 COVER ===== -->
+<div class="slide active" data-s="1">
+  <div class="si si-center" style="background:linear-gradient(180deg,#f8f9fb 0%,#eef2ff 100%)">
+    <div class="a1"><span class="tag tag-blue">五步法分析 · AI 硬件方向</span></div>
+    <h1 class="a2" style="margin-top:28px;font-size:68px">
+      AI 安全帽<br><span style="color:var(--blue)">中建发展的第一步</span>
+    </h1>
+    <p class="a3 mt-2" style="font-size:26px;color:var(--ink-3);max-width:800px;text-align:center">
+      政策强制 × 平台赋能 × 数据飞轮<br>三者同时成立的唯一方向
+    </p>
+    <div class="a4 mt-4" style="display:flex;gap:12px">
+      <span class="tag tag-blue">政策锚定</span>
+      <span class="tag tag-emerald">资源盘点</span>
+      <span class="tag tag-amber">产品交叉</span>
+      <span class="tag tag-violet">协同分析</span>
+      <span class="tag tag-rose">路径筛选</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== S02 STEP 1: POLICY ===== -->
+<div class="slide" data-s="2">
+  <div class="si si-top">
+    <div class="step-hd a1"><div class="step-num step-num-1">1</div><h2 style="font-size:36px">政策传导链分析（自上而下）</h2></div>
+    <div class="q-box a2"><h3>❓ 问题：AI 硬件方向有没有政策支撑？不做会不会挨批？</h3></div>
+    <div class="a3" style="margin-top:8px">
+      <h3 style="font-size:22px;color:var(--ink-3);margin-bottom:16px">分析过程：追踪政策从国务院到中建发展的传导路径</h3>
+      <div class="flow">
+        <div class="flow-node" style="border-top:3px solid var(--ink-3)"><span style="font-size:16px;color:var(--ink-3)">国务院</span><br>国发〔2025〕11号<br><span style="font-size:16px;color:var(--blue)">智能终端普及率≥70%</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="border-top:3px solid var(--ink-3)"><span style="font-size:16px;color:var(--ink-3)">国资委 / 工信部</span><br>2026.6.4 专项行动<br><span style="font-size:16px;color:var(--blue)">央企≥10个具身智能场景</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="border-top:3px solid var(--ink-3)"><span style="font-size:16px;color:var(--ink-3)">中建集团</span><br>信字〔2025〕111号<br><span style="font-size:16px;color:var(--blue)">"集团建底座，子企业找场景"</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="border-top:3px solid var(--blue);border:2px solid var(--blue)"><span style="font-size:16px;color:var(--blue)">中建发展</span><br><strong>找场景+出产品</strong><br><span style="font-size:16px;color:var(--blue)">AI 安全帽 = 直接落地场景</span></div>
+      </div>
+    </div>
+    <div class="a4 mt-2">
+      <table class="tbl">
+        <tr><th style="width:25%">政策层级</th><th style="width:40%">核心要求</th><th>与 AI 安全帽的关联</th></tr>
+        <tr><td><strong>安全生产法</strong></td><td>企业必须为工人配备安全防护装备</td><td>AI 安全帽是"必须买"的升级品，非新增采购</td></tr>
+        <tr><td><strong>国资委</strong></td><td>智能终端普及率 70%+</td><td>每个工地百顶安全帽，量大面广，最直接的智能终端</td></tr>
+        <tr><td><strong>中建集团</strong></td><td>子企业找场景、出产品</td><td>AI 安全帽不需等集团平台，可独立落地</td></tr>
+      </table>
+    </div>
+    <div class="c-box a5"><p>✅ 结论：政策信号三层叠加（安全生产法 + 国资委考核 + 集团要求），AI 安全帽是"做了加分、不做扣分"的方向，确定性极强。</p></div>
+  </div>
+</div>
+
+<!-- ===== S03 STEP 2: RESOURCES ===== -->
+<div class="slide" data-s="3">
+  <div class="si si-top">
+    <div class="step-hd a1"><div class="step-num step-num-2">2</div><h2 style="font-size:36px">内部资源盘点（自知之明）</h2></div>
+    <div class="q-box a2" style="border-left-color:var(--emerald)"><h3>❓ 问题：中建发展手里有什么牌？缺什么？能做什么、不能做什么？</h3></div>
+    <div class="a3">
+      <h3 style="font-size:22px;color:var(--ink-3);margin-bottom:16px">分析过程：盘点中建发展与 AI 硬件相关的所有资源</h3>
+      <div class="g2">
+        <div>
+          <h3 style="font-size:20px;color:var(--emerald);margin-bottom:14px">✅ 有的</h3>
+          <table class="tbl">
+            <tr><th>资源</th><th>对 AI 硬件的价值</th></tr>
+            <tr><td>10 万亿供应链交易数据</td><td>知道谁在买什么、在哪施工</td></tr>
+            <tr><td>1400 万工人实名制数据</td><td>行业唯一，部署目标用户</td></tr>
+            <tr><td>AI 工程化能力（云智采等）</td><td>软件能力可复用到硬件数据处理</td></tr>
+            <tr><td>集团业务通道（海外部等）</td><td>已有客户关系，硬件是软件的延伸</td></tr>
+            <tr><td>4100+ 智慧工地接入项目</td><td>部署场景入口</td></tr>
+          </table>
+        </div>
+        <div>
+          <h3 style="font-size:20px;color:var(--rose);margin-bottom:14px">❌ 没有的</h3>
+          <table class="tbl">
+            <tr><th>缺失</th><th>影响</th></tr>
+            <tr><td>硬件研发团队</td><td>不能自研硬件</td></tr>
+            <tr><td>施工场景（非工程局）</td><td>无法直接部署到工地</td></tr>
+            <tr><td>制造业经验</td><td>缺乏量产能力</td></tr>
+            <tr><td>硬件供应链</td><td>需要外部合作</td></tr>
+          </table>
+          <div class="card-hl mt-2">
+            <p style="font-size:20px"><strong>关键矛盾：</strong>有 AI 能力但缺硬件基因</p>
+            <p style="font-size:18px;color:var(--ink-3);margin-top:6px">→ 必须走<strong>集成合作</strong>路线，不能自研</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="c-box a4" style="border-left-color:var(--emerald)"><p>✅ 结论：中建发展的角色定位是<strong>集成商 + 平台运营商</strong>，不是制造商。用数据和渠道换硬件能力。</p></div>
+  </div>
+</div>
+
+<!-- ===== S04 STEP 3: PRODUCT CROSS ===== -->
+<div class="slide" data-s="4">
+  <div class="si si-top">
+    <div class="step-hd a1"><div class="step-num step-num-3">3</div><h2 style="font-size:36px">AI 硬件产品全景扫描</h2></div>
+    <div class="q-box a2" style="border-left-color:var(--amber)"><h3>❓ 问题：市场上 165 款 AI 硬件产品，哪些与中建发展的业务方向有交叉？</h3></div>
+    <div class="a3">
+      <h3 style="font-size:22px;color:var(--ink-3);margin-bottom:16px">分析过程：165 款产品 × 4 大 AI 方向（供应链 / 劳务 / 产业服务 / Token 出海）交叉映射</h3>
+      <div class="g3">
+        <div class="card" style="border-top:3px solid var(--emerald)">
+          <h3 style="font-size:20px;color:var(--emerald);margin-bottom:14px">🟢 高相关（5 个品类）</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:18px">🪖 AI 安全帽 / 工业穿戴</p>
+            <p style="font-size:18px">🎙️ AI 录音硬件</p>
+            <p style="font-size:18px">🌐 AI 翻译设备</p>
+            <p style="font-size:18px">📡 边缘 AI 推理盒</p>
+            <p style="font-size:18px">⌚ 健康监测穿戴</p>
+          </div>
+        </div>
+        <div class="card" style="border-top:3px solid var(--amber)">
+          <h3 style="font-size:20px;color:var(--amber);margin-bottom:14px">🟡 中相关（5 个品类）</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:18px">👓 AR 眼镜</p>
+            <p style="font-size:18px">📹 运动相机 / 执法记录仪</p>
+            <p style="font-size:18px">🤖 具身智能机器人（专用型）</p>
+            <p style="font-size:18px">📍 GPS 追踪设备</p>
+            <p style="font-size:18px">🌡️ 环境传感器</p>
+          </div>
+        </div>
+        <div class="card" style="border-top:3px solid var(--rose)">
+          <h3 style="font-size:20px;color:var(--rose);margin-bottom:14px">🔴 低相关（7 个品类，淘汰）</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:18px;color:var(--ink-3)">💍 AI 戒指 · 🎧 通用耳机</p>
+            <p style="font-size:18px;color:var(--ink-3)">🧸 AI 玩具 · 🎹 AI 乐器</p>
+            <p style="font-size:18px;color:var(--ink-3)">⌨️ AI 办公设备 · 🖨️ AI 打印机</p>
+            <p style="font-size:18px;color:var(--ink-3)">🐕 AI 宠物设备</p>
+          </div>
+          <p style="font-size:16px;color:var(--ink-3);margin-top:10px">淘汰原因：消费级产品，无 B 端采购场景，与建筑行业零交叉</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-box a4" style="border-left-color:var(--amber)"><p>✅ 结论：165 款产品中约 10 个品类与中建发展高度匹配。AI 硬件不是"什么都做"，而是<strong>精准匹配建筑行业场景</strong>。</p></div>
+  </div>
+</div>
+
+<!-- ===== S05 STEP 4: SYNERGY ===== -->
+<div class="slide" data-s="5">
+  <div class="si si-top">
+    <div class="step-hd a1"><div class="step-num step-num-4">4</div><h2 style="font-size:36px">协同效应分析（1+1>2）</h2></div>
+    <div class="q-box a2" style="border-left-color:var(--violet)"><h3>❓ 问题：AI 硬件如何放大中建发展现有四个 AI 方向的价值？</h3></div>
+    <div class="a3">
+      <h3 style="font-size:22px;color:var(--ink-3);margin-bottom:16px">分析过程：硬件 × 现有 AI 方向，逐一分析协同效应</h3>
+      <div class="g4">
+        <div class="card" style="border-left:4px solid var(--blue)">
+          <div class="row-c"><span class="tag tag-blue">供应链 AI</span><span style="font-size:20px;color:var(--ink-3)">+</span><span class="tag tag-amber">硬件</span></div>
+          <p style="font-size:20px;margin-top:14px"><strong>→ 智能仓储</strong></p>
+          <p style="font-size:18px;color:var(--ink-3);margin-top:6px">AI 摄像头自动盘点 + 云筑网交易数据<br>硬件采集的数据与 10 万亿交易数据交叉分析</p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--emerald)">
+          <div class="row-c"><span class="tag tag-emerald">劳务 AI</span><span style="font-size:20px;color:var(--ink-3)">+</span><span class="tag tag-amber">硬件</span></div>
+          <p style="font-size:20px;margin-top:14px"><strong>→ 智能穿戴</strong></p>
+          <p style="font-size:18px;color:var(--ink-3);margin-top:6px">安全帽/手环实时采集 → 1400 万工人数据<br>从静态档案升级为<strong>动态数字孪生</strong></p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--amber)">
+          <div class="row-c"><span class="tag tag-amber">产业服务 AI</span><span style="font-size:20px;color:var(--ink-3)">+</span><span class="tag tag-amber">硬件</span></div>
+          <p style="font-size:20px;margin-top:14px"><strong>→ 软硬一体方案</strong></p>
+          <p style="font-size:18px;color:var(--ink-3);margin-top:6px">水务巡检 = 机器人 + AI 分析平台<br>从"卖软件"升级为<strong>"卖解决方案"</strong></p>
+        </div>
+        <div class="card" style="border-left:4px solid var(--violet)">
+          <div class="row-c"><span class="tag tag-violet">Token 出海</span><span style="font-size:20px;color:var(--ink-3)">+</span><span class="tag tag-amber">硬件</span></div>
+          <p style="font-size:20px;margin-top:14px"><strong>→ 硬件 + 算力捆绑出海</strong></p>
+          <p style="font-size:18px;color:var(--ink-3);margin-top:6px">边缘 AI 终端 + Token 服务打包输出海外<br>从"卖算力"升级为<strong>"卖基础设施"</strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="c-box a4" style="border-left-color:var(--violet)"><p>✅ 结论：AI 硬件不是独立的新业务线，而是现有四个方向的<strong>能力放大器</strong>。每个方向 + 硬件都能产生新的价值增量。</p></div>
+  </div>
+</div>
+
+<!-- ===== S06 STEP 5: PATH ===== -->
+<div class="slide" data-s="6">
+  <div class="si si-top">
+    <div class="step-hd a1"><div class="step-num step-num-5">5</div><h2 style="font-size:36px">切入路径选择（风险收益矩阵）</h2></div>
+    <div class="q-box a2" style="border-left-color:var(--rose)"><h3>❓ 问题：自研、合作、投资、场景定制——哪条路最适合中建发展？</h3></div>
+    <div class="a3">
+      <h3 style="font-size:22px;color:var(--ink-3);margin-bottom:16px">分析过程：评估 4 种路径的投入、风险、速度，结合第二步的能力盘点做匹配</h3>
+      <table class="tbl">
+        <tr><th>路径</th><th>投入</th><th>风险</th><th>速度</th><th>与中建发展能力匹配</th><th>判断</th></tr>
+        <tr><td><strong>A. 集成合作</strong></td><td style="color:var(--emerald)">低</td><td style="color:var(--emerald)">低</td><td style="color:var(--emerald)">快</td><td>完全匹配（有渠道+有数据，缺硬件能力）</td><td><span class="tag tag-emerald">✅ 推荐</span></td></tr>
+        <tr><td><strong>B. 场景定制</strong></td><td style="color:var(--amber)">中</td><td style="color:var(--amber)">中</td><td style="color:var(--amber)">中</td><td>部分匹配（需补充定制能力）</td><td><span class="tag tag-amber">中期选择</span></td></tr>
+        <tr><td><strong>C. 自研硬件</strong></td><td style="color:var(--rose)">高</td><td style="color:var(--rose)">高</td><td style="color:var(--rose)">慢</td><td>不匹配（缺硬件团队、制造经验）</td><td><span class="tag tag-rose">❌ 不适合</span></td></tr>
+        <tr><td><strong>D. 投资布局</strong></td><td style="color:var(--amber)">中</td><td style="color:var(--amber)">中</td><td style="color:var(--amber)">中</td><td>可行（集团审批后可考虑）</td><td><span class="tag tag-amber">中期可考虑</span></td></tr>
+      </table>
+      <div class="mt-3">
+        <h3 style="font-size:22px;color:var(--ink-3);margin-bottom:16px">集成合作路径下，Top 5 合作目标排序：</h3>
+        <div class="g5">
+          <div class="card" style="text-align:center;padding:20px"><div style="font-size:32px;margin-bottom:8px">🥇</div><p style="font-size:18px;font-weight:700">WakeCap</p><small>智能安全帽</small></div>
+          <div class="card" style="text-align:center;padding:20px"><div style="font-size:32px;margin-bottom:8px">🥈</div><p style="font-size:18px;font-weight:700">亮亮视野</p><small>AR 眼镜</small></div>
+          <div class="card" style="text-align:center;padding:20px"><div style="font-size:32px;margin-bottom:8px">🥉</div><p style="font-size:18px;font-weight:700">Plaud</p><small>AI 录音</small></div>
+          <div class="card" style="text-align:center;padding:20px"><div style="font-size:32px;margin-bottom:8px">4</div><p style="font-size:18px;font-weight:700">NVIDIA</p><small>边缘推理</small></div>
+          <div class="card" style="text-align:center;padding:20px"><div style="font-size:32px;margin-bottom:8px">5</div><p style="font-size:18px;font-weight:700">Timekettle</p><small>翻译耳机</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="c-box a4" style="border-left-color:var(--rose)"><p>✅ 结论：短期走集成合作（与成熟厂商合作），中期考虑场景定制和战略投资，长期视情况评估自研。</p></div>
+  </div>
+</div>
+
+<!-- ===== S07 WHY AI SAFETY HELMET ===== -->
+<div class="slide" data-s="7">
+  <div class="si si-top">
+    <span class="tag tag-blue a1" style="margin-bottom:12px">五步法结论</span>
+    <h2 class="a2">五个方向中，AI 安全帽<span style="color:var(--blue)">可能性最高</span></h2>
+    <div class="a3 mt-2">
+      <h3 style="font-size:22px;color:var(--ink-3);margin-bottom:16px">为什么是它？逐维度对比：</h3>
+      <table class="tbl">
+        <tr><th>维度</th><th>AI 安全帽</th><th>其他候选（对比）</th></tr>
+        <tr><td><strong>政策确定性</strong></td><td style="color:var(--emerald)">⭐⭐⭐⭐⭐ 三层叠加</td><td>水务硬件 ⭐⭐⭐（无强制采购）</td></tr>
+        <tr><td><strong>采购逻辑</strong></td><td style="color:var(--emerald)">⭐⭐⭐⭐⭐ "必须买"的升级品</td><td>AR 眼镜 ⭐⭐⭐（锦上添花）</td></tr>
+        <tr><td><strong>数据价值</strong></td><td style="color:var(--emerald)">⭐⭐⭐⭐⭐ 1400 万工人 × 每天 8h</td><td>边缘 AI ⭐⭐⭐⭐（设备侧数据）</td></tr>
+        <tr><td><strong>平台耦合度</strong></td><td style="color:var(--emerald)">⭐⭐⭐⭐⭐ 云筑网+智能班组+供应链金融</td><td>机器人 ⭐⭐⭐⭐（需更多整合）</td></tr>
+        <tr><td><strong>落地速度</strong></td><td style="color:var(--emerald)">⭐⭐⭐⭐ 选 1 个项目 1 个月试点</td><td>劳务穿戴 ⭐⭐⭐（从 0 建产品）</td></tr>
+        <tr><td><strong>飞轮潜力</strong></td><td style="color:var(--emerald)">⭐⭐⭐⭐⭐ 数据→模型→保险→降价</td><td>所有品类中最高</td></tr>
+      </table>
+    </div>
+    <div class="c-box a4"><p>✅ AI 安全帽是唯一一个<strong>"政策强制 × 平台赋能 × 数据飞轮"三者同时成立</strong>的方向。不是最炫的那个，而是最"够得着"的那个。</p></div>
+  </div>
+</div>
+
+<!-- ===== S08 PLATFORM LOGIC ===== -->
+<div class="slide" data-s="8">
+  <div class="si si-top">
+    <span class="tag tag-blue a1" style="margin-bottom:12px">平台逻辑加持</span>
+    <h2 class="a2">云筑网 + 智能班组 = <span style="color:var(--blue)">平台级战略产品</span></h2>
+    <div class="a3 mt-3">
+      <div class="g3">
+        <div class="card-hl">
+          <div style="font-size:40px;margin-bottom:12px">📦</div>
+          <h3 style="font-size:24px;color:var(--blue);margin-bottom:12px">云筑网分发</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:18px">110 万+ 供应商体系 → <strong>直接曝光</strong></p>
+            <p style="font-size:18px">招投标标准化 → <strong>降低采购摩擦</strong></p>
+            <p style="font-size:18px">供应链金融 → <strong>分期采购</strong></p>
+          </div>
+        </div>
+        <div class="card-hl">
+          <div style="font-size:40px;margin-bottom:12px">👷</div>
+          <h3 style="font-size:24px;color:var(--emerald);margin-bottom:12px">智能班组激活</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:18px">定位+考勤+健康 → <strong>数字班组底座</strong></p>
+            <p style="font-size:18px">戴帽 = 打卡 → <strong>无感知数据采集</strong></p>
+            <p style="font-size:18px">1400 万工人 → <strong>行业唯一数据源</strong></p>
+          </div>
+        </div>
+        <div class="card-hl">
+          <div style="font-size:40px;margin-bottom:12px">🔄</div>
+          <h3 style="font-size:24px;color:var(--violet);margin-bottom:12px">数据飞轮锁定</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:18px">数据沉淀 → <strong>安全预测模型</strong></p>
+            <p style="font-size:18px">模型优化 → <strong>保险公司买单</strong></p>
+            <p style="font-size:18px">数据收入 → <strong>补贴硬件降价</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="c-box a4"><p>✅ 没有平台的 AI 安全帽 = 孤立设备。接入平台后 = <strong>智能班组的物理层 + 云筑网的标准化品类 + 数据飞轮的启动器</strong>。</p></div>
+  </div>
+</div>
+
+<!-- ===== S09 BUSINESS MODEL + LANDING ===== -->
+<div class="slide" data-s="9">
+  <div class="si si-top">
+    <span class="tag tag-violet a1" style="margin-bottom:12px">落地路径</span>
+    <h2 class="a2">商业模式 + <span style="color:var(--violet)">四阶段落地</span></h2>
+    <div class="a3 mt-2">
+      <div class="g2">
+        <div>
+          <h3 style="font-size:22px;margin-bottom:16px">三层收入结构</h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="card" style="border-left:4px solid var(--emerald)">
+              <div class="row-c" style="justify-content:space-between"><span style="font-size:18px;font-weight:700;color:var(--emerald)">L1 硬件集成</span><span style="font-size:20px;font-weight:800;color:var(--emerald)">15 万/年</span></div>
+              <p style="font-size:16px;color:var(--ink-3);margin-top:4px">10 项目 × 300 顶 × 500 元 × 10% 毛利</p>
+            </div>
+            <div class="card" style="border-left:4px solid var(--blue)">
+              <div class="row-c" style="justify-content:space-between"><span style="font-size:18px;font-weight:700;color:var(--blue)">L2 SaaS 订阅（核心）</span><span style="font-size:20px;font-weight:800;color:var(--blue)">180万→3600万</span></div>
+              <p style="font-size:16px;color:var(--ink-3);margin-top:4px">50 元/人/月 × 覆盖人数 · Y1→Y3</p>
+            </div>
+            <div class="card" style="border-left:4px solid var(--violet)">
+              <div class="row-c" style="justify-content:space-between"><span style="font-size:18px;font-weight:700;color:var(--violet)">L3 数据服务（长期）</span><span style="font-size:20px;font-weight:800;color:var(--violet)">待验证</span></div>
+              <p style="font-size:16px;color:var(--ink-3);margin-top:4px">工伤风险模型 → 保险公司 · 安全态势 → 安监</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:22px;margin-bottom:16px">四阶段落地节奏</h3>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="card" style="padding:16px 20px;border-left:4px solid var(--blue)">
+              <div class="row-c" style="justify-content:space-between"><span class="tag tag-blue" style="font-size:13px">0-3 月</span><strong style="font-size:18px">最小闭环验证</strong></div>
+              <p style="font-size:16px;color:var(--ink-3);margin-top:6px">选 1 个项目 + 1 个硬件伙伴 · 跑通"帽→数据→看板"</p>
+            </div>
+            <div style="text-align:center;color:var(--ink-3);font-size:18px">↓</div>
+            <div class="card" style="padding:16px 20px;border-left:4px solid var(--emerald)">
+              <div class="row-c" style="justify-content:space-between"><span class="tag tag-emerald" style="font-size:13px">3-6 月</span><strong style="font-size:18px">平台化</strong></div>
+              <p style="font-size:16px;color:var(--ink-3);margin-top:6px">接入云筑网采购目录 · 开发安全管理 SaaS · 扩到 2-5 项目</p>
+            </div>
+            <div style="text-align:center;color:var(--ink-3);font-size:18px">↓</div>
+            <div class="card" style="padding:16px 20px;border-left:4px solid var(--amber)">
+              <div class="row-c" style="justify-content:space-between"><span class="tag tag-amber" style="font-size:13px">6-12 月</span><strong style="font-size:18px">规模化</strong></div>
+              <p style="font-size:16px;color:var(--ink-3);margin-top:6px">纳入集团场景清单 · 复制到 50 项目 · 启动保险合作</p>
+            </div>
+            <div style="text-align:center;color:var(--ink-3);font-size:18px">↓</div>
+            <div class="card" style="padding:16px 20px;border-left:4px solid var(--violet);background:linear-gradient(135deg,#f5f3ff,transparent)">
+              <div class="row-c" style="justify-content:space-between"><span class="tag tag-violet" style="font-size:13px">12 月+</span><strong style="font-size:18px;color:var(--violet)">飞轮效应</strong></div>
+              <p style="font-size:16px;color:var(--ink-3);margin-top:6px">更多数据→更准模型→保险买单→降价→更多采购 🔄</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== S10 RISKS ===== -->
+<div class="slide" data-s="10">
+  <div class="si si-top">
+    <span class="tag tag-rose a1" style="margin-bottom:12px">风险清单</span>
+    <h2 class="a2">四个风险，<span style="color:var(--rose)">四个对策</span></h2>
+    <div class="g4 a3 mt-3">
+      <div class="card" style="border-top:3px solid var(--rose)">
+        <div class="row-c" style="justify-content:space-between;margin-bottom:12px">
+          <h3 style="font-size:22px">工人拒绝佩戴</h3>
+          <div><span class="tag tag-amber" style="font-size:13px">可能性：中</span> <span class="tag tag-rose" style="font-size:13px">影响：高</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <p style="font-size:18px;color:var(--emerald)">✓ 选择轻量化产品（<300g）</p>
+          <p style="font-size:18px;color:var(--emerald)">✓ 从安全帽升级切入，非新增设备</p>
+          <p style="font-size:18px;color:var(--emerald)">✓ 配合安全培训引导接受</p>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--rose)">
+        <div class="row-c" style="justify-content:space-between;margin-bottom:12px">
+          <h3 style="font-size:22px">工程局不配合</h3>
+          <div><span class="tag tag-amber" style="font-size:13px">可能性：中</span> <span class="tag tag-rose" style="font-size:13px">影响：高</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <p style="font-size:18px;color:var(--emerald)">✓ 选配合度高的工程局做试点</p>
+          <p style="font-size:18px;color:var(--emerald)">✓ 用数据说话（事故率降多少）</p>
+          <p style="font-size:18px;color:var(--emerald)">✓ 不用行政命令推动</p>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="row-c" style="justify-content:space-between;margin-bottom:12px">
+          <h3 style="font-size:22px">硬件厂商合作不顺</h3>
+          <div><span class="tag tag-emerald" style="font-size:13px">可能性：低</span> <span class="tag tag-amber" style="font-size:13px">影响：中</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <p style="font-size:18px;color:var(--emerald)">✓ 多备 2-3 家候选厂商</p>
+          <p style="font-size:18px;color:var(--emerald)">✓ 不绑死一家，保持灵活性</p>
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="row-c" style="justify-content:space-between;margin-bottom:12px">
+          <h3 style="font-size:22px">ROI 说不清</h3>
+          <div><span class="tag tag-amber" style="font-size:13px">可能性：中</span> <span class="tag tag-rose" style="font-size:13px">影响：高</span></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <p style="font-size:18px;color:var(--emerald)">✓ 试点阶段必须量化数据</p>
+          <p style="font-size:18px;color:var(--emerald)">✓ "投入多少、减少几起事故、节省多少成本"</p>
+        </div>
+      </div>
+    </div>
+    <div class="c-box a4" style="border-left-color:var(--rose)"><p>💡 核心防线：中建发展的 <strong>1400 万工人数据 + 云筑网渠道</strong> 是竞品没有的。即使别人先做硬件，中建发展做平台也能后发制人。</p></div>
+  </div>
+</div>
+
+<!-- ===== S11 CLOSING ===== -->
+<div class="slide" data-s="11">
+  <div class="si si-center" style="background:linear-gradient(180deg,#f8f9fb 0%,#eef2ff 100%)">
+    <span class="tag tag-blue a1">五步法分析总结</span>
+    <h1 class="a2 mt-2" style="font-size:52px">
+      不是<span style="text-decoration:line-through;color:var(--ink-3)">"AI 硬件很火所以要做"</span>
+    </h1>
+    <h2 class="a3" style="font-size:36px;color:var(--blue);margin-top:8px">
+      而是"政策有要求 + 自身有资源 + 产品有交叉 + 路径可落地"
+    </h2>
+    <div class="a4 mt-4" style="display:flex;gap:16px">
+      <div class="card" style="text-align:center;padding:32px 40px;min-width:260px">
+        <div style="font-size:48px;margin-bottom:12px">📋</div>
+        <h3 style="font-size:22px">政策锚定</h3>
+        <p style="font-size:18px;color:var(--ink-3);margin-top:8px">三层叠加<br>确定性极强</p>
+      </div>
+      <div style="display:flex;align-items:center;font-size:28px;color:var(--ink-3)">→</div>
+      <div class="card" style="text-align:center;padding:32px 40px;min-width:260px">
+        <div style="font-size:48px;margin-bottom:12px">🔍</div>
+        <h3 style="font-size:22px">资源盘点</h3>
+        <p style="font-size:18px;color:var(--ink-3);margin-top:8px">有数据+渠道<br>缺硬件→走合作</p>
+      </div>
+      <div style="display:flex;align-items:center;font-size:28px;color:var(--ink-3)">→</div>
+      <div class="card" style="text-align:center;padding:32px 40px;min-width:260px">
+        <div style="font-size:48px;margin-bottom:12px">🎯</div>
+        <h3 style="font-size:22px">产品交叉</h3>
+        <p style="font-size:18px;color:var(--ink-3);margin-top:8px">165 款中筛出<br>~10 个品类</p>
+      </div>
+      <div style="display:flex;align-items:center;font-size:28px;color:var(--ink-3)">→</div>
+      <div class="card" style="text-align:center;padding:32px 40px;min-width:260px">
+        <div style="font-size:48px;margin-bottom:12px">⚡</div>
+        <h3 style="font-size:22px">协同+路径</h3>
+        <p style="font-size:18px;color:var(--ink-3);margin-top:8px">放大器效应<br>集成合作为首选</p>
+      </div>
+    </div>
+    <div class="a5 mt-4">
+      <p style="font-size:24px;color:var(--ink-2)">
+        <strong style="color:var(--blue)">AI 安全帽</strong> = 智能班组的物理层 + 云筑网的标准化品类 + 数据飞轮的启动器
+      </p>
+    </div>
+  </div>
+</div>
+
+</div></div>
+
+<script>
+(function(){
+  const st=document.getElementById('stage'),sl=document.querySelectorAll('.slide'),pb=document.getElementById('pbar'),sn=document.getElementById('snum');
+  let cur=0;const N=sl.length;
+  function rz(){const vw=innerWidth,vh=innerHeight,sc=Math.min(vw/1920,vh/1080);st.style.transform=`translate(${(vw-1920*sc)/2}px,${(vh-1080*sc)/2}px) scale(${sc})`}
+  function go(n){if(n<0||n>=N)return;sl[cur].classList.remove('active');cur=n;sl[cur].classList.add('active');pb.style.width=(cur+1)/N*100+'%';sn.textContent=(cur+1)+' / '+N}
+  document.addEventListener('keydown',e=>{if(['ArrowRight',' ','ArrowDown','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}else if(e.key==='Home'){e.preventDefault();go(0)}else if(e.key==='End'){e.preventDefault();go(N-1)}});
+  let tx,ty;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){dx<0?go(cur+1):go(cur-1)}},{passive:true});
+  st.addEventListener('click',e=>{if(e.target.closest('a,button,input,select,textarea'))return;const r=st.getBoundingClientRect();(e.clientX-r.left)/r.width<.33?go(cur-1):go(cur+1)});
+  addEventListener('resize',rz);rz();go(0);
+})();
+</script>
+</body>
+</html>

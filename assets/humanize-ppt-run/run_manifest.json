@@ -1,0 +1,73 @@
+{
+  "version": "0.8.0",
+  "generated_at": "2026-06-14T11:51:10+00:00",
+  "title": "AI 安全帽：中建发展 AI 硬件战略的第一步",
+  "source": "D:\\Projects\\AI-Report\\assets\\ai-safety-helmet-brief-source.md",
+  "primary_renderer": "frontend-slides",
+  "routes": [
+    {
+      "id": "frontend-slides",
+      "stage": "produce",
+      "purpose": "根据Humanize PPT契约生成主deck或候选预览。",
+      "reason": "用户指定 renderer=frontend-slides。",
+      "command_file": "commands/frontend-slides-agent.md",
+      "status": "brief-written",
+      "display_name": "Frontend Slides",
+      "skill_name": "frontend-slides",
+      "expected_inputs": [
+        "deck_brief.md",
+        "ast_outline.md",
+        "slide_plan.json",
+        "speaker_intent.md",
+        "asset_manifest.md",
+        "video_slots.json",
+        "style_brief.md",
+        "source.pptx"
+      ],
+      "expected_outputs": [
+        "frontend-slides-production-prompt.md"
+      ],
+      "actual_output": "D:\\Projects\\AI-Report\\assets\\humanize-ppt-run\\frontend-slides-production-prompt.md"
+    },
+    {
+      "id": "qa",
+      "stage": "control",
+      "purpose": "检查契约、路径、人感、AI草稿痕迹和交付完整性。",
+      "reason": "所有Humanize PPT运行必须经过QA。",
+      "command_file": "commands/qa-agent.md",
+      "status": "pass",
+      "display_name": "Humanize PPT Brief-Mode QA",
+      "skill_name": "humanize-ppt",
+      "expected_inputs": [
+        "router_plan.json",
+        "run_manifest.json",
+        "outputs/"
+      ],
+      "expected_outputs": [
+        "outputs/qa/qa_report.md",
+        "outputs/qa/fix_list.md",
+        "outputs/qa/final_manifest.json"
+      ],
+      "actual_output": "D:\\Projects\\AI-Report\\assets\\humanize-ppt-run\\outputs\\qa\\qa_report.md"
+    }
+  ],
+  "qa_status": "pass",
+  "files": [
+    "asset_manifest.md",
+    "ast_outline.md",
+    "commands\\frontend-slides-agent.md",
+    "commands\\qa-agent.md",
+    "deck_brief.md",
+    "frontend-slides-production-prompt.md",
+    "outputs\\qa\\final_manifest.json",
+    "outputs\\qa\\fix_list.md",
+    "outputs\\qa\\qa_report.md",
+    "renderer_registry.json",
+    "router_plan.json",
+    "run_manifest.json",
+    "slide_plan.json",
+    "speaker_intent.md",
+    "style_brief.md",
+    "video_slots.json"
+  ]
+}

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1.0">
+<title>方案A · 列表式目录预览</title>
+<style>
+:root {
+  --ink: #111827; --ink-dim: #4B5563; --ink-muted: #9CA3AF;
+  --accent: #1A56DB; --accent-light: #E8EFFC; --accent-dark: #1E40AF;
+  --surface: #FFFFFF; --surface-alt: #F9FAFB; --border: #E5E7EB;
+  --font-display: 'KaiTi','楷体','STKaiti','华文楷体',serif;
+  --font-body: 'KaiTi','楷体','STKaiti','华文楷体',Arial,'Noto Sans SC',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100vw;height:100vh;overflow:hidden;background:var(--surface);font-family:var(--font-body)}
+
+.frame{position:relative;width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 120px}
+.frame::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--accent)}
+
+.kicker{font-size:18px;font-weight:600;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+h1{font-family:var(--font-display);font-size:clamp(36px,3vw,48px);font-weight:700;color:var(--accent-dark);line-height:1.25;margin-bottom:48px}
+
+.toc-list{width:100%;max-width:1200px}
+.toc-item{display:flex;align-items:baseline;gap:24px;padding:22px 0;border-bottom:1px solid var(--border)}
+.toc-item:last-child{border-bottom:none}
+
+.toc-num{font-family:var(--font-display);font-size:clamp(48px,4vw,64px);font-weight:700;color:var(--accent);line-height:1;min-width:80px;text-align:right}
+.toc-text{flex:1}
+.toc-title{font-family:var(--font-display);font-size:clamp(22px,1.8vw,28px);font-weight:700;color:var(--ink);line-height:1.35}
+.toc-sub{font-size:clamp(15px,1.2vw,18px);color:var(--ink-dim);margin-top:4px}
+.toc-page{font-size:16px;color:var(--ink-muted);font-family:'Consolas','Courier New',monospace;white-space:nowrap}
+
+/* 方案标识 */
+.badge{position:fixed;top:20px;right:24px;background:var(--accent);color:#fff;padding:8px 20px;border-radius:6px;font-size:15px;font-weight:600;z-index:999}
+</style>
+</head>
+<body>
+<div class="badge">方案 A · 列表式</div>
+<div class="frame">
+  <div class="kicker">第三部分 · 技术解构与认知重建</div>
+  <h1>本部分目录</h1>
+  <div class="toc-list">
+    <div class="toc-item">
+      <div class="toc-num">01</div>
+      <div class="toc-text">
+        <div class="toc-title">AI 做了 60 年，为什么最近三年才爆发？</div>
+        <div class="toc-sub">技术演进时间线 · 三次浪潮对比 · ChatGPT 为什么是拐点</div>
+      </div>
+      <div class="toc-page">P14</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">02</div>
+      <div class="toc-text">
+        <div class="toc-title">大模型的三种形态：不是只有一种 AI</div>
+        <div class="toc-sub">基础模型 · 微调模型 · Agent 智能体</div>
+      </div>
+      <div class="toc-page">P15</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">03</div>
+      <div class="toc-text">
+        <div class="toc-title">LLM 的四种能力升级</div>
+        <div class="toc-sub">它已经不只是聊天了</div>
+      </div>
+      <div class="toc-page">P16</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">04</div>
+      <div class="toc-text">
+        <div class="toc-title">LLM 怎么干活？——四种工作模式</div>
+        <div class="toc-sub">单次问答 · 多轮对话 · 工具调用 · 自主代理</div>
+      </div>
+      <div class="toc-page">P17</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">05</div>
+      <div class="toc-text">
+        <div class="toc-title">AI 市场演进：钱在往哪里流？</div>
+        <div class="toc-sub">从芯片到应用的产业链价值迁移</div>
+      </div>
+      <div class="toc-page">P18</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">06</div>
+      <div class="toc-text">
+        <div class="toc-title">AI 技术架构：软件栈与硬件栈双线并行</div>
+        <div class="toc-sub">全栈视角 · 各层代表产品</div>
+      </div>
+      <div class="toc-page">P19</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">07</div>
+      <div class="toc-text">
+        <div class="toc-title">软件门槛已低：非技术人员也能造系统</div>
+        <div class="toc-sub">零代码工具 · 自然语言编程 · 实际案例</div>
+      </div>
+      <div class="toc-page">P20</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">08</div>
+      <div class="toc-text">
+        <div class="toc-title">硬件门槛已低：40 块钱就能做人脸识别</div>
+        <div class="toc-sub">边缘计算 · 低成本开发板 · 嵌入式 AI</div>
+      </div>
+      <div class="toc-page">P21</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">09</div>
+      <div class="toc-text">
+        <div class="toc-title">AI 从虚拟走向现实：它在帮你解决真实问题</div>
+        <div class="toc-sub">从屏幕里的文字到工地上的眼睛</div>
+      </div>
+      <div class="toc-page">P22</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

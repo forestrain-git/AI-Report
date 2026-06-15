@@ -68,7 +68,19 @@
    如果新摄入的知识与旧知识冲突，不要静默覆盖。在页面中新建 `## 知识冲突` 区块，将两种说法都保留并做对比。
 
 # 工作流指令说明 (Workflows / Skills)
-当被要求执行以下操作时，请遵循核心逻辑：
+
+## 已安装技能速查
+当用户提到以下关键词时，必须调用对应的已安装技能（位于 `~/.claude/skills/`），而不是自行编造框架：
+
+| 关键词 | 技能路径 | 说明 |
+|:---|:---|:---|
+| **五步法** / 一堂五步法 / 业务预判 / 硬伤卡牌 | `~/.claude/skills/五步法预判/SKILL.md` | 一堂五步法+业务预判+行业预判。分析结构：机会预判（三层过滤）→ 行业预判（六模块）→ 五步法（需求→解决方案→商业模式→增长→壁垒）→ 20张硬伤卡牌 → 关键假设验证。先读技能文件再执行。 |
+| **前端幻灯片** / frontend-slides / HTML演示 | `~/.claude/skills/frontend-slides/SKILL.md` | 生成零依赖 HTML 幻灯片，16:9 固定舞台，浏览器打开即演示。 |
+| **PPT大纲** / humanize-ppt / 演讲体检 | `~/.claude/skills/humanize-ppt/SKILL.md` | AST大纲导演 + 渲染后质检。先出大纲再交给渲染技能。 |
+| **白板PPT** / guizang-whiteboard / 宣讲PPT / 做PPT | `.claude/skills/guizang-whiteboard/SKILL.md` | 从大纲md生成白板蓝主题HTML幻灯片（楷体/白底/蓝色），含紧凑布局规范、演讲模式、TOC目录。面向国企宣讲场景。 |
+| **Cloudflare部署** / deploy / 发链接 | `~/.claude/skills/cloudflare-deploy/SKILL.md` | 部署 HTML 到 Cloudflare Pages，返回公网链接。 |
+
+## 当被要求执行以下操作时，请遵循核心逻辑：
 
 - `/ingest <路径>`：读取指定的 `raw/` 文件，将其核心价值提炼并整合到 `wiki/` 目录的相关概念/实体中。必须更新 index 和 log。
 - `/query <问题>`：通过读取 `wiki/index.md` 寻找相关文件，进行深度阅读后综合回答，并在回答中必须使用 `[[wikilink]]` 标注引用来源。

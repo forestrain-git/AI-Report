@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1.0">
+<title>方案A · 全局目录预览</title>
+<style>
+:root {
+  --ink:#111827;--ink-dim:#4B5563;--ink-muted:#9CA3AF;
+  --accent:#1A56DB;--accent-light:#E8EFFC;--accent-dark:#1E40AF;
+  --surface:#FFFFFF;--border:#E5E7EB;
+  --font-display:'KaiTi','楷体','STKaiti','华文楷体',serif;
+  --font-body:'KaiTi','楷体','STKaiti','华文楷体',Arial,'Noto Sans SC',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100vw;height:100vh;overflow:hidden;background:var(--surface);font-family:var(--font-body)}
+
+.frame{position:relative;width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 120px}
+.frame::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--accent)}
+
+.kicker{font-size:18px;font-weight:600;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+h1{font-family:var(--font-display);font-size:clamp(32px,2.6vw,42px);font-weight:700;color:var(--accent-dark);line-height:1.25;margin-bottom:56px}
+
+/* 全局目录 - 方案A：横向五段式 */
+.toc-track{display:flex;align-items:stretch;gap:0;width:100%;max-width:1600px;position:relative}
+.toc-track::before{content:'';position:absolute;top:50%;left:0;right:0;height:3px;background:var(--border);z-index:0}
+
+.toc-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;padding:0 12px}
+
+/* 序号圆圈 */
+.step-circle{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:24px;font-weight:700;margin-bottom:20px;border:3px solid var(--border);background:var(--surface);color:var(--ink-muted);transition:all .3s}
+
+/* 当前高亮 */
+.toc-step.current .step-circle{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 0 0 8px rgba(26,86,219,.12)}
+
+.step-label{font-family:var(--font-display);font-size:clamp(16px,1.3vw,20px);font-weight:700;color:var(--ink-muted);text-align:center;line-height:1.4;max-width:240px}
+.toc-step.current .step-label{color:var(--accent-dark)}
+
+.step-sub{font-size:clamp(13px,1vw,15px);color:var(--ink-muted);text-align:center;margin-top:6px;line-height:1.4;max-width:240px}
+.toc-step.current .step-sub{color:var(--ink-dim)}
+
+/* 当前指示器 */
+.step-indicator{margin-top:16px;font-size:14px;font-weight:600;color:var(--accent);opacity:0}
+.toc-step.current .step-indicator{opacity:1}
+
+/* 切换按钮 */
+.controls{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:999}
+.controls button{padding:10px 24px;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font-size:15px;font-weight:600;border-radius:6px;cursor:pointer;font-family:var(--font-body)}
+.controls button.active{background:var(--accent);color:#fff}
+
+.badge{position:fixed;top:20px;right:24px;background:var(--accent);color:#fff;padding:8px 20px;border-radius:6px;font-size:15px;font-weight:600;z-index:999}
+</style>
+</head>
+<body>
+<div class="badge">方案 A · 横向五段式</div>
+<div class="frame">
+  <div class="kicker" id="pageKicker">中建发展 · AI 分享</div>
+  <h1 id="pageTitle">本次分享由五个部分组成</h1>
+  <div class="toc-track" id="tocTrack">
+    <div class="toc-step" data-part="1">
+      <div class="step-circle">1</div>
+      <div class="step-label">政策锚定</div>
+      <div class="step-sub">国家要求 · 国资委部署<br>集团战略 · AI 版图</div>
+      <div class="step-indicator">← 当前</div>
+    </div>
+    <div class="toc-step" data-part="2">
+      <div class="step-circle">2</div>
+      <div class="step-label">同行压力</div>
+      <div class="step-sub">全球标杆 · 能源央企<br>建筑央企 · 中建系竞争</div>
+      <div class="step-indicator">← 当前</div>
+    </div>
+    <div class="toc-step" data-part="3">
+      <div class="step-circle">3</div>
+      <div class="step-label">技术祛魅</div>
+      <div class="step-sub">大模型形态 · 能力升级<br>门槛降低 · 市场趋势</div>
+      <div class="step-indicator">← 当前</div>
+    </div>
+    <div class="toc-step" data-part="4">
+      <div class="step-circle">4</div>
+      <div class="step-label">分层行动</div>
+      <div class="step-sub">落地五步法 · 双线推进<br>组织保障 · 30/60/90天</div>
+      <div class="step-indicator">← 当前</div>
+    </div>
+    <div class="toc-step" data-part="5">
+      <div class="step-circle">5</div>
+      <div class="step-label">风险管控</div>
+      <div class="step-sub">风险预判 · 7天行动<br>工具箱</div>
+      <div class="step-indicator">← 当前</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <button onclick="setPart(1)">Part 1</button>
+  <button onclick="setPart(2)">Part 2</button>
+  <button onclick="setPart(3)">Part 3</button>
+  <button onclick="setPart(4)">Part 4</button>
+  <button onclick="setPart(5)">Part 5</button>
+</div>
+
+<script>
+function setPart(n){
+  document.querySelectorAll('.toc-step').forEach(el=>{
+    el.classList.toggle('current', el.dataset.part==n);
+  });
+  document.querySelectorAll('.controls button').forEach((btn,i)=>{
+    btn.classList.toggle('active', i==n-1);
+  });
+}
+setPart(1);
+</script>
+</body>
+</html>

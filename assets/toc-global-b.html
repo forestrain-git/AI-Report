@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1.0">
+<title>方案B · 全局目录预览</title>
+<style>
+:root {
+  --ink:#111827;--ink-dim:#4B5563;--ink-muted:#9CA3AF;
+  --accent:#1A56DB;--accent-light:#E8EFFC;--accent-dark:#1E40AF;
+  --surface:#FFFFFF;--border:#E5E7EB;
+  --font-display:'KaiTi','楷体','STKaiti','华文楷体',serif;
+  --font-body:'KaiTi','楷体','STKaiti','华文楷体',Arial,'Noto Sans SC',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100vw;height:100vh;overflow:hidden;background:var(--surface);font-family:var(--font-body)}
+
+.frame{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 100px;gap:80px}
+.frame::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--accent)}
+
+.left{flex:0 0 480px;display:flex;flex-direction:column;justify-content:center}
+.kicker{font-size:18px;font-weight:600;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+h1{font-family:var(--font-display);font-size:clamp(32px,2.6vw,42px);font-weight:700;color:var(--accent-dark);line-height:1.3;margin-bottom:24px}
+.left-desc{font-size:18px;color:var(--ink-dim);line-height:1.6}
+
+.right{flex:1;display:flex;flex-direction:column;gap:16px;max-width:1000px}
+
+/* 时间线行 */
+.tl-row{display:flex;align-items:center;gap:20px;padding:20px 28px;border-radius:12px;border:1px solid var(--border);background:var(--surface);transition:all .3s;position:relative}
+
+.tl-num{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:22px;font-weight:700;border:2px solid var(--border);background:var(--surface);color:var(--ink-muted);flex-shrink:0;transition:all .3s}
+
+.tl-body{flex:1}
+.tl-title{font-family:var(--font-display);font-size:clamp(20px,1.6vw,24px);font-weight:700;color:var(--ink-muted);line-height:1.3;transition:color .3s}
+.tl-sub{font-size:clamp(14px,1.1vw,16px);color:var(--ink-muted);margin-top:4px;line-height:1.4;transition:color .3s}
+
+.tl-badge{padding:6px 16px;border-radius:6px;font-size:14px;font-weight:600;background:var(--border);color:var(--ink-muted);flex-shrink:0;transition:all .3s}
+
+/* 连接线 */
+.tl-connector{width:2px;height:16px;background:var(--border);margin-left:23px;transition:background .3s}
+
+/* 当前高亮 */
+.tl-row.current{
+  border-color:var(--accent);
+  background:linear-gradient(135deg,var(--accent-light),rgba(232,239,252,.3));
+  box-shadow:0 2px 16px rgba(26,86,219,.1);
+}
+.tl-row.current .tl-num{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 0 0 6px rgba(26,86,219,.1)}
+.tl-row.current .tl-title{color:var(--accent-dark)}
+.tl-row.current .tl-sub{color:var(--ink-dim)}
+.tl-row.current .tl-badge{background:var(--accent);color:#fff}
+
+/* 已完成（可选：给前面的部分加淡色标记） */
+.tl-row.done .tl-num{border-color:#059669;background:#D1FAE5;color:#059669}
+.tl-row.done .tl-badge{background:#D1FAE5;color:#059669}
+
+/* 当前指示 */
+.tl-now{position:absolute;right:-80px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:var(--accent);white-space:nowrap;opacity:0;transition:opacity .3s}
+.tl-row.current .tl-now{opacity:1}
+
+/* 控制 */
+.controls{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:999}
+.controls button{padding:10px 24px;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font-size:15px;font-weight:600;border-radius:6px;cursor:pointer;font-family:var(--font-body)}
+.controls button.active{background:var(--accent);color:#fff}
+
+.badge{position:fixed;top:20px;right:24px;background:var(--accent);color:#fff;padding:8px 20px;border-radius:6px;font-size:15px;font-weight:600;z-index:999}
+</style>
+</head>
+<body>
+<div class="badge">方案 B · 左文右线式</div>
+<div class="frame">
+  <div class="left">
+    <div class="kicker">中建发展 · AI 分享</div>
+    <h1>本次分享由<br>五个部分组成</h1>
+    <div class="left-desc">从政策到行动，从认知到落地<br>逐层推进，分步拆解</div>
+  </div>
+  <div class="right" id="timeline">
+    <div class="tl-row" data-part="1">
+      <div class="tl-num">1</div>
+      <div class="tl-body">
+        <div class="tl-title">政策锚定</div>
+        <div class="tl-sub">国家要求 · 国资委部署 · 集团战略 · AI 版图</div>
+      </div>
+      <div class="tl-badge">为什么要做</div>
+      <div class="tl-now">← 当前</div>
+    </div>
+    <div class="tl-connector"></div>
+    <div class="tl-row" data-part="2">
+      <div class="tl-num">2</div>
+      <div class="tl-body">
+        <div class="tl-title">同行压力</div>
+        <div class="tl-sub">全球标杆 · 能源央企 · 建筑央企 · 中建系竞争</div>
+      </div>
+      <div class="tl-badge">别人在做什么</div>
+      <div class="tl-now">← 当前</div>
+    </div>
+    <div class="tl-connector"></div>
+    <div class="tl-row" data-part="3">
+      <div class="tl-num">3</div>
+      <div class="tl-body">
+        <div class="tl-title">技术祛魅</div>
+        <div class="tl-sub">大模型形态 · 能力升级 · 门槛降低 · 市场趋势</div>
+      </div>
+      <div class="tl-badge">AI 到底是什么</div>
+      <div class="tl-now">← 当前</div>
+    </div>
+    <div class="tl-connector"></div>
+    <div class="tl-row" data-part="4">
+      <div class="tl-num">4</div>
+      <div class="tl-body">
+        <div class="tl-title">分层行动</div>
+        <div class="tl-sub">落地五步法 · 双线推进 · 组织保障 · 30/60/90天</div>
+      </div>
+      <div class="tl-badge">我们怎么做</div>
+      <div class="tl-now">← 当前</div>
+    </div>
+    <div class="tl-connector"></div>
+    <div class="tl-row" data-part="5">
+      <div class="tl-num">5</div>
+      <div class="tl-body">
+        <div class="tl-title">风险管控</div>
+        <div class="tl-sub">风险预判 · 7天行动 · 工具箱</div>
+      </div>
+      <div class="tl-badge">怎么防踩坑</div>
+      <div class="tl-now">← 当前</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <button onclick="setPart(1)">Part 1</button>
+  <button onclick="setPart(2)">Part 2</button>
+  <button onclick="setPart(3)">Part 3</button>
+  <button onclick="setPart(4)">Part 4</button>
+  <button onclick="setPart(5)">Part 5</button>
+</div>
+
+<script>
+function setPart(n){
+  const rows=document.querySelectorAll('.tl-row');
+  const connectors=document.querySelectorAll('.tl-connector');
+  rows.forEach(el=>{
+    const p=parseInt(el.dataset.part);
+    el.classList.remove('current','done');
+    if(p===n) el.classList.add('current');
+    else if(p<n) el.classList.add('done');
+  });
+  connectors.forEach((c,i)=>{
+    c.style.background=(i<n-1)?'#059669':getComputedStyle(document.documentElement).getPropertyValue('--border');
+  });
+  document.querySelectorAll('.controls button').forEach((btn,i)=>{
+    btn.classList.toggle('active',i==n-1);
+  });
+}
+setPart(1);
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1.0">
+<title>方案B · 卡片式目录预览</title>
+<style>
+:root {
+  --ink: #111827; --ink-dim: #4B5563; --ink-muted: #9CA3AF;
+  --accent: #1A56DB; --accent-light: #E8EFFC; --accent-dark: #1E40AF;
+  --surface: #FFFFFF; --surface-alt: #F9FAFB; --border: #E5E7EB;
+  --font-display: 'KaiTi','楷体','STKaiti','华文楷体',serif;
+  --font-body: 'KaiTi','楷体','STKaiti','华文楷体',Arial,'Noto Sans SC',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100vw;height:100vh;overflow:hidden;background:var(--surface);font-family:var(--font-body)}
+
+.frame{position:relative;width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 80px}
+.frame::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--accent)}
+
+.kicker{font-size:18px;font-weight:600;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+h1{font-family:var(--font-display);font-size:clamp(32px,2.6vw,42px);font-weight:700;color:var(--accent-dark);line-height:1.25;margin-bottom:36px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;max-width:1680px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px 24px 22px;position:relative;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(26,86,219,.1)}
+
+.card-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.card-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.card-icon.blue{background:#DBEAFE}.card-icon.green{background:#D1FAE5}.card-icon.amber{background:#FEF3C7}
+.card-icon.rose{background:#FFE4E6}.card-icon.purple{background:#EDE9FE}.card-icon.cyan{background:#CFFAFE}
+.card-icon.indigo{background:#E0E7FF}.card-icon.teal{background:#CCFBF1}.card-icon.orange{background:#FFEDD5}
+
+.card-num{position:absolute;top:12px;right:16px;font-size:14px;font-weight:700;color:var(--ink-muted);font-family:'Consolas',monospace}
+
+.card-title{font-family:var(--font-display);font-size:clamp(18px,1.5vw,22px);font-weight:700;color:var(--ink);line-height:1.35}
+.card-desc{font-size:clamp(14px,1.1vw,16px);color:var(--ink-dim);line-height:1.5;margin-top:8px}
+.card-tag{display:inline-block;margin-top:10px;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:600;background:var(--accent-light);color:var(--accent)}
+
+.badge{position:fixed;top:20px;right:24px;background:var(--accent);color:#fff;padding:8px 20px;border-radius:6px;font-size:15px;font-weight:600;z-index:999}
+</style>
+</head>
+<body>
+<div class="badge">方案 B · 卡片式</div>
+<div class="frame">
+  <div class="kicker">第三部分 · 技术解构与认知重建</div>
+  <h1>本部分目录</h1>
+  <div class="grid">
+    <div class="card">
+      <div class="card-num">01</div>
+      <div class="card-head">
+        <div class="card-icon blue">⏳</div>
+        <div class="card-title">为什么最近三年才爆发？</div>
+      </div>
+      <div class="card-desc">AI 60 年演进时间线 · 三次浪潮 · ChatGPT 拐点</div>
+      <div class="card-tag">技术演进</div>
+    </div>
+    <div class="card">
+      <div class="card-num">02</div>
+      <div class="card-head">
+        <div class="card-icon green">🧊</div>
+        <div class="card-title">大模型的三种形态</div>
+      </div>
+      <div class="card-desc">基础模型 · 微调模型 · Agent 智能体</div>
+      <div class="card-tag">模型分类</div>
+    </div>
+    <div class="card">
+      <div class="card-num">03</div>
+      <div class="card-head">
+        <div class="card-icon amber">⚡</div>
+        <div class="card-title">LLM 的四种能力升级</div>
+      </div>
+      <div class="card-desc">它已经不只是聊天了</div>
+      <div class="card-tag">能力边界</div>
+    </div>
+    <div class="card">
+      <div class="card-num">04</div>
+      <div class="card-head">
+        <div class="card-icon rose">⚙️</div>
+        <div class="card-title">LLM 怎么干活？</div>
+      </div>
+      <div class="card-desc">单次问答 · 多轮对话 · 工具调用 · 自主代理</div>
+      <div class="card-tag">工作模式</div>
+    </div>
+    <div class="card">
+      <div class="card-num">05</div>
+      <div class="card-head">
+        <div class="card-icon purple">💰</div>
+        <div class="card-title">钱在往哪里流？</div>
+      </div>
+      <div class="card-desc">从芯片到应用的产业链价值迁移</div>
+      <div class="card-tag">市场趋势</div>
+    </div>
+    <div class="card">
+      <div class="card-num">06</div>
+      <div class="card-head">
+        <div class="card-icon cyan">🏗️</div>
+        <div class="card-title">软件栈与硬件栈</div>
+      </div>
+      <div class="card-desc">全栈视角 · 各层代表产品</div>
+      <div class="card-tag">技术架构</div>
+    </div>
+    <div class="card">
+      <div class="card-num">07</div>
+      <div class="card-head">
+        <div class="card-icon indigo">💻</div>
+        <div class="card-title">软件门槛已低</div>
+      </div>
+      <div class="card-desc">非技术人员也能造系统 · 零代码工具</div>
+      <div class="card-tag">平权信号</div>
+    </div>
+    <div class="card">
+      <div class="card-num">08</div>
+      <div class="card-head">
+        <div class="card-icon teal">🔧</div>
+        <div class="card-title">硬件门槛已低</div>
+      </div>
+      <div class="card-desc">40 块钱做人脸识别 · 边缘计算</div>
+      <div class="card-tag">平权信号</div>
+    </div>
+    <div class="card">
+      <div class="card-num">09</div>
+      <div class="card-head">
+        <div class="card-icon orange">🌍</div>
+        <div class="card-title">从虚拟走向现实</div>
+      </div>
+      <div class="card-desc">AI 在帮你解决真实问题</div>
+      <div class="card-tag">落地方向</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

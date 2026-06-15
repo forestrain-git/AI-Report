@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1.0">
+<title>PPT 标题</title>
+<style>
+/* ═══════════════════════════════════════════
+   Guizang Whiteboard — 白底楷体蓝色主题
+   来源：guizang-whiteboard skill
+   ═══════════════════════════════════════════ */
+
+/* --- Design Tokens --- */
+:root {
+  --ink:#111827;--ink-dim:#4B5563;--ink-muted:#9CA3AF;
+  --accent:#1A56DB;--accent-light:#E8EFFC;--accent-dark:#1E40AF;
+  --danger:#CC0000;--danger-bg:#FEF2F2;
+  --success:#059669;--warning:#D97706;
+  --surface:#FFFFFF;--surface-alt:#F9FAFB;
+  --border:#E5E7EB;--border-strong:#D1D5DB;
+  --font-display:'KaiTi','楷体','STKaiti','华文楷体',serif;
+  --font-body:'KaiTi','楷体','STKaiti','华文楷体',Arial,'Noto Sans SC',sans-serif;
+  --font-mono:'Consolas','Courier New',monospace;
+  --text-hero:clamp(36px,3vw,48px);--text-h1:clamp(28px,2.4vw,36px);
+  --text-h2:clamp(24px,2vw,32px);--text-h3:clamp(20px,1.6vw,26px);
+  --text-body:clamp(18px,1.4vw,22px);--text-small:clamp(16px,1.2vw,18px);
+  --text-footnote:clamp(14px,1vw,16px);
+  --leading:1.45;--leading-tight:1.25;
+  --slide-pad:60px;--gap:24px;--radius:8px;
+}
+
+/* --- Reset & Base --- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px}
+body{background:var(--surface);color:var(--ink);font-family:var(--font-body);font-size:var(--text-body);line-height:var(--leading);overflow:hidden;width:100vw;height:100vh;-webkit-font-smoothing:antialiased}
+
+/* --- Deck & Slide --- */
+.deck{width:100vw;height:100vh;position:relative;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:var(--slide-pad);padding-bottom:calc(var(--slide-pad)+52px);overflow-y:auto;opacity:0;transition:opacity .3s ease}
+.slide.active{display:flex;opacity:1}
+
+/* --- Slide Types --- */
+.slide[data-type="cover"]{justify-content:center;align-items:center;text-align:center;background:linear-gradient(135deg,#f8faff 0%,#e8effc 100%)}
+.slide[data-type="pivot"]{justify-content:center;align-items:center;text-align:center}
+.slide[data-type="content"]{justify-content:flex-start}
+.slide[data-type="part"]{justify-content:center;align-items:flex-start;padding-left:120px}
+.slide[data-type="toc"]{justify-content:center;align-items:center}
+
+/* --- TOC --- */
+.toc-wrap{display:flex;flex-direction:column;gap:10px;width:100%;max-width:900px}
+.toc-row{display:flex;align-items:center;gap:20px;padding:18px 28px;border-radius:12px;border:1px solid var(--border);background:var(--surface);transition:all .3s}
+.toc-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:20px;font-weight:700;border:2px solid var(--border);background:var(--surface);color:var(--ink-muted);flex-shrink:0;transition:all .3s}
+.toc-name{font-family:var(--font-display);font-size:var(--text-h3);font-weight:700;color:var(--ink-muted);transition:color .3s}
+.toc-tag{padding:5px 14px;border-radius:6px;font-size:var(--text-footnote);font-weight:600;background:var(--border);color:var(--ink-muted);margin-left:auto;flex-shrink:0;transition:all .3s}
+.toc-connector{width:2px;height:10px;background:var(--border);margin-left:21px;transition:background .3s}
+.toc-row.done .toc-dot{border-color:var(--success);background:#D1FAE5;color:var(--success)}
+.toc-row.done .toc-tag{background:#D1FAE5;color:var(--success)}
+.toc-connector.done{background:var(--success)}
+.toc-row.current{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-light),rgba(232,239,252,.3));box-shadow:0 2px 16px rgba(26,86,219,.1)}
+.toc-row.current .toc-dot{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 0 0 6px rgba(26,86,219,.12)}
+.toc-row.current .toc-name{color:var(--accent-dark)}
+.toc-row.current .toc-tag{background:var(--accent);color:#fff}
+
+/* --- Typography --- */
+.kicker{font-family:var(--font-body);font-size:var(--text-small);font-weight:600;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.slide-title{font-family:var(--font-display);font-size:var(--text-h1);font-weight:700;color:var(--accent-dark);line-height:var(--leading-tight);margin-bottom:28px;max-width:1600px}
+.slide[data-type="pivot"] .slide-title,.slide[data-type="cover"] .slide-title{font-size:var(--text-hero);color:var(--accent-dark);max-width:1200px}
+.slide[data-type="part"] .slide-title{font-size:clamp(40px,3.5vw,56px);color:var(--accent-dark)}
+h3{font-family:var(--font-display);font-size:var(--text-h3);font-weight:700;color:var(--ink);margin:20px 0 12px}
+p{font-size:var(--text-body);margin-bottom:12px;max-width:1600px}
+.lead{font-size:var(--text-h3);color:var(--ink-dim);max-width:900px;margin:0 auto 32px;line-height:var(--leading)}
+.subtitle{font-size:var(--text-h3);color:var(--ink-dim);margin-bottom:16px}
+
+/* --- Emphasis --- */
+strong,b{font-weight:700}
+.accent{color:var(--accent);font-weight:700}
+.danger{color:var(--danger);font-weight:700}
+.success{color:var(--success);font-weight:700}
+.warning{color:var(--warning);font-weight:700}
+.highlight{background:var(--accent-light);padding:2px 8px;border-radius:4px;font-weight:700}
+.mark-danger{background:var(--danger-bg);padding:2px 8px;border-radius:4px;color:var(--danger);font-weight:700}
+
+/* --- Quote --- */
+.quote{font-family:var(--font-display);font-size:var(--text-h2);font-style:italic;color:var(--accent-dark);border-left:4px solid var(--accent);padding:16px 24px;margin:24px 0;max-width:1200px;line-height:1.5}
+.quote-mark{font-size:4em;color:var(--accent);opacity:.2;font-family:Georgia,serif;line-height:.5;display:block;margin-bottom:16px}
+
+/* --- Divider --- */
+.divider{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:20px 0;max-width:400px}
+.divider-full{height:1px;background:var(--border);margin:20px 0}
+
+/* --- Tables --- */
+table{width:100%;max-width:1700px;border-collapse:collapse;margin:12px 0 20px;font-size:var(--text-body)}
+th{background:var(--accent);color:#fff;font-family:var(--font-display);font-weight:700;font-size:var(--text-small);padding:12px 16px;text-align:left;letter-spacing:.03em}
+td{padding:10px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:var(--surface-alt)}
+tr:hover td{background:var(--accent-light)}
+.table-accent th{background:var(--accent-dark)}
+table.compact{font-size:var(--text-small)}
+table.compact td,table.compact th{padding:8px 12px}
+
+/* --- Cards Grid --- */
+.cards{display:grid;gap:var(--gap);margin:12px 0}
+.cards-2{grid-template-columns:1fr 1fr}
+.cards-3{grid-template-columns:1fr 1fr 1fr}
+.cards-4{grid-template-columns:1fr 1fr 1fr 1fr}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px}
+.card-accent{border-left:4px solid var(--accent)}
+.card-danger{border-left:4px solid var(--danger)}
+.card-title{font-family:var(--font-display);font-size:var(--text-h3);font-weight:700;color:var(--accent-dark);margin-bottom:8px}
+
+/* --- Timeline --- */
+.timeline{position:relative;padding-left:40px;margin:16px 0}
+.timeline::before{content:'';position:absolute;left:12px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),var(--accent-light))}
+.timeline-item{position:relative;margin-bottom:20px;padding-left:20px}
+.timeline-item::before{content:'';position:absolute;left:-33px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--surface);box-shadow:0 0 0 2px var(--accent)}
+.timeline-year{font-family:var(--font-mono);font-size:var(--text-small);color:var(--accent);font-weight:700;margin-bottom:4px}
+.timeline-text{font-size:var(--text-body);color:var(--ink)}
+
+/* --- Stats --- */
+.stats{display:flex;gap:32px;margin:16px 0;flex-wrap:wrap}
+.stat{text-align:center;padding:16px 24px}
+.stat-value{font-family:var(--font-display);font-size:var(--text-hero);font-weight:700;color:var(--accent);line-height:1}
+.stat-value.danger-val{color:var(--danger)}
+.stat-label{font-size:var(--text-small);color:var(--ink-dim);margin-top:8px}
+
+/* --- SVG Charts --- */
+.chart-container{margin:16px 0;max-width:1600px}
+.chart-container svg{max-width:100%;height:auto}
+.chart-container svg text{font-family:'KaiTi','楷体',Arial,sans-serif}
+
+/* --- Two Column --- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+
+/* --- Footnote --- */
+.footnote{margin-top:auto;padding-top:12px;padding-bottom:4px;border-top:1px solid var(--border);font-size:var(--text-footnote);color:var(--ink-muted);line-height:1.5}
+
+/* --- Part Separator --- */
+.part-number{font-family:var(--font-display);font-size:clamp(80px,8vw,140px);font-weight:700;color:var(--accent);opacity:.12;position:absolute;right:80px;bottom:80px;line-height:1}
+
+/* --- Slide Header/Body --- */
+.slide-header{flex-shrink:0;margin-bottom:8px}
+.slide-body{flex:1;overflow-y:hidden;min-height:0}
+
+/* --- Tags --- */
+.tag{display:inline-block;font-size:var(--text-footnote);padding:3px 10px;border-radius:20px;font-weight:600;margin-right:6px}
+.tag-blue{background:var(--accent-light);color:var(--accent)}
+.tag-red{background:var(--danger-bg);color:var(--danger)}
+.tag-green{background:#ecfdf5;color:var(--success)}
+.tag-gray{background:var(--surface-alt);color:var(--ink-dim)}
+
+/* --- Flex List --- */
+.flex-list{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+.flex-item{background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;font-size:var(--text-small);font-weight:600}
+
+/* --- Navigation Bar --- */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;height:48px;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:16px;z-index:200;font-size:14px;color:var(--ink-dim);font-family:Arial,sans-serif}
+.nav-bar button{background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink);padding:4px 12px;border-radius:4px;transition:background .15s}
+.nav-bar button:hover{background:var(--accent-light)}
+.nav-bar button:disabled{opacity:.25;cursor:default}
+.nav-bar button:disabled:hover{background:none}
+.nav-progress{width:200px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.nav-progress-fill{height:100%;background:var(--accent);transition:width .3s ease}
+.nav-folio{font-variant-numeric:tabular-nums;min-width:80px;text-align:center}
+
+/* --- Presenter Mode --- */
+.presenter-overlay{display:none;position:fixed;inset:0;background:#1a1a2e;z-index:1000;color:#fff;font-family:Arial,sans-serif}
+.presenter-overlay.active{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto}
+
+/* --- Speaker Notes --- */
+.speaker-notes{display:none}
+
+/* --- Responsive --- */
+@media(max-width:1400px){:root{--slide-pad:40px;--gap:16px}}
+
+/* --- Print --- */
+@media print{.nav-bar,.presenter-overlay{display:none!important}.slide{position:relative;display:flex!important;opacity:1!important;page-break-after:always;min-height:100vh}body{overflow:visible}}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ═══ 封面 ═══ -->
+<section class="slide active" id="slide-1" data-type="cover">
+  <div style="margin-bottom:40px;"><span class="kicker">主题标签</span></div>
+  <h1 class="slide-title" style="font-size:clamp(44px,3.8vw,60px);margin-bottom:32px;">主标题</h1>
+  <p class="lead">副标题描述</p>
+  <div class="divider" style="margin:40px auto;"></div>
+  <div style="display:flex;gap:32px;justify-content:center;margin-top:24px;">
+    <span class="tag tag-blue">要点1</span>
+    <span class="tag tag-blue">要点2</span>
+    <span class="tag tag-blue">要点3</span>
+  </div>
+  <div class="footnote" style="border-top:none;margin-top:60px;">
+    演讲人：XXX ｜ 日期：2026.XX.XX
+  </div>
+  <div class="speaker-notes">开场演讲备注写在这里。</div>
+</section>
+
+<!-- ═══ 内容页示例（紧凑布局） ═══ -->
+<!--
+  紧凑布局规范：
+  section: padding-top:16px;padding-bottom:56px;
+  slide-header: margin-bottom:4px;
+  kicker: margin-bottom:6px;
+  slide-title: margin-bottom:14px;font-size:clamp(24px,2vw,30px);
+-->
+<section class="slide" id="slide-2" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第一部分 · 主题</span>
+    <h2 class="slide-title" style="margin-bottom:14px;font-size:clamp(24px,2vw,30px);">叙述型标题——用一句话覆盖页面全部内容，同时承上启下</h2>
+  </div>
+  <div class="slide-body">
+    <div class="split">
+      <div class="split-left">
+        <h3>左栏标题</h3>
+        <div class="cards cards-2" style="grid-template-columns:1fr;">
+          <div class="card card-accent">
+            <p><strong class="accent">要点一</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">详细说明</span></p>
+          </div>
+          <div class="card card-accent">
+            <p><strong class="accent">要点二</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">详细说明</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="split-right">
+        <h3>右栏标题</h3>
+        <p>右栏内容。可以用表格、列表、引用等组件。</p>
+        <div style="margin-top:12px;padding:10px 14px;background:var(--surface-alt);border-radius:var(--radius);font-size:var(--text-small);">
+          <strong>信息框：</strong>补充说明文字。
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">来源：[[知识库引用]]</div>
+  <div class="speaker-notes">这一页的演讲备注。按P键进入演讲模式可以看到。</div>
+</section>
+
+</div><!-- end .deck -->
+
+<!-- ═══ Navigation Bar ═══ -->
+<nav class="nav-bar" id="navBar">
+  <button id="btnPrev" onclick="goSlide(current-1)">◀</button>
+  <div class="nav-progress"><div class="nav-progress-fill" id="progressFill"></div></div>
+  <span class="nav-folio" id="folio">1 / 2</span>
+  <button id="btnNext" onclick="goSlide(current+1)">▶</button>
+  <span style="margin-left:16px;color:#9CA3AF;font-size:12px;">P: 演讲模式 · ←→: 翻页 · G: 跳转</span>
+</nav>
+
+<!-- ═══ Presenter Mode ═══ -->
+<div class="presenter-overlay" id="presenterOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;color:#fff;font-family:Arial,sans-serif;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;height:100%;">
+    <div style="padding:40px;overflow-y:auto;display:flex;flex-direction:column;">
+      <div style="font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">演讲备注</div>
+      <div id="presenterNotes" style="font-size:20px;line-height:1.6;color:#e5e7eb;flex:1;overflow-y:auto;"></div>
+    </div>
+    <div style="padding:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;border-left:1px solid #333;">
+      <div id="presenterTimer" style="font-size:72px;font-weight:700;color:#60a5fa;font-variant-numeric:tabular-nums;margin-bottom:24px;">00:00:00</div>
+      <div id="presenterPage" style="font-size:24px;color:#9ca3af;margin-bottom:40px;">1 / 2</div>
+      <div style="display:flex;gap:12px;">
+        <button onclick="goSlide(current-1)" style="background:#333;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:16px;cursor:pointer;">◀ 上一页</button>
+        <button onclick="goSlide(current+1)" style="background:#1A56DB;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:16px;cursor:pointer;">下一页 ▶</button>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:16px;">
+        <button onclick="resetTimer()" style="background:#222;color:#9ca3af;border:1px solid #444;padding:8px 16px;border-radius:6px;font-size:14px;cursor:pointer;">重置计时</button>
+        <button onclick="togglePresenter()" style="background:#222;color:#9ca3af;border:1px solid #444;padding:8px 16px;border-radius:6px;font-size:14px;cursor:pointer;">退出 (P)</button>
+      </div>
+      <div style="margin-top:32px;padding:16px 20px;background:#111;border-radius:8px;width:100%;max-width:400px;">
+        <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">下一页标题</div>
+        <div id="presenterNextTitle" style="font-size:16px;color:#d1d5db;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Go-to Dialog ═══ -->
+<div id="gotoDialog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;justify-content:center;align-items:center;">
+  <div style="background:#fff;padding:32px;border-radius:12px;min-width:320px;text-align:center;">
+    <h3 style="margin-bottom:16px;font-family:var(--font-display);">跳转到页面</h3>
+    <input id="gotoInput" type="number" min="1" style="font-size:24px;padding:8px 16px;width:120px;text-align:center;border:2px solid var(--accent);border-radius:8px;">
+    <div style="margin-top:16px;">
+      <button onclick="doGoto()" style="background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:16px;cursor:pointer;">跳转</button>
+      <button onclick="closeGoto()" style="background:var(--surface-alt);border:none;padding:10px 24px;border-radius:8px;font-size:16px;cursor:pointer;margin-left:8px;">取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══ Navigation Engine ═══ */
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+document.getElementById('folio').textContent = `1 / ${total}`;
+
+function goSlide(n) {
+  if (n < 0 || n >= total) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  document.getElementById('folio').textContent = `${current+1} / ${total}`;
+  document.getElementById('progressFill').style.width = `${((current+1)/total)*100}%`;
+  document.getElementById('btnPrev').disabled = current === 0;
+  document.getElementById('btnNext').disabled = current === total - 1;
+  history.replaceState(null, '', `#slide-${current+1}`);
+  if (presenterActive) updatePresenter();
+}
+
+document.addEventListener('keydown', e => {
+  if (document.getElementById('gotoDialog').style.display === 'flex') {
+    if (e.key === 'Escape') closeGoto();
+    if (e.key === 'Enter') doGoto();
+    return;
+  }
+  switch(e.key) {
+    case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); goSlide(current+1); break;
+    case 'ArrowLeft': case 'PageUp': e.preventDefault(); goSlide(current-1); break;
+    case 'Home': e.preventDefault(); goSlide(0); break;
+    case 'End': e.preventDefault(); goSlide(total-1); break;
+    case 'p': case 'P': togglePresenter(); break;
+    case 'g': case 'G': openGoto(); break;
+    case 'Escape': if (presenterActive) togglePresenter(); break;
+  }
+});
+
+const hash = location.hash;
+if (hash && hash.startsWith('#slide-')) {
+  const n = parseInt(hash.replace('#slide-','')) - 1;
+  if (n >= 0 && n < total) goSlide(n);
+}
+
+function openGoto() { const d = document.getElementById('gotoDialog'); d.style.display = 'flex'; document.getElementById('gotoInput').value = ''; document.getElementById('gotoInput').focus(); }
+function closeGoto() { document.getElementById('gotoDialog').style.display = 'none'; }
+function doGoto() { const n = parseInt(document.getElementById('gotoInput').value); if (n >= 1 && n <= total) goSlide(n-1); closeGoto(); }
+
+/* ═══ Presenter Mode ═══ */
+let presenterActive = false;
+let timerInterval = null;
+let timerSeconds = 0;
+
+function togglePresenter() {
+  presenterActive = !presenterActive;
+  const overlay = document.getElementById('presenterOverlay');
+  if (presenterActive) { overlay.style.display = 'block'; updatePresenter(); startTimer(); }
+  else { overlay.style.display = 'none'; stopTimer(); }
+}
+
+function updatePresenter() {
+  const notesEl = slides[current].querySelector('.speaker-notes');
+  document.getElementById('presenterNotes').textContent = notesEl ? notesEl.textContent : '（无演讲备注）';
+  document.getElementById('presenterPage').textContent = `${current+1} / ${total}`;
+  const nextTitle = document.getElementById('presenterNextTitle');
+  if (current + 1 < total) { const nextH2 = slides[current+1].querySelector('.slide-title'); nextTitle.textContent = nextH2 ? nextH2.textContent : '（最后一页）'; }
+  else { nextTitle.textContent = '— 结束 —'; }
+}
+
+function startTimer() { timerSeconds = 0; updateTimerDisplay(); timerInterval = setInterval(() => { timerSeconds++; updateTimerDisplay(); }, 1000); }
+function stopTimer() { if (timerInterval) clearInterval(timerInterval); }
+function resetTimer() { timerSeconds = 0; updateTimerDisplay(); }
+function updateTimerDisplay() {
+  const h = Math.floor(timerSeconds/3600);
+  const m = Math.floor((timerSeconds%3600)/60);
+  const s = timerSeconds%60;
+  document.getElementById('presenterTimer').textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+</script>
+</body>
+</html>
