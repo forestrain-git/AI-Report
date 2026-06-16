@@ -1,0 +1,195 @@
+{
+  "version": "0.8.0",
+  "positioning_note": "热插拔：Humanize 广义兼容任何能产出 HTML PPT 的下游 skill——brief 是普通 markdown+JSON，谁都能读。本表只是把『我们真实跑通且输出稳定』的路线标出来：中文推荐 guizang-ppt-skill，英文推荐 frontend-slides / beautiful-html-templates。其他下游可以接，跑通欢迎反馈，support_level 据实更新。",
+  "support_levels": {
+    "full": "brief 出口 + 渲染后演讲体检（--qa-from）都已在真实渲染产物上验证过",
+    "brief+qa-verified": "brief 出口可用，且演讲体检（--qa-from）已在该渲染器的真实渲染产物上完整跑通（扫描→发现→修复→复检）；渲染器专属失败模式规则尚未沉淀",
+    "brief-only": "brief 出口可用；演讲体检（--qa-from）这条腿尚未在该渲染器的真实产物上验证，不承诺"
+  },
+  "renderers": [
+    {
+      "id": "guizang",
+      "display_name": "Guizang PPT Skill",
+      "skill_name": "guizang-ppt-skill",
+      "role": "primary-renderer-100pct-native",
+      "support_level": "full",
+      "best_for": [
+        "中文分享",
+        "稳定成稿",
+        "中文默认生产路径",
+        "杂志风",
+        "瑞士风",
+        "v0.6.4 由 Humanize 发 brief，guizang-ppt-skill 原生渲染"
+      ],
+      "inputs": [
+        "deck_brief.md",
+        "ast_outline.md",
+        "slide_plan.json",
+        "speaker_intent.md",
+        "asset_manifest.md",
+        "video_slots.json",
+        "style_brief.md"
+      ],
+      "outputs": [
+        "guizang-production-prompt.md"
+      ],
+      "v0_6_4_note": "Humanize does not write outputs/guizang/index.html. The downstream guizang-ppt-skill renders natively. Post-render QA is run via --qa-from on the downstream's HTML.",
+      "local_skill_paths": [
+        "~/.agents/skills/guizang-ppt-skill",
+        "~/.hermes/skills/guizang-ppt-skill"
+      ],
+      "command_file": "commands/guizang-agent.md"
+    },
+    {
+      "id": "beautiful-html-templates",
+      "display_name": "Beautiful HTML Templates",
+      "skill_name": "beautiful-html-templates",
+      "role": "english-native-renderer",
+      "support_level": "brief+qa-verified",
+      "support_note": "v0.8.0 (2026-06-13): 演讲体检（--qa-from）在 docs/showcase/hermes-agent-mastery/en/ppt/index.html（Neo-Grid Bold，11 页，beautiful-html-templates 原生渲染）上完整跑通：第 1 轮静态扫描 pass，截图逐页复核发现页码徽章遮挡 9 页正文，修复后第 2 轮 pass。逐轮记录见 docs/showcase/hermes-agent-mastery/en/qa/presentation-checkup-2026-06-13.md。beautiful 专属失败模式规则仍为 0 条（当前只有渲染器无关层 placeholder-residue），故不升 full。",
+      "best_for": [
+        "34套模板",
+        "英文默认至少5个真实预览",
+        "按occasion和mood选风格",
+        "design.md视觉契约",
+        "v0.6.4 由 Humanize 发 brief，beautiful-html-templates 原生渲染"
+      ],
+      "inputs": [
+        "deck_brief.md",
+        "ast_outline.md",
+        "slide_plan.json",
+        "speaker_intent.md",
+        "asset_manifest.md",
+        "video_slots.json",
+        "style_brief.md"
+      ],
+      "outputs": [
+        "beautiful-html-templates-production-prompt.md"
+      ],
+      "v0_6_4_note": "Humanize does not write outputs/beautiful/previews/* or outputs/beautiful/selected/*. The downstream beautiful-html-templates renders natively.",
+      "local_skill_paths": [
+        "~/.agents/skills/beautiful-html-templates",
+        "~/.hermes/skills/beautiful-html-templates"
+      ],
+      "command_file": "commands/beautiful-agent.md"
+    },
+    {
+      "id": "html-ppt",
+      "display_name": "HTML PPT Studio",
+      "skill_name": "html-ppt",
+      "role": "full-deck-and-presenter-renderer",
+      "best_for": [
+        "演讲者模式",
+        "逐字稿",
+        "36主题",
+        "15个full-deck模板",
+        "31个布局",
+        "动画丰富"
+      ],
+      "inputs": [
+        "deck_brief.md",
+        "slide_plan.json",
+        "speaker_intent.md",
+        "asset_manifest.md"
+      ],
+      "outputs": [
+        "outputs/html-ppt/index.html",
+        "outputs/html-ppt/render_report.md"
+      ],
+      "v0_6_4_note": "html-ppt is a legacy renderer slot. v0.6.4 production paths are guizang (zh) and frontend-slides / beautiful-html-templates (en).",
+      "local_skill_paths": [
+        "~/.hermes/skills/html-ppt",
+        "~/.agents/skills/html-ppt"
+      ],
+      "command_file": "commands/html-ppt-agent.md"
+    },
+    {
+      "id": "frontend-slides",
+      "display_name": "Frontend Slides",
+      "skill_name": "frontend-slides",
+      "role": "english-native-renderer",
+      "support_level": "brief-only",
+      "support_note": "v0.8.0: brief 出口可用（frontend-slides-production-prompt.md 正常产出）；维持 brief-only 的原因：演讲体检（--qa-from）尚未在任何一份 frontend-slides 真实渲染产物上跑过（2026-06-13 验证的英文 deck 是 beautiful-html-templates 渲染的），失败模式目录也没有 frontend-slides 专属规则。第一单真实产物过完体检后据实升级。",
+      "best_for": [
+        "PPTX转HTML",
+        "英文style discovery",
+        "show-don't-tell风格预览",
+        "viewport fitting",
+        "Vercel deploy",
+        "PDF export",
+        "v0.6.4 由 Humanize 发 brief，frontend-slides 原生渲染"
+      ],
+      "inputs": [
+        "deck_brief.md",
+        "ast_outline.md",
+        "slide_plan.json",
+        "speaker_intent.md",
+        "asset_manifest.md",
+        "video_slots.json",
+        "style_brief.md",
+        "source.pptx"
+      ],
+      "outputs": [
+        "frontend-slides-production-prompt.md"
+      ],
+      "v0_6_4_note": "Humanize does not write outputs/frontend-slides/*. The downstream frontend-slides renders natively.",
+      "local_skill_paths": [
+        "~/.agents/skills/frontend-slides",
+        "~/.hermes/skills/frontend-slides"
+      ],
+      "command_file": "commands/frontend-slides-agent.md"
+    },
+    {
+      "id": "post-render-qa-loop",
+      "display_name": "Humanize PPT 演讲体检 (Post-Render QA Loop)",
+      "skill_name": "humanize-ppt",
+      "role": "post-render-quality-gate",
+      "best_for": [
+        "演讲体检：逐页核对渲染结果和大纲页的差异",
+        "把『只能看、不能讲』的页揪出来",
+        "写 fix_prompt.md 给下游 skill 重渲",
+        "3 轮上限，超出 needs-human",
+        "锁定 known-good 视觉基准"
+      ],
+      "inputs": [
+        "--qa-from <rendered.html>",
+        "out/slide_plan.json",
+        "out/qa_iteration.json (上一轮)"
+      ],
+      "outputs": [
+        "outputs/qa/qa_report.md",
+        "outputs/qa/fix_prompt.md",
+        "outputs/qa/qa_iteration.json"
+      ],
+      "v0_6_4_note": "New in v0.6.4. The loop is launched via `python3 scripts/humanize_ppt.py --qa-from <rendered.html> --out <previous out> --renderer guizang --guizang-style A --max-qa-iterations 3`.",
+      "command_file": null
+    },
+    {
+      "id": "qa",
+      "display_name": "Humanize PPT Brief-Mode QA",
+      "skill_name": "humanize-ppt",
+      "role": "brief-mode-quality-gate",
+      "best_for": [
+        "检查AST是否保留",
+        "检查AI草稿痕迹",
+        "检查路径",
+        "检查交付清单"
+      ],
+      "inputs": [
+        "router_plan.json",
+        "run_manifest.json",
+        "outputs/"
+      ],
+      "outputs": [
+        "outputs/qa/qa_report.md",
+        "outputs/qa/fix_list.md",
+        "outputs/qa/final_manifest.json"
+      ],
+      "local_skill_paths": [
+        "~/.hermes/skills/humanize-ppt"
+      ],
+      "command_file": "commands/qa-agent.md"
+    }
+  ]
+}
+

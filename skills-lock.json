@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "design-spec-extraction": {
+      "source": "pedronauck/skills",
+      "sourceType": "github",
+      "skillPath": "skills/community/design-spec-extraction/SKILL.md",
+      "computedHash": "31bcdb8bd4037650a26451a3e2ee6a117daeb1cd283cf87533bc7793fde286db"
+    },
+    "guizang-ppt-skill": {
+      "source": "op7418/guizang-ppt-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "0999d931017a8c1a87d3070c520200bcc41de6b873a8b814f0116299cc63fc32"
+    },
+    "humanize-ppt": {
+      "source": "learnprompt/humanize-ppt",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "ae3b64d31dfcad0d71512bb4ccc683df2e5e5fb830be0307f4c2af5704ff76a2"
+    }
+  }
+}

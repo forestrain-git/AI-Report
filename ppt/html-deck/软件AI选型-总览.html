@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中建发展 · AI软件机会选型</title>
+<script>
+(function(){const t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.className=t;})();
+</script>
+<style>
+:root{--bg:#f8f9fa; --surface:#fff; --border:#dee2e6; --text:#212529; --dim:#6c757d; --accent:#2563eb; --green:#16a34a; --amber:#d97706; --red:#dc2626; --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+html.dark{--bg:#0a0a0f; --surface:#141420; --border:#2a2a3e; --text:#e4e4e7; --dim:#9ca3af; --accent:#4f8cff; --green:#22c55e; --amber:#eab308; --red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;padding:20px}
+.container{max-width:900px;margin:0 auto}
+.theme-toggle{position:fixed;top:16px;right:16px;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;z-index:10}
+h1{font-size:26px;font-weight:700;margin-bottom:6px}
+.sub{color:var(--dim);font-size:14px;margin-bottom:24px}
+.page-nav{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.page-nav a{text-decoration:none;padding:8px 16px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:500}
+.page-nav a.active,.page-nav a:hover{border-color:var(--accent);color:var(--accent)}
+.page{display:none}
+.page.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+th{text-align:left;font-weight:600;color:var(--dim);padding:8px;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:10px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+.tag-g{background:rgba(22,163,74,.12);color:var(--green)}
+.tag-a{background:rgba(217,119,6,.12);color:var(--amber)}
+.tag-r{background:rgba(220,38,38,.12);color:var(--red)}
+.tag-b{background:rgba(37,99,235,.12);color:var(--accent)}
+.score{font-size:20px;font-weight:700}
+.score-g{color:var(--green)}.score-a{color:var(--amber)}.score-r{color:var(--red)}
+.bar-bg{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px}
+.bar-fill{height:100%;border-radius:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.insight{background:rgba(37,99,235,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 14px;margin:12px 0;font-size:13px}
+</style>
+</head>
+<body>
+<div class="container">
+<button class="theme-toggle" onclick="const t=document.documentElement;t.className=t.className==='dark'?'':'dark';localStorage.setItem('theme',t.className)">🌓 主题</button>
+
+<h1>中建发展 · AI软件机会选型</h1>
+<p class="sub">基于五步法 + 七维评分体系 · 28个单元 × 6大方向 · 2026-06</p>
+
+<div class="page-nav">
+<a href="#" class="active" data-page="0">① 全景总览</a>
+<a href="#" data-page="1">② 优先推进</a>
+<a href="#" data-page="2">③ 谨慎推进</a>
+<a href="#" data-page="3">④ 风险与硬伤</a>
+<a href="#" data-page="4">⑤ 行动建议</a>
+</div>
+
+<!-- ===== PAGE 1: OVERVIEW ===== -->
+<div class="page active" data-idx="0">
+  <div class="card">
+    <div class="card-title">📊 方向级评分总览</div>
+    <table>
+      <thead><tr><th>方向</th><th>单元数</th><th>均分</th><th>建议</th><th>推进</th><th>谨慎</th><th>调整</th></tr></thead>
+      <tbody>
+        <tr><td><strong>供应链AI</strong></td><td>5</td><td><span class="score score-g">69.4</span></td><td><span class="tag tag-g">优先推进</span></td><td>3</td><td>1</td><td>1</td></tr>
+        <tr><td><strong>内部管理流程AI化</strong></td><td>6</td><td><span class="score score-g">69.0</span></td><td><span class="tag tag-g">推进</span></td><td>2</td><td>4</td><td>0</td></tr>
+        <tr><td><strong>业务赋能</strong></td><td>7</td><td><span class="score score-g">69.6</span></td><td><span class="tag tag-g">推进</span></td><td>1</td><td>3</td><td>0</td></tr>
+        <tr><td><strong>劳务AI</strong></td><td>5</td><td><span class="score score-a">62.2</span></td><td><span class="tag tag-a">选择性推进</span></td><td>2</td><td>3</td><td>0</td></tr>
+        <tr><td><strong>项目管理AI</strong></td><td>1</td><td><span class="score score-a">66.0</span></td><td><span class="tag tag-a">谨慎推进</span></td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td><strong>Token出海</strong></td><td>2</td><td><span class="score score-r">35.5</span></td><td><span class="tag tag-r">暂缓</span></td><td>0</td><td>0</td><td>2</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏆 Top 9 优先推进（≥75分）</div>
+    <table>
+      <thead><tr><th>#</th><th>编码</th><th>业务</th><th>方向</th><th>得分</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>SC-03</td><td>供应链金融AI</td><td>供应链AI</td><td><span class="score score-g">91</span></td></tr>
+        <tr><td>2</td><td>IS-B08</td><td>AI质量检测</td><td>业务赋能</td><td><span class="score score-g">87</span></td></tr>
+        <tr><td>3</td><td>SC-01</td><td>供应商智能风控</td><td>供应链AI</td><td><span class="score score-g">86</span></td></tr>
+        <tr><td>4</td><td>IS-A06</td><td>AI审图</td><td>内部管理</td><td><span class="score score-g">86</span></td></tr>
+        <tr><td>5</td><td>LW-04</td><td>劳务市场行情指数</td><td>劳务AI</td><td><span class="score score-g">84</span></td></tr>
+        <tr><td>6</td><td>SC-04</td><td>招投标合规审查</td><td>供应链AI</td><td><span class="score score-g">79</span></td></tr>
+        <tr><td>7</td><td>IS-B07</td><td>AI施工进度优化</td><td>业务赋能</td><td><span class="score score-g">79</span></td></tr>
+        <tr><td>8</td><td>IS-A01</td><td>海外部投标评审</td><td>内部管理</td><td><span class="score score-g">78</span></td></tr>
+        <tr><td>9</td><td>LW-02</td><td>劳动力调度优化</td><td>劳务AI</td><td><span class="score score-g">76</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <strong>关键判断：</strong>供应链AI是王冠（SC-03 91分蝉联第一），但盲区补齐发现的AI质量检测（87分）和AI审图（86分）验证了"交叉映射发现宝石"的方法论。
+  </div>
+</div>
+
+<!-- ===== PAGE 2: TOP PICKS ===== -->
+<div class="page" data-idx="1">
+  <div class="card">
+    <div class="card-title">🥇 供应链AI — 中建发展的王冠</div>
+    <p style="font-size:13px;color:var(--dim);margin-bottom:12px">5个单元，方向均分69.4，3个进入推进区间</p>
+    <table>
+      <thead><tr><th>单元</th><th>得分</th><th>核心壁垒</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SC-03 供应链金融AI</strong></td><td><span class="score score-g">91</span></td><td>10万亿交易数据独占 + 13家银行已验证 + 毛利率60%+</td></tr>
+        <tr><td><strong>SC-01 供应商智能风控</strong></td><td><span class="score score-g">86</span></td><td>10万亿数据独占壁垒 + 黏着式引擎 + 数据/网络双壁垒</td></tr>
+        <tr><td><strong>SC-04 招投标合规审查</strong></td><td><span class="score score-g">79</span></td><td>八部门"不做就违规" + 140万次招标数据训练</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">💰 SC-03 供应链金融AI</div>
+      <div style="font-size:36px;font-weight:700;color:var(--green)">91</div>
+      <p style="font-size:13px;color:var(--dim);margin-top:6px">10万亿交易数据独占 · LTV/CAC=30 · 政策+需求+技术三重共振</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🛡️ SC-01 供应商智能风控</div>
+      <div style="font-size:36px;font-weight:700;color:var(--green)">86</div>
+      <p style="font-size:13px;color:var(--dim);margin-top:6px">C型市场 + 2-3年窗口 · 云筑网110万供应商覆盖</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📈 两大黑马（盲区补齐发现）</div>
+    <table>
+      <thead><tr><th>单元</th><th>得分</th><th>为什么之前漏了</th><th>为什么值得推</th></tr></thead>
+      <tbody>
+        <tr><td><strong>IS-B08 AI质量检测</strong></td><td><span class="score score-g">87</span></td><td>归类在"智慧工地"而非AI软件</td><td>4100+工地摄像头沉没成本 + LTV/CAC=105</td></tr>
+        <tr><td><strong>IS-A06 AI审图</strong></td><td><span class="score score-g">86</span></td><td>作为内部管理流程被低估</td><td>政策强制（住建部2030）+ 中立审图者定位</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="insight">
+    <strong>结论：</strong>供应链金融AI是确定性最高的方向。AI质量检测和AI审图是盲区补齐发现的两颗遗珠，值得立即启动试点。
+  </div>
+</div>
+
+<!-- ===== PAGE 3: MIDDLE TIER ===== -->
+<div class="page" data-idx="2">
+  <div class="card">
+    <div class="card-title">⚠️ 劳务AI — 数据独占但天花板有限</div>
+    <p style="font-size:13px;color:var(--dim);margin-bottom:12px">5个单元，均分62.2，2个推进 + 3个谨慎</p>
+    <table>
+      <thead><tr><th>单元</th><th>得分</th><th>核心判断</th></tr></thead>
+      <tbody>
+        <tr><td><strong>LW-04 劳务市场行情指数</strong></td><td>84</td><td>1400万vs竞品6万条数据碾压，毛利70%，终局清晰</td></tr>
+        <tr><td><strong>LW-02 劳动力调度优化</strong></td><td>76</td><td>最优C型结构 + 两强壁垒 + LTV/CAC=5.0</td></tr>
+        <tr><td><strong>LW-03 安全培训个性化</strong></td><td>59</td><td>政策刚需但天花板低 + 窗口仅12-18月</td></tr>
+        <tr><td><strong>LW-05 工人信用体系</strong></td><td>51</td><td>征信牌照合规红线 + LTV/CAC仅2.2</td></tr>
+        <tr><td><strong>LW-01 工人技能画像</strong></td><td>51</td><td>天花板仅10-25亿 + LTV/CAC仅2.3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏛️ 内部管理流程AI化 — 路径最短，天花板不高</div>
+    <table>
+      <thead><tr><th>单元</th><th>得分</th><th>特点</th></tr></thead>
+      <tbody>
+        <tr><td><strong>IS-A06 AI审图 🆕</strong></td><td>86</td><td>政策强制 + 与合同审查共享底座</td></tr>
+        <tr><td><strong>IS-A01 海外部投标评审</strong></td><td>78</td><td>已交付验证 + 海外营收增速22%</td></tr>
+        <tr><td><strong>IS-A05 AI知识管理 🆕</strong></td><td>75</td><td>共用地基属性强，LTV/CAC=11.2</td></tr>
+        <tr><td><strong>IS-A02 办公厅制度审核</strong></td><td>65</td><td>已正式使用（2026.5.26），路径最短</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔧 业务赋能 — 覆盖广，但毛利率偏低</div>
+    <table>
+      <thead><tr><th>单元</th><th>得分</th><th>核心风险</th></tr></thead>
+      <tbody>
+        <tr><td><strong>IS-B08 AI质量检测 🆕</strong></td><td>87</td><td>与安全AI共享CV底座，LTV/CAC=105极优</td></tr>
+        <tr><td><strong>IS-B07 AI施工进度优化 🆕</strong></td><td>79</td><td>国内AI排程完全空白</td></tr>
+        <tr><td><strong>IS-B05 能碳平台</strong></td><td>71</td><td>数据独占 + 政策刚需，但天花板仅10-30亿</td></tr>
+        <tr><td><strong>IS-B04 管网AI诊断</strong></td><td>67</td><td>政策确定（970亿资金），但毛利率仅15%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== PAGE 4: RISKS ===== -->
+<div class="page" data-idx="3">
+  <div class="card">
+    <div class="card-title">❌ 需重大调整（<50分）</div>
+    <table>
+      <thead><tr><th>单元</th><th>得分</th><th>硬伤</th></tr></thead>
+      <tbody>
+        <tr><td><strong>IS-A04 合同风险识别</strong></td><td><span class="score score-r">46</span></td><td>红海竞争 + B型寡头 + 天花板仅2-3亿</td></tr>
+        <tr><td><strong>SC-05 行业数据产品</strong></td><td><span class="score score-r">40</span></td><td>"有了更好"非刚需 + 数据脱敏后价值衰减</td></tr>
+        <tr><td><strong>TD-01 轻资产Token</strong></td><td><span class="score score-r">37</span></td><td>P0级合规三重叠加（数据出境+ICP+AI备案）</td></tr>
+        <tr><td><strong>TD-02 汕头算力中心</strong></td><td><span class="score score-r">34</span></td><td>IRR 2.94%低于央企资金成本，回收9.85年</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">🔴 五大失败原因</div>
+      <p style="font-size:13px">低于50分的4个单元全部是<strong>商业模式问题</strong></p>
+      <ul style="font-size:13px;color:var(--dim);padding-left:16px;margin-top:6px">
+        <li>IRR &lt; 3%</li>
+        <li>负毛利</li>
+        <li>LTV/CAC &lt; 1</li>
+        <li>寡头压制</li>
+      </ul>
+      <p style="font-size:12px;color:var(--dim);margin-top:6px">印证：商模不行，其余免谈</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🟡 Token出海 — 两个都暂缓</div>
+      <p style="font-size:13px;color:var(--dim)">
+        <strong>TD-01</strong> 合规三重叠加无解<br>
+        <strong>TD-02</strong> 单元经济系统不可行
+      </p>
+      <p style="font-size:12px;color:var(--amber);margin-top:6px">建议：等待政策明确后再评估</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 七维评分方法论 — 商业模型是分水岭</div>
+    <p style="font-size:13px;color:var(--dim)">
+      七维 = 政策确定性 + 市场需求 + 数据壁垒 + 技术可行性 + 商业模式 + 组织能力 + 竞争格局<br><br>
+      低于50分的5个单元全部死在"商业模式"维度。结论：<strong>先算账，再做产品。</strong>
+    </p>
+  </div>
+</div>
+
+<!-- ===== PAGE 5: ACTION ===== -->
+<div class="page" data-idx="4">
+  <div class="card">
+    <div class="card-title">🎯 三条行动线</div>
+    <table>
+      <thead><tr><th>优先级</th><th>方向</th><th>具体行动</th><th>时间线</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="tag tag-g">P0</span></td>
+          <td><strong>供应链金融AI</strong><br>SC-03</td>
+          <td>13家银行已验证 → 启动产品化开发<br>目标：云筑网金融板块第一个AI产品</td>
+          <td>本月启动</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-g">P0</span></td>
+          <td><strong>AI质量检测</strong><br>IS-B08</td>
+          <td>4100+工地摄像头 → CV底座复用<br>LTV/CAC=105，回报周期最短</td>
+          <td>本月试点</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-b">P1</span></td>
+          <td><strong>AI审图 + 劳务指数</strong><br>IS-A06 / LW-04</td>
+          <td>审图：政策2030年强制 → 抢占窗口<br>劳务指数：1400万数据碾压竞品</td>
+          <td>本季度</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-a">P2</span></td>
+          <td><strong>供应商风控 + 投标合规</strong><br>SC-01 / SC-04</td>
+          <td>基于云筑网现有数据启动MVP</td>
+          <td>本季度</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 方法论沉淀</div>
+    <div class="grid2">
+      <div style="font-size:13px;color:var(--dim)">
+        <strong style="color:var(--text)">✅ 已验证有效的流程</strong><br>
+        线索穷举 → 五步法预判 → 七维评分<br>
+        盲区补齐发现2颗宝石（质量检测/审图）
+      </div>
+      <div style="font-size:13px;color:var(--dim)">
+        <strong style="color:var(--text)">⚠️ 需回避的坑</strong><br>
+        IRR&lt;3%的项目不做<br>
+        寡头盘踞的市场不进<br>
+        合规红线不碰
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <strong>一句话策略：</strong>先打供应链金融AI这张确定牌，同时用质量检测快速出成果建立信心。审图和劳务指数是中长线布局。其他方向等验证后再投入。
+  </div>
+</div>
+
+</div>
+
+<script>
+const links = document.querySelectorAll('.page-nav a');
+const pages = document.querySelectorAll('.page');
+links.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    links.forEach(l => l.classList.remove('active'));
+    pages.forEach(p => p.classList.remove('active'));
+    a.classList.add('active');
+    pages[parseInt(a.dataset.page)].classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

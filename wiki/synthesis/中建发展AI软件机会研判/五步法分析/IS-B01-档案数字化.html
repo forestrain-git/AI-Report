@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IS-B01 档案数字化 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --blue: #1d4ed8; --blue-light: #dbeafe; --blue-50: #eff6ff;
+  --green: #16a34a; --green-bg: #dcfce7;
+  --amber: #d97706; --amber-bg: #fef3c7;
+  --red: #dc2626; --red-bg: #fee2e2;
+  --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b;
+  --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b; --slate-900: #0f172a;
+  --radius: 12px; --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: var(--slate-800); font-size: 15px; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+.container { max-width: 480px; margin: 0 auto; padding: 0 0 40px; }
+.hero { background: var(--grad-header); padding: 28px 20px 16px; color: #fff; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); pointer-events: none; }
+.hero-code { display: inline-block; background: rgba(255,255,255,0.1); padding: 3px 14px; border-radius: 20px; font-size: 11px; color: #ffd700; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-badge-wrap { display: flex; justify-content: center; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-badge { width: 88px; height: 88px; border-radius: 50%; background: var(--grad-yellow); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(239,108,0,0.45); }
+.hero-badge .num { font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.hero-badge .unit { font-size: 11px; font-weight: 600; opacity: 0.8; margin-top: 1px; }
+.hero-title { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; position: relative; z-index: 1; }
+.hero-sub { font-size: 13px; opacity: 0.65; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-judgment { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px 6px 12px; font-size: 14px; font-weight: 600; position: relative; z-index: 1; }
+.dim-strip { background: #fff; margin: -12px 12px 16px; border-radius: 12px; padding: 16px 16px 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; z-index: 2; }
+.dim-strip-title { font-size: 12px; font-weight: 700; color: var(--slate-400); letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
+.dim-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label { width: 76px; font-size: 13px; font-weight: 600; color: var(--slate-700); flex-shrink: 0; }
+.dim-bar-wrap { flex: 1; display: flex; align-items: center; gap: 8px; }
+.dim-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--slate-100); overflow: hidden; }
+.dim-bar .fill { height: 100%; border-radius: 4px; }
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score { width: 48px; font-size: 13px; font-weight: 700; color: var(--slate-500); text-align: right; flex-shrink: 0; }
+.content { padding: 16px 16px 0; }
+.card { background: #fff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--slate-100); }
+.card h2 { font-size: 17px; font-weight: 700; color: var(--slate-900); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
+.card h2 .emoji-box { width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.card h3 { font-size: 15px; font-weight: 700; color: var(--slate-800); margin-bottom: 10px; margin-top: 18px; }
+.card h3:first-child { margin-top: 0; }
+.card p { font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 10px; }
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; letter-spacing: 0.01em; line-height: 1.5; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+.verdict-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; }
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.summary-box { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; line-height: 1.7; color: var(--slate-700); margin-bottom: 12px; }
+.summary-box.amber-border { border-left: 3px solid var(--amber); }
+.summary-box .sb-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.5; }
+table th { text-align: left; font-weight: 600; color: var(--slate-500); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 8px 6px 0; border-bottom: 1px solid var(--slate-200); }
+table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--slate-100); vertical-align: top; color: var(--slate-600); }
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+.summary-strip { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--slate-50); border-radius: var(--radius-sm); margin-bottom: 10px; }
+.summary-strip .strip-label { font-size: 12px; color: var(--slate-500); flex-shrink: 0; min-width: 52px; }
+.summary-strip .strip-bar { flex: 1; height: 6px; background: var(--slate-200); border-radius: 3px; overflow: hidden; }
+.summary-strip .strip-bar .strip-fill { height: 100%; border-radius: 3px; }
+.summary-strip .strip-val { font-size: 13px; font-weight: 700; flex-shrink: 0; min-width: 28px; text-align: right; }
+.ltv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.ltv-card { background: var(--slate-50); border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--slate-100); text-align: center; }
+.ltv-card .lc-label { font-size: 12px; color: var(--slate-500); margin-bottom: 4px; }
+.ltv-card .lc-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-sub { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.hs { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 700; color: #fff; }
+.hs-0 { background: var(--green); }
+.hs-1 { background: #a3e635; color: var(--slate-800); }
+.hs-2 { background: var(--amber); }
+.hs-3 { background: var(--red); }
+.assumption-item { display: flex; gap: 10px; padding: 10px 12px; border: 1px solid var(--slate-100); border-radius: var(--radius-sm); margin-bottom: 8px; }
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 1px; }
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label { font-size: 13px; font-weight: 600; color: var(--slate-800); }
+.assumption-item .ai-text .ai-meta { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.sens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.sens-item { background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: var(--radius-sm); padding: 10px; }
+.sens-item .si-label { font-size: 11px; color: var(--slate-400); margin-bottom: 2px; font-weight: 600; }
+.sens-item .si-title { font-size: 13px; font-weight: 600; color: var(--slate-800); margin-bottom: 2px; }
+.sens-item .si-desc { font-size: 11px; color: var(--slate-500); line-height: 1.4; }
+.action-card { background: var(--blue-50); border: 1px solid var(--blue-light); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; }
+.action-card .ac-title { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+.action-card .ac-desc { font-size: 13px; color: var(--slate-600); line-height: 1.6; }
+.check-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.check-list li { padding: 5px 0; font-size: 13px; color: var(--slate-600); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+.check-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-top: 7px; flex-shrink: 0; }
+.phase-bar { display: flex; gap: 6px; margin-bottom: 10px; }
+.phase-bar .phase { flex: 1; border-radius: 8px; padding: 8px 6px; text-align: center; }
+.phase-bar .phase .ph-time { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.phase-bar .phase .ph-label { font-size: 10px; margin-top: 2px; opacity: 0.7; }
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+.callout { border-left: 3px solid var(--blue); background: var(--slate-50); padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13px; color: var(--slate-600); margin: 10px 0; line-height: 1.6; }
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+.dir-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.back-link { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 20px 0; padding: 10px; color: var(--slate-400); font-size: 14px; font-weight: 500; text-decoration: none; border-radius: var(--radius-sm); transition: all 0.15s; }
+.back-link:hover { color: var(--blue); background: var(--slate-50); }
+.footer { text-align: center; padding: 16px; font-size: 12px; color: var(--slate-400); line-height: 1.6; }
+.footer .brand { color: var(--slate-300); margin-top: 4px; }
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .ltv-grid { grid-template-columns: 1fr; }
+  .sens-grid { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; IS-B01</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">61</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">档案数字化+干部专审</div>
+  <div class="hero-sub">中建发展 / 中建智能</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">&#x26A0;&#xFE0F;</span> 谨慎推进
+  </div>
+</div>
+
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:72%"></div></div>
+      <span class="dim-score">13/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:71%"></div></div>
+      <span class="dim-score">12/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:71%"></div></div>
+      <span class="dim-score">12/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:53%"></div></div>
+      <span class="dim-score">9/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:56%"></div></div>
+      <span class="dim-score">9/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:60%"></div></div>
+      <span class="dim-score">9/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:30%"></div></div>
+      <span class="dim-score">-3/10</span>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box amber-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-yellow">6/20 低风险</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">关键致命伤</span>
+        <span style="font-weight:600;color:var(--slate-700);">无 P0 级硬伤</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">团队/运营风险</span>
+        <span style="font-weight:600;color:var(--slate-700);font-size:13px;">#19 团队能力（2/5）；#20 运营复杂度（3/5）</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge va">&#x26A0;&#xFE0F; 可推进（需警惕航星永志先发优势）</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：扫描仪/芯片 &#x2192; AI-OCR算法厂商 &#x2192; 档案数字化加工/AI专审系统 &#x2192; 央企组织人事部/档案管理部门</p>
+    <p><strong>利润分配（100元）</strong>：硬件 20-30% | 数字化加工 30-40% | AI-OCR+专审系统 60-70% | 信创部署集成 40-50%</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">技术壁垒型</span> — AI-OCR在干部档案专用场景准确率99.2% + 信创全栈适配（昇腾/寒武纪/飞腾/鲲鹏）</p>
+    <p><strong>可优化</strong>：央企干部档案审核长期依赖人工（每卷数小时），AI可将审核用时压减60%以上。济南标杆已验证：超10万卷，52类核心数据元素。</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>政策法规</td><td>"凡提必审、凡进必审、凡转必审"硬性要求</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>政策法规</td><td>国资委79号文：2027年前央企核心系统100%信创替代</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>新技术</td><td>AI-OCR专用模型：22类材料3秒完成，准确率99.2%</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>新技术</td><td>AI专审：济南标杆验证，审核用时压减60%+</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>需求侧</td><td>央企干部档案数字化存量市场：数十亿至百亿级</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>供给侧</td><td>航星永志年营收约10亿，已推出AI专审机器人</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>判断：系统性变化</strong> — 政策（凡提必审+信创强制）+ 技术（AI-OCR+AI专审成熟）+ 需求（央企存量档案数字化）三重共振。双重刚需叠加，需求弹性极低。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <p><strong>原子需求</strong>：央企组织人事部（干部提拔前档案专审，50-200万/项目）| 档案管理部门（存量数字化，2-5元/页）| IT/信创部门（信创部署）| 纪检监察（合规审查，30-100万/年）</p>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>凡提必审+信创强制 &#x2192; AI档案专审+信创部署成为央企合规刚需 &#x2192; <strong>央企干部档案管理从"人工+传统OCR"转向"AI专审+信创部署"，头部企业凭借技术+行业Know-how+客户信任形成壁垒。</strong>
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">技术+信创的差异化挑战者</span> — 管理学院项目已验证交付能力（中建AI第一单），昇腾信创适配已跑通，但面对航星永志先发优势，需找到差异化切入点。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索 &#x2192; 爆发增长过渡期。窗口已开，还有 <strong>2-3 年</strong>。</p>
+    <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-green">低</span> — 技术已成熟，政策已明确，管理学院项目已验证</p>
+    <p><span class="dir-dot red"></span><strong>太晚风险</strong>：<span class="tag tag-red">高</span> — 航星永志32个省级网络+20年客户关系，窗口期有限</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>档案数字化（狭义）284.6亿(2025)，同比+23.7%</td></tr>
+        <tr><td>直接数据</td><td>AI+档案库房（广义）880亿(2025)</td></tr>
+        <tr><td>Top-down</td><td>央企数量&#x00D7;平均档案卷数&#x00D7;单卷价格 = 数十亿至百亿级</td></tr>
+        <tr><td>类比法</td><td>信创产业2023年2.1万亿&#x2192;2027年3.7万亿</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：央企干部档案数字化可触达市场 <span class="tag tag-yellow">50-100亿元</span>，叠加信创部署和AI专审，支撑十亿级体量公司。天花板略低于供应商风控。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：有头部玩家但未形成垄断 — 航星永志（年营收约10亿，32个省级网络），紫光集团第一梯队，"一超多强"格局。</p>
+    <p><strong>趋势</strong>：<span class="tag tag-yellow">C型（分散&#x2192;集中）</span> — 政策驱动（信创2027大限）将加速行业整合。技术壁垒（AI-OCR+信创适配）提高进入门槛。</p>
+    <p><strong>策略</strong>：差异化深耕 — 聚焦"央企AI专审+信创部署"细分场景，利用中建体系内客户关系和昇腾信创适配能力做差异化切入。</p>
+    <div class="callout callout-yellow">
+      <strong>行业预判结论：</strong>&#x1F7E1; 5 模块通过（M5天花板略低），补充待验证假设后进入五步法。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：央企/国企组织人事部门、档案管理部门</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>干部提拔前档案专审</td><td>人工审核每卷需数小时，52类核心数据逐一校核，效率低、易遗漏</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>存量档案数字化</td><td>纸质档案无法检索、无法AI分析，历史数据沉淀浪费</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+        <tr><td>信创环境部署</td><td>国资委2027年信创替代硬性要求，不合规则问责</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>"三龄两历一身份"校核</td><td>人工校核效率低、主观性强、覆盖面窄</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-red">
+      <strong>需求评估三角形</strong>：<span class="tag tag-red">刚性</span> 雪中送炭（凡提必审+信创强制） &middot; <span class="tag tag-yellow">中频</span> 每次干部任免 &middot; <span class="tag tag-red">广泛</span> 所有央企国企
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>航星永志是"档案行业老兵"（20年深耕、32个省级网络），我们是<strong>"AI+信创的央企内部人"</strong> — 有昇腾信创全栈适配能力 + 中建体系内央企客户信任。
+    </div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"22类干部档案材料，3秒完成识别，准确率99.2%，信创全适配。"</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>干部档案AI专审（三龄两历一身份自动校核）</td><td>通用档案数字化加工（劳动密集型）</td></tr>
+        <tr><td>AI-OCR专用模型（22类干部档案材料）</td><td>通用OCR（与百度/腾讯等大厂竞争）</td></tr>
+        <tr><td>昇腾信创全栈部署</td><td>非信创环境部署</td></tr>
+        <tr><td>人机协同审核（AI初审+人工复审）</td><td>完全替代人工（组织人事部门不接受"黑箱"）</td></tr>
+      </table>
+    </div>
+    <p><strong>MVP</strong>：管理学院经验提炼标准方案 &#x2192; 1家中建体系内工程局做第二标杆 &#x2192; 验证可复制性</p>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（项目制ToB）</span> — 按项目交付+年度运维混合计费</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>央企AI专审+信创部署（标准版，5家&#x00D7;100万）</td><td>500万</td></tr>
+        <tr><td>档案数字化加工（附属，10家&#x00D7;30万）</td><td>300万</td></tr>
+        <tr><td>年度运维+模型迭代（8家&#x00D7;20万）</td><td>160万</td></tr>
+        <tr style="background:#fffbeb;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--amber);font-size:15px;"><strong>960万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:12%;background:var(--grad-red);"></div></div>
+      <span class="strip-val" style="color:var(--red);">11.5%</span>
+    </div>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">LTV / CAC</div>
+        <div class="lc-val green">6.7</div>
+        <div class="lc-sub">&#x2705; 健康（&gt;3）</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">回收期</div>
+        <div class="lc-val green">3月</div>
+        <div class="lc-sub">&#x2705; 合理</div>
+      </div>
+    </div>
+    <p><strong>核心风险</strong>：初期毛利11.5%偏低（项目制交付成本高），随标准化程度提升可改善。对标航星永志（毛利率40%+）。</p>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式</span> — AI专审系统嵌入组织人事流程后，切换成本高（数据迁移+流程重建+人员培训）</p>
+    <div class="phase-bar">
+      <div class="phase blue"><div class="ph-time">0-6月</div><div class="ph-label">商业验证</div></div>
+      <div class="phase amber"><div class="ph-time">6-18月</div><div class="ph-label">增长早期</div></div>
+      <div class="phase green"><div class="ph-time">18-36月</div><div class="ph-label">加速增长</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>中建体系内复制（8个工程局+N个子公司）</td><td>0</td></tr>
+        <tr><td>2</td><td>央企集团总部渠道</td><td>5-10万</td></tr>
+        <tr><td>3</td><td>行业协会/政府渠道</td><td>10-15万</td></tr>
+        <tr><td>4</td><td>信创生态合作（华为昇腾/中国电子）</td><td>8-12万</td></tr>
+        <tr><td>5</td><td>内容营销+行业会议</td><td>15-20万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>技术壁垒</strong></td><td>AI-OCR专用模型（22类材料99.2%）+ 昇腾信创全栈适配</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>转化成本</strong></td><td>嵌入组织人事流程后，切换成本高</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>央企身份+中建品牌+管理学院标杆</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>规模效应</strong></td><td>模型训练成本被客户数摊薄，但当前客户基数小</td><td class="num"><span class="tag tag-red">弱</span></td></tr>
+        <tr><td><strong>网络效应</strong></td><td>无 — 档案AI专审是单客户产品，无网络效应</td><td class="num"><span class="tag tag-red">无</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：航星永志 <span class="tag tag-yellow">1-2年</span>（已有AI专审产品）| 其他央企 <span class="tag tag-yellow">2-3年</span> | 新进入者 <span class="tag tag-red">3年+</span></p>
+    <p><strong>核心风险</strong>：航星永志是最大的竞争威胁 — 年营收10亿、20年深耕、32个省级网络、已推出AI专审机器人。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:30%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">6/20</span>
+    </div>
+    <div class="callout callout-yellow" style="margin-bottom:10px;">
+      <strong>结论：</strong>低风险，14项未命中，#19团队能力和#20运营复杂度为主要风险项。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1-3</td><td>目标用户/痛点/频率</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="tag tag-green" style="margin-left:6px;">基本未命中</span></td></tr>
+        <tr><td>4-6</td><td>用户验证/本质区别/卖点</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-2" style="margin-left:4px;">2</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#5航星永志已有产品</span></td></tr>
+        <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">基本未命中</span></td></tr>
+        <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-1">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">基本未命中</span></td></tr>
+        <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-1">1</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">壁垒持续性存疑</span></td></tr>
+        <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-2">2</span></td><td><span class="tag tag-yellow">需补充档案行业BD人才</span></td></tr>
+        <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度</td><td style="background:#fffbeb;"><span class="hs hs-3">3</span></td><td style="background:#fffbeb;"><span class="tag tag-red">信创适配+数据安全合规复杂</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H7：中建体系内各局愿意使用中建智能的AI专审方案</div>
+        <div class="ai-meta">内部调研+试点 &nbsp;|&nbsp; 标准：&#x2265;3个工程局同意试点</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H3：中建体系内其他工程局有干部档案AI专审需求</div>
+        <div class="ai-meta">需求访谈 &nbsp;|&nbsp; 标准：&#x2265;5个工程局确认需求存在</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H1：央企愿意为"AI专审+信创部署"一体化方案付费</div>
+        <div class="ai-meta">客户访谈 &nbsp;|&nbsp; 标准：&#x2265;3/5家央企确认意向</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H2：中建发展能在2-3年内建立足够客户信任</div>
+        <div class="ai-meta">标杆验证 &nbsp;|&nbsp; 标准：第2个标杆项目成功交付</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H4：AI-OCR在不同央企档案格式上准确率保持97%+</div>
+        <div class="ai-meta">跨企业测试 &nbsp;|&nbsp; 标准：&#x2265;3家企业准确率&#x2265;97%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H8：其他央企愿意接受"中建系"的档案AI方案</div>
+        <div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&#x2265;2家非中建央企表达意向</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H5：第3年获取5家央企客户（不含中建体系内）</div>
+        <div class="ai-meta">增长验证 &nbsp;|&nbsp; 标准：第1年&#x2265;2家外部客户</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观(+20%)</th><th>悲观(-20%)</th></tr>
+        <tr><td>第3年客户数</td><td>23家</td><td>28家&#x2192;1152万</td><td>18家&#x2192;768万</td></tr>
+        <tr><td>年均客单价</td><td>60万</td><td>72万&#x2192;1152万</td><td>48万&#x2192;768万</td></tr>
+        <tr><td>信创适配成本</td><td>63人天/项目</td><td>76人天</td><td>50人天</td></tr>
+        <tr><td>模型准确率</td><td>97%</td><td>99%&#x2192;满意度提升</td><td>95%&#x2192;客户流失风险</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">客户数</span>和<span class="tag tag-red">信创适配成本</span> — 共同受"央企采购决策周期长"制约</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">央企AI专审+信创部署一体化</div>
+        <div class="si-desc">中建标杆 &#x2192; 央企复制 &#x2192; 信创生态合作 &#x2192; 行业标准制定</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年960万，第5年5000万+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">AI-OCR技术输出</div>
+        <div class="si-desc">模型封装为API/SDK，授权给档案服务商</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年300万/年</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>：中建体系内&#x2265;3个工程局无需求 | 航星永志1年内完成信创全栈适配 | AI-OCR准确率&lt;95% | 信创适配成本持续&gt;80人天
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">在中建体系内选择 1 个工程局的组织人事部门，做一次干部档案AI专审需求验证。</div>
+    </div>
+    <ul class="check-list">
+      <li>访谈该局组织人事部门负责人，了解当前档案审核流程和痛点</li>
+      <li>展示管理学院项目案例和AI专审效果（审核用时压减60%+，准确率97%+）</li>
+      <li>确认该局是否有信创部署需求和预算</li>
+      <li>收集该局档案格式和数据量信息，评估AI-OCR模型适配难度</li>
+    </ul>
+    <p style="font-size:12px;color:var(--slate-400);">成本：1 周 + 1 名BD人员 + 0 元技术投入 | 成功标准：该局明确表达"有兴趣试点"或"愿意进一步沟通"</p>
+  </div>
+
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+</div>
+
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>IS-B01 档案数字化+干部专审 &middot; 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 &middot; 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

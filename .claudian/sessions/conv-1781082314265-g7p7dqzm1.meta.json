@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781082314265-g7p7dqzm1",
+  "providerId": "claude",
+  "title": "Review and optimize Part 5 synthesis",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781082314265,
+  "updatedAt": 1781083760167,
+  "lastResponseAt": 1781083744309,
+  "sessionId": "4aab086d-8705-432c-b367-a72062ea63a1",
+  "providerState": {
+    "providerSessionId": "4aab086d-8705-432c-b367-a72062ea63a1"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版-详细版.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 45,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 132992,
+    "contextWindow": 1000000,
+    "contextTokens": 133037,
+    "percentage": 13,
+    "contextWindowIsAuthoritative": true
+  }
+}

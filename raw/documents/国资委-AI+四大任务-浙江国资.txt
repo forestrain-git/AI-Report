@@ -1,0 +1,481 @@
+国资委部署央企“AI+” 明确四大重点任务
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+    .doc-html-content img{
+        max-width: 100% !important;
+    }
+    .transparent-footerbar .footer {
+        background-color: transparent !important;
+    }
+    .transparent-footerbar .footer .footCont .footContL span {
+        color: #fff !important;
+    }
+    .transparent-footerbar .footer .footCont .footContR a {
+        color: #fff !important;
+    }
+    video,iframe{ display: block;width:100%;}
+
+	
+
+	
+
+		var h = window.location.host;
+		var a = window.location.href;
+		if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|ios|SymbianOS)/i) && !a.match("m2pc")) {
+			document.write(
+				'
+')
+		} else {
+			document.write('
+')
+		}
+	
+
+	
+
+	
+
+		
+
+			
+浙江在线首页
+
+			
+浙江在线首页
+
+		
+
+		
+
+			
+
+		
+
+	
+
+	
+
+			
+
+			
+
+			
+
+					
+
+					
+
+							
+
+									
+
+									
+
+									
+
+							
+
+							
+
+									function search() {
+											var u = navigator.userAgent;
+											var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+											var urlstr = '//s.zjol.com.cn/cse/search?s=6048247431686495421&entry=1&q=' + document.getElementById('q').value;
+											if (isiOS) {
+													window.location.href = urlstr;
+											} else {
+													window.open(urlstr);
+											}
+									}
+							
+
+					
+
+			
+
+	
+
+	
+
+			
+
+					
+
+频道首页
+
+					
+
+要闻动态
+
+					
+
+国企党建
+
+					
+
+数智国企
+
+					
+
+理论观点
+
+					
+
+高端访谈
+
+					
+
+热点专题
+
+			
+
+	
+
+	
+
+		
+
+    
+
+        
+
+            
+
+                
+本网策划
+
+            
+
+        
+
+        
+            
+                
+
+                    
+
+                        
+
+                        
+
+                            【专题】2026浙江国资国企新春特辑
+                        
+
+                    
+
+                
+
+            
+                
+
+                    
+
+                        
+
+                        
+
+                            一流财务管理体系助推中国式现代化优秀案例展播
+                        
+
+                    
+
+                
+
+            
+        
+    
+
+    
+
+    
+
+        
+
+            
+
+                
+热门推荐
+
+            
+
+        
+
+        
+
+            
+                
+                    
+
+                        
+
+                            
+
+                            
+
+                                聚焦浙江国资国企新风尚
+                            
+
+                        
+
+                    
+
+                
+                    
+
+                        
+
+                            
+
+                            
+
+                                浙江国资国企共赴“十四五”新征程
+                            
+
+                        
+
+                    
+
+                
+                    
+
+                        
+
+                            
+
+                            
+
+                                浙江省属国企党建“十大样本”
+                            
+
+                        
+
+                    
+
+                
+            
+        
+
+        
+
+            
+        
+
+    
+
+  
+
+		
+
+		
+
+			
+
+				
+您当前的位置 ： 
+国企
+&nbsp;>&nbsp;
+					
+要闻动态
+&nbsp;正文
+				
+
+				
+
+					
+				
+
+				
+
+					国资委部署央企“AI+” 明确四大重点任务
+				
+
+				
+
+					
+				
+
+				
+
+					
+发布时间：
+						2026-02-14  09:50:06
+					
+
+					
+来源：
+						证券时报
+					
+
+					
+
+						记者 江聃
+					
+
+				
+
+				
+
+					
+　　2月12日，记者从国务院国资委获悉，中央企业“人工智能+”专项行动深化部署会近日召开，会议披露了专项行动的最新进展，并明确了深化推进专项行动的四个方面主要任务，包括持续攻关“大模型”技术、积极扩大算力有效投资、推进“算力+电力”协同发展等。此外，部署会上还举行了人工智能（AI）重点企业集中入驻焕新社区仪式、央企“AI+”具身智能产业共同体成立仪式。
+
+　　国务院国资委党委书记、主任张玉卓强调，中央企业要以制定和实施“十五五”规划为契机，找准发展人工智能的定位、优势，构建科学有效的产业协作、经营管理机制，进一步发挥战略支撑和示范带动作用，切实当好智算基础设施的供给者、人工智能赋能千行百业的推动者、产业体系化布局的组织者。
+
+　　四个方面重点任务包括：一要强化自主创新，着力突破关键核心技术，持续攻关“大模型”技术，推动更多自主创新成果从样品变成产品、形成产业；二要强化场景培育，加强人工智能与主责主业、产业需求的精准对接，在高适配、高价值、高可靠上下更大功夫，推动人工智能规模化落地应用；三要强化投资牵引，积极扩大算力有效投资，推进“算力+电力”协同发展，提升全链条数据治理能力，不断夯实人工智能产业基础底座；四要强化开源开放协同，加快推动开源“焕新社区”迭代升级，努力成为“赋能型企业”，推进“AI+”产业共同体建设，不断涵养互利共赢的产业生态。
+
+					
+
+						
+					
+
+					
+
+编辑：
+
+						
+					
+
+				
+
+				
+
+					
+
+相关新闻
+
+					
+
+						
+					
+
+				
+
+				
+
+					
+
+版权说明
+
+					
+
+						凡注有"浙江在线·国企频道"的稿件，均为浙江在线·国企频道独家版权所有，未经许可不得转载或镜像；授权转载必须注明来源为"浙江在线·国企频道消息"，并保留"浙江在线·国企频道消息"的电头。
+					
+
+				
+
+			
+
+		
+
+	
+
+	
+
+	
+
+		
+
+			
+
+				
+浙江在线新闻网站版权所有 
+
+				
+Copyright &copy;1999-2026 Zjol. All Rights Reserved
+
+			
+
+			
+
+				
+网站简介
+
+				
+版权声明
+
+				
+广告刊登
+
+				
+联系我们
+
+			
+
+			
+
+电脑版
+
+		
+
+	
+
+	
+
+	
+
+		GetuiDataSDK.track('newsInfoPv', {
+			NewsArticleID: '31508784',
+			NewsArticleTitle: '国资委部署央企“AI+” 明确四大重点任务',
+			NewsEditionNumber: '101142',
+			NewsEditionName: '要闻动态',
+			NewsArticleType: '1',
+			NewsArticleSource: '证券时报',
+			NewsArticleAuthor: '记者 江聃',
+			NewsArticlePubtime: '2026-02-14 09:50:06'
+		})
+	
+
+	
+
+			(function (doc, win) {
+				var isAndroid = win.navigator.appVersion.match(/android/gi);
+				var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+				var scale = 1.0;
+				var ratio = 1;
+				if (isIPhone) {
+					if (window.devicePixelRatio == 2) {
+						scale *= 0.5;
+						ratio *= 2;
+					}
+					if (window.devicePixelRatio == 3) {
+						scale *= (1 / 3);
+						ratio *= 3;
+					}
+				}
+				var text = '
+';
+				// document.write(text);
+
+				var docEl = doc.documentElement
+				var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'
+				var recalc = function () {
+					var clientWidth = docEl.clientWidth
+					if (!clientWidth) return
+					docEl.style.fontSize = 16 * (clientWidth / 320) + 'px'
+					var docElFontSize = docEl.style.fontSize.replace(/px/gi, '')
+					var computedFontSize = win.getComputedStyle(docEl)['font-size'].replace(/px/gi, '')
+					docElFontSize != computedFontSize && (docEl.style.fontSize = docElFontSize * docElFontSize /
+						computedFontSize + 'px')
+				}
+				if (!doc.addEventListener) return
+				recalc()
+				win.addEventListener(resizeEvt, recalc, false)
+			})(document, window);
+	
+
+	
+
+	
+
+	
+
+		$('.CurrChnlCls').removeAttr('href')

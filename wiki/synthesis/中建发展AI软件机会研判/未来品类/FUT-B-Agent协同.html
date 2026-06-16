@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2B Agent协同 — 未来品类分析报告</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #555;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --border: #e5e7eb;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,.1), 0 2px 4px rgba(0,0,0,.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:0;
+  }
+
+  /* Header Banner */
+  .banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #3b82f6 100%);
+    color: #fff; padding: 48px 40px 40px;
+  }
+  .banner .tag {
+    display:inline-block; background:rgba(255,255,255,.18); border-radius:20px;
+    padding:4px 14px; font-size:13px; margin-bottom:16px; letter-spacing:.5px;
+  }
+  .banner h1 { font-size:32px; font-weight:700; margin-bottom:8px; }
+  .banner .subtitle { font-size:15px; opacity:.85; max-width:680px; }
+
+  /* Container */
+  .container { max-width:960px; margin:0 auto; padding:32px 24px; }
+
+  /* Status Badge */
+  .status-bar {
+    background:var(--warning-light); border:1px solid #fcd34d; border-radius:var(--radius);
+    padding:14px 20px; margin-bottom:32px; display:flex; align-items:center; gap:12px;
+  }
+  .status-bar .dot { width:14px; height:14px; border-radius:50%; background:var(--warning); flex-shrink:0; }
+  .status-bar .txt { font-size:14px; color:#92400e; }
+  .status-bar .txt strong { color:#78350f; }
+
+  /* Cards */
+  .card {
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    margin-bottom:24px; overflow:hidden;
+  }
+  .card-header {
+    padding:20px 24px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:10px;
+  }
+  .card-header .icon { font-size:20px; }
+  .card-header h2 { font-size:18px; font-weight:600; }
+  .card-body { padding:24px; }
+
+  /* Score Grid */
+  .score-grid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  }
+  .score-item {
+    text-align:center; padding:20px 12px; border-radius:var(--radius);
+    background:#f9fafb; border:1px solid var(--border);
+  }
+  .score-item .label { font-size:12px; color:var(--text-secondary); margin-bottom:6px; }
+  .score-item .value { font-size:28px; font-weight:700; }
+  .score-item .weight { font-size:11px; color:#999; margin-top:4px; }
+  .score-total {
+    grid-column:1/-1; text-align:center; padding:16px;
+    background:var(--warning-light); border-radius:var(--radius);
+  }
+  .score-total .big { font-size:36px; font-weight:800; color:#92400e; }
+  .score-total .tagline { font-size:13px; color:#92400e; margin-top:4px; }
+
+  /* Tables */
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { background:#f1f5f9; padding:10px 14px; text-align:left; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.5px; color:var(--text-secondary); }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); }
+  tr:last-child td { border-bottom:none; }
+  .cell-num { text-align:center; font-weight:700; }
+  .cell-badge { display:inline-block; padding:2px 10px; border-radius:12px; font-size:12px; font-weight:600; }
+  .badge-red { background:var(--danger-light); color:var(--danger); }
+  .badge-yellow { background:var(--warning-light); color:var(--danger); }
+  .badge-green { background:var(--success-light); color:var(--success); }
+
+  /* Flow diagram */
+  .flow-box {
+    background:#f0f4ff; border:2px dashed #93c5fd; border-radius:var(--radius);
+    padding:24px; margin:16px 0;
+  }
+  .flow-row { display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; }
+  .flow-node {
+    background:var(--card); border:2px solid #2563eb; border-radius:var(--radius);
+    padding:14px 18px; font-size:13px; font-weight:600; text-align:center;
+  }
+  .flow-arrow { font-size:24px; color:#2563eb; font-weight:700; }
+
+  /* Trigger signal list */
+  .signal-list { list-style:none; }
+  .signal-list li {
+    padding:12px 16px; margin:6px 0; border-radius:8px;
+    display:flex; align-items:flex-start; gap:12px;
+  }
+  .signal-list .pri {
+    display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; flex-shrink:0;
+  }
+  .pri-p0 { background:var(--danger-light); color:var(--danger); }
+  .pri-p1 { background:var(--warning-light); color:#92400e; }
+  .pri-p2 { background:#f0f4ff; color:#2563eb; }
+
+  /* Reserve action cards */
+  .action-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+  .action-card {
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px; border-left:4px solid #2563eb;
+  }
+  .action-card .num { font-size:24px; font-weight:800; color:#2563eb; opacity:.3; }
+  .action-card h4 { font-size:15px; margin:8px 0; }
+  .action-card .cost { font-size:12px; color:var(--text-secondary); margin-bottom:6px; }
+  .action-card .reason { font-size:13px; color:var(--text-secondary); line-height:1.6; }
+
+  /* Risk cards */
+  .risk-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+  .risk-card {
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px; border-top:4px solid var(--danger);
+  }
+  .risk-card h4 { font-size:15px; margin-bottom:8px; }
+  .risk-card .severity { font-size:12px; margin-bottom:6px; }
+  .risk-card .desc { font-size:13px; color:var(--text-secondary); line-height:1.6; }
+
+  /* Timeline */
+  .timeline { position:relative; padding-left:24px; }
+  .timeline::before {
+    content:''; position:absolute; left:8px; top:8px; bottom:8px;
+    width:2px; background:var(--border);
+  }
+  .timeline-item { position:relative; margin-bottom:20px; padding-left:12px; }
+  .timeline-item::before {
+    content:''; position:absolute; left:-20px; top:6px;
+    width:14px; height:14px; border-radius:50%; background:#2563eb; border:3px solid #dbeafe;
+  }
+  .timeline-item .time { font-size:12px; color:var(--text-secondary); font-weight:600; }
+  .timeline-item .content { font-size:14px; margin-top:4px; }
+
+  /* Responsive */
+  @media (max-width:768px) {
+    .score-grid { grid-template-columns:repeat(2,1fr); }
+    .action-grid, .risk-grid { grid-template-columns:1fr; }
+    .banner { padding:32px 20px; }
+    .banner h1 { font-size:24px; }
+    .container { padding:20px 16px; }
+  }
+
+  /* Print */
+  @media print {
+    body { background:#fff; }
+    .card { box-shadow:none; border:1px solid #ddd; break-inside:avoid; }
+    .banner { background:#1e3a5f !important; -webkit-print-color-adjust:exact; }
+  }
+
+  .meta-note {
+    font-size:12px; color:var(--text-secondary); background:#fefce8;
+    border-left:3px solid #eab308; padding:10px 14px; border-radius:0 6px 6px 0;
+    margin-top:16px;
+  }
+  .matrix-grid {
+    display:grid; grid-template-columns:80px repeat(3,1fr); gap:4px;
+    font-size:12px; text-align:center;
+  }
+  .matrix-grid .cell {
+    padding:10px 6px; border-radius:4px; font-weight:600;
+  }
+  .matrix-grid .header { background:#f1f5f9; color:var(--text-secondary); }
+  .matrix-grid .row-label { background:#f1f5f9; text-align:right; padding-right:10px; font-weight:600; }
+  .matrix-highlight { background:#fef3c7; border:2px solid var(--warning); }
+  .matrix-dim { background:#f9fafb; color:#ccc; }
+  .matrix-green { background:#d1fae5; }
+  .matrix-red { background:#fee2e2; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <div class="tag">未来品类 · 前瞻性分析</div>
+  <h1>FUT-B：B2B Agent 协同</h1>
+  <div class="subtitle">AI驱动的供应链自动协商网络 — 施工方AI进度排程Agent与供应商AI库存Agent直接对话，让B2B协调成本归零</div>
+</div>
+
+<div class="container">
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="dot"></div>
+    <div class="txt">
+      <strong>四维评分 20.1/100 · 储备优先级：🟡 技术跟踪</strong><br>
+      归零强度大(28)、解锁价值高(25)，但技术就绪度仅12。当前策略：跟踪但不押注。
+    </div>
+  </div>
+
+  <!-- 品类定义 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🎯</span><h2>品类定义</h2></div>
+    <div class="card-body">
+      <p style="font-size:15px; margin-bottom:16px;"><strong>一句话定义：</strong>让AI Agent代替人工完成B2B供应链中的交期协商、价格谈判和履约确认。</p>
+      <p style="font-size:14px; color:var(--text-secondary);">与现有28单元的关系：SC-01~03（供应链AI）的Agent化终局形态。当前SC-01做供应商风控、SC-03做供应链金融，都是在"帮人做判断"；Agent协同是更进一步——"替人做交易"。</p>
+    </div>
+  </div>
+
+  <!-- 成本归零重构 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">📐</span><h2>成本归零重构分析</h2></div>
+    <div class="card-body">
+
+      <h3 style="font-size:15px; margin-bottom:12px; color:var(--accent);">Step 1-2：扫描与锁定</h3>
+      <table>
+        <tr><th>场景</th><th>当前方式</th><th>耗时</th><th>痛点</th></tr>
+        <tr><td>交期确认</td><td>采购员打电话→供应商查库存→回复</td><td>0.5-2小时/次</td><td>信息滞后，库存不透明</td></tr>
+        <tr><td>价格询比</td><td>微信/电话多家询价→手工比价</td><td>2-4小时/批次</td><td>覆盖不全，价格非最优</td></tr>
+        <tr><td>紧急调货</td><td>项目经理→采购员→多供应商→逐个确认</td><td>4-8小时/次</td><td>工地等料停工，损失巨大</td></tr>
+        <tr><td>变更通知</td><td>供应商主动通知交期变动→靠人转发</td><td>0-2天延迟</td><td>信息断层，连锁延误</td></tr>
+        <tr><td>履约确认</td><td>到货后人工核对订单→验收入库</td><td>1-2小时/单</td><td>三单匹配靠人，易出错</td></tr>
+      </table>
+      <p style="margin-top:16px; font-size:14px;"><strong>归零力锁定：</strong>② <strong>协调归零</strong> — 组织之间的沟通协调成本趋零。这是四个归零力中最具"网络效应"的一个：参与节点越多，网络价值越大（梅特卡夫式增长）。</p>
+
+      <h3 style="font-size:15px; margin:24px 0 12px; color:var(--accent);">Step 3：归零后的对话</h3>
+      <div class="flow-box">
+        <div class="flow-row">
+          <div class="flow-node">施工方<br>进度排程Agent</div>
+          <div class="flow-arrow">⇄</div>
+          <div class="flow-node">供应商A<br>库存Agent</div>
+          <div class="flow-arrow">⇄</div>
+          <div class="flow-node">供应商B<br>库存Agent</div>
+        </div>
+        <p style="text-align:center; margin-top:16px; font-size:13px; color:var(--text-secondary);">
+          「下周三需200吨42.5水泥？」 → 「能，但周四便宜8%，要不要调？」 → 「检查进度网络图，调一天不影响关键路径，确认。」
+        </p>
+      </div>
+
+      <h3 style="font-size:15px; margin:24px 0 12px; color:var(--accent);">Step 4：应然结构</h3>
+      <div class="flow-box">
+        <div style="text-align:center; font-size:13px; color:var(--text-secondary); margin-bottom:12px;">B2B Agent 协同网络架构</div>
+        <div class="flow-row" style="flex-direction:column; gap:8px;">
+          <div class="flow-node" style="width:280px;">Agent协同层 — A2A协议</div>
+          <div style="display:flex; gap:40px;">
+            <div class="flow-node">施工侧<br>进度排程Agent<br><small style="color:var(--text-secondary);">←BIM进度数据库</small></div>
+            <div class="flow-node">供应侧<br>库存Agent<br><small style="color:var(--text-secondary);">←ERP/库存数据库</small></div>
+          </div>
+          <div style="font-size:12px; color:var(--text-secondary); margin-top:8px;">
+            网络效应：每新增一个节点，所有已有节点受益<br>
+            云筑网 110万供应商 → 天然种子节点池
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px; color:var(--text-secondary); margin-top:12px;">
+        <strong>关键设计原则：</strong>Agent只做"可逆决策"（交期协商、价格询比），不可逆决策（签约付款）仍需人确认。异常升级机制：Agent无法达成满意结果时，自动升级到人工采购员。渐进式信任：先跑"询价"（只读）→再跑"锁定库存"（软锁定）→最后跑"自动下单"（需审批）。
+      </p>
+
+      <h3 style="font-size:15px; margin:24px 0 12px; color:var(--accent);">Step 5：三步追问验证</h3>
+
+      <p style="font-size:14px; font-weight:600; margin-bottom:8px;">a) 谁的利益被消解？</p>
+      <table>
+        <tr><th>角色</th><th>影响</th><th style="text-align:center;">抵制概率</th></tr>
+        <tr><td>采购员（初级）</td><td>询价比价工作被Agent替代</td><td class="cell-num"><span class="cell-badge badge-yellow">中</span></td></tr>
+        <tr><td>供应商销售</td><td>日常交期确认被Agent替代</td><td class="cell-num"><span class="cell-badge badge-yellow">中</span></td></tr>
+        <tr><td>中间商/黄牛</td><td>信息不对称利润消失</td><td class="cell-num"><span class="cell-badge badge-red">高</span></td></tr>
+      </table>
+      <p style="font-size:13px; color:var(--text-secondary); margin-top:8px;">
+        采购员和销售不会消失，角色升级为"例外处理者+战略寻源"。类似1990年代ERP替代手工记账——会计没消失，工作内容变了。
+      </p>
+
+      <p style="font-size:14px; font-weight:600; margin:16px 0 8px;">b) 谁是新受益者？</p>
+      <table>
+        <tr><th>受益者</th><th>收益</th><th>量化估算</th></tr>
+        <tr><td>项目经理</td><td>交期确认从小时→秒，停工风险降低</td><td>单项目年节省50-200万</td></tr>
+        <tr><td>采购经理</td><td>从操作工→战略决策者</td><td>采购效率提升10-20倍</td></tr>
+        <tr><td>供应商</td><td>获取更多订单机会，库存周转加快</td><td>库存周转率+15-30%</td></tr>
+        <tr><td>云筑网平台</td><td>交易量跃升，平台价值增长</td><td>GMV增长+粘性增强</td></tr>
+        <tr><td>中建集团</td><td>采购成本降低，供应链韧性提升</td><td>1%成本节约=数十亿/年</td></tr>
+      </table>
+
+      <p style="font-size:14px; font-weight:600; margin:16px 0 8px;">c) 时间窗口？</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time">2026-2027</div>
+          <div class="content">Agent-to-Agent (A2A) 协议标准化（Google A2A、Anthropic MCP）</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2027-2028</div>
+          <div class="content">首批B2B Agent在物流/制造采购落地</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2028-2030</div>
+          <div class="content"><strong>建筑行业Agent协同试点</strong> — 云筑网天然优势窗口</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2030+</div>
+          <div class="content">网络效应加速，先发者不可逆转</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 穿越对标 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">⏳</span><h2>穿越对标</h2></div>
+    <div class="card-body">
+      <table>
+        <tr><th>穿越案例</th><th>归零的成本</th><th>品类出现速度</th><th>启示</th></tr>
+        <tr>
+          <td><strong>1990s ERP→制造业</strong></td>
+          <td>企业内部信息传递成本</td>
+          <td>~15年(1985-2000)</td>
+          <td>归零速度在加速</td>
+        </tr>
+        <tr>
+          <td><strong>2000s B2B电商平台</strong></td>
+          <td>采购信息搜索成本</td>
+          <td>~8年(1999-2007)</td>
+          <td style="color:var(--accent);"><strong>最直接穿越参照</strong></td>
+        </tr>
+        <tr>
+          <td><strong>2020s RPA→财务对账</strong></td>
+          <td>跨系统数据搬运成本</td>
+          <td>~3年(2018-2021)</td>
+          <td>基础设施越好，归零越快</td>
+        </tr>
+      </table>
+      <p style="margin-top:16px; font-size:13px; color:var(--text-secondary);">
+        <strong>关键启示：</strong>B2B电商从阿里巴巴1999成立到2007年上市用了8年。Agent协同已有云筑网110万供应商基础设施，可能更快。但先发者不一定赢——阿里巴巴不是第一个B2B平台（前面有中国化工网1997），但它是第一个做对的。
+      </p>
+      <p style="font-size:13px; color:var(--accent);"><strong>穿越结论：</strong>B2B Agent协同的时间线可能被低估。如果2030年临界，中建现在就该储备。</p>
+    </div>
+  </div>
+
+  <!-- 被解锁价值 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">💰</span><h2>被解锁价值</h2></div>
+    <div class="card-body">
+      <table>
+        <tr><th>成本项</th><th>当前支出</th><th>归零后释放</th></tr>
+        <tr><td>人工协调成本</td><td>采购员+供应商销售人力（中建体系内数万人日/年）</td><td>释放80%人力到高价值工作</td></tr>
+        <tr><td>信息滞后损失</td><td>交期延误→工地停工（单项目年损失50-200万）</td><td>归零</td></tr>
+        <tr><td>价格非最优损失</td><td>覆盖供应商不全→采购溢价2-5%</td><td>归零</td></tr>
+        <tr><td>库存错配损失</td><td>供应商库存积压+施工方紧急高价采购</td><td>双方各减30-50%</td></tr>
+        <tr style="background:#fef3c7; font-weight:600;">
+          <td><strong>全行业范围</strong></td>
+          <td>建筑业年产值30万亿，采购占比50-70%</td>
+          <td><strong>1%效率提升=1500-2100亿</strong></td>
+        </tr>
+      </table>
+      <p style="margin-top:12px; font-size:13px; color:var(--text-secondary);">保守测算：仅中建体系内，B2B协调成本归零释放价值约<strong>数十亿/年</strong>。</p>
+    </div>
+  </div>
+
+  <!-- 四维评分 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">📊</span><h2>四维评分体系</h2></div>
+    <div class="card-body">
+      <div class="score-grid">
+        <div class="score-item">
+          <div class="label">归零强度</div>
+          <div class="value" style="color:#2563eb;">28</div>
+          <div class="weight">权重 30% · /30</div>
+        </div>
+        <div class="score-item">
+          <div class="label">解锁价值</div>
+          <div class="value" style="color:#059669;">25</div>
+          <div class="weight">权重 30% · /30</div>
+        </div>
+        <div class="score-item">
+          <div class="label">技术就绪度</div>
+          <div class="value" style="color:#d97706;">12</div>
+          <div class="weight">权重 25% · /25</div>
+        </div>
+        <div class="score-item">
+          <div class="label">触发确定性</div>
+          <div class="value" style="color:#dc2626;">8</div>
+          <div class="weight">权重 15% · /15</div>
+        </div>
+        <div class="score-total">
+          <div class="big">20.1</div>
+          <div class="tagline">加权总分 · 储备优先级：🟡 技术跟踪</div>
+        </div>
+      </div>
+
+      <!-- Matrix position -->
+      <p style="font-size:13px; font-weight:600; margin:20px 0 8px; color:var(--text-secondary);">储备优先级矩阵位置</p>
+      <div class="matrix-grid">
+        <div class="cell"></div>
+        <div class="cell header">技术就绪度 高<br>20-25</div>
+        <div class="cell header">技术就绪度 中<br>12-19</div>
+        <div class="cell header">技术就绪度 低<br>&lt;12</div>
+        <div class="cell row-label">归零强度<br>大 25-30</div>
+        <div class="cell matrix-red">🔴 立即储备</div>
+        <div class="cell matrix-highlight">🟡 技术跟踪<br><strong>← B在此</strong></div>
+        <div class="cell matrix-green">🟢 方向观察</div>
+        <div class="cell row-label">归零强度<br>中 15-24</div>
+        <div class="cell matrix-dim">🟡 验证性POC</div>
+        <div class="cell matrix-green">🟢 方向观察</div>
+        <div class="cell matrix-dim">⚪ 暂不投入</div>
+        <div class="cell row-label">归零强度<br>小 &lt;15</div>
+        <div class="cell matrix-green">🟢 方向观察</div>
+        <div class="cell matrix-dim">⚪ 暂不投入</div>
+        <div class="cell matrix-dim">⚪ 暂不投入</div>
+      </div>
+
+      <p style="font-size:12px; color:var(--text-secondary); margin-top:12px;">
+        <strong>判据：</strong>归零强度大(28)——②协调归零直接撼动B2B交易核心结构。解锁价值高(25)——建筑业年产值30万亿，1%效率提升=1500-2100亿。但技术就绪度仅12——LLM协商能力具备但"可信协商"未到生产级，A2A协议制定中。触发确定性仅8——可观测信号明确但时间线±2年不确定性大。
+      </p>
+    </div>
+  </div>
+
+  <!-- 触发条件 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🔔</span><h2>触发条件：什么信号意味着可以正式启动？</h2></div>
+    <div class="card-body">
+      <ul class="signal-list">
+        <li>
+          <span class="pri pri-p0">P0</span>
+          <div><strong>Google A2A或等效Agent间通信协议发布v1.0稳定版</strong><br>
+          <span style="font-size:12px; color:var(--text-secondary);">观测：跟踪Google/Anthropic/OpenAI官方动态 | 预计：2027-2028</span></div>
+        </li>
+        <li>
+          <span class="pri pri-p0">P0</span>
+          <div><strong>相邻行业（物流/制造/零售）出现首个B2B Agent协商的生产级案例</strong><br>
+          <span style="font-size:12px; color:var(--text-secondary);">观测：行业报告+VC投资追踪 | 预计：2027-2029</span></div>
+        </li>
+        <li>
+          <span class="pri pri-p1">P1</span>
+          <div><strong>云筑网供应商中≥30%完成ERP/库存系统API化</strong><br>
+          <span style="font-size:12px; color:var(--text-secondary);">观测：云筑网内部数据 | 预计：需内部评估</span></div>
+        </li>
+        <li>
+          <span class="pri pri-p1">P1</span>
+          <div><strong>LLM在"约束协商"任务上的基准测试准确率≥95%</strong><br>
+          <span style="font-size:12px; color:var(--text-secondary);">观测：学术基准+内部测试 | 预计：2027-2028</span></div>
+        </li>
+        <li>
+          <span class="pri pri-p2">P2</span>
+          <div><strong>《电子签名法》修订或司法解释明确Agent签约效力</strong><br>
+          <span style="font-size:12px; color:var(--text-secondary);">观测：法律动态追踪 | 预计：2028-2030</span></div>
+        </li>
+      </ul>
+      <p style="margin-top:16px; font-size:13px; color:var(--text-secondary);">
+        <strong>触发逻辑：</strong>P0两个条件同时满足 → 启动POC。P1满足 → 加速投入。P2满足 → 可考虑商业化部署。
+      </p>
+    </div>
+  </div>
+
+  <!-- 储备动作 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🔧</span><h2>储备动作：今天可做的低成本不后悔准备</h2></div>
+    <div class="card-body">
+      <div class="action-grid">
+        <div class="action-card">
+          <div class="num">R1</div>
+          <h4>供应商数字化画像</h4>
+          <div class="cost">投入：1-2人月</div>
+          <div class="reason">统计110万供应商中已使用ERP/库存管理系统/API接口的比例，识别Top 1000高频交易供应商的数字化就绪度。无论Agent协同何时启动，这是SC-01/03的共有基础设施。</div>
+        </div>
+        <div class="action-card">
+          <div class="num">R2</div>
+          <h4>B2B协商语料收集</h4>
+          <div class="cost">投入：2-3人月</div>
+          <div class="reason">从云筑网历史交易记录中提取"交期变更""价格谈判""紧急调货"的协商模式和决策树。语料是任何AI化的训练基础。</div>
+        </div>
+        <div class="action-card">
+          <div class="num">R3</div>
+          <h4>A2A协议跟踪与沙盒测试</h4>
+          <div class="cost">投入：1人月+少量算力</div>
+          <div class="reason">搭建Google A2A/Anthropic MCP的测试环境，用"建材询价"场景跑通Agent对话链路。协议理解是通用能力，对所有权Agent化场景有复利。</div>
+        </div>
+        <div class="action-card">
+          <div class="num">R4</div>
+          <h4>B2B协商模拟器建设</h4>
+          <div class="cost">投入：2人月+开发</div>
+          <div class="reason">搭建多Agent协商沙盒——"1个施工方Agent vs 3个供应商Agent"的询比价场景。沙盒可复用于SC方向其他Agent化需求。</div>
+        </div>
+        <div class="action-card">
+          <div class="num">R5</div>
+          <h4>法律合规前置研究</h4>
+          <div class="cost">投入：1人月+外聘费用</div>
+          <div class="reason">委托律所出具《AI Agent在B2B交易中的法律地位分析》，明确当前法律框架下的可行边界和待突破点。</div>
+        </div>
+      </div>
+      <p style="margin-top:20px; font-size:13px; color:var(--text-secondary);">
+        <strong>总投入估算：</strong>7-10人月 + 少量外部费用。<strong>优先级：</strong>R1→R3→R2→R4→R5。R1（数据画像）可立即执行，R3（协议沙盒）可并行启动。
+      </p>
+    </div>
+  </div>
+
+  <!-- 先行者风险 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">⚠️</span><h2>先行者风险：如果别人先做了，我们会损失什么？</h2></div>
+    <div class="card-body">
+      <div class="risk-grid">
+        <div class="risk-card">
+          <h4>平台价值稀释</h4>
+          <div class="severity">🔴 严重程度：高 | 概率：中</div>
+          <div class="desc">云筑网从"不可替代的交易平台"退化为"商品目录"——Agent协同层成为新控制点，平台沦为底层管道。</div>
+        </div>
+        <div class="risk-card">
+          <h4>供应商锁定</h4>
+          <div class="severity">🔴 严重程度：高 | 概率：高</div>
+          <div class="desc">先行者用Agent网络锁定供应商（切换成本=重新训练Agent+重新接入系统），后来者突破成本极高。</div>
+        </div>
+        <div class="risk-card">
+          <h4>数据飞轮丧失</h4>
+          <div class="severity">🟡 严重程度：中 | 概率：高</div>
+          <div class="desc">Agent对话产生的协商策略数据是独一无二的训练语料——先发者数据优势随时间指数增长。</div>
+        </div>
+        <div class="risk-card">
+          <h4>生态位替代</h4>
+          <div class="severity">🔴 严重程度：高 | 概率：中</div>
+          <div class="desc">如果广联达或阿里1688先建立建筑业Agent协同网络，中建的云筑网可能被绕过——施工方直接在其他平台完成采购。</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px; padding:16px; background:var(--danger-light); border-radius:var(--radius);">
+        <p style="font-size:14px; font-weight:700; color:var(--danger); margin-bottom:6px;">最差情景模拟</p>
+        <p style="font-size:13px; color:#7f1d1d; line-height:1.7;">
+          2029年，广联达发布"广联达Agent协同平台"，已接入5万供应商，月均Agent协商交易100万笔。中建云筑网发现供应商已习惯在广联达平台维护库存数据，接入成本高、意愿低。云筑网从"交易规则制定者"变成"追随者"。
+        </p>
+      </div>
+
+      <p style="margin-top:16px; font-size:13px; color:var(--accent);">
+        <strong>防御性底线：</strong>即使不主动做Agent协同，也必须确保云筑网的API开放度和供应商数据可移植性——防止被第三方平台锁定。
+      </p>
+    </div>
+  </div>
+
+  <!-- 时间判断卡牌 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🃏</span><h2>时间判断卡牌</h2></div>
+    <div class="card-body">
+      <table>
+        <tr><th style="width:32px;">#</th><th>时间判断问题</th><th style="width:64px;">评估</th><th>说明</th></tr>
+        <tr>
+          <td class="cell-num">T1</td>
+          <td><strong>核心技术是否已存在？</strong></td>
+          <td class="cell-num"><span class="cell-badge badge-yellow">🟡</span></td>
+          <td>LLM协商能力具备（GPT-4+工具调用），A2A协议制定中，但"Agent谈判可靠性"未到生产级</td>
+        </tr>
+        <tr>
+          <td class="cell-num">T2</td>
+          <td><strong>基础设施是否ready？</strong></td>
+          <td class="cell-num"><span class="cell-badge badge-green">🟢</span></td>
+          <td>云筑网双边平台已运营多年，供应商ERP渗透率逐步提升，但供应商侧库存系统API化率待统计</td>
+        </tr>
+        <tr>
+          <td class="cell-num">T3</td>
+          <td><strong>用户是否有需求信号？</strong></td>
+          <td class="cell-num"><span class="cell-badge badge-yellow">🟡</span></td>
+          <td>采购效率提升是明确痛点，但没人会主动说"我要Agent帮我打电话"——典型的"用户不知道自己要什么"型需求</td>
+        </tr>
+        <tr>
+          <td class="cell-num">T4</td>
+          <td><strong>先行者窗口有多长？</strong></td>
+          <td class="cell-num"><span class="cell-badge badge-red">🔴</span></td>
+          <td>A2A协议成熟后（2027-2028），科技公司可6-12个月做出通用B2B Agent平台。窗口：在通用方案出现前，用行业know-how+独占双边网络建壁垒</td>
+        </tr>
+        <tr>
+          <td class="cell-num">T5</td>
+          <td><strong>监管/合规何时就绪？</strong></td>
+          <td class="cell-num"><span class="cell-badge badge-yellow">🟡</span></td>
+          <td>电子合同已确认，但"Agent代签"法律地位未明确。预计2028-2030年有相关立法</td>
+        </tr>
+        <tr>
+          <td class="cell-num">T6</td>
+          <td><strong>失败的代价有多大？</strong></td>
+          <td class="cell-num"><span class="cell-badge badge-green">🟢</span></td>
+          <td>渐进式验证（先询价后下单），每一步都可退。不会像"投入2年开发后发现市场不存在"那样伤筋动骨</td>
+        </tr>
+        <tr>
+          <td class="cell-num">T7</td>
+          <td><strong>先发劣势风险？</strong></td>
+          <td class="cell-num"><span class="cell-badge badge-yellow">🟡</span></td>
+          <td>过早做→技术不成熟，体验差，教育了市场；过晚做→网络效应被他人锁定</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 路线图 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🗺️</span><h2>储备路线图</h2></div>
+    <div class="card-body">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="time">2026 H2</div>
+          <div class="content">执行全部5项储备动作。R1供应商画像+R3协议沙盒并行启动。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2027 H1</div>
+          <div class="content">完成沙盒验证，形成内部技术白皮书《B2B Agent协同可行性评估》</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2027 H2</div>
+          <div class="content"><strong>关键决策点：</strong>评估P0触发条件（A2A协议发布+行业首例），决定是否进入POC</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2028 H1</div>
+          <div class="content">如P0触发 → 启动2-3品类POC验证（水泥、钢材、砂石）</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2028 H2+</div>
+          <div class="content">POC通过 → 云筑网Agent协同试点，首批100家供应商</div>
+        </div>
+        <div class="timeline-item">
+          <div class="time">2029+</div>
+          <div class="content">规模化Agent网络，目标覆盖10000+供应商</div>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--text-secondary); margin-top:12px;">
+        如P0未触发：继续技术跟踪，半年度重申触发条件。
+      </p>
+    </div>
+  </div>
+
+  <!-- 关键假设 -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🔬</span><h2>关键假设清单</h2></div>
+    <div class="card-body">
+      <table>
+        <tr><th style="width:36px;">#</th><th>假设</th><th style="width:60px;">优先级</th><th>验证方法</th></tr>
+        <tr>
+          <td class="cell-num">H1</td>
+          <td>LLM Agent能在建材采购协商中达到≥90%的人类满意度</td>
+          <td class="cell-num"><span class="cell-badge badge-red">P0</span></td>
+          <td>R4沙盒模拟+人工评估</td>
+        </tr>
+        <tr>
+          <td class="cell-num">H2</td>
+          <td>云筑网Top 1000供应商中≥30%具备API化库存系统</td>
+          <td class="cell-num"><span class="cell-badge badge-red">P0</span></td>
+          <td>R1数据画像</td>
+        </tr>
+        <tr>
+          <td class="cell-num">H3</td>
+          <td>供应商愿意让Agent接入其库存系统（数据安全+商业机密顾虑）</td>
+          <td class="cell-num"><span class="cell-badge badge-red">P0</span></td>
+          <td>供应商深度访谈(20家+)</td>
+        </tr>
+        <tr>
+          <td class="cell-num">H4</td>
+          <td>A2A协议能在2028年前达到生产级稳定性</td>
+          <td class="cell-num"><span class="cell-badge badge-yellow">P1</span></td>
+          <td>协议跟踪</td>
+        </tr>
+        <tr>
+          <td class="cell-num">H5</td>
+          <td>"Agent代签"在2029年前获得法律认可或至少不被禁止</td>
+          <td class="cell-num"><span class="cell-badge badge-yellow">P1</span></td>
+          <td>R5法律研究</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Footer meta -->
+  <div class="meta-note">
+    <strong>前瞻性分析，不构成当前行动建议。</strong> 本报告基于"成本归零重构法"推导，回答"什么时候该启动、现在该准备什么"。评分采用四维体系（归零强度/解锁价值/技术就绪度/触发确定性），不可与现有28单元七维评分直接比较。更新频率：半年度扫描。分析方法详见 [[方法论-成本归零重构法]] 和 [[行动清单-未来品类五步法]]。
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -3,6 +3,74 @@ const path = require('path');
 
 const DECK_DIR = __dirname;
 
+/**
+ * 给 CSS 文本中的每条规则加 slide 作用域前缀
+ * @param {string} css - 原始 CSS（已移除 body 规则）
+ * @param {string} slideId - 如 "slide-0"
+ * @returns {string} 作用域后的 CSS
+ */
+function scopeCss(css, slideId) {
+  if (!css || !css.trim()) return css;
+
+  // 第一步：移除 CSS 注释（避免注释中的 { } 干扰深度计数）
+  const noComments = css.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  // 第二步：按 brace 深度切分 CSS 语句
+  const statements = [];
+  let depth = 0;
+  let current = '';
+  let i = 0;
+
+  while (i < noComments.length) {
+    const ch = noComments[i];
+
+    if (ch === '{') {
+      depth++;
+      current += ch;
+    } else if (ch === '}') {
+      depth--;
+      current += ch;
+      if (depth === 0) {
+        const stmt = current.trim();
+        if (stmt) statements.push(stmt);
+        current = '';
+      }
+    } else {
+      current += ch;
+    }
+    i++;
+  }
+  // 残留内容（格式空白等）
+  if (current.trim()) statements.push(current.trim());
+
+  // 第三步：给每条规则的选择器加 #slideId 前缀
+  const scoped = statements.map(stmt => {
+    const braceIdx = stmt.indexOf('{');
+    if (braceIdx === -1) return stmt; // 不是规则
+
+    const pre = stmt.substring(0, braceIdx).trim();
+    const rest = stmt.substring(braceIdx);
+
+    // 不处理 at-rules（@keyframes, @media, @import, @font-face 等）
+    if (pre.startsWith('@')) return stmt;
+
+    // 处理逗号分隔的选择器列表
+    const selectors = pre.split(',').map(s => {
+      s = s.trim();
+      if (!s) return s;
+      // :root / html 是全局选择器，不做作用域
+      if (s === ':root' || s === 'html') return s;
+      // 已经包含 slide ID 则不重复
+      if (s.includes('#' + slideId)) return s;
+      return '#' + slideId + ' ' + s;
+    });
+
+    return selectors.join(', ') + ' ' + rest;
+  });
+
+  return scoped.filter(Boolean).join('\n');
+}
+
 // 读取 index.html 提取 DECK_MANIFEST
 const indexHtml = fs.readFileSync(path.join(DECK_DIR, 'index.html'), 'utf8');
 const manifestMatch = indexHtml.match(/window\.DECK_MANIFEST = (\[[\s\S]*?\]);/);
@@ -42,7 +110,7 @@ const slides = manifest.map((item, idx) => {
   }
   let privateCss = styles.join('\n');
 
-  // 4. 从 privateCss 中提取多行 body { ... } 规则（使用 ^ 锚点确保只匹配独立的 body 选择器）
+  // 4. 从 privateCss 中提取多行 body { ... } 规则
   const bodyRuleMatch = privateCss.match(/^[\s]*body\s*\{([\s\S]*?)\n\s*\}/m);
   let bodyStyle = bodyRuleMatch ? bodyRuleMatch[1].trim() : '';
 
@@ -51,15 +119,22 @@ const slides = manifest.map((item, idx) => {
     bodyStyle = bodyStyle ? bodyInlineStyle + '; ' + bodyStyle : bodyInlineStyle;
   }
 
-  // 5. 从 privateCss 中移除 body 规则（使用 ^ 锚点避免误删 .case-body、.form-body 等）
+  // 5. 从 privateCss 中移除 body 规则
   privateCss = privateCss.replace(/^[\s]*body\s*\{[\s\S]*?\n\s*\}\s*\n?/gm, '');
 
   // 6. 清理空白行
   privateCss = privateCss.replace(/\n{3,}/g, '\n\n').trim();
 
-  // 7. 修正路径（slide 在 slides/ 子目录，single-file.html 在 html-deck/ 根目录）
+  // 7. 修正路径
   bodyContent = bodyContent.replaceAll('../shared/', './shared/');
+  bodyContent = bodyContent.replaceAll('../demos/', './demos/');
+  bodyContent = bodyContent.replaceAll('../../assets/', '../assets/');
+  bodyContent = bodyContent.replaceAll('../../archive/', '../archive/');
   privateCss = privateCss.replaceAll('../shared/', './shared/');
+
+  // 8. CSS 作用域隔离：给每条规则加 #slide-N 前缀
+  const slideId = 'slide-' + idx;
+  privateCss = scopeCss(privateCss, slideId);
 
   // 提取原始 display 值（默认 flex，来自共享 CSS 的 body { display: flex; }）
   const displayMatch = bodyStyle.match(/display:\s*([^;]+)/);
@@ -87,6 +162,13 @@ parts.push(`<!DOCTYPE html>
 <style>
 ${sharedCss}
 
+/* 覆盖共享CSS中的 body 属性，匹配原始 index.html 的画布效果 */
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #e2e8f0;
+}
+
 /* 主框架 */
 #stage {
   position: fixed;
@@ -103,8 +185,7 @@ ${sharedCss}
   display: none;
   width: 1920px;
   height: 1080px;
-  position: absolute;
-  top: 0; left: 0;
+  position: relative;
   overflow: hidden;
 }
 

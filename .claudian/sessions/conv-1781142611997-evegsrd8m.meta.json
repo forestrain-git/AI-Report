@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781142611997-evegsrd8m",
+  "providerId": "claude",
+  "title": "调整 HTML 演示页面二维码居中并环绕金句",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781142611998,
+  "updatedAt": 1781143724446,
+  "lastResponseAt": 1781143610631,
+  "sessionId": "2f0d0072-ef26-42d8-b439-eff8f483a98a",
+  "providerState": {
+    "providerSessionId": "2f0d0072-ef26-42d8-b439-eff8f483a98a"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 102115,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 99840,
+    "contextWindow": 200000,
+    "contextTokens": 201955,
+    "percentage": 100,
+    "contextWindowIsAuthoritative": true
+  }
+}

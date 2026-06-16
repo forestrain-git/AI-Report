@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781144661174-ckkmhshez",
+  "providerId": "claude",
+  "title": "Find missing project slide in HTML deck",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781144661174,
+  "updatedAt": 1781146315880,
+  "lastResponseAt": 1781144859945,
+  "sessionId": "482051c9-5889-4dc0-a44b-bc5b2cd8f2eb",
+  "providerState": {
+    "providerSessionId": "482051c9-5889-4dc0-a44b-bc5b2cd8f2eb"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 73902,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 72192,
+    "contextWindow": 200000,
+    "contextTokens": 146094,
+    "percentage": 73,
+    "contextWindowIsAuthoritative": true
+  }
+}

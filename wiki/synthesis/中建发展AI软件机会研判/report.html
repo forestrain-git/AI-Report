@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>中建发展AI软件方向 · 全景评分报告</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #fff;
+  color: var(--slate-800);
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 28px 0 8px;
+  border-bottom: 1px solid var(--slate-100);
+  margin-bottom: 20px;
+}
+.header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--slate-900);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.header .meta {
+  font-size: 13px;
+  color: var(--slate-400);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.header .meta .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--slate-300);
+}
+
+/* Stats bar */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--slate-50);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  text-align: center;
+  border: 1px solid var(--slate-100);
+}
+.stat-card .num {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-card .num.green { color: var(--green); }
+.stat-card .num.amber { color: var(--amber); }
+.stat-card .num.red { color: var(--red); }
+.stat-card .label {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-top: 4px;
+}
+
+/* Legend strip */
+.legend-strip {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.legend-strip span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.legend-strip .ldot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Section */
+.section {
+  margin-bottom: 24px;
+}
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.section-head h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  letter-spacing: -0.01em;
+}
+.section-head .cnt {
+  font-size: 11px;
+  background: var(--slate-100);
+  color: var(--slate-500);
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* Direction card */
+.dir-card {
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.dir-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--slate-50);
+  border-bottom: 1px solid var(--slate-100);
+}
+.dir-header .dir-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.dir-header .dir-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--slate-800);
+}
+.dir-header .dir-avg {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.dir-header .dir-avg .val {
+  font-size: 20px;
+  color: var(--blue);
+}
+
+/* Item row */
+.item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 12px;
+  border-bottom: 1px solid var(--slate-100);
+  transition: background 0.15s;
+}
+.item:last-child { border-bottom: none; }
+.item:active { background: var(--slate-50); }
+.item-main {
+  flex: 1;
+  min-width: 0;
+}
+.item-code {
+  font-size: 11px;
+  color: var(--slate-400);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 2px;
+}
+.item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-800);
+  line-height: 1.35;
+  text-decoration: none;
+}
+.item-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.15s;
+}
+.item-title a:hover { border-bottom-color: var(--blue); }
+
+/* Score badge */
+.score-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+.score-hi { background: var(--green); }
+.score-md { background: var(--amber); }
+.score-lo { background: var(--red); }
+
+/* Verdict pill */
+.verdict {
+  font-size: 15px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+/* Divider with label */
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 28px 0 20px;
+}
+.divider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+  background: var(--slate-200);
+}
+.divider span {
+  position: relative;
+  display: inline-block;
+  padding: 0 14px;
+  background: #fff;
+  font-size: 12px;
+  color: var(--slate-400);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Future disclaimer */
+.disclaimer {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--blue);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.disclaimer .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* Future item */
+.future-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 16px;
+  gap: 12px;
+  border-bottom: 1px solid var(--slate-100);
+}
+.future-item:last-child { border-bottom: none; }
+.future-info { flex: 1; min-width: 0; }
+.future-code {
+  font-size: 11px;
+  color: var(--slate-400);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.future-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 4px;
+}
+.future-name a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+}
+.future-name a:hover { border-bottom-color: var(--blue); }
+.future-desc {
+  font-size: 12px;
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+.future-meta {
+  text-align: right;
+  flex-shrink: 0;
+}
+.future-meta .fscore {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.future-meta .fscore.score-hi-c { color: var(--blue); }
+.future-meta .fscore.score-md-c { color: var(--amber); }
+.future-meta .fmatrix {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Insight card */
+.insight-card {
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.insight-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+.insight-row:last-child { margin-bottom: 0; }
+.insight-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.insight-num.c1 { background: var(--blue); }
+.insight-num.c2 { background: var(--green); }
+.insight-num.c3 { background: var(--amber); }
+.insight-num.c4 { background: #6366f1; }
+.insight-num.c5 { background: var(--red); }
+.insight-text h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 2px;
+}
+.insight-text p {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 32px 0 8px;
+  font-size: 12px;
+  color: var(--slate-400);
+}
+.footer .brand {
+  font-weight: 600;
+  color: var(--slate-300);
+}
+
+/* Link icon */
+.link-icon {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 11px;
+  opacity: 0.4;
+  vertical-align: middle;
+}
+
+/* Direction-specific accent colors */
+.accent-sc { background: #eef2ff; color: #4338ca; }
+.accent-mgmt { background: #ecfdf5; color: #047857; }
+.accent-biz { background: #fef3c7; color: #b45309; }
+.accent-labor { background: #fce7f3; color: #be185d; }
+.accent-pm { background: #e0e7ff; color: #4f46e5; }
+.accent-token { background: #fee2e2; color: #b91c1c; }
+
+/* Direction header border accents */
+.dir-card.border-sc { border-left: 3px solid #4338ca; }
+.dir-card.border-mgmt { border-left: 3px solid #047857; }
+.dir-card.border-biz { border-left: 3px solid #b45309; }
+.dir-card.border-labor { border-left: 3px solid #be185d; }
+.dir-card.border-pm { border-left: 3px solid #4f46e5; }
+.dir-card.border-token { border-left: 3px solid #b91c1c; }
+
+/* Future matrix grid label */
+.matrix-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.matrix-red { background: #fee2e2; color: #b91c1c; }
+.matrix-yellow { background: #fef3c7; color: #92400e; }
+.matrix-green { background: #dcfce7; color: #15803d; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <h1>中建发展AI软件方向<br>全景评分报告</h1>
+  <div class="meta">
+    <span>2026-06-15</span>
+    <span class="dot"></span>
+    <span>26个现有品类 + 7个未来品类</span>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="num green">9</div>
+    <div class="label">建议推进</div>
+  </div>
+  <div class="stat-card">
+    <div class="num amber">13</div>
+    <div class="label">谨慎推进</div>
+  </div>
+  <div class="stat-card">
+    <div class="num red">4</div>
+    <div class="label">需重大调整</div>
+  </div>
+</div>
+<div class="legend-strip">
+  <span><span class="ldot" style="background:var(--green)"></span> ≥75 推进</span>
+  <span><span class="ldot" style="background:var(--amber)"></span> 50-74 谨慎</span>
+  <span><span class="ldot" style="background:var(--red)"></span> &lt;50 调整</span>
+</div>
+
+<!-- Part 1 Divider -->
+<div class="divider"><span>第一部分 · 现有26品类七维评分</span></div>
+
+<!-- Direction: 供应链AI -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F4E6; 供应链AI</h2>
+    <span class="cnt">5个单元</span>
+  </div>
+  <div class="dir-card border-sc">
+    <div class="dir-header">
+      <div class="dir-icon accent-sc">&#x1F4E6;</div>
+      <div class="dir-name">供应链AI</div>
+      <div class="dir-avg">均分 <span class="val">69.4</span></div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">SC-03</div>
+        <div class="item-title"><a href="五步法分析/SC-03-供应链金融AI.html">供应链金融AI <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">91</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">SC-01</div>
+        <div class="item-title"><a href="五步法分析/SC-01-供应商智能风控.html">供应商智能风控 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">86</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">SC-04</div>
+        <div class="item-title"><a href="五步法分析/SC-04-招投标合规审查.html">招投标合规审查 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">79</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">SC-02</div>
+        <div class="item-title"><a href="五步法分析/SC-02-建材价格预测.html">建材价格预测 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">51</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">SC-05</div>
+        <div class="item-title"><a href="五步法分析/SC-05-行业数据产品.html">行业数据产品 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x1F534;</div>
+      <div class="score-badge score-lo">40</div>
+    </div>
+  </div>
+</div>
+
+<!-- Direction: 内部管理流程 -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F3E2; 内部管理流程</h2>
+    <span class="cnt">6个单元</span>
+  </div>
+  <div class="dir-card border-mgmt">
+    <div class="dir-header">
+      <div class="dir-icon accent-mgmt">&#x1F3E2;</div>
+      <div class="dir-name">内部管理流程AI化</div>
+      <div class="dir-avg">均分 <span class="val">69.0</span></div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-A06</div>
+        <div class="item-title"><a href="五步法分析/IS-A06-审图.html">AI审图 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">86</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-A01</div>
+        <div class="item-title"><a href="五步法分析/IS-A01-海外部投标评审.html">海外部投标评审 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">78</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-A05</div>
+        <div class="item-title"><a href="五步法分析/IS-A05-知识管理.html">AI知识管理 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-hi">75</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">SAFE-01</div>
+        <div class="item-title"><a href="五步法分析/SAFE-01-安全管理AI化.html">安全管理AI化 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">72</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-A02</div>
+        <div class="item-title"><a href="五步法分析/IS-A02-办公厅制度审核.html">办公厅制度审核 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">65</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-A03</div>
+        <div class="item-title"><a href="五步法分析/IS-A03-财务辅助审核.html">财务辅助审核 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">57</div>
+    </div>
+  </div>
+</div>
+
+<!-- Direction: 业务赋能 -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x2699;&#xFE0F; 业务赋能</h2>
+    <span class="cnt">7个单元</span>
+  </div>
+  <div class="dir-card border-biz">
+    <div class="dir-header">
+      <div class="dir-icon accent-biz">&#x2699;&#xFE0F;</div>
+      <div class="dir-name">业务赋能</div>
+      <div class="dir-avg">均分 <span class="val">69.6</span></div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-B08</div>
+        <div class="item-title"><a href="五步法分析/IS-B08-质量检测.html">AI质量检测 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">87</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-B07</div>
+        <div class="item-title"><a href="五步法分析/IS-B07-施工进度优化.html">AI施工进度优化 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">79</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-B05</div>
+        <div class="item-title"><a href="五步法分析/IS-B05-能碳平台.html">能碳平台 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">71</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-B04</div>
+        <div class="item-title"><a href="五步法分析/IS-B04-管网AI诊断.html">管网AI诊断 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">67</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-B06</div>
+        <div class="item-title"><a href="五步法分析/IS-B06-运营业务AI赋能.html">运营业务AI赋能 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">64</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-B01</div>
+        <div class="item-title"><a href="五步法分析/IS-B01-档案数字化.html">档案数字化 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">61</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">IS-A04</div>
+        <div class="item-title"><a href="五步法分析/IS-A04-合同风险识别.html">合同风险识别 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x1F534;</div>
+      <div class="score-badge score-lo">46</div>
+    </div>
+  </div>
+</div>
+
+<!-- Direction: 劳务AI -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F477; 劳务AI</h2>
+    <span class="cnt">5个单元</span>
+  </div>
+  <div class="dir-card border-labor">
+    <div class="dir-header">
+      <div class="dir-icon accent-labor">&#x1F477;</div>
+      <div class="dir-name">劳务AI</div>
+      <div class="dir-avg">均分 <span class="val">62.2</span></div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">LW-04</div>
+        <div class="item-title"><a href="五步法分析/LW-04-劳务市场行情指数.html">劳务市场行情指数 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">84</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">LW-02</div>
+        <div class="item-title"><a href="五步法分析/LW-02-劳动力调度优化.html">劳动力调度优化 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x2705;</div>
+      <div class="score-badge score-hi">76</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">LW-03</div>
+        <div class="item-title"><a href="五步法分析/LW-03-安全培训个性化.html">安全培训个性化 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">59</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">LW-05</div>
+        <div class="item-title"><a href="五步法分析/LW-05-工人信用体系.html">工人信用体系 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">51</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">LW-01</div>
+        <div class="item-title"><a href="五步法分析/LW-01-工人技能画像.html">工人技能画像 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">51</div>
+    </div>
+  </div>
+</div>
+
+<!-- Direction: 项目管理AI -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F4CA; 项目管理AI</h2>
+    <span class="cnt">1个单元</span>
+  </div>
+  <div class="dir-card border-pm">
+    <div class="dir-header">
+      <div class="dir-icon accent-pm">&#x1F4CA;</div>
+      <div class="dir-name">项目管理AI</div>
+      <div class="dir-avg">均分 <span class="val">66.0</span></div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">PM-01</div>
+        <div class="item-title"><a href="五步法分析/PM-01-项目风险预测.html">AI项目管理风险预测 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x26A0;&#xFE0F;</div>
+      <div class="score-badge score-md">66</div>
+    </div>
+  </div>
+</div>
+
+<!-- Direction: Token出海 -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F310; Token出海</h2>
+    <span class="cnt">2个单元</span>
+  </div>
+  <div class="dir-card border-token">
+    <div class="dir-header">
+      <div class="dir-icon accent-token">&#x1F310;</div>
+      <div class="dir-name">Token出海</div>
+      <div class="dir-avg">均分 <span class="val">35.5</span></div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">TD-01</div>
+        <div class="item-title"><a href="五步法分析/TD-01-轻资产Token.html">轻资产Token <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x1F534;</div>
+      <div class="score-badge score-lo">37</div>
+    </div>
+
+    <div class="item">
+      <div class="item-main">
+        <div class="item-code">TD-02</div>
+        <div class="item-title"><a href="五步法分析/TD-02-汕头算力中心.html">汕头算力中心 <span class="link-icon">&#x2197;</span></a></div>
+      </div>
+      <div class="verdict">&#x1F534;</div>
+      <div class="score-badge score-lo">34</div>
+    </div>
+  </div>
+</div>
+
+<!-- Part 2 Divider -->
+<div class="divider"><span>第二部分 · 未来7品类四维评分</span></div>
+
+<div class="disclaimer">
+  <span class="icon">&#x26A0;&#xFE0F;</span>
+  <span>前瞻性分析，不构成当前行动建议。四维评分独立于现有品类七维体系，两套不可混用、不可交叉比较。评分回答"何时启动、储备什么"，而非"现在该不该做"。</span>
+</div>
+
+<!-- Future: Wave 1 -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F534; 第一波 · 1-3年可启动</h2>
+    <span class="cnt">3个品类</span>
+  </div>
+  <div class="dir-card">
+    <div class="future-item">
+      <div class="future-info">
+        <div class="future-code">FUT-A</div>
+        <div class="future-name"><a href="未来品类/FUT-A-统一智能层">统一智能层 <span class="link-icon">&#x2197;</span></a></div>
+        <div class="future-desc">跨系统统一查询层，检索归零瓦解建筑企业"系统孤岛"组织架构</div>
+      </div>
+      <div class="future-meta">
+        <div class="fscore score-hi-c">85</div>
+        <div><span class="matrix-tag matrix-red">&#x1F534; 立即储备</span></div>
+      </div>
+    </div>
+
+    <div class="future-item">
+      <div class="future-info">
+        <div class="future-code">FUT-D</div>
+        <div class="future-name"><a href="未来品类/FUT-D-AI自动合约生成">AI自动合约生成 <span class="link-icon">&#x2197;</span></a></div>
+        <div class="future-desc">从合同审查延伸到自动写合同，技术就绪度在7个未来品类中最高</div>
+      </div>
+      <div class="future-meta">
+        <div class="fscore score-hi-c">80</div>
+        <div><span class="matrix-tag matrix-red">&#x1F534; 立即储备</span></div>
+      </div>
+    </div>
+
+    <div class="future-item">
+      <div class="future-info">
+        <div class="future-code">FUT-G</div>
+        <div class="future-name"><a href="未来品类/FUT-G-AI实时安全监护">AI实时安全监护 <span class="link-icon">&#x2197;</span></a></div>
+        <div class="future-desc">CV+IoT实现全时空连续安全判断，从人工"离散抽样"到AI"全覆盖监护"</div>
+      </div>
+      <div class="future-meta">
+        <div class="fscore score-hi-c">82</div>
+        <div><span class="matrix-tag matrix-red">&#x1F534; 立即储备</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Future: Wave 2 -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F7E1; 第二波 · 3-5年</h2>
+    <span class="cnt">2个品类</span>
+  </div>
+  <div class="dir-card">
+    <div class="future-item">
+      <div class="future-info">
+        <div class="future-code">FUT-B</div>
+        <div class="future-name"><a href="未来品类/FUT-B-Agent协同">B2B Agent协同 <span class="link-icon">&#x2197;</span></a></div>
+        <div class="future-desc">AI Agent代替人工完成B2B交期协商、价格谈判和履约确认，技术就绪度是瓶颈</div>
+      </div>
+      <div class="future-meta">
+        <div class="fscore score-md-c">20.1</div>
+        <div><span class="matrix-tag matrix-yellow">&#x1F7E1; 技术跟踪</span></div>
+      </div>
+    </div>
+
+    <div class="future-item">
+      <div class="future-info">
+        <div class="future-code">FUT-C</div>
+        <div class="future-name"><a href="未来品类/FUT-C-跨项目经验迁移">跨项目经验迁移 <span class="link-icon">&#x2197;</span></a></div>
+        <div class="future-desc">AI自动蒸馏1000+项目施工日志，核心矛盾是数据治理而非AI技术</div>
+      </div>
+      <div class="future-meta">
+        <div class="fscore score-md-c">61</div>
+        <div><span class="matrix-tag matrix-yellow">&#x1F7E1; 技术跟踪</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Future: Wave 3 -->
+<div class="section">
+  <div class="section-head">
+    <h2>&#x1F7E2; 第三波 · 5年+</h2>
+    <span class="cnt">2个品类</span>
+  </div>
+  <div class="dir-card">
+    <div class="future-item">
+      <div class="future-info">
+        <div class="future-code">FUT-E</div>
+        <div class="future-name"><a href="未来品类/FUT-E-AI质量追溯链">AI质量追溯链 <span class="link-icon">&#x2197;</span></a></div>
+        <div class="future-desc">跨组织证据串联+责任归因全链条自动追溯，需要B+C+D品类先跑通</div>
+      </div>
+      <div class="future-meta">
+        <div class="fscore score-md-c">62</div>
+        <div><span class="matrix-tag matrix-yellow">&#x1F7E1; 技术跟踪</span></div>
+      </div>
+    </div>
+
+    <div class="future-item">
+      <div class="future-info">
+        <div class="future-code">FUT-F</div>
+        <div class="future-name"><a href="未来品类/FUT-F-AI直连项目协同">AI直连项目协同 <span class="link-icon">&#x2197;</span></a></div>
+        <div class="future-desc">打破层层分包信息断层，解锁价值极高但因制度变革阻力从方向观察上调</div>
+      </div>
+      <div class="future-meta">
+        <div class="fscore score-md-c">55</div>
+        <div><span class="matrix-tag matrix-red">&#x1F534; 立即储备</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Part 3 Divider -->
+<div class="divider"><span>第三部分 · 关键洞察</span></div>
+
+<div class="section">
+  <div class="insight-card">
+    <div class="insight-row">
+      <div class="insight-num c1">1</div>
+      <div class="insight-text">
+        <h4>供应链AI仍是王冠</h4>
+        <p>SC-03供应链金融AI以91分蝉联第一，10万亿交易数据独占+政策窗口（77号文+八部门）是核心壁垒。方向均分69.4，SC-01（86分）、SC-04（79分）同样进入推进区间。</p>
+      </div>
+    </div>
+
+    <div class="insight-row">
+      <div class="insight-num c2">2</div>
+      <div class="insight-text">
+        <h4>盲区补齐发现两颗宝石</h4>
+        <p>经全球300+案例市场穷举后，IS-B08质量检测（87分）和IS-A06审图（86分）直接进入推进区间，分别位列第2和第4。验证了"软件方向也该走硬件穷举+交叉映射"的方法论。</p>
+      </div>
+    </div>
+
+    <div class="insight-row">
+      <div class="insight-num c3">3</div>
+      <div class="insight-text">
+        <h4>劳务AI最大反转：LW-04从32分跃升至84分</h4>
+        <p>劳务市场行情指数原评分仅32分，七维重评后以84分位列第5。核心反转点：1400万vs竞品6万条的数据独占性+70%毛利率被原评分忽略，寡头终局清晰。</p>
+      </div>
+    </div>
+
+    <div class="insight-row">
+      <div class="insight-num c4">4</div>
+      <div class="insight-text">
+        <h4>商业模型是分水岭</h4>
+        <p>低于50分的4个单元（IS-A04合同风险识别46分、SC-05行业数据产品40分、TD-01轻资产Token 37分、TD-02汕头算力中心34分）全部是商模硬伤：IRR低于资金成本、负毛利、LTV/CAC低于健康线。印证"商模不行，其余免谈"。</p>
+      </div>
+    </div>
+
+    <div class="insight-row">
+      <div class="insight-num c5">5</div>
+      <div class="insight-text">
+        <h4>未来品类中，可执行性最高的不是最高分</h4>
+        <p>FUT-A统一智能层虽以85分居首，但FUT-D自动合约生成（80分）的技术就绪度+触发确定性组合在7个品类中最高。从IS-A04合同审查到FUT-D自动合约的演进路径最清晰。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>基于一堂五步法+业务预判+行业预判方法论</p>
+  <p>26个单元并行分析 · 7个未来品类成本归零重构</p>
+  <p class="brand">中建发展AI软件方向 · 全景评分报告 · 2026-06-15</p>
+</div>
+
+</div>
+
+<script>
+// Make entire item row clickable
+document.querySelectorAll('.item').forEach(function(item) {
+  var link = item.querySelector('.item-title a, .future-name a');
+  if (link) {
+    item.style.cursor = 'pointer';
+    item.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') return; // let normal link clicks through
+      window.location.href = link.href;
+    });
+  }
+});
+</script>
+
+</body>
+</html>

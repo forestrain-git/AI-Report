@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781163070092-uk9ecpoca",
+  "providerId": "claude",
+  "title": "Process inbox backlog into wiki",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781163070092,
+  "updatedAt": 1781167810331,
+  "lastResponseAt": 1781166495481,
+  "sessionId": "6d9c4b40-87d3-42d0-ad2e-88518299008d",
+  "providerState": {
+    "providerSessionId": "6d9c4b40-87d3-42d0-ad2e-88518299008d"
+  },
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 195810,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 195584,
+    "contextWindow": 200000,
+    "contextTokens": 391394,
+    "percentage": 100,
+    "contextWindowIsAuthoritative": true
+  }
+}

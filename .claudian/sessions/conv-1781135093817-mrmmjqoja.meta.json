@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781135093817-mrmmjqoja",
+  "providerId": "claude",
+  "title": "Increase HTML font size and fix md color prompts",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781135093818,
+  "updatedAt": 1781163029662,
+  "lastResponseAt": 1781159351202,
+  "sessionId": "e1335244-745d-4b1c-8ebf-774f7f44f5ff",
+  "providerState": {
+    "providerSessionId": "e1335244-745d-4b1c-8ebf-774f7f44f5ff"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 92,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 211712,
+    "contextWindow": 1000000,
+    "contextTokens": 211804,
+    "percentage": 21
+  }
+}

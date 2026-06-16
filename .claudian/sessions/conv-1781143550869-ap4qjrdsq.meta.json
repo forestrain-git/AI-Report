@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781143550869-ap4qjrdsq",
+  "providerId": "claude",
+  "title": "Check if hook is working",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781143550869,
+  "updatedAt": 1781143594702,
+  "lastResponseAt": 1781143592804,
+  "sessionId": "80ee2ff9-3d85-470b-9aae-9bc7ca207ac9",
+  "providerState": {
+    "providerSessionId": "80ee2ff9-3d85-470b-9aae-9bc7ca207ac9"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 50349,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 50349,
+    "percentage": 25
+  }
+}

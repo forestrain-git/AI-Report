@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SC-04 招投标合规审查 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: var(--slate-800);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+/* ===== Hero Header ===== */
+.hero {
+  background: var(--grad-header);
+  padding: 28px 20px 16px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.hero-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--grad-green);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(67,160,71,0.45);
+}
+.hero-badge .num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero-badge .unit {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+.hero-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-judgment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 16px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Dimension Score Strip ===== */
+.dim-strip {
+  background: #fff;
+  margin: -12px 12px 16px;
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.dim-strip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.dim-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label {
+  width: 76px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+  flex-shrink: 0;
+}
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+.dim-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-align: right;
+  flex-shrink: 0;
+}
+  min-width: 26px;
+  text-align: right;
+}
+
+/* ===== Content Area ===== */
+.content {
+  padding: 16px 16px 0;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--slate-100);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.card h2 .emoji-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+.card h3:first-child { margin-top: 0; }
+.card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 8px;
+  margin-top: 4px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--slate-600);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+
+/* ===== Tag Pills ===== */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* ===== Verdict Badge ===== */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--slate-700);
+  margin-bottom: 12px;
+}
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box .sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+
+/* ===== Table ===== */
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 8px 6px 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+  color: var(--slate-600);
+}
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+
+/* ===== Summary Strip Progress Bar ===== */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.summary-strip .strip-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.summary-strip .strip-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--slate-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.summary-strip .strip-bar .strip-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.summary-strip .strip-val {
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Progress Bar (inline) ===== */
+.progress-strip {
+  height: 6px;
+  background: var(--slate-100);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-strip .fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ===== LTV Grid ===== */
+.ltv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ltv-card {
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid var(--slate-100);
+  text-align: center;
+}
+.ltv-card .lc-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-bottom: 4px;
+}
+.ltv-card .lc-val {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-sub {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Injury Table ===== */
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.injury-table table td:nth-child(2) { color: var(--slate-600); }
+.hs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.hs-0 { background: var(--green); }
+.hs-1 { background: #60a5fa; }
+.hs-2 { background: var(--amber); }
+.hs-3 { background: #f97316; }
+
+/* ===== Assumption Card ===== */
+.assumption-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+.assumption-item .ai-text .ai-meta {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Sensitivity ===== */
+.sens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.sens-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+.sens-item .si-label {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.sens-item .si-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 2px;
+}
+.sens-item .si-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+
+/* ===== Action Card ===== */
+.action-card {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.action-card .ac-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.action-card .ac-desc {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* ===== Check List ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== Synergy Box ===== */
+.synergy-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--slate-700);
+}
+
+/* ===== Phase Bar ===== */
+.phase-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.phase-bar .phase {
+  flex: 1;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.phase-bar .phase .ph-time {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.phase-bar .phase .ph-label {
+  font-size: 10px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+
+/* ===== Callout ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--slate-50);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+
+/* ===== Dir Dot ===== */
+.dir-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.dir-dot.blue { background: var(--blue); }
+
+/* ===== Back Link ===== */
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  padding: 10px;
+  color: var(--slate-400);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.back-link:hover {
+  color: var(--blue);
+  background: var(--slate-50);
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+.footer .brand {
+  color: var(--slate-300);
+  margin-top: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .dim-item .dim-bar { width: 36px; }
+  .dim-item { font-size: 10px; }
+  .ltv-grid { grid-template-columns: 1fr; }
+  .sens-grid { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== Hero Header ===== -->
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; SC-04</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">79</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">招投标合规审查</div>
+  <div class="hero-sub">云筑网 + 中建发展</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">&#x2705;</span> 建议推进
+  </div>
+</div>
+
+<!-- ===== Dimension Score Strip ===== -->
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:89%"></div></div>
+      <span class="dim-score">16/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:94%"></div></div>
+      <span class="dim-score">16/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:75%"></div></div>
+      <span class="dim-score">12/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:67%"></div></div>
+      <span class="dim-score">10/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:10%"></div></div>
+      <span class="dim-score">-1/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Content ===== -->
+<div class="content">
+
+  <!-- ===== 预判摘要 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box green-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-green">4/20 低风险</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">关键致命伤</span>
+        <span style="font-weight:600;color:var(--slate-700);">无 P0 级硬伤</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">团队/运营风险</span>
+        <span style="font-weight:600;color:var(--slate-700);font-size:13px;">#20 政策落地执行不确定性（2/5）</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge vg">&#x2705; 建议立即启动（强政策驱动+数据壁垒）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 行业预判六模块 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：监管端（八部门政策、公共资源交易中心、纪检监察）&#x2192; 技术端（AI检测引擎、围串标识别模型、关系图谱引擎）&#x2192; 执行端（招标文件审查、投标行为分析、评标辅助）&#x2192; 终端用户</p>
+    <p><strong>利润分配（100元）</strong>：AI模型研发 70-80% | 数据采集与标注 20-30% | 系统集成 40-50% | 销售 15-25%</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">数据资产型</span> &#8212; 云筑网140万次历史招标数据可训练建筑行业专属的围串标模式库，通用AI工具不具备。</p>
+    <p><strong>可优化</strong>：传统招投标审查依赖人工（7小时评标&#x2192;AI 9分46秒，效率提升40倍+），且人工无法识别复杂的关联关系网络。</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>政策法规</td><td>八部门AI+招投标强制时间表（发改法规〔2026〕195号）</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>政策法规</td><td>20个AI应用重点场景，覆盖招标/投标/开标/评标/定标七大环节</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>政策法规</td><td>财政部低价红线制度（低于均价50%必须审查）</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>新技术</td><td>贵州大模型围串标线索属实率91%</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>需求侧</td><td>智能化渗透率从28%(2023)跃升至51%(2026)</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-green">
+      <strong>判断：系统性变化，强政策驱动</strong> &#8212; 八部门强制时间表是罕见的"不做不行"型政策，比77号文更直接。加上财政部低价红线制度，AI审查有了明确的触发规则和执行标准。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>八部门强制时间表 &#x2192; 2027年全国招投标AI审查全覆盖 &#x2192; 建筑行业招投标必须使用AI工具 &#x2192; <strong>AI招投标审查成为基础设施，数据+模型双优的平台形成寡头。</strong>
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">建筑招投标数据最丰富的AI审查平台</span> &#8212; 140万次招标数据训练出行业专属的围串标模式库。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索 &#x2192; 爆发增长临界点。窗口<strong>刚刚打开</strong>，还有 <strong>1.5-2 年</strong>（政策截止2027年底）。</p>
+    <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-green">极低</span> &#8212; 政策已明确时间表</p>
+    <p><span class="dir-dot red"></span><strong>太晚风险</strong>：<span class="tag tag-red">高</span> &#8212; 2027年全国推广时必须有产品，否则市场被新点软件等占满</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>AI标书工具市场52.3亿(2026H1) &#x2192; 招投标信息化120亿 &#x2192; 中期200亿+</td></tr>
+        <tr><td>Bottom-up</td><td>全国招标项目 &#x00D7; AI审查单价 &#x2192; 千亿级长期生态</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：<span class="tag tag-green">50-200亿元可触达市场</span>（中期），支撑十亿级体量。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：有头部玩家但数据层未垄断 &#8212; 系统集成层新点软件50%+，AI层科大讯飞/拓尔思，数据层启信慧眼缺乏建筑行业招标行为数据。</p>
+    <p><strong>趋势</strong>：<span class="tag tag-green">C型（分散&#x2192;集中）</span> &#8212; 政策推动2027年全覆盖，将加速行业整合。</p>
+    <div class="callout callout-green">
+      <strong>行业预判结论：</strong>6 模块全部通过，政策驱动极强。
+    </div>
+  </div>
+
+  <!-- ===== 五步法逐层分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：建筑企业招投标管理部门、政府公共资源交易中心、纪检监察部门</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>围串标识别</td><td>人工排查140万次招标数据中的关联关系，覆盖率极低</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>报价异常检测</td><td>人工无法统计分析大量报价数据的分布异常</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>招标文件合规审查</td><td>歧视性条款、量身定做条款人工审核效率低</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>评标辅助</td><td>5名专家评标7小时，AI可压缩至15分钟</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-red">
+      <strong>需求评估三角形</strong>：<span class="tag tag-red">刚性</span> 雪中送炭（"不做"就是违规）&#183; <span class="tag tag-red">高频</span> 每次招标都需要 &#183; <span class="tag tag-red">极广泛</span> 全国所有招投标场景
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>新点软件是"招投标系统集成商"，启信慧眼是"通用企业关系排查工具"，我们是<strong>"建筑行业招投标AI审查平台"</strong> &#8212; 140万次招标数据训练的围串标模式库是核心差异。
+    </div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"通用AI告诉你企业之间有没有关联，我们告诉你在建筑招投标中这种关联意味着什么。"</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>围串标AI识别（关联关系+报价异常+行为分析）</td><td>招投标系统平台（与新点软件竞争）</td></tr>
+        <tr><td>报价异常预警（统计学+ML）</td><td>通用企业信用查询（与天眼查竞争）</td></tr>
+        <tr><td>招标文件合规审查（歧视性条款检测）</td><td>评标全流程自动化（先做辅助）</td></tr>
+        <tr><td>智能化合规审查报告</td><td>跨行业扩展</td></tr>
+      </table>
+    </div>
+    <p><strong>MVP</strong>：140万次数据训练模型 &#x2192; 选1个中建工程局试点 &#x2192; 输出风险评分+关系图谱 &#x2192; 对比AI vs 人工发现率</p>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（ToB + 政府采购）</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>中建体系内招标审查</td><td>0（内部服务）</td></tr>
+        <tr><td>其他央企招标审查 30-50万 &#x00D7; 10家</td><td>400万</td></tr>
+        <tr><td>政府公共资源交易中心 50-100万 &#x00D7; 15个</td><td>1000万</td></tr>
+        <tr><td>纪检监察专项 80-150万 &#x00D7; 5个</td><td>500万</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--green);font-size:15px;"><strong>1900万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:37%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">37%</span>
+    </div>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">LTV / CAC</div>
+        <div class="lc-val green">14</div>
+        <div class="lc-sub">&#x2705; 极健康</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">政府客户LTV</div>
+        <div class="lc-val green">210万</div>
+        <div class="lc-sub">政府采购周期3年</div>
+      </div>
+    </div>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式 + 政策驱动</span> &#8212; 政策强制使用，黏性极强</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>中建体系内试点（8个工程局）</td><td>0</td></tr>
+        <tr><td>2</td><td>八部门政策直接对接（各省市交易中心）</td><td>10万</td></tr>
+        <tr><td>3</td><td>纪检监察系统（围串标线索是反腐利器）</td><td>20万</td></tr>
+        <tr><td>4</td><td>其他央企复制（中铁/中交等）</td><td>30万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>数据资产</strong></td><td>140万次建筑招标数据训练的围串标模式库</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>技术壁垒</strong></td><td>建筑行业专属NLP+关系图谱模型</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>转化成本</strong></td><td>嵌入招投标流程后切换成本中等</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>央企身份在政府招标中天然优势</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：新点软件 <span class="tag tag-yellow">2-3年</span>（有系统入口缺数据）| 启信慧眼 <span class="tag tag-yellow">1-2年</span>（有通用图谱缺建筑数据）| 新进入者 <span class="tag tag-red">极难</span></p>
+  </div>
+
+  <!-- ===== 20张硬伤卡牌 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:20%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">4/20</span>
+    </div>
+    <div class="callout callout-green" style="margin-bottom:10px;">
+      <strong>结论：</strong>低风险，16项未命中，仅#19轻微扣分、#20中等扣分。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1-3</td><td>目标用户/痛点/频率</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>4-6</td><td>用户验证/本质区别/卖点</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-1">1</span></td><td><span class="tag tag-green">轻微（需加强NLP/图谱人才）</span></td></tr>
+        <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度</td><td style="background:#fffbeb;"><span class="hs hs-2">2</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">中等（政府采购流程长、政策落地不确定）</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 关键假设清单 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H1：140万数据训练模型识别率&#x2265;90%</div>
+        <div class="ai-meta">历史数据回测 &nbsp;|&nbsp; 标准：识别率&#x2265;90%，误报&#x2264;15%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H3：围串标模型准确率达到实用水平</div>
+        <div class="ai-meta">试点工程局验证 &nbsp;|&nbsp; 标准：人工复核采纳率&#x2265;80%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H2：政府采购接受中建系企业作为审查服务提供商</div>
+        <div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&#x2265;3个省市表达意向</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H4：误报率可控</div>
+        <div class="ai-meta">试点数据 &nbsp;|&nbsp; 标准：&#x2264;15%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 敏感性分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观</th><th>悲观</th></tr>
+        <tr><td>政府客户数</td><td>15个</td><td>25个</td><td>8个</td></tr>
+        <tr><td>政府客单价</td><td>70万</td><td>100万</td><td>40万</td></tr>
+        <tr><td>政策落地速度</td><td>2027年</td><td>2026年中</td><td>2028年</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">政策落地速度</span> &#8212; 直接决定窗口期长度。</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">建筑招投标AI审查平台</div>
+        <div class="si-desc">中建内试点 &#x2192; 政府交易中心 &#x2192; 纪检监察 &#x2192; 全国推广</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年1900万，第5年1亿+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">围串标识别API</div>
+        <div class="si-desc">不做平台，只做能力输出给新点软件等系统集成商</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年800万</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>：模型识别率&lt;80% &#x2192; 技术不成熟 | 政策落地严重延迟（&gt;2028年）&#x2192; 窗口关闭
+    </div>
+  </div>
+
+  <!-- ===== 下一步行动 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">用云筑网140万次招标数据做一次围串标模型训练+历史回测。</div>
+    </div>
+    <ul class="check-list">
+      <li>取已知围串标案例100个 + 正常案例500个，训练+测试</li>
+      <li>输出围串标风险评分+关联关系图谱</li>
+      <li>对比AI审查与人工审查的发现率</li>
+    </ul>
+    <div class="summary-strip">
+      <span class="strip-label">成功标准</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:90%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">AUC &#x2265; 0.90</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">成本：2周 + 1名NLP工程师 + 1名数据分析师</p>
+  </div>
+
+  <!-- ===== 返回链接 ===== -->
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>SC-04 招投标合规审查 &middot; 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 &middot; 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

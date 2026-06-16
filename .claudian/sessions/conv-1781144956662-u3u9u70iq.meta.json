@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781144956662-u3u9u70iq",
+  "providerId": "claude",
+  "title": "编写吴迪总工云控恒进水监控大屏案例",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781144956662,
+  "updatedAt": 1781145113984,
+  "lastResponseAt": 1781145015373,
+  "sessionId": "c7e502f5-049d-44ce-9258-65b389ab6e98",
+  "providerState": {
+    "providerSessionId": "c7e502f5-049d-44ce-9258-65b389ab6e98"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 51323,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 50176,
+    "contextWindow": 200000,
+    "contextTokens": 101499,
+    "percentage": 51,
+    "contextWindowIsAuthoritative": true
+  }
+}

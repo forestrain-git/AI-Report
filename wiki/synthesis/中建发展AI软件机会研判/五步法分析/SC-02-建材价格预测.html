@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SC-02 建材价格预测 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: var(--slate-800);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+/* ===== Hero Header ===== */
+.hero {
+  background: var(--grad-header);
+  padding: 28px 20px 16px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.hero-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--grad-yellow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(239,108,0,0.45);
+}
+.hero-badge .num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero-badge .unit {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+.hero-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-judgment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 16px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Dimension Score Strip ===== */
+.dim-strip {
+  background: #fff;
+  margin: -12px 12px 16px;
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.dim-strip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.dim-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label {
+  width: 76px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+  flex-shrink: 0;
+}
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+.dim-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-align: right;
+  flex-shrink: 0;
+}
+  min-width: 26px;
+  text-align: right;
+}
+
+/* ===== Content Area ===== */
+.content {
+  padding: 16px 16px 0;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--slate-100);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.card h2 .emoji-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+.card h3:first-child { margin-top: 0; }
+.card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 8px;
+  margin-top: 4px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--slate-600);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+
+/* ===== Tag Pills ===== */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* ===== Verdict Badge ===== */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--slate-700);
+  margin-bottom: 12px;
+}
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box .sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+
+/* ===== Table ===== */
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 8px 6px 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+  color: var(--slate-600);
+}
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+
+/* ===== Summary Strip Progress Bar ===== */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.summary-strip .strip-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.summary-strip .strip-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--slate-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.summary-strip .strip-bar .strip-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.summary-strip .strip-val {
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Progress Bar (inline) ===== */
+.progress-strip {
+  height: 6px;
+  background: var(--slate-100);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-strip .fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ===== LTV Grid ===== */
+.ltv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ltv-card {
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid var(--slate-100);
+  text-align: center;
+}
+.ltv-card .lc-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-bottom: 4px;
+}
+.ltv-card .lc-val {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-sub {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Injury Table ===== */
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.injury-table table td:nth-child(2) { color: var(--slate-600); }
+.hs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.hs-0 { background: var(--green); }
+.hs-1 { background: #60a5fa; }
+.hs-2 { background: var(--amber); }
+.hs-3 { background: #f97316; }
+
+/* ===== Assumption Card ===== */
+.assumption-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+.assumption-item .ai-text .ai-meta {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Sensitivity ===== */
+.sens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.sens-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+.sens-item .si-label {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.sens-item .si-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 2px;
+}
+.sens-item .si-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+
+/* ===== Action Card ===== */
+.action-card {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.action-card .ac-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.action-card .ac-desc {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* ===== Check List ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== Synergy Box ===== */
+.synergy-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--slate-700);
+}
+
+/* ===== Phase Bar ===== */
+.phase-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.phase-bar .phase {
+  flex: 1;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.phase-bar .phase .ph-time {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.phase-bar .phase .ph-label {
+  font-size: 10px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+
+/* ===== Callout ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--slate-50);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+
+/* ===== Dir Dot ===== */
+.dir-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.dir-dot.blue { background: var(--blue); }
+
+/* ===== Back Link ===== */
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  padding: 10px;
+  color: var(--slate-400);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.back-link:hover {
+  color: var(--blue);
+  background: var(--slate-50);
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+.footer .brand {
+  color: var(--slate-300);
+  margin-top: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .dim-item .dim-bar { width: 36px; }
+  .dim-item { font-size: 10px; }
+  .ltv-grid { grid-template-columns: 1fr; }
+  .sens-grid { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== Hero Header ===== -->
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; SC-02</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">51</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">建材价格预测</div>
+  <div class="hero-sub">云筑网 + 中建发展</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">&#x26A0;&#xFE0F;</span> 谨慎推进
+  </div>
+</div>
+
+<!-- ===== Dimension Score Strip ===== -->
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:44%"></div></div>
+      <span class="dim-score">8/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:53%"></div></div>
+      <span class="dim-score">9/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:53%"></div></div>
+      <span class="dim-score">9/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:53%"></div></div>
+      <span class="dim-score">9/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:69%"></div></div>
+      <span class="dim-score">11/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:53%"></div></div>
+      <span class="dim-score">8/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:30%"></div></div>
+      <span class="dim-score">-3/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Content ===== -->
+<div class="content">
+
+  <!-- ===== 预判摘要 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box green-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-yellow">6/20 低风险（有竞争硬伤）</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">关键致命伤</span>
+        <span style="font-weight:600;color:var(--slate-700);">无 P0 级，但有1个强竞争硬伤（#5 差异化不足）</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">团队/运营风险</span>
+        <span style="font-weight:600;color:var(--slate-700);font-size:13px;">#19 需引进价格预测算法人才（2/5）</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge va">&#x26A0;&#xFE0F; 谨慎推进（需先验证差异化切入点）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 行业预判六模块 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：数据源层（钢厂/水泥厂、交易所数据、云筑网真实交易）&#x2192; 加工层（上海钢联、生意社/钢之家、水泥网）&#x2192; 应用层（价格指数发布、趋势预测、采购决策支持）&#x2192; 终端用户</p>
+    <p><strong>利润分配（100元）</strong>：数据采集 30-40% | 模型研发 70-80% | 产品化 50-60% | 销售 15-25%</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">用户心智型</span> &#8212; Mysteel 已建立行业品牌认知（铁矿石指数被全球四大矿山采用），新进入者需要差异化品类切入。</p>
+    <p><strong>可优化</strong>：现有价格数据以"调研报价"为主，与"真实成交价"有偏差。云筑网交易数据可提供更准确的真实成交价，尤其在混凝土、砂石等区域性强的品类。</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>政策法规</td><td>"数据要素&#x00D7;"三年行动计划，建材价格指数是典型数据产品</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>政策法规</td><td>国家发改委价格监测中心与建材数据平台合作</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>新技术</td><td>行业大模型赋能价格预测</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>需求侧</td><td>建材年交易超10万亿，价格波动1%影响数百亿</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>供给侧</td><td>云筑网真实交易价，覆盖混凝土/砂石等盲区品类</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>判断：中等变化</strong> &#8212; 需求刚性存在，但供给侧已有强壁垒玩家（Mysteel），机会在于差异化品类和数据类型。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>数据要素市场化 &#x2192; 建材价格指数需求增长 &#x2192; 但Mysteel已占据通用市场 &#x2192; <strong>形成"通用Mysteel + 建筑垂直品类"的分层格局。</strong>
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">建筑行业全品类价格预测的垂直玩家</span> &#8212; 不替代Mysteel，而是在Mysteel覆盖不到的品类（混凝土/砂石/防水/管材）和数据维度（真实成交价）上做差异化。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：<span class="tag tag-yellow">成熟整合期</span> &#8212; 价格预测市场已高度成熟（Mysteel运营20年+），新进入者窗口较窄。</p>
+    <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-green">低</span> &#8212; 数据已就绪</p>
+    <p><span class="dir-dot red"></span><strong>太晚风险</strong>：<span class="tag tag-red">高</span> &#8212; Mysteel品牌壁垒强，直接切入通用价格预测几乎不可能</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>建材年交易10万亿 &#x00D7; 0.01-0.05% = 10-50亿（全品类）</td></tr>
+        <tr><td>类比</td><td>上海钢联数据服务8亿/年 &#x2192; 建筑垂直2-3亿</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：<span class="tag tag-yellow">10-30亿元可触达市场</span>，支撑亿级体量。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：<span class="tag tag-red">寡头格局（Mysteel主导）</span> &#8212; 900+大宗商品，30万+付费用户，IOSCO认证。</p>
+    <p><strong>趋势</strong>：<span class="tag tag-yellow">B型（已集中）</span> &#8212; Mysteel在通用大宗商品市场已建立绝对优势。</p>
+    <p><strong>策略</strong>：差异化深耕 &#8212; 避开通用品类，聚焦混凝土/砂石/防水/管材，以"真实成交价"为差异化卖点。</p>
+    <div class="callout callout-yellow">
+      <strong>行业预判结论：</strong>4 模块通过，M4偏晚（成熟期），M6偏高（寡头）。需补充差异化验证。
+    </div>
+  </div>
+
+  <!-- ===== 五步法逐层分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：建筑企业采购部门、建材贸易商、金融机构（抵质押品估值）</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>钢材/水泥采购决策</td><td>价格波动1%影响数百亿，缺乏系统性趋势判断工具</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>混凝土/砂石区域定价</td><td>区域性强、透明度低，采购员凭经验砍价</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+        <tr><td>供应链金融抵质押估值</td><td>银行需要动态建材估值，目前依赖人工</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>需求评估三角形</strong>：<span class="tag tag-yellow">刚性</span> 大宗品类Mysteel已满足，差异化品类待验证 &#183; <span class="tag tag-red">高频</span> 每日/每周价格更新 &#183; <span class="tag tag-yellow">中等</span> 付费意愿待验证
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>Mysteel是"大宗商品价格数据平台"（覆盖全行业900+品类），我们是<strong>"建筑行业采购视角的价格预测工具"</strong> &#8212; 一站式覆盖单个项目全品类材料。
+    </div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"一个项目用一份报告，Mysteel按品类卖，我们按项目卖。"</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>建筑行业全品类价格指数</td><td>通用大宗商品价格数据（与Mysteel正面竞争）</td></tr>
+        <tr><td>真实成交价预测（云筑网数据优势）</td><td>调研报价（Mysteel已有）</td></tr>
+        <tr><td>项目级采购成本预测</td><td>期货/衍生品定价</td></tr>
+        <tr><td>区域化价格差异分析</td><td>国际大宗商品指数（IOSCO认证）</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（ToB SaaS + 数据订阅）</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>建筑企业订阅 5万/年 &#x00D7; 200家</td><td>1000万</td></tr>
+        <tr><td>价格指数API 0.5元/次 &#x00D7; 200万次</td><td>100万</td></tr>
+        <tr><td>金融机构定制 50万 &#x00D7; 10家</td><td>500万</td></tr>
+        <tr><td>政府/协会 30万 &#x00D7; 5个</td><td>150万</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--green);font-size:15px;"><strong>1750万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:43%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">43%</span>
+    </div>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">LTV / CAC</div>
+        <div class="lc-val green">4.2</div>
+        <div class="lc-sub">&#x2705; 健康（&gt;3）</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">月流失率</div>
+        <div class="lc-val" style="color:var(--amber);">5%</div>
+        <div class="lc-sub">数据产品粘性中等</div>
+      </div>
+    </div>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式</span> &#8212; 价格预测嵌入采购决策流程，形成使用习惯</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>云筑网现有采购客户</td><td>0</td></tr>
+        <tr><td>2</td><td>信融宝银行客户联合推广</td><td>2万</td></tr>
+        <tr><td>3</td><td>建筑行业协会/政府监测</td><td>3万</td></tr>
+        <tr><td>4</td><td>建材贸易商社群</td><td>5万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>数据资产</strong></td><td>真实成交价（vs Mysteel调研报价），尤其混凝土/砂石</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>转化成本</strong></td><td>嵌入采购流程后切换成本中等</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>央企身份+发改委合作</td><td class="num"><span class="tag tag-yellow">弱</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：Mysteel <span class="tag tag-yellow">6-12个月</span>（扩展品类成本低）| 其他平台 <span class="tag tag-yellow">中等</span></p>
+  </div>
+
+  <!-- ===== 20张硬伤卡牌 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:30%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">6/20</span>
+    </div>
+    <div class="callout callout-yellow" style="margin-bottom:10px;">
+      <strong>结论：</strong>低风险但有竞争硬伤，#5差异化不足需重点验证。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1-3</td><td>目标用户/痛点/频率</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">#2轻微</span></td></tr>
+        <tr><td>4-6</td><td>用户验证/本质区别/卖点</td><td colspan="2"><span class="hs hs-1">1</span> <span class="hs hs-2" style="margin-left:4px;">2</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#5中等</span></td></tr>
+        <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-1">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">#16轻微</span></td></tr>
+        <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-1">1</span></td><td><span class="tag tag-green">轻微</span></td></tr>
+        <tr><td>20</td><td>低估运营复杂度</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 关键假设清单 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H1：建筑企业愿意为"全品类一体化"产品付费</div>
+        <div class="ai-meta">客户访谈+预售 &nbsp;|&nbsp; 标准：&#x2265;10/20家确认意向</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H3："按项目卖"客单价高于"按品类卖"</div>
+        <div class="ai-meta">定价测试 &nbsp;|&nbsp; 标准：客单价&#x2265;8万（高于Mysteel单品类2-3万）</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H2：真实成交价预测准确率更高</div>
+        <div class="ai-meta">A/B对比测试 &nbsp;|&nbsp; 标准：准确率提升&#x2265;10%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H4：混凝土/砂石数据确实更准确</div>
+        <div class="ai-meta">数据质量审计 &nbsp;|&nbsp; 标准：偏差&#x2264;3%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H6：差异化优势可持续</div>
+        <div class="ai-meta">竞品监控 &nbsp;|&nbsp; 标准：12个月内Mysteel未补齐</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 敏感性分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观</th><th>悲观</th></tr>
+        <tr><td>第3年客户数</td><td>225家</td><td>300家</td><td>150家</td></tr>
+        <tr><td>年均客单价</td><td>5万</td><td>8万</td><td>3万</td></tr>
+        <tr><td>毛利率</td><td>43%</td><td>50%</td><td>35%</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">客单价</span> &#8212; "按项目卖"模式能否成立直接决定商业模型可行性。</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">建筑行业全品类价格预测SaaS</div>
+        <div class="si-desc">先做混凝土/砂石2个品类 &#x2192; 扩展全品类 &#x2192; 数据产品化</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年1750万，第5年8000万+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">建材价格数据API</div>
+        <div class="si-desc">不做SaaS，只做数据API输出给金融机构和政府</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年500万</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>："按项目卖"模式不成立 &#x2192; 退回按品类模式 | Mysteel 6个月内补齐混凝土/砂石 &#x2192; 窗口关闭
+    </div>
+  </div>
+
+  <!-- ===== 下一步行动 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">选云筑网20家采购活跃客户做访谈，测试"建筑行业全品类价格预测"的付费意愿。</div>
+    </div>
+    <ul class="check-list">
+      <li>展示混凝土/砂石价格预测demo，询问付费意愿和价格敏感度</li>
+      <li>验证"按项目卖"模式是否比"按品类卖"更吸引客户</li>
+      <li>收集客户对Mysteel现有服务的不满点</li>
+    </ul>
+    <div class="summary-strip">
+      <span class="strip-label">成功标准</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:50%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">50%+客户表达意向</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">成本：1周 + 1名产品经理 + 0元技术开发</p>
+  </div>
+
+  <!-- ===== 返回链接 ===== -->
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>SC-02 建材价格预测 &middot; 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 &middot; 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

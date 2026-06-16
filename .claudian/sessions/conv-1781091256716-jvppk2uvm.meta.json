@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781091256716-jvppk2uvm",
+  "providerId": "claude",
+  "title": "Review PPT for speaker-only content",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781091256716,
+  "updatedAt": 1781101361755,
+  "lastResponseAt": 1781092687259,
+  "sessionId": "4009eec6-d6af-4431-9e7c-b66dcf4a75c9",
+  "providerState": {
+    "providerSessionId": "4009eec6-d6af-4431-9e7c-b66dcf4a75c9"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版-详细版.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 69,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 138880,
+    "contextWindow": 1000000,
+    "contextTokens": 138949,
+    "percentage": 14,
+    "contextWindowIsAuthoritative": true
+  }
+}

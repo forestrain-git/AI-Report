@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781143611628-xrjpw89al",
+  "providerId": "claude",
+  "title": "Verify Git hook for PPT commits",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781143611628,
+  "updatedAt": 1781144632222,
+  "lastResponseAt": 1781143745980,
+  "sessionId": "7af96ca0-f653-48cf-aeaa-fc462f821e2b",
+  "providerState": {
+    "providerSessionId": "7af96ca0-f653-48cf-aeaa-fc462f821e2b"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 43734,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 42496,
+    "contextWindow": 200000,
+    "contextTokens": 86230,
+    "percentage": 43,
+    "contextWindowIsAuthoritative": true
+  }
+}

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>统一智能层 · 成本归零重构法分析 | 未来品类A</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --text-muted: #888;
+    --accent: #c0392b;
+    --accent-soft: #e74c3c;
+    --blue: #2471a3;
+    --green: #1e8449;
+    --yellow: #b7950b;
+    --border: #e8e4e0;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --radius: 6px;
+    --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "宋体", "SimSun", serif;
+    --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "微软雅黑", sans-serif;
+    --font-mono: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .report-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    padding: 48px 0 40px;
+    text-align: center;
+  }
+  .report-header .category-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: #ffd700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .report-header h1 {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0.03em;
+  }
+  .report-header .subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 0;
+  }
+  .report-header .meta-line {
+    margin-top: 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Container */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+
+  /* Score Board */
+  .score-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: -28px 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .score-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .score-card .score-value {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .score-card .score-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+  .score-card .score-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .score-accent { color: var(--accent); }
+  .score-blue { color: var(--blue); }
+  .score-green { color: var(--green); }
+
+  /* Section */
+  section {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  section h2 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    letter-spacing: 0.03em;
+  }
+  section h3 {
+    font-family: var(--font-serif);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 28px 0 12px;
+    color: #333;
+  }
+  section h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 20px 0 8px;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+  section p {
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+  }
+  section p strong {
+    color: var(--text);
+  }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  thead th {
+    background: #f5f3f0;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #f0eeea;
+    vertical-align: top;
+  }
+  tbody tr:hover { background: #fafaf8; }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .badge-red { background: #fdecea; color: var(--accent); }
+  .badge-yellow { background: #fef9e7; color: var(--yellow); }
+  .badge-green { background: #e8f5e9; color: var(--green); }
+  .badge-blue { background: #e3f2fd; color: var(--blue); }
+
+  /* Callout boxes */
+  .callout {
+    border-left: 4px solid var(--blue);
+    background: #f8fafc;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 14px;
+  }
+  .callout-red { border-left-color: var(--accent); background: #fef9f9; }
+  .callout-yellow { border-left-color: var(--yellow); background: #fefdf7; }
+  .callout-green { border-left-color: var(--green); background: #f8fdf8; }
+
+  /* Trigger signal list */
+  .trigger-list { list-style: none; padding: 0; }
+  .trigger-list li {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .trigger-list .t-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .t-p0 { background: #fdecea; color: var(--accent); }
+  .t-p1 { background: #fef9e7; color: var(--yellow); }
+
+  /* Pre / code */
+  pre {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+
+  /* Score board extended */
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 180px repeat(3, 1fr);
+    gap: 0;
+    margin: 16px 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    font-size: 13px;
+  }
+  .matrix-grid > * {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0eeea;
+    border-right: 1px solid #f0eeea;
+    text-align: center;
+  }
+  .matrix-header { background: #f5f3f0; font-weight: 600; }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    gap: 0;
+    margin: 20px 0;
+    font-size: 13px;
+    text-align: center;
+  }
+  .timeline-phase {
+    flex: 1;
+    padding: 20px 12px;
+    border-radius: var(--radius);
+  }
+  .timeline-phase:nth-child(1) { background: #e3f2fd; }
+  .timeline-phase:nth-child(2) { background: #fff3e0; }
+  .timeline-phase:nth-child(3) { background: #fce4ec; }
+  .timeline-phase:nth-child(4) { background: #e8f5e9; }
+  .timeline-phase:nth-child(5) { background: #f3e5f5; }
+  .timeline-phase .phase-year { font-family: var(--font-serif); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .timeline-phase .phase-label { font-size: 11px; color: var(--text-muted); }
+
+  /* Risk cards */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .risk-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .risk-card .risk-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .risk-card .risk-pct {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .risk-card p { font-size: 13px; color: var(--text-secondary); margin: 0; }
+
+  /* Evolution steps */
+  .evo-step {
+    border-left: 4px solid var(--blue);
+    padding-left: 20px;
+    margin: 16px 0 16px 8px;
+    position: relative;
+  }
+  .evo-step::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    background: var(--blue);
+    border-radius: 50%;
+  }
+  .evo-step h4 { margin-top: 0; }
+
+  /* Footer */
+  .report-footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .score-board { grid-template-columns: repeat(2, 1fr); }
+    .risk-grid { grid-template-columns: 1fr; }
+    section { padding: 24px 20px; }
+    .report-header h1 { font-size: 24px; }
+    .timeline { flex-wrap: wrap; }
+    .timeline-phase { flex: 1 1 30%; }
+  }
+
+  /* Print */
+  @media print {
+    .report-header { background: #1a1a2e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    section { break-inside: avoid; box-shadow: none; }
+    body { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="category-tag">未来品类 A · 归零力 ① 检索归零</div>
+  <h1>统一智能层</h1>
+  <p class="subtitle">"不做系统集成，做信息集成"&emsp;——&emsp;一个坐在所有现有系统之上的统一查询层</p>
+  <p class="meta-line">成本归零重构法 · 完整分析 &nbsp;|&nbsp; 2026-06-15 &nbsp;|&nbsp; 中建发展AI软件机会研判</p>
+</header>
+
+<div class="container">
+
+<!-- Score Board -->
+<div class="score-board">
+  <div class="score-card">
+    <div class="score-label">归零强度</div>
+    <div class="score-value score-accent">28<span style="font-size:16px;font-weight:400;color:#888;">/30</span></div>
+    <div class="score-sub">彻底颠覆系统孤岛结构</div>
+  </div>
+  <div class="score-card">
+    <div class="score-label">解锁价值</div>
+    <div class="score-value score-blue">25<span style="font-size:16px;font-weight:400;color:#888;">/30</span></div>
+    <div class="score-sub">全行业年损失130-165亿</div>
+  </div>
+  <div class="score-card">
+    <div class="score-label">技术就绪度</div>
+    <div class="score-value score-green">20<span style="font-size:16px;font-weight:400;color:#888;">/25</span></div>
+    <div class="score-sub">关键技术拼图基本齐全</div>
+  </div>
+  <div class="score-card">
+    <div class="score-label">触发确定性</div>
+    <div class="score-value" style="color:#b7950b;">12<span style="font-size:16px;font-weight:400;color:#888;">/15</span></div>
+    <div class="score-sub">3个明确信号可观测</div>
+  </div>
+</div>
+
+<!-- 总分 -->
+<section style="text-align:center;">
+  <span style="font-family:var(--font-serif);font-size:48px;font-weight:700;color:var(--accent);">85</span>
+  <span style="font-size:16px;color:var(--text-muted);"> / 100 分</span>
+  <span class="badge badge-red" style="margin-left:12px;font-size:13px;padding:4px 12px;">🔴 立即储备</span>
+  <p style="margin-top:8px;color:var(--text-muted);">归零强度大 × 技术就绪度高 → 今天开始储备，触发条件一旦出现，最快响应</p>
+</section>
+
+<!-- 一、品类定义 -->
+<section>
+  <h2>一、品类定义与推导</h2>
+
+  <h3>什么是统一智能层？</h3>
+  <p>建筑企业当前每个部门用不同软件：<strong>SRM</strong>管采购、<strong>PM</strong>管项目、<strong>ERP</strong>管财务、<strong>EHS</strong>管安全。数据彼此隔离，跨系统查数据必须靠人逐个打开系统，手动拼 Excel。AI让跨系统信息检索成本趋零后，可能出现一个<strong>"坐在所有现有系统之上的统一查询层"</strong>——不做系统集成，做信息集成。</p>
+
+  <div class="callout callout-red">
+    <strong>核心洞察</strong>：传统系统集成（ESB/API）太重太贵，每个系统对接 50-200 万，维护 20 万/年。统一智能层用 AI 直接"看懂"每个系统的界面，不需要任何系统集成——只需要 AI 能"看屏幕"就够了。
+  </div>
+
+  <h3>成本归零推导（五步还原）</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:12%;">步骤</th><th style="width:18%;">动作</th><th>内容</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Step 1</strong></td>
+          <td>扫描</td>
+          <td>建筑企业软件栈：SRM→PM→ERP→EHS→OA，各系统独立运行，跨系统查数据靠<strong>"人肉中台"</strong>（一个人打开三个系统，抄到 Excel）</td>
+        </tr>
+        <tr>
+          <td><strong>Step 2</strong></td>
+          <td>锁定</td>
+          <td><span class="badge badge-red">① 检索归零</span> — 跨系统信息查找成本。AI 直接读懂所有系统的界面和文档，无需数据打通接口</td>
+        </tr>
+        <tr>
+          <td><strong>Step 3</strong></td>
+          <td>归零</td>
+          <td>假设信息检索成本趋零：任何员工用自然语言问"某供应商过去 12 个月所有项目的履约情况"，3 秒内得到跨 SRM+PM+财务的汇总答案</td>
+        </tr>
+        <tr>
+          <td><strong>Step 4</strong></td>
+          <td>推导</td>
+          <td>"统一查询层"坐在所有现有系统之上：<strong>不替代、不集成、只读不写、屏幕级理解、自然语言入口</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Step 5</strong></td>
+          <td>验证</td>
+          <td>受益者：所有需要跨系统信息的角色。在位者：现有软件供应商（但不冲突，是叠加层而非替代层）— 这是罕见的"所有人受益、无人受损"的结构变化</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 二、解锁价值 -->
+<section>
+  <h2>二、被解锁价值：系统孤岛的隐性成本</h2>
+  <p>如果不做统一智能层，建筑行业每年因为系统孤岛要花多少钱？归零后能释放多少？</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>价值类型</th><th style="text-align:right;">全行业年损失</th><th>归零效果</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>人力时间浪费（250万人×每周跨系统查数据）</td>
+          <td style="text-align:right;font-weight:700;">~97.5 亿</td>
+          <td>人去做更高价值的事</td>
+        </tr>
+        <tr>
+          <td>决策延迟成本（供应商评估/付款审批/项目汇总）</td>
+          <td style="text-align:right;font-weight:700;">~27 亿</td>
+          <td>大部分释放</td>
+        </tr>
+        <tr>
+          <td>错误成本（信息不全导致的合同/付款/安全等错误）</td>
+          <td style="text-align:right;font-weight:700;">~8.25 亿</td>
+          <td>部分释放</td>
+        </tr>
+        <tr>
+          <td>系统集成替代节省（无需 ESB/API 对接）</td>
+          <td style="text-align:right;font-weight:700;">~16 亿/年</td>
+          <td>大部分释放</td>
+        </tr>
+        <tr style="background:#fef9f9;">
+          <td><strong>被锁价值合计（保守估算）</strong></td>
+          <td style="text-align:right;font-weight:700;font-family:var(--font-serif);font-size:18px;color:var(--accent);">~120 亿/年</td>
+          <td>释放 30-50% = 36-60 亿/年</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>算例</strong>（千人建筑企业管理团队）：跨系统查询耗时 65,000 小时/年 → <strong>人力损失 520 万/年</strong>；决策延迟损失 <strong>540 万/年</strong>；信息不全错误 <strong>165 万/年</strong>。仅一个二级单位，年损失就超 <strong>1,200 万</strong>。
+  </div>
+</section>
+
+<!-- 三、穿越对标 -->
+<section>
+  <h2>三、穿越对标：历史上的"检索归零"</h2>
+  <p>找历史上类似的信息检索成本归零事件，推断统一智能层出现的速度和轨迹。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:20%;">对标事件</th><th style="width:25%;">之前状态</th><th style="width:20%;">归零了什么</th><th style="width:15%;">T0→企业可用</th><th>对统一智能层的启示</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Google 搜索引擎</strong><br>(1998-2005)</td>
+          <td>企业信息分散在不同数据库/文件服务器/邮件系统</td>
+          <td>"整个互联网"中找一条信息的成本</td>
+          <td><strong>~8 年</strong></td>
+          <td>Google 没解决企业内部系统问题。统一智能层就是"企业版的 Google"</td>
+        </tr>
+        <tr>
+          <td><strong>Slack 搜索一切</strong><br>(2014-2019)</td>
+          <td>企业沟通分散在邮件+多个 IM+文档系统</td>
+          <td>多个沟通渠道中找一条消息的成本</td>
+          <td><strong>3-5 年</strong></td>
+          <td>关键是"入口归一"而非技术突破。最大挑战是用户习惯</td>
+        </tr>
+        <tr>
+          <td><strong>SAP ERP 统一</strong><br>(1990s)</td>
+          <td>制造业用不同软件管财务/库存/人事</td>
+          <td>在多个软件间切换的成本</td>
+          <td><strong>5-10 年</strong></td>
+          <td>SAP 做"系统集成"太重（70% 超预算）；统一智能层做"信息集成"轻量得多</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-yellow">
+    <strong>综合推演</strong>：AI 迭代速度远快于前几代技术。<strong>技术验证期 2026-2027</strong>，<strong>企业可用期 2028-2029</strong>，<strong>全面推广期 2029+</strong>。总周期约 5 年，比 Google 的 8 年快，但比 Slack 的 3 年慢（因为建筑行业企业级场景更复杂）。
+  </div>
+</section>
+
+<!-- 四、触发条件 -->
+<section>
+  <h2>四、触发条件：什么信号出现意味着可以启动？</h2>
+
+  <h3>P0 级触发（必须同时满足）</h3>
+  <ul class="trigger-list">
+    <li>
+      <span class="t-icon t-p0">T1</span>
+      <div>
+        <strong>Computer Use 可稳定操作至少 2 个主流企业管理软件</strong>（如用友 NC/金蝶 EAS/广联达造价）
+        <br><span style="font-size:12px;color:var(--text-muted);">准确率 > 95%，一次成功率 > 90%。当前状态：约 60-70%。每季度实测一次。</span>
+      </div>
+    </li>
+    <li>
+      <span class="t-icon t-p0">T2</span>
+      <div>
+        <strong>IS-A05 知识管理已在中建体系内完成 ≥3 个局级单位推广</strong>
+        <br><span style="font-size:12px;color:var(--text-muted);">日活 > 3000 人，月活 > 60%，NPS > 30。证明"AI 查企业信息"的用户习惯可建立。</span>
+      </div>
+    </li>
+    <li>
+      <span class="t-icon t-p0">T3</span>
+      <div>
+        <strong>≥3 个核心系统 IT 部门书面同意开放只读查询权限</strong>
+        <br><span style="font-size:12px;color:var(--text-muted);">需要正式的内部备忘录/MOU。这是组织层面的关键解锁点。</span>
+      </div>
+    </li>
+  </ul>
+
+  <h3>P1 级触发（强烈建议，非必须）</h3>
+  <ul class="trigger-list">
+    <li>
+      <span class="t-icon t-p1">T4</span>
+      <div><strong>集团出台"企业数据 AI 赋能"相关制度</strong>，明确跨系统 AI 查询合规边界</div>
+    </li>
+    <li>
+      <span class="t-icon t-p1">T5</span>
+      <div><strong>广联达或钉钉/飞书发布跨产品 AI 查询功能</strong>（竞品信号，表明市场教育已完成）</div>
+    </li>
+    <li>
+      <span class="t-icon t-p1">T6</span>
+      <div><strong>体系内积累 ≥1000 条真实跨系统查询需求案例</strong>（通过 IS-A05 推广自然收集）</div>
+    </li>
+  </ul>
+
+  <div class="callout callout-green">
+    <strong>触发判断</strong>：T1+T2+T3 全部满足 → <strong>立即启动正式立项和 MVP</strong>。T1+T2 满足但 T3 不满足 → 加速组织沟通，技术预研并行。T1 不满足 → 保持跟踪，不做正式开发。
+  </div>
+</section>
+
+<!-- 五、时间判断卡牌 -->
+<section>
+  <h2>五、时间判断卡牌</h2>
+
+  <div class="timeline">
+    <div class="timeline-phase">
+      <div class="phase-year">2026</div>
+      <div class="phase-label">储备期</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">2027</div>
+      <div class="phase-label">准备期</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">2028</div>
+      <div class="phase-label">启动窗口</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">2029</div>
+      <div class="phase-label">推广期</div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">2030</div>
+      <div class="phase-label">全面期</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:14%;">判断维度</th><th>当前状态</th><th>预计就绪</th><th>关键不确定性</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Computer Use</strong></td>
+          <td>可操作简单界面，企业级不稳定</td>
+          <td>2027-2028</td>
+          <td>大模型公司是否把企业软件作为优先级</td>
+        </tr>
+        <tr>
+          <td><strong>多模态理解</strong></td>
+          <td>已成熟（GPT-4o/Gemini）</td>
+          <td><span class="badge badge-green">已就绪</span></td>
+          <td>低</td>
+        </tr>
+        <tr>
+          <td><strong>RAG+向量检索</strong></td>
+          <td>已成熟（DeepSeek 等）</td>
+          <td><span class="badge badge-green">已就绪</span></td>
+          <td>低</td>
+        </tr>
+        <tr>
+          <td><strong>组织准备度</strong></td>
+          <td>各系统 IT 对"被查询"有抵触</td>
+          <td>2027-2028</td>
+          <td>需 IS-A05 先跑通，证明无害</td>
+        </tr>
+        <tr>
+          <td><strong>竞品窗口</strong></td>
+          <td>广联达最可能先行（2027-2028）</td>
+          <td>2027-2028</td>
+          <td>广联达的优先级未知</td>
+        </tr>
+        <tr>
+          <td><strong>先行者优势</strong></td>
+          <td>暂无先行者</td>
+          <td>约 3 年窗口</td>
+          <td>技术可追，但数据+习惯+信任不可追</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 六、储备动作 -->
+<section>
+  <h2>六、储备动作：今天就能做的</h2>
+
+  <h3>🔴 技术储备（优先级最高）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:8%;">#</th><th>动作</th><th style="width:15%;">成本</th><th>产出</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>R1</td>
+          <td><strong>每季度 1 次 Computer Use 能力测试</strong>：选取用友 NC、广联达造价、自研 PM 系统，实测"查供应商→看合同→看付款"三连操作</td>
+          <td>1 人天/季度</td>
+          <td>成熟度趋势图，触发 T1 的信号数据</td>
+        </tr>
+        <tr>
+          <td>R2</td>
+          <td><strong>建立核心系统数据字典映射</strong>：梳理 SRM/PM/ERP/EHS/财务等系统字段定义、实体关系、ID 关联（如"供应商"在不同系统的 ID 映射）</td>
+          <td>2 人月</td>
+          <td>系统间概念映射表——统一智能层的"底图"</td>
+        </tr>
+        <tr>
+          <td>R3</td>
+          <td><strong>在 IS-A05 MVP 中内置跨系统需求收集</strong>：用户提问涉及多系统时自动标记</td>
+          <td>并入 IS-A05</td>
+          <td>结构化需求语料，触发 T6</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>🟡 组织储备</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:8%;">#</th><th>动作</th><th style="width:15%;">成本</th><th>产出</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>R4</td>
+          <td><strong>与集团信息化部/各系统 IT 做 1v1 访谈</strong>，了解对"AI 读系统"的顾虑和条件</td>
+          <td>10 次访谈</td>
+          <td>组织阻力地图 + 关键决策者态度</td>
+        </tr>
+        <tr>
+          <td>R5</td>
+          <td><strong>发布内部概念验证白皮书</strong>：向中高层汇报统一智能层概念和穿越对标结论</td>
+          <td>1 周编写</td>
+          <td>降低正式立项的决策门槛</td>
+        </tr>
+        <tr>
+          <td>R6</td>
+          <td><strong>法务前置评估</strong>：请法务出具"AI 访问企业内部系统数据的合规边界"初步意见</td>
+          <td>1 次咨询</td>
+          <td>合规边界清单</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-red">
+    <strong>本周立即启动</strong>：R1（安排第一次 Computer Use 测试）+ R2（启动数据字典映射）。这两件事成本极低，且无论统一智能层何时启动，产出都有长期价值。
+  </div>
+</section>
+
+<!-- 七、先行者风险 -->
+<section>
+  <h2>七、先行者风险：如果别人先做了</h2>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <div class="risk-title">🔴 风险一：入口被占</div>
+      <div class="risk-pct">40-50%</div>
+      <p>广联达在 2027-2028 年推出跨产品线 AI 助手。IS-A05 被降级为"知识库"，用户习惯被对手锁定。中建的入口效应和数据飞轮被对手启动。</p>
+      <p style="margin-top:8px;"><strong>应对</strong>：IS-A05 在 2026-2027 完成体系推广，先占领"企业内 AI 查询"心智。</p>
+    </div>
+    <div class="risk-card">
+      <div class="risk-title">🟡 风险二：先发数据壁垒</div>
+      <div class="risk-pct" style="color:#b7950b;">30%</div>
+      <p>任何先行者积累 5 万条以上跨系统查询日志。行业数据壁垒一旦建立，后发者即使技术更好，准确率也长期落后 10-15 个百分点。</p>
+      <p style="margin-top:8px;"><strong>应对</strong>：R3 暗度陈仓——在 IS-A05 推广中自然积累跨系统语料。</p>
+    </div>
+    <div class="risk-card">
+      <div class="risk-title">🟡 风险三：组织惰性锁定</div>
+      <div class="risk-pct" style="color:#b7950b;">20-30%</div>
+      <p>一个外部产品被体系内某个局先采购使用，其他局因央企"对标"惯性跟随。数据外流 + 自研方案面临内部竞争。</p>
+      <p style="margin-top:8px;"><strong>应对</strong>：R4+R5 高层铺垫，避免被单个局的采购决策绑架集团方向。</p>
+    </div>
+    <div class="risk-card">
+      <div class="risk-title">🟢 风险四：IS-A05 被降级</div>
+      <div class="risk-pct" style="color:#1e8449;">30-40%</div>
+      <p>钉钉/飞书做成通用方案后，IS-A05 从"地基+入口"被降级为"地基"，失去了入口效应的战略价值。</p>
+      <p style="margin-top:8px;"><strong>应对</strong>：加速 IS-A05 推广，在通用方案进入建筑行业之前建立用户习惯壁垒。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 八、演进路径 -->
+<section>
+  <h2>八、演进路径：从 IS-A05 到统一智能层</h2>
+
+  <div class="evo-step">
+    <h4>Phase 1：IS-A05 知识管理（2026-2027）</h4>
+    <p>能力：AI 查询企业制度/规范/文档。范围：<strong>1 个系统类型</strong>（文档系统）。验证：用户是否养成"问 AI 查企业信息"的习惯。</p>
+  </div>
+
+  <div class="evo-step">
+    <h4>Phase 2：双系统智能（2027-2028）</h4>
+    <p>能力：AI 查询文档系统 <strong>+ 1 个业务系统</strong>（如 PM 或 SRM）。范围：<strong>2 个系统类型</strong>。验证：Computer Use 是否稳定读取企业软件 + 跨系统查询准确率。</p>
+  </div>
+
+  <div class="evo-step">
+    <h4>Phase 3：统一智能层（2028+）</h4>
+    <p>能力：AI 查询所有核心系统，跨系统推理和汇总。范围：<strong>5-8 个核心系统</strong>。验证：正式产品化 + 体系内推广 + 对外输出。</p>
+  </div>
+
+  <div class="callout">
+    <strong>关键衔接点</strong>：IS-A05 是统一智能层的 MVP 起点。不跑通 IS-A05，统一智能层就是空中楼阁。IS-A05 建立的"问 AI 查企业信息"用户习惯，是统一智能层最宝贵的资产。
+  </div>
+</section>
+
+<!-- 九、局限性声明 -->
+<section>
+  <h2>九、局限性声明</h2>
+  <ol style="padding-left:20px;color:var(--text-secondary);line-height:2;">
+    <li><strong>Computer Use 是关键单点故障</strong>：如果该技术的企业级成熟度比推演慢 2 年以上，整个时间线推迟。但即使 Computer Use 不成熟，也可用传统 API 集成方式实现——只是成本更高、推广更慢。</li>
+    <li><strong>组织阻力可能被低估</strong>：各系统 IT 部门对"被 AI 查询"的抵触可能比预想更强烈。如果 Phase 2 无法推进，统一智能层将停留在"文档查询"阶段。</li>
+    <li><strong>不构成当前行动建议</strong>：本分析属前瞻性研判，结论是"立即储备"而非"立即开发"。当前行动建议参考现有 28 单元的五步法七维评分。</li>
+    <li><strong>对标推演的局限</strong>：穿越对标选取的历史案例（Google/Slack/SAP）与建筑行业 AI 查询的类比并非完美，提供的是"方向感"而非精确时间预测。</li>
+  </ol>
+</section>
+
+<div class="report-footer">
+  <p>成本归零重构法 · 未来品类 A · 统一智能层 &nbsp;|&nbsp; 2026-06-15</p>
+  <p style="margin-top:4px;">中建发展 AI 软件机会研判 &nbsp;|&nbsp; 前瞻性品类研判，不构成当前行动建议 &nbsp;|&nbsp; 建议每半年重新扫描</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781163146497-95nmzvq9v",
+  "providerId": "claude",
+  "title": "收集中建发展信息并完善汇报材料",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781163146497,
+  "updatedAt": 1781319717739,
+  "lastResponseAt": 1781245441357,
+  "sessionId": "39d96890-2f2c-4952-9b32-9f02e5fb0574",
+  "providerState": {
+    "providerSessionId": "39d96890-2f2c-4952-9b32-9f02e5fb0574"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 1163,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 205952,
+    "contextWindow": 1000000,
+    "contextTokens": 207115,
+    "percentage": 21
+  }
+}

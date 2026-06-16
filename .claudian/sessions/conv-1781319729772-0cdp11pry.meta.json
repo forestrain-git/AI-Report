@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781319729772-0cdp11pry",
+  "providerId": "claude",
+  "title": "把这个md文件转html，发我飞书",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1781319729772,
+  "updatedAt": 1781320959853,
+  "lastResponseAt": 1781319961683,
+  "sessionId": "0b2bb10d-bf2f-4b02-aee0-42860bf22677",
+  "providerState": {
+    "providerSessionId": "0b2bb10d-bf2f-4b02-aee0-42860bf22677"
+  },
+  "currentNote": "wiki/synthesis/中建发展AI战略定位分析.md",
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 10760,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 41152,
+    "contextWindow": 1000000,
+    "contextTokens": 51912,
+    "percentage": 5
+  }
+}

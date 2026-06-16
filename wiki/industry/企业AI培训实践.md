@@ -1,6 +1,6 @@
 ---
 type: industry
-last_updated: "2026-06-09 22:30"
+last_updated: "2026-06-12"
 tags: ["央企培训", "国企培训", "企业AI培训", "管理层培训", "中国"]
 related_tools: []
 related_models: []
@@ -14,15 +14,19 @@ related_models: []
 
 ## 一、宏观政策背景
 
-### 国务院国资委"AI+"行动计划（2025年2月）
+### 国务院国资委"AI+"行动计划
 
 核心要求：
 - 中央企业必须将AI技术整合到核心业务运营中
 - 对全体员工设定AI培训要求，**管理层优先培训**
-- 将AI素养纳入央企领导干部考核评价体系
+- **2025年1月**：国资委印发《关于加快推进中央企业人工智能发展的指导意见》，要求央企发展AI作为"一把手工程"，领导人员带头提升AI素养 — [21财经](https://www.21jingji.com/article/20250114/herald/54f6d5e8c4e4b7d57f3bb16bb7c50e45.html)
+- **2025年5月8日**：国资委进一步明确要求将AI素养纳入领导干部**培训体系和考核评价体系** — [央视新闻/澎湃新闻](https://www.thepaper.cn/newsDetail_forward_30406012)
 - 目标：到2025年底，央企管理层普遍具备AI素养
 
-来源：[Xinhua](https://en.news.cn/20250221/ai-action-plan-central-soe-digital-transformation/index.html) | [China Briefing](https://www.china-briefing.com/news/chinas-sasac-issues-ai-action-plan-for-state-owned-enterprises/)
+来源：
+- [国资委：将AI素养纳入领导干部培训体系和考核评价体系（2025.5.8 央视新闻/澎湃新闻）](https://www.thepaper.cn/newsDetail_forward_30406012)
+- [《关于加快推进中央企业人工智能发展的指导意见》（2025.1.14 21财经）](https://www.21jingji.com/article/20250114/herald/54f6d5e8c4e4b7d57f3bb16bb7c50e45.html)
+- [Xinhua](https://en.news.cn/20250221/ai-action-plan-central-soe-digital-transformation/index.html) | [China Briefing](https://www.china-briefing.com/news/chinas-sasac-issues-ai-action-plan-for-state-owned-enterprises/)
 
 ### 中国大连高级经理学院
 国资委直属培训机构，2025年开设面向央企高管的AI专题培训班，涵盖AI战略与治理、国企数智化转型、大模型商业应用等课程。

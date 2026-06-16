@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IS-A05 知识管理 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: var(--slate-800);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+/* ===== Hero Header ===== */
+.hero {
+  background: var(--grad-header);
+  padding: 28px 20px 16px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.hero-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--grad-green);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(67,160,71,0.45);
+}
+.hero-badge .num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero-badge .unit {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+.hero-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-judgment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 16px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Dimension Score Strip ===== */
+.dim-strip {
+  background: #fff;
+  margin: -12px 12px 16px;
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.dim-strip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.dim-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label {
+  width: 76px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+  flex-shrink: 0;
+}
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+.dim-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-align: right;
+  flex-shrink: 0;
+}
+  min-width: 26px;
+  text-align: right;
+}
+
+/* ===== Content Area ===== */
+.content {
+  padding: 16px 16px 0;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--slate-100);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.card h2 .emoji-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+.card h3:first-child { margin-top: 0; }
+.card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 8px;
+  margin-top: 4px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--slate-600);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+
+/* ===== Tag Pills ===== */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* ===== Verdict Badge ===== */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--slate-700);
+  margin-bottom: 12px;
+}
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box .sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+
+/* ===== Table ===== */
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 8px 6px 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+  color: var(--slate-600);
+}
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+
+/* ===== Summary Strip Progress Bar ===== */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.summary-strip .strip-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.summary-strip .strip-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--slate-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.summary-strip .strip-bar .strip-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.summary-strip .strip-val {
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Progress Bar (inline) ===== */
+.progress-strip {
+  height: 6px;
+  background: var(--slate-100);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-strip .fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ===== LTV Grid ===== */
+.ltv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ltv-card {
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid var(--slate-100);
+  text-align: center;
+}
+.ltv-card .lc-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-bottom: 4px;
+}
+.ltv-card .lc-val {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-sub {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Injury Table ===== */
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.injury-table table td:nth-child(2) { color: var(--slate-600); }
+.hs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.hs-0 { background: var(--green); }
+.hs-1 { background: #eab308; }
+.hs-2 { background: var(--amber); }
+.hs-3 { background: #ea580c; }
+
+/* ===== Assumption Card ===== */
+.assumption-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+.assumption-item .ai-text .ai-meta {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Sensitivity ===== */
+.sens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.sens-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+.sens-item .si-label {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.sens-item .si-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 2px;
+}
+.sens-item .si-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+
+/* ===== Action Card ===== */
+.action-card {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.action-card .ac-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.action-card .ac-desc {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* ===== Check List ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== Synergy Box ===== */
+.synergy-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--slate-700);
+}
+
+/* ===== Phase Bar ===== */
+.phase-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.phase-bar .phase {
+  flex: 1;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.phase-bar .phase .ph-time {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.phase-bar .phase .ph-label {
+  font-size: 10px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+
+/* ===== Callout ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--slate-50);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+
+/* ===== Dir Dot ===== */
+.dir-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.dir-dot.blue { background: var(--blue); }
+
+/* ===== Back Link ===== */
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  padding: 10px;
+  color: var(--slate-400);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.back-link:hover {
+  color: var(--blue);
+  background: var(--slate-50);
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+.footer .brand {
+  color: var(--slate-300);
+  margin-top: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .dim-item .dim-bar { width: 36px; }
+  .dim-item { font-size: 10px; }
+  .ltv-grid { grid-template-columns: 1fr; }
+  .sens-grid { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== Hero Header ===== -->
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; IS-A05</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">75</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">知识管理</div>
+  <div class="hero-sub">建筑行业垂直大脑</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">&#x2705;</span> 可推进
+  </div>
+</div>
+
+<!-- ===== Dimension Score Strip ===== -->
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:67%"></div></div>
+      <span class="dim-score">12/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:75%"></div></div>
+      <span class="dim-score">12/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:87%"></div></div>
+      <span class="dim-score">13/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:10%"></div></div>
+      <span class="dim-score">-1/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Content ===== -->
+<div class="content">
+
+  <!-- ===== 预判摘要 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box green-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-green">3/20 低风险</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">关键致命伤</span>
+        <span style="font-weight:600;color:var(--slate-700);">无 P0 级硬伤</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">团队/运营风险</span>
+        <span style="font-weight:600;color:var(--slate-700);font-size:13px;">#20 供应链/运营复杂度（3/5）— 知识库质量依赖于持续的文档治理和数据工程</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge vg">&#x2705; 可推进（建议作为IS-A02的向上延伸优先启动）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 行业预判六模块 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：内容产生层（制度/规范/经验）&#x2192; 知识加工层（文档解析+向量化+知识图谱）&#x2192; 平台层（AI知识库RAG+大模型）&#x2192; 应用层（智能问答/制度审核/安全检索/培训）&#x2192; 终端用户（全体员工/法务/安全/HR）</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">场景独占型</span> + <span class="tag tag-blue">数据资产型</span> — 核心竞争力在于获取企业内部独占文档数据，以及将知识管理嵌入日常工作流</p>
+    <p><strong>可优化</strong>：建筑企业知识管理长期处于"文件夹+搜索引擎"阶段，AI+RAG技术使"问制度比翻文件夹更快"成为可能</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>新技术</td><td>大模型+RAG使非结构化文档的智能检索成为现实</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>新技术</td><td>GraphRAG/混合索引提升建筑专业术语检索精度</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>政策法规</td><td>央企数字化考核倒逼知识管理升级</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>需求侧</td><td>制度规范存量巨大，查询效率低下是普遍痛点</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>供给侧</td><td>通用工具（飞书/钉钉/Notion）缺乏行业know-how</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>标杆效应</td><td>央企密集自研（中建八局云智、中铁小智、中交AI助手等）</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-green">
+      <strong>判断：准系统性变化</strong> — 技术（大模型+RAG成本断崖式下降）+ 需求（头部央企密集自研证明痛点真实）+ 标杆效应三重共振，唯一缺失明确政策强制。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <p><strong>原子需求</strong>：法务/合规部（制度查询，3-10万/年）| 安全管理部（安全规范检索）| 技术质量部（标准对标）| HR（新员工培训）| 一线人员（经验复用）| 中高层（跨部门协作）</p>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>大模型+RAG技术成熟+成本骤降 &#x2192; 使建筑企业"AI问制度"比"翻文件夹找人"更高效 &#x2192; 叠加央企数字化考核+标杆示范效应 &#x2192; <strong>建筑行业知识管理从"文档存储+人工检索"转向"AI语义理解+智能问答"，行业垂直知识库成为央企标配</strong>。
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">场景独占者</span> — IS-A02制度审核已跑通底层能力，中建体系海量制度/规范/经验文档是独占资产。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索 &#x2192; 爆发增长过渡期，窗口<strong>2-3年</strong>。</p>
+    <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-green">低</span> — IS-A02制度审核能力已验证，技术上不存在障碍</p>
+    <p><span class="dir-dot yellow"></span><strong>太晚风险</strong>：<span class="tag tag-yellow">中</span> — 广联达AecGPT、品茗茗智已在布局；各央企自研方案成熟后窗口期可能缩短至1-2年</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>全球企业知识管理市场 $200-250亿(2024) &#x00D7; 建筑占比5-8% = 10-20亿美元</td></tr>
+        <tr><td>Top-down</td><td>中国建筑业33万亿 &#x00D7; 信息化0.2% &#x00D7; AI知识管理5-10% = <strong>33-66亿元</strong></td></tr>
+        <tr><td>Bottom-up</td><td>100家央企&#x00D7;50万/年 + 1000家省级建工&#x00D7;10万/年 + 3000家中型&#x00D7;2万/年 = <strong>6.6亿元/年</strong></td></tr>
+        <tr><td>类比</td><td>广联达2024年营收约77亿 &#x2192; 知识管理独立SaaS初期约其1/10-1/5</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：<span class="tag tag-green">30-60亿元</span>（中国建筑AI知识管理市场），支撑十亿级体量。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：高度分散，无建筑行业垂直垄断玩家。通用层（飞书/钉钉/Notion）无行业深耕，建筑垂直层（广联达/PKPM）为附属功能，央企自研不对外。</p>
+    <p><strong>趋势</strong>：<span class="tag tag-green">C型（分散&#x2192;集中）最佳时机</span> — 数据和场景具有"用的人越多&#x2192;知识越丰富&#x2192;模型越准&#x2192;吸引更多用户"的网络效应，2-3年内可能出现头部平台。</p>
+    <div class="callout callout-green">
+      <strong>行业预判结论：</strong>&#x1F7E2; 6 模块全部通过，进入五步法分析。
+    </div>
+  </div>
+
+  <!-- ===== 五步法逐层分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：建筑企业内部职能部门（法务/安全/技术/HR/一线人员）</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>制度查找</td><td>企业制度数百份+行业规范上千条，平均耗时30分钟</td><td class="num"><span class="tag tag-red">刚性-每天</span></td></tr>
+        <tr><td>安全管理</td><td>2000+条安全规范，项目现场纸质版检索效率极低</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>新员工培训</td><td>传统带教周期3-6个月，老员工经验离职即流失</td><td class="num"><span class="tag tag-yellow">较刚</span></td></tr>
+        <tr><td>跨部门协作</td><td>信息不对称导致推诿扯皮</td><td class="num"><span class="tag tag-yellow">较刚</span></td></tr>
+        <tr><td>经验复用</td><td>"这个项目踩过的坑，下个项目接着踩"</td><td class="num"><span class="tag tag-yellow">较刚</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-red">
+      <strong>需求评估三角形</strong>：<span class="tag tag-red">刚性</span> 安全合规刚需+日常高频痛点 &middot; <span class="tag tag-red">高频</span> 日均多次查询 &middot; <span class="tag tag-red">广泛</span> 所有建筑企业都有需求
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>飞书/钉钉/Notion是"通用文档管理+AI搜索"，我们是<strong>"建筑企业的专属大脑"</strong> — 内置建筑领域知识图谱+行业分词+规范关联，预置建筑企业最常见知识场景，开箱即用。
+    </div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"让制度自己说话，让经验不再藏在脑子里。"</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>企业制度/规范/经验文档AI知识库</td><td>通用文档管理/云盘</td></tr>
+        <tr><td>建筑行业知识图谱预置（标准规范关联）</td><td>项目管理系统（专注知识层）</td></tr>
+        <tr><td>制度审核辅助（复用IS-A02能力）</td><td>全文AI生成（高风险场景不做）</td></tr>
+        <tr><td>安全规范智能检索+合规检查</td><td>工地IoT数据采集</td></tr>
+        <tr><td>新员工AI培训助手（制度引导式问答）</td><td>C端知识付费/建筑考试辅导</td></tr>
+      </table>
+    </div>
+    <p><strong>MVP</strong>：IS-A02向上构建 &#x2192; 1-2个内部单元文档向量化入库 &#x2192; DeepSeek+RAG智能问答 &#x2192; 嵌入企业微信/飞书工作台 &#x2192; 验证：准确率&gt;90%，响应&lt;3秒</p>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（ToB SaaS）</span> — 按企业年订阅 + 按用户数阶梯计费</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>中建体系内部（基础版）20万/年&#x00D7;10个局</td><td>200万</td></tr>
+        <tr><td>外部央企（标准版）30万/年&#x00D7;15家</td><td>450万</td></tr>
+        <tr><td>省级建工/大型民企 10万/年&#x00D7;50家</td><td>500万</td></tr>
+        <tr><td>中型建筑企业（精简版）3万/年&#x00D7;100家</td><td>300万</td></tr>
+        <tr><td>定制化实施服务 50万/项目&#x00D7;5个</td><td>250万</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--green);font-size:15px;"><strong>1700万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:28%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">28%</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);margin-bottom:10px;">成本1220万（技术500万+API 100万+云120万+销售350万+文档治理150万），毛利480万。第5年毛利率可达50%+。</p>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">LTV / CAC</div>
+        <div class="lc-val green">11.2</div>
+        <div class="lc-sub">&#x2705; 极健康（&gt;3）</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">回收期</div>
+        <div class="lc-val green">4.5月</div>
+        <div class="lc-sub">&#x2705; 合理（&#x2264;6月）</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">Benchmark：Notion企业版LTV/CAC约3-5，飞书约2-3。建筑行业AI知识库因替换成本更高（数据已向量化+员工已习惯），流失率更低，LTV/CAC更优。</p>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式</span> — AI知识库嵌入日常工作流后替换成本极高（数据已向量化+员工已习惯+知识图谱已定制）</p>
+    <div class="phase-bar">
+      <div class="phase blue">
+        <div class="ph-time">0-6月</div>
+        <div class="ph-label">商业验证</div>
+      </div>
+      <div class="phase amber">
+        <div class="ph-time">6-18月</div>
+        <div class="ph-label">增长早期</div>
+      </div>
+      <div class="phase green">
+        <div class="ph-time">18-36月</div>
+        <div class="ph-label">加速增长</div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>中建体系内复制</td><td>0-1万</td></tr>
+        <tr><td>2</td><td>IS-A02交叉销售</td><td>1-2万</td></tr>
+        <tr><td>3</td><td>行业协会/论坛渠道</td><td>3-5万</td></tr>
+        <tr><td>4</td><td>建筑央企IT采购体系</td><td>3-5万</td></tr>
+        <tr><td>5</td><td>建筑行业媒体+白皮书</td><td>5-8万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>数据资产</strong></td><td>中建体系内大量制度/规范/经验/案例文档（独占数据）</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>转化成本</strong></td><td>数据向量化+知识图谱定制+员工习惯养成后替换成本极高</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>场景网络效应</strong></td><td>用的人越多&#x2192;知识越丰富&#x2192;模型越准&#x2192;吸引更多用户</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>央企身份+中建品牌背书+IS-A02已验证能力</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>规模效应</strong></td><td>模型和数据基础设施成本被更多客户摊薄</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：通用平台（飞书/钉钉）<span class="tag tag-red">难</span>（缺行业知识图谱）| 广联达/PKPM <span class="tag tag-yellow">1-2年</span> | 其他央企自研 <span class="tag tag-yellow">各自为政</span> | 新进入者 <span class="tag tag-red">极难</span></p>
+  </div>
+
+  <!-- ===== 20张硬伤卡牌 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:15%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">3/20</span>
+    </div>
+    <div class="callout callout-green" style="margin-bottom:10px;">
+      <strong>结论：</strong>低风险，17项未命中，#2/#4轻微扣分，#20中等扣分。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1</td><td>目标用户是"所有人"？</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>2</td><td>痛点是"锦上添花"？</td><td><span class="hs hs-1">1</span></td><td><span class="tag tag-green">轻微</span></td></tr>
+        <tr><td>3</td><td>需求频率极低？</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>4</td><td>没有和真实用户验证？</td><td><span class="hs hs-1">1</span></td><td><span class="tag tag-green">轻微</span></td></tr>
+        <tr><td>5-6</td><td>本质区别/核心卖点</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-2" style="margin-left:4px;">2</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#11毛利偏低</span></td></tr>
+        <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度</td><td style="background:#fffbeb;"><span class="hs hs-3">3</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">中等 &#x26A0;</span></td></tr>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">#11（毛利改善空间）和#20（运营复杂度）两处轻微至中等风险，与SC-01智能风控类似——都是"初期毛利偏低+运营链条长"的ToB SaaS通病，非致命伤。</p>
+  </div>
+
+  <!-- ===== 关键假设清单 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H4：IS-A02能力可向上生长为通用知识管理</div>
+        <div class="ai-meta">技术POC &nbsp;|&nbsp; 标准：查询准确率&#x2265;90%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H9：中建体系内各局愿意使用统一平台</div>
+        <div class="ai-meta">内部调研+管理层访谈 &nbsp;|&nbsp; 标准：&#x2265;3个局/子公司同意</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H11：数据确权合规</div>
+        <div class="ai-meta">法律合规审查 &nbsp;|&nbsp; 标准：法务出具合规意见书</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H1：企业愿意为"建筑行业专属"知识库付费</div>
+        <div class="ai-meta">客户访谈 &nbsp;|&nbsp; 标准：&#x2265;5/10家外部企业确认意向</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H5：行业知识图谱预置后检索准确率显著提升</div>
+        <div class="ai-meta">A/B测试 &nbsp;|&nbsp; 标准：准确率提升&#x2265;15pp vs 通用AI搜索</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H10：IS-A02客户&#x2192;知识管理客户转化率&#x2265;50%</div>
+        <div class="ai-meta">销售漏斗数据 &nbsp;|&nbsp; 标准：前10家中&#x2265;5家愿意试用</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H2：各局愿意支持对外输出</div>
+        <div class="ai-meta">管理层访谈 &nbsp;|&nbsp; 标准：集团支持或默许外部商业化</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H3：外部央企愿意接入中建体系产品</div>
+        <div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&#x2265;2家外部央企表达合作意向</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H6：低成本大模型在建筑知识问答中表现达标</div>
+        <div class="ai-meta">技术测试 &nbsp;|&nbsp; 标准：幻觉率&#x2264;5%，响应&lt;3秒</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H7：第3年获取15家外部央企+50家省级建工</div>
+        <div class="ai-meta">增长验证 &nbsp;|&nbsp; 标准：第1年&#x2265;5家外部客户</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H8：知识库月流失率&#x2264;2%</div>
+        <div class="ai-meta">运营数据 &nbsp;|&nbsp; 标准：上线6个月后月流失率&lt;2%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 敏感性分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观(+20%)</th><th>悲观(-20%)</th></tr>
+        <tr><td>外部央企数</td><td>15家</td><td>18家 &#x2192; 收入+90万</td><td>12家 &#x2192; 收入-90万</td></tr>
+        <tr><td>省级建工数</td><td>50家</td><td>60家 &#x2192; 收入+100万</td><td>40家 &#x2192; 收入-100万</td></tr>
+        <tr><td>月流失率</td><td>2%</td><td>2.4% &#x2192; LTV=27.9万</td><td>1.6% &#x2192; LTV=41.9万</td></tr>
+        <tr><td>大模型API成本</td><td>100万/年</td><td>80万</td><td>120万</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">外部客户数</span> — 内部客户增长确定性高（体系内推广），外部客户是真正的增长弹性变量。</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">AI知识管理SaaS</div>
+        <div class="si-desc">IS-A02向上延伸 &#x2192; 体系内验证 &#x2192; 全面推广 &#x2192; 外部央企+省级建工</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年1700万，第5年5000万+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">IS-A02+知识管理捆绑套件</div>
+        <div class="si-desc">以制度审核为主菜，知识管理为"套餐升级"，降低决策门槛</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年50%客户升级为捆绑套餐</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>：IS-A02向上生长技术验证失败 | &#x2265;3局选择自建而非使用统一平台 | 外部客户付费意愿验证失败
+    </div>
+  </div>
+
+  <!-- ===== 下一步行动 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">基于IS-A02现有代码，用1个内部单元的制度/规范文档，搭建MVP级AI知识问答Demo</div>
+    </div>
+    <ul class="check-list">
+      <li>选取中建发展内部100份制度/规范/流程文档（IS-A02已覆盖部分）</li>
+      <li>将文档向量化入库（PGVector或FAISS）</li>
+      <li>接入DeepSeek API作为生成模型，设计30个典型查询问题</li>
+      <li>测评回答准确率、响应时间、用户满意度</li>
+    </ul>
+    <div class="summary-strip">
+      <span class="strip-label">成功标准</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:90%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">27/30</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">30个测试问题中&#x2265;27个（90%）回答准确可用，响应时间&lt;3秒。成本：2周 + 1名算法工程师（复用IS-A02团队） + DeepSeek API约500元。若Demo验证通过 &#x2192; 开设正式项目，启动中建体系内1个试点单元。</p>
+  </div>
+
+  <!-- ===== 协同关系 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F517;</span> 与IS-A02及其他方向的协同关系</h2>
+    <p>AI知识管理（KM-01）在中建发展AI产品矩阵中扮演<strong>"地基+入口"</strong>的双重角色：</p>
+    <div class="synergy-box">IS-A02 制度审核（已验证的底层能力）
+  &#x2502;
+  &#x251C;&#x2500;&#x2500; 向上生长 &#x2192; KM-01 AI知识管理（知识检索+问答+经验复用）
+  &#x2502;                 &#x2502;
+  &#x2502;                 &#x251C;&#x2500;&#x2500; 向下赋能 &#x2192; IS-A01 智能合同（合同知识库+条款联动）
+  &#x2502;                 &#x251C;&#x2500;&#x2500; 横向赋能 &#x2192; 安全管理（安全规范知识库+合规检查）
+  &#x2502;                 &#x251C;&#x2500;&#x2500; 交叉销售 &#x2192; 其他IS模块（法务/HR/技术质量知识库）
+  &#x2502;                 &#x2514;&#x2500;&#x2500; 入口效应 &#x2192; 培养全员AI使用习惯，降低推广门槛
+  &#x2502;
+  &#x2514;&#x2500;&#x2500; 向下延伸 &#x2192; SC-01 供应商风控（制度审核用于供应商资质审核）</div>
+    <div class="callout callout-green">
+      <strong>战略建议：</strong>KM-01应作为IS-A02的"向上延伸"优先启动。<span class="tag tag-green">最低技术风险 + 最广用户覆盖 + 最强协同效应</span> — 可服务IS-A01/04/安全管理等至少5个内部单元，是真正的"共用地基"。
+    </div>
+  </div>
+
+  <!-- ===== 返回链接 ===== -->
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>IS-A05 知识管理 &middot; 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 &middot; 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

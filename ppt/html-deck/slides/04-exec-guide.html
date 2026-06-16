@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P04 · 四条核心建议与本报告结构</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 80px 36px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title { margin-bottom: 8px; }
+  .slide-lead { margin-bottom: 28px; }
+
+  /* 左右分栏 */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* 左侧：四条建议 */
+  .actions-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .action-card {
+    border-radius: 14px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 2px solid;
+    flex: 1;
+    justify-content: center;
+  }
+  .action-card .act-label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    margin-bottom: 2px;
+  }
+  .action-card .act-title {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .action-card .act-desc {
+    font-size: 17px;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  .action-card.a1 {
+    background: linear-gradient(135deg, #fef2f2, #fff);
+    border-color: #fecaca;
+  }
+  .action-card.a1 .act-label { color: var(--red); }
+  .action-card.a1 .act-title { color: #991b1b; }
+  .action-card.a1 .act-desc { color: #7f1d1d; }
+
+  .action-card.a2 {
+    background: linear-gradient(135deg, #fff7ed, #fff);
+    border-color: #fed7aa;
+  }
+  .action-card.a2 .act-label { color: var(--orange); }
+  .action-card.a2 .act-title { color: #9a3412; }
+  .action-card.a2 .act-desc { color: #7c2d12; }
+
+  .action-card.a3 {
+    background: linear-gradient(135deg, #eff6ff, #fff);
+    border-color: #dbeafe;
+  }
+  .action-card.a3 .act-label { color: var(--brand-blue); }
+  .action-card.a3 .act-title { color: #1e3a8a; }
+  .action-card.a3 .act-desc { color: #1e40af; }
+
+  .action-card.a4 {
+    background: linear-gradient(135deg, #f0fdf4, #fff);
+    border-color: #86efac;
+  }
+  .action-card.a4 .act-label { color: var(--green); }
+  .action-card.a4 .act-title { color: #14532d; }
+  .action-card.a4 .act-desc { color: #166534; }
+
+  /* 右侧：章节导航 */
+  .chapters-col {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 28px 32px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .chapters-col .col-header {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--ink-title);
+    margin-bottom: 4px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .chapter-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: background 0.15s;
+  }
+  .chapter-row:hover {
+    background: #fff;
+  }
+  .chapter-row .ch-num {
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--brand-blue);
+    min-width: 44px;
+    text-align: center;
+  }
+  .chapter-row .ch-info {
+    flex: 1;
+  }
+  .chapter-row .ch-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink-title);
+    line-height: 1.3;
+  }
+  .chapter-row .ch-sub {
+    font-size: 14px;
+    color: var(--ink-dim);
+    margin-top: 2px;
+  }
+  .chapter-row .ch-pages {
+    font-size: 13px;
+    color: var(--ink-subtle);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* 角色速查 */
+  .role-tip {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 15px;
+    color: var(--ink-dim);
+    line-height: 1.6;
+  }
+  .role-tip b {
+    color: var(--brand-blue);
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">四条核心建议</div>
+<p class="slide-lead">不同角色可以按自己的节奏切入——但第一步，今天就能迈出去</p>
+
+<div class="main-grid">
+  <!-- 左侧：四条建议 -->
+  <div class="actions-col">
+    <div class="action-card a1">
+      <div class="act-label">今天</div>
+      <div class="act-title">打开一个 AI 工具，问一个头疼的问题</div>
+      <div class="act-desc">豆包、Kimi、DeepSeek 均可——体验是最好的认知起点。</div>
+    </div>
+
+    <div class="action-card a2">
+      <div class="act-label">本月内</div>
+      <div class="act-title">成立 AI 专项工作组，明确 Owner</div>
+      <div class="act-desc">不需要庞大编制，1 个牵头人 + 2-3 个种子成员即可启动。</div>
+    </div>
+
+    <div class="action-card a3">
+      <div class="act-label">本季度</div>
+      <div class="act-title">选定 1-2 个低风险场景试点跑起来</div>
+      <div class="act-desc">从最高频、最痛点、数据最充分的场景切入，快速验证价值。</div>
+    </div>
+
+    <div class="action-card a4">
+      <div class="act-label">本年度</div>
+      <div class="act-title">形成可复制的 AI 应用模板与方法</div>
+      <div class="act-desc">1 套方法论 + 1 批模板 + 1 个成功案例 + 1 支种子团队。</div>
+    </div>
+  </div>
+
+  <!-- 右侧：章节导航 -->
+  <div class="chapters-col">
+    <div class="col-header">本报告结构</div>
+
+    <div class="chapter-row">
+      <div class="ch-num">01</div>
+      <div class="ch-info">
+        <div class="ch-title">紧迫性：政策与市场窗口</div>
+        <div class="ch-sub">政策逻辑链 → 考核指标 → 技术爆发</div>
+      </div>
+      <div class="ch-pages">P5-15</div>
+    </div>
+
+    <div class="chapter-row">
+      <div class="ch-num">02</div>
+      <div class="ch-info">
+        <div class="ch-title">可能性：技术突破与就绪度</div>
+        <div class="ch-sub">AI 为什么现在爆发 → 四种能力升级</div>
+      </div>
+      <div class="ch-pages">P16-20</div>
+    </div>
+
+    <div class="chapter-row">
+      <div class="ch-num">03</div>
+      <div class="ch-info">
+        <div class="ch-title">参照系：全球与内部实践</div>
+        <div class="ch-sub">全球标杆 → 央企案例 → 云筑网成果</div>
+      </div>
+      <div class="ch-pages">P21-29</div>
+    </div>
+
+    <div class="chapter-row">
+      <div class="ch-num">04</div>
+      <div class="ch-info">
+        <div class="ch-title">诊断：现状、差距与跃迁路径</div>
+        <div class="ch-sub">数据冲击 → 五个案例 → 三级跃迁</div>
+      </div>
+      <div class="ch-pages">P30-33</div>
+    </div>
+
+    <div class="chapter-row">
+      <div class="ch-num">05</div>
+      <div class="ch-info">
+        <div class="ch-title">方案：切入点、支撑与回报</div>
+        <div class="ch-sub">七个入口 → 标杆方法 → ROI 测算</div>
+      </div>
+      <div class="ch-pages">P34-40</div>
+    </div>
+
+    <div class="chapter-row">
+      <div class="ch-num">06</div>
+      <div class="ch-info">
+        <div class="ch-title">保障：风险、合规与行动</div>
+        <div class="ch-sub">避坑指南 → 合规清单 → 30/60/90 计划</div>
+      </div>
+      <div class="ch-pages">P41-50</div>
+    </div>
+
+    <div class="role-tip">
+      <b>高管速览：</b>重点看 P2-P4 摘要、P21 云筑网成果、P37 ROI、P41 行动计划、P43 收尾。<br>
+      <b>业务负责人：</b>重点看 P30 三级跃迁、P34 切入点、P38 避坑、P42 周计划。<br>
+      <b>技术人员：</b>重点看 P16 技术演进、P40 合规、P45 选型指南。
+    </div>
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">执行摘要</span>
+  <span class="page-num">4 / 50</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 安全帽：中建发展 AI 硬件战略的第一步</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* === VIEWPORT BASE (MUST INCLUDE) === */
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#0a0e1a}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:#0a0e1a}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:#0a0e1a}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none;background:#0a0e1a}
+.slide.active,.slide.visible{visibility:visible;opacity:1;pointer-events:auto;z-index:1}
+img,video,canvas,svg{max-width:100%;max-height:100%}
+.deck-controls{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:1000}
+@media print{html,body{width:1920px;height:auto;overflow:visible;background:#fff}.deck-viewport{position:static;overflow:visible;background:#fff}.deck-stage{position:static;width:auto;height:auto;transform:none!important;background:none}.slide{position:relative;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;width:1920px;height:1080px;break-after:page;page-break-after:always}.slide:last-child{break-after:auto;page-break-after:auto}.deck-controls{display:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
+
+/* === DESIGN SYSTEM === */
+:root {
+  --bg: #0a0e1a;
+  --bg-card: #111827;
+  --bg-card-alt: #1a2236;
+  --accent: #f59e0b;
+  --accent-light: #fbbf24;
+  --accent-dim: #92400e;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --blue: #3b82f6;
+  --green: #10b981;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --cyan: #06b6d4;
+  --border: #1e293b;
+  --font: 'Noto Sans SC', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+/* === TYPOGRAPHY === */
+h1 { font-size: 64px; font-weight: 900; line-height: 1.15; margin: 0; }
+h2 { font-size: 48px; font-weight: 700; line-height: 1.2; margin: 0; }
+h3 { font-size: 36px; font-weight: 700; line-height: 1.3; margin: 0; }
+p { font-size: 28px; font-weight: 400; line-height: 1.6; margin: 0; }
+.label { font-size: 18px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+.mono { font-family: var(--mono); }
+.accent { color: var(--accent); }
+.blue { color: var(--blue); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.purple { color: var(--purple); }
+.cyan { color: var(--cyan); }
+
+/* === LAYOUT === */
+.slide-inner {
+  width: 100%; height: 100%;
+  padding: 80px 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide-inner.top { justify-content: flex-start; padding-top: 60px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* === CARDS === */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+}
+.card-sm {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+.card-accent {
+  border-left: 4px solid var(--accent);
+}
+.card-blue { border-left: 4px solid var(--blue); }
+.card-green { border-left: 4px solid var(--green); }
+.card-red { border-left: 4px solid var(--red); }
+
+/* === TABLES === */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 24px;
+}
+.data-table th {
+  background: var(--bg-card-alt);
+  color: var(--accent);
+  font-weight: 600;
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 2px solid var(--accent-dim);
+}
+.data-table th:first-child { border-radius: 12px 0 0 0; }
+.data-table th:last-child { border-radius: 0 12px 0 0; }
+.data-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+/* === BADGES === */
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.badge-amber { background: rgba(245,158,11,0.15); color: var(--accent); }
+.badge-blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+.badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
+.badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+
+/* === PROGRESS BAR === */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+  z-index: 1001;
+}
+
+/* === SLIDE NUMBER === */
+.slide-number {
+  position: fixed;
+  bottom: 28px;
+  right: 40px;
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--text-dim);
+  z-index: 1000;
+}
+
+/* === DECORATIVE === */
+.glow-line {
+  width: 80px; height: 4px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 2px;
+  margin: 20px 0;
+}
+.dot-grid {
+  position: absolute;
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  background-image: radial-gradient(circle, rgba(245,158,11,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* === STEP INDICATOR === */
+.step-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.step-dot {
+  width: 48px; height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+}
+.step-dot.active { background: var(--accent); }
+.step-dot.done { background: var(--accent-dim); }
+
+/* === ANIMATIONS === */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.anim-1 { animation: fadeInUp 0.6s ease both 0.1s; }
+.anim-2 { animation: fadeInUp 0.6s ease both 0.25s; }
+.anim-3 { animation: fadeInUp 0.6s ease both 0.4s; }
+.anim-4 { animation: fadeInUp 0.6s ease both 0.55s; }
+.anim-5 { animation: fadeInUp 0.6s ease both 0.7s; }
+.anim-6 { animation: fadeInUp 0.6s ease both 0.85s; }
+
+/* === FLYWHEEL === */
+.flywheel-ring {
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+}
+.flywheel-item {
+  position: absolute;
+  background: var(--bg-card);
+  border: 1px solid var(--accent-dim);
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--accent-light);
+}
+.flywheel-center {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+}
+.flywheel-arrow {
+  position: absolute;
+  color: var(--accent-dim);
+  font-size: 24px;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="slide-number" id="slideNumber"></div>
+
+<div class="deck-viewport">
+<div class="deck-stage" id="deckStage">
+
+<!-- ============ SLIDE 01: COVER ============ -->
+<div class="slide active" data-slide="1">
+  <div class="dot-grid"></div>
+  <div class="slide-inner" style="align-items: center; text-align: center;">
+    <div class="anim-1">
+      <span class="label">中建发展 · AI 硬件战略</span>
+    </div>
+    <div class="anim-2" style="margin-top: 32px;">
+      <h1 style="font-size: 72px; background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+        AI 安全帽
+      </h1>
+    </div>
+    <div class="anim-3" style="margin-top: 16px;">
+      <p style="font-size: 36px; color: var(--text-muted); font-weight: 300;">
+        中建发展 AI 硬件战略的<span style="color: var(--accent); font-weight: 700;">第一步</span>
+      </p>
+    </div>
+    <div class="anim-4" style="margin-top: 48px; display: flex; gap: 32px; justify-content: center;">
+      <div class="badge badge-amber">政策强制 ×</div>
+      <div class="badge badge-blue">平台赋能 ×</div>
+      <div class="badge badge-green">数据飞轮</div>
+    </div>
+    <div class="anim-5" style="margin-top: 60px;">
+      <p style="font-size: 20px; color: var(--text-dim);">方向键 / 空格键 翻页 · 手机端左右滑动</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 02: CORE POSITIONING ============ -->
+<div class="slide" data-slide="2">
+  <div class="slide-inner">
+    <div class="step-row">
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div><div class="step-dot"></div>
+      <div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <span class="label anim-1">核心定位</span>
+    <h2 class="anim-2" style="margin-top: 16px;">不是卖硬件，是建<span class="accent">生态</span></h2>
+    <div class="glow-line anim-2"></div>
+    <div class="grid-3 anim-3" style="margin-top: 40px;">
+      <div class="card card-accent">
+        <div style="font-size: 48px; margin-bottom: 12px;">🏗️</div>
+        <h3 style="font-size: 28px;">智能班组的<br>物理层</h3>
+        <p style="font-size: 20px; color: var(--text-muted); margin-top: 12px;">1400 万工人的数据采集终端，戴帽即贡献数据</p>
+      </div>
+      <div class="card card-blue">
+        <div style="font-size: 48px; margin-bottom: 12px;">📦</div>
+        <h3 style="font-size: 28px;">云筑网的<br>标准化品类</h3>
+        <p style="font-size: 20px; color: var(--text-muted); margin-top: 12px;">110 万+ 供应商体系中的智能设备品类</p>
+      </div>
+      <div class="card card-green">
+        <div style="font-size: 48px; margin-bottom: 12px;">🔄</div>
+        <h3 style="font-size: 28px;">数据飞轮的<br>启动器</h3>
+        <p style="font-size: 20px; color: var(--text-muted); margin-top: 12px;">硬件采集→数据沉淀→模型优化→更多采购</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 03: POLICY ============ -->
+<div class="slide" data-slide="3">
+  <div class="slide-inner">
+    <div class="step-row">
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <span class="label anim-1">第一步 · 政策锚定</span>
+    <h2 class="anim-2" style="margin-top: 16px;">为什么"<span class="accent">必须做</span>"</h2>
+    <div class="glow-line anim-2"></div>
+    <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 24px;">
+      <div class="card card-accent anim-3" style="display: flex; align-items: center; gap: 24px;">
+        <div style="min-width: 100px; text-align: center;">
+          <div style="font-size: 44px; font-weight: 900; color: var(--accent);">顶层</div>
+          <div style="font-size: 16px; color: var(--text-dim);">集团</div>
+        </div>
+        <div>
+          <p style="font-size: 24px; font-weight: 600;">子企业找场景、出产品</p>
+          <p style="font-size: 20px; color: var(--text-muted); margin-top: 6px;">中建信字〔2025〕111号 · "集团建底座，子企业找场景"</p>
+        </div>
+        <div class="badge badge-amber" style="margin-left: auto;">业绩加分</div>
+      </div>
+      <div class="card card-blue anim-4" style="display: flex; align-items: center; gap: 24px;">
+        <div style="min-width: 100px; text-align: center;">
+          <div style="font-size: 44px; font-weight: 900; color: var(--blue);">中层</div>
+          <div style="font-size: 16px; color: var(--text-dim);">国资委</div>
+        </div>
+        <div>
+          <p style="font-size: 24px; font-weight: 600;">智能终端普及率 ≥ 70%</p>
+          <p style="font-size: 20px; color: var(--text-muted); margin-top: 6px;">国发〔2025〕11号 · 2027 年量化目标</p>
+        </div>
+        <div class="badge badge-blue" style="margin-left: auto;">考核压力</div>
+      </div>
+      <div class="card card-green anim-5" style="display: flex; align-items: center; gap: 24px;">
+        <div style="min-width: 100px; text-align: center;">
+          <div style="font-size: 44px; font-weight: 900; color: var(--green);">底层</div>
+          <div style="font-size: 16px; color: var(--text-dim);">安全生产法</div>
+        </div>
+        <div>
+          <p style="font-size: 24px; font-weight: 600;">必须戴安全帽（刚需）</p>
+          <p style="font-size: 20px; color: var(--text-muted); margin-top: 6px;">不是新增采购，是在"必须买"基础上升级</p>
+        </div>
+        <div class="badge badge-green" style="margin-left: auto;">合规刚需</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 04: SCENARIO - FEATURES ============ -->
+<div class="slide" data-slide="4">
+  <div class="slide-inner top">
+    <div class="step-row">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <span class="label anim-1">第二步 · 场景匹配</span>
+    <h2 class="anim-2" style="margin-top: 16px;">AI 安全帽能<span class="accent">做什么</span></h2>
+    <div class="glow-line anim-2"></div>
+    <div class="grid-4 anim-3" style="margin-top: 32px;">
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">📍</span>
+        <div><h3 style="font-size: 22px;">实时定位</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">UWB / 蓝牙信标 / GPS<br>进入危险区域自动预警</p></div>
+      </div>
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">⚡</span>
+        <div><h3 style="font-size: 22px;">跌倒 / 碰撞检测</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">加速度计 + AI 算法<br>自动报警，缩短救援时间</p></div>
+      </div>
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">☁️</span>
+        <div><h3 style="font-size: 22px;">环境监测</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">CO / H₂S / O₂ 气体传感器<br>有限空间有毒气体实时监测</p></div>
+      </div>
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">💓</span>
+        <div><h3 style="font-size: 22px;">疲劳 / 健康监测</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">心率 / 体温传感器<br>高温中暑预警、疲劳预警</p></div>
+      </div>
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">🚨</span>
+        <div><h3 style="font-size: 22px;">SOS 报警</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">一键按钮紧急求助<br>自动发送位置信息</p></div>
+      </div>
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">✅</span>
+        <div><h3 style="font-size: 22px;">无感知考勤</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">进出围栏自动打卡<br>替代指纹/人脸打卡</p></div>
+      </div>
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">📸</span>
+        <div><h3 style="font-size: 22px;">AI 行为识别</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">边缘 AI 芯片<br>未戴安全带/违规操作自动识别</p></div>
+      </div>
+      <div class="card-sm" style="display: flex; gap: 16px; align-items: flex-start;">
+        <span style="font-size: 32px;">🎤</span>
+        <div><h3 style="font-size: 22px;">语音记录</h3><p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">现场语音采集<br>安全交底全程留痕</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 05: PLATFORM VALUE ============ -->
+<div class="slide" data-slide="5">
+  <div class="slide-inner">
+    <div class="step-row">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+      <div class="step-dot"></div><div class="step-dot"></div>
+    </div>
+    <span class="label anim-1">第二步 · 平台价值倍增</span>
+    <h2 class="anim-2" style="margin-top: 16px;">接入平台后，<span class="accent">价值质变</span></h2>
+    <div class="glow-line anim-2"></div>
+    <div class="grid-3 anim-3" style="margin-top: 36px;">
+      <div class="card card-accent">
+        <h3 style="font-size: 24px; color: var(--accent); margin-bottom: 16px;">数据 → 智能班组</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p style="font-size: 20px;">📍 实时位置 → <span class="accent">排班优化</span></p>
+          <p style="font-size: 20px;">💓 健康数据 → <span class="accent">疲劳预警</span></p>
+          <p style="font-size: 20px;">✅ 考勤数据 → <span class="accent">工资自动化</span></p>
+          <p style="font-size: 20px;">📊 行为数据 → <span class="accent">工人信用体系</span></p>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <h3 style="font-size: 24px; color: var(--blue); margin-bottom: 16px;">数据 → 云筑网</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p style="font-size: 20px;">🔧 设备使用 → <span class="blue">供应商评价</span></p>
+          <p style="font-size: 20px;">💰 采购数据 → <span class="blue">行业基准</span></p>
+          <p style="font-size: 20px;">📍 设备位置 → <span class="blue">供应链可视化</span></p>
+        </div>
+      </div>
+      <div class="card card-green">
+        <h3 style="font-size: 24px; color: var(--green); margin-bottom: 16px;">数据 → 反向赋能</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <p style="font-size: 20px;">🏥 保险公司 → <span class="green">工伤风险定价</span></p>
+          <p style="font-size: 20px;">🏛️ 安监部门 → <span class="green">实时态势感知</span></p>
+          <p style="font-size: 20px;">🏢 集团管理层 → <span class="green">穿透式安全监管</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="anim-4" style="margin-top: 32px; text-align: center;">
+      <p style="font-size: 22px; color: var(--text-muted);">
+        <span style="color: var(--accent); font-weight: 700;">云筑网</span> 是 App Store ·
+        <span style="color: var(--blue); font-weight: 700;">智能班组</span> 是操作系统 ·
+        <span style="color: var(--green); font-weight: 700;">AI 安全帽</span> 是上面的 App
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 06: RESOURCES ============ -->
+<div class="slide" data-slide="6">
+  <div class="slide-inner top">
+    <div class="step-row">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div>
+      <div class="step-dot active"></div><div class="step-dot"></div>
+    </div>
+    <span class="label anim-1">第三步 · 资源盘点</span>
+    <h2 class="anim-2" style="margin-top: 16px;">手里有什么<span class="accent">牌</span></h2>
+    <div class="glow-line anim-2"></div>
+    <div class="grid-2 anim-3" style="margin-top: 32px;">
+      <div>
+        <h3 style="font-size: 24px; color: var(--green); margin-bottom: 20px;">✅ 已有资源</h3>
+        <table class="data-table">
+          <tr><th>资源</th><th>对 AI 安全帽的作用</th></tr>
+          <tr><td>1400 万工人数据</td><td>部署目标用户</td></tr>
+          <tr><td>4100+ 智慧工地</td><td>部署场景入口</td></tr>
+          <tr><td>110 万+ 供应商</td><td>分发渠道</td></tr>
+          <tr><td>供应链金融</td><td>批量采购资金支持</td></tr>
+          <tr><td>云筑 AI 大模型</td><td>行为数据分析</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3 style="font-size: 24px; color: var(--red); margin-bottom: 20px;">⚠️ 缺什么</h3>
+        <table class="data-table">
+          <tr><th>缺失</th><th>解决方案</th></tr>
+          <tr><td>硬件研发能力</td><td><span class="green">集成合作</span>（不自研）</td></tr>
+          <tr><td>现场部署运维</td><td><span class="green">借力工程局</span></td></tr>
+          <tr><td>智能班组未成熟</td><td><span class="green">先对接现有系统</span></td></tr>
+          <tr><td>IoT 硬件人才</td><td><span class="green">补充招聘</span></td></tr>
+        </table>
+        <div class="card-sm anim-4" style="margin-top: 20px; border-left: 3px solid var(--accent);">
+          <p style="font-size: 20px; color: var(--accent);">核心策略：不造硬件，做平台</p>
+          <p style="font-size: 18px; color: var(--text-muted); margin-top: 6px;">中建发展的角色是集成商 + 平台运营商，不是制造商</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 07: BUSINESS MODEL ============ -->
+<div class="slide" data-slide="7">
+  <div class="slide-inner top">
+    <div class="step-row">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+    </div>
+    <span class="label anim-1">第四步 · 商业模式</span>
+    <h2 class="anim-2" style="margin-top: 16px;">不是卖硬件赚差价，是<span class="accent">三层收入</span></h2>
+    <div class="glow-line anim-2"></div>
+    <div style="margin-top: 32px; display: flex; flex-direction: column; gap: 20px;">
+      <div class="card anim-3" style="display: flex; align-items: center; gap: 32px; background: linear-gradient(135deg, rgba(16,185,129,0.08), transparent);">
+        <div style="min-width: 80px; height: 80px; border-radius: 50%; background: rgba(16,185,129,0.15); display: flex; align-items: center; justify-content: center;">
+          <span style="font-size: 36px; font-weight: 900; color: var(--green);">L1</span>
+        </div>
+        <div style="flex: 1;">
+          <h3 style="font-size: 26px;">硬件集成收入</h3>
+          <p style="font-size: 20px; color: var(--text-muted); margin-top: 6px;">AI 安全帽采购（通过云筑网）· 设备差价/佣金</p>
+        </div>
+        <div style="text-align: right;">
+          <p style="font-size: 28px; font-weight: 700; color: var(--green);">15 万/年</p>
+          <p style="font-size: 16px; color: var(--text-dim);">首年 10 项目 · 低毛利但建供应链</p>
+        </div>
+      </div>
+      <div class="card anim-4" style="display: flex; align-items: center; gap: 32px; background: linear-gradient(135deg, rgba(59,130,246,0.08), transparent);">
+        <div style="min-width: 80px; height: 80px; border-radius: 50%; background: rgba(59,130,246,0.15); display: flex; align-items: center; justify-content: center;">
+          <span style="font-size: 36px; font-weight: 900; color: var(--blue);">L2</span>
+        </div>
+        <div style="flex: 1;">
+          <h3 style="font-size: 26px;">SaaS 订阅收入 <span class="badge badge-blue">核心</span></h3>
+          <p style="font-size: 20px; color: var(--text-muted); margin-top: 6px;">安全管理看板 + 智能班组平台 · 按人/按项目收费</p>
+        </div>
+        <div style="text-align: right;">
+          <p style="font-size: 28px; font-weight: 700; color: var(--blue);">180 万→3600 万/年</p>
+          <p style="font-size: 16px; color: var(--text-dim);">Y1→Y3 · 可复制 · 核心增长引擎</p>
+        </div>
+      </div>
+      <div class="card anim-5" style="display: flex; align-items: center; gap: 32px; background: linear-gradient(135deg, rgba(139,92,246,0.08), transparent);">
+        <div style="min-width: 80px; height: 80px; border-radius: 50%; background: rgba(139,92,246,0.15); display: flex; align-items: center; justify-content: center;">
+          <span style="font-size: 36px; font-weight: 900; color: var(--purple);">L3</span>
+        </div>
+        <div style="flex: 1;">
+          <h3 style="font-size: 26px;">数据服务收入 <span class="badge badge-amber">长期</span></h3>
+          <p style="font-size: 20px; color: var(--text-muted); margin-top: 6px;">工伤风险模型 → 保险公司 · 安全态势 → 安监/集团</p>
+        </div>
+        <div style="text-align: right;">
+          <p style="font-size: 28px; font-weight: 700; color: var(--purple);">待验证</p>
+          <p style="font-size: 16px; color: var(--text-dim);">数据积累到一定规模后启动</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 08: WHO PAYS + GROWTH ============ -->
+<div class="slide" data-slide="8">
+  <div class="slide-inner top">
+    <div class="step-row">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+    </div>
+    <span class="label anim-1">第四步 · 付费方与增长</span>
+    <h2 class="anim-2" style="margin-top: 16px;">谁付钱？<span class="accent">怎么增长</span>？</h2>
+    <div class="glow-line anim-2"></div>
+    <div class="grid-2 anim-3" style="margin-top: 32px;">
+      <div>
+        <h3 style="font-size: 24px; margin-bottom: 20px;">付费方矩阵</h3>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="card-sm card-green" style="display: flex; gap: 16px; align-items: center;">
+            <span style="font-size: 28px;">🏗️</span>
+            <div><p style="font-size: 20px; font-weight: 600;">项目部</p><p style="font-size: 17px; color: var(--text-muted);">安全生产费用预算内 · 降低事故率=降低考核风险</p></div>
+          </div>
+          <div class="card-sm card-blue" style="display: flex; gap: 16px; align-items: center;">
+            <span style="font-size: 28px;">🏢</span>
+            <div><p style="font-size: 20px; font-weight: 600;">工程局安全部</p><p style="font-size: 17px; color: var(--text-muted);">穿透式安全管理需求 · 集团考核压力</p></div>
+          </div>
+          <div class="card-sm card-accent" style="display: flex; gap: 16px; align-items: center;">
+            <span style="font-size: 28px;">🏥</span>
+            <div><p style="font-size: 20px; font-weight: 600;">保险公司（中期）</p><p style="font-size: 17px; color: var(--text-muted);">精准风险定价 · 建筑行业工伤高发</p></div>
+          </div>
+          <div class="card-sm card-red" style="display: flex; gap: 16px; align-items: center;">
+            <span style="font-size: 28px;">🏛️</span>
+            <div><p style="font-size: 20px; font-weight: 600;">安监部门（长期）</p><p style="font-size: 17px; color: var(--text-muted);">智慧工地政策推动 · 行业安全数据服务</p></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size: 24px; margin-bottom: 20px;">SaaS 增长曲线</h3>
+        <div class="card" style="padding: 32px;">
+          <div style="display: flex; align-items: flex-end; gap: 24px; height: 240px; padding: 0 20px;">
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+              <p style="font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 8px;">180万</p>
+              <div style="width: 100%; height: 48px; background: linear-gradient(180deg, var(--accent), var(--accent-dim)); border-radius: 8px 8px 0 0;"></div>
+              <p style="font-size: 18px; color: var(--text-dim); margin-top: 12px;">Y1</p>
+              <p style="font-size: 16px; color: var(--text-dim);">10 项目</p>
+              <p style="font-size: 16px; color: var(--text-dim);">3,000 人</p>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+              <p style="font-size: 22px; font-weight: 700; color: var(--blue); margin-bottom: 8px;">900万</p>
+              <div style="width: 100%; height: 120px; background: linear-gradient(180deg, var(--blue), #1d4ed8); border-radius: 8px 8px 0 0;"></div>
+              <p style="font-size: 18px; color: var(--text-dim); margin-top: 12px;">Y2</p>
+              <p style="font-size: 16px; color: var(--text-dim);">50 项目</p>
+              <p style="font-size: 16px; color: var(--text-dim);">15,000 人</p>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+              <p style="font-size: 22px; font-weight: 700; color: var(--green); margin-bottom: 8px;">3,600万</p>
+              <div style="width: 100%; height: 240px; background: linear-gradient(180deg, var(--green), #047857); border-radius: 8px 8px 0 0;"></div>
+              <p style="font-size: 18px; color: var(--text-dim); margin-top: 12px;">Y3</p>
+              <p style="font-size: 16px; color: var(--text-dim);">200 项目</p>
+              <p style="font-size: 16px; color: var(--text-dim);">60,000 人</p>
+            </div>
+          </div>
+          <p style="text-align: center; font-size: 18px; color: var(--text-dim); margin-top: 20px;">50 元/人/月 × 覆盖人数 = SaaS 年收入</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 09: LANDING PATH ============ -->
+<div class="slide" data-slide="9">
+  <div class="slide-inner top">
+    <div class="step-row">
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot done"></div><div class="step-dot done"></div>
+      <div class="step-dot active"></div>
+    </div>
+    <span class="label anim-1">第五步 · 落地路径</span>
+    <h2 class="anim-2" style="margin-top: 16px;">最小闭环 → <span class="accent">飞轮</span></h2>
+    <div class="glow-line anim-2"></div>
+    <div style="margin-top: 36px; display: flex; gap: 16px; align-items: stretch;">
+      <div class="card anim-3" style="flex: 1; border-top: 4px solid var(--accent);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge badge-amber">0-3 月</span>
+          <span style="font-size: 16px; color: var(--text-dim);">Phase 1</span>
+        </div>
+        <h3 style="font-size: 24px; margin-bottom: 12px;">最小闭环验证</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <p style="font-size: 18px; color: var(--text-muted);">• 选 1 个项目做试点</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 与 WakeCap / 海康合作</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 安全帽→数据→基础看板</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 量化：事故率、考勤效率</p>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; font-size: 28px; color: var(--accent-dim);">→</div>
+      <div class="card anim-4" style="flex: 1; border-top: 4px solid var(--blue);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge badge-blue">3-6 月</span>
+          <span style="font-size: 16px; color: var(--text-dim);">Phase 2</span>
+        </div>
+        <h3 style="font-size: 24px; margin-bottom: 12px;">平台化</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <p style="font-size: 18px; color: var(--text-muted);">• 接入云筑网采购目录</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 开发安全管理 SaaS</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 对接智能班组（戴帽=打卡）</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 扩展到 2-5 个项目</p>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; font-size: 28px; color: var(--accent-dim);">→</div>
+      <div class="card anim-5" style="flex: 1; border-top: 4px solid var(--green);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge badge-green">6-12 月</span>
+          <span style="font-size: 16px; color: var(--text-dim);">Phase 3</span>
+        </div>
+        <h3 style="font-size: 24px; margin-bottom: 12px;">规模化</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <p style="font-size: 18px; color: var(--text-muted);">• 纳入集团场景清单</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 参加集团 AI 创新大赛</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 复制到 50 个项目</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 启动保险数据合作</p>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; font-size: 28px; color: var(--accent-dim);">→</div>
+      <div class="card anim-6" style="flex: 1; border-top: 4px solid var(--purple); background: linear-gradient(135deg, rgba(139,92,246,0.05), transparent);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span class="badge" style="background: rgba(139,92,246,0.15); color: var(--purple);">12 月+</span>
+          <span style="font-size: 16px; color: var(--text-dim);">Phase 4</span>
+        </div>
+        <h3 style="font-size: 24px; margin-bottom: 12px; color: var(--purple);">飞轮效应</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <p style="font-size: 18px; color: var(--text-muted);">• 更多项目→更多数据</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 更多数据→模型更准</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 模型更准→保险买单</p>
+          <p style="font-size: 18px; color: var(--text-muted);">• 收入覆盖→降低售价→更多采购</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 10: FLYWHEEL ============ -->
+<div class="slide" data-slide="10">
+  <div class="slide-inner">
+    <span class="label anim-1">飞轮模型</span>
+    <h2 class="anim-2" style="margin-top: 16px;"><span class="accent">数据飞轮</span>如何转起来</h2>
+    <div class="glow-line anim-2"></div>
+    <div class="anim-3" style="margin-top: 40px; display: flex; justify-content: center; align-items: center; gap: 80px;">
+      <!-- Flywheel visualization -->
+      <div style="position: relative; width: 480px; height: 480px;">
+        <svg width="480" height="480" viewBox="0 0 480 480" style="position: absolute; top: 0; left: 0;">
+          <circle cx="240" cy="240" r="180" fill="none" stroke="#1e293b" stroke-width="2" stroke-dasharray="8,8"/>
+          <path d="M 240 60 A 180 180 0 0 1 420 240" fill="none" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrow)"/>
+          <path d="M 420 240 A 180 180 0 0 1 240 420" fill="none" stroke="#3b82f6" stroke-width="3"/>
+          <path d="M 240 420 A 180 180 0 0 1 60 240" fill="none" stroke="#10b981" stroke-width="3"/>
+          <path d="M 60 240 A 180 180 0 0 1 240 60" fill="none" stroke="#8b5cf6" stroke-width="3"/>
+          <defs><marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/></marker></defs>
+        </svg>
+        <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 2px solid var(--accent); border-radius: 12px; padding: 12px 24px; text-align: center;">
+          <p style="font-size: 20px; font-weight: 700; color: var(--accent);">更多项目使用</p>
+        </div>
+        <div style="position: absolute; top: 50%; right: -10px; transform: translateY(-50%); background: var(--bg-card); border: 2px solid var(--blue); border-radius: 12px; padding: 12px 24px; text-align: center;">
+          <p style="font-size: 20px; font-weight: 700; color: var(--blue);">更多数据沉淀</p>
+        </div>
+        <div style="position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 2px solid var(--green); border-radius: 12px; padding: 12px 24px; text-align: center;">
+          <p style="font-size: 20px; font-weight: 700; color: var(--green);">模型更准 · 保险买单</p>
+        </div>
+        <div style="position: absolute; top: 50%; left: -10px; transform: translateY(-50%); background: var(--bg-card); border: 2px solid var(--purple); border-radius: 12px; padding: 12px 24px; text-align: center;">
+          <p style="font-size: 20px; font-weight: 700; color: var(--purple);">降价 · 更多采购</p>
+        </div>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+          <p style="font-size: 36px;">🔄</p>
+          <p style="font-size: 18px; font-weight: 700; color: var(--accent); margin-top: 4px;">飞轮</p>
+        </div>
+      </div>
+      <!-- Key insight -->
+      <div style="max-width: 500px;">
+        <div class="card" style="margin-bottom: 24px;">
+          <h3 style="font-size: 24px; margin-bottom: 16px;">关键杠杆点</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <p style="font-size: 20px;"><span class="accent">①</span> 安全帽是"必须买"的升级品——<span class="accent">零教育成本</span></p>
+            <p style="font-size: 20px;"><span class="blue">②</span> 云筑网提供现成分发渠道——<span class="blue">零获客成本</span></p>
+            <p style="font-size: 20px;"><span class="green">③</span> 智能班组让数据产生价值——<span class="green">零数据浪费</span></p>
+          </div>
+        </div>
+        <div class="card-sm" style="border-left: 3px solid var(--accent);">
+          <p style="font-size: 22px; font-weight: 600; color: var(--text);">
+            第一年目标不是赚钱，<br>是<span class="accent">跑通飞轮的第一圈</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 11: RISKS ============ -->
+<div class="slide" data-slide="11">
+  <div class="slide-inner top">
+    <span class="label anim-1">风险清单</span>
+    <h2 class="anim-2" style="margin-top: 16px;">四个风险，<span class="accent">四个对策</span></h2>
+    <div class="glow-line anim-2"></div>
+    <div class="grid-4 anim-3" style="margin-top: 36px;">
+      <div class="card card-red" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 22px;">工人拒绝佩戴</h3>
+          <div><span class="badge badge-amber">中</span> <span class="badge badge-red">高影响</span></div>
+        </div>
+        <div style="height: 2px; background: var(--border);"></div>
+        <p style="font-size: 18px; color: var(--green);">✓ 对策：轻量化产品（<300g）</p>
+        <p style="font-size: 18px; color: var(--green);">✓ 从安全帽升级切入，非新增设备</p>
+        <p style="font-size: 18px; color: var(--green);">✓ 配合安全培训</p>
+      </div>
+      <div class="card card-red" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 22px;">工程局不配合</h3>
+          <div><span class="badge badge-amber">中</span> <span class="badge badge-red">高影响</span></div>
+        </div>
+        <div style="height: 2px; background: var(--border);"></div>
+        <p style="font-size: 18px; color: var(--green);">✓ 选配合度高的做试点</p>
+        <p style="font-size: 18px; color: var(--green);">✓ 用数据说话（事故率降多少）</p>
+        <p style="font-size: 18px; color: var(--green);">✓ 不用行政命令</p>
+      </div>
+      <div class="card card-blue" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 22px;">硬件厂商合作不顺</h3>
+          <div><span class="badge badge-green">低</span> <span class="badge badge-amber">中影响</span></div>
+        </div>
+        <div style="height: 2px; background: var(--border);"></div>
+        <p style="font-size: 18px; color: var(--green);">✓ 多备 2-3 家候选厂商</p>
+        <p style="font-size: 18px; color: var(--green);">✓ 不绑死一家</p>
+      </div>
+      <div class="card card-accent" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 22px;">ROI 说不清</h3>
+          <div><span class="badge badge-amber">中</span> <span class="badge badge-red">高影响</span></div>
+        </div>
+        <div style="height: 2px; background: var(--border);"></div>
+        <p style="font-size: 18px; color: var(--green);">✓ 试点必须量化数据</p>
+        <p style="font-size: 18px; color: var(--green);">✓ "投入多少、减少几起事故"</p>
+      </div>
+    </div>
+    <div class="anim-4" style="margin-top: 32px;">
+      <div class="card" style="background: linear-gradient(135deg, rgba(245,158,11,0.05), transparent); border: 1px solid var(--accent-dim);">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <span style="font-size: 32px;">💡</span>
+          <p style="font-size: 22px;">中建发展的 <span class="accent">1400 万工人数据 + 云筑网渠道</span> 是竞品没有的。即使别人先做硬件，中建发展做平台也能后发制人。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SLIDE 12: CLOSING ============ -->
+<div class="slide" data-slide="12">
+  <div class="dot-grid"></div>
+  <div class="slide-inner" style="align-items: center; text-align: center;">
+    <span class="label anim-1">总结</span>
+    <h1 class="anim-2" style="font-size: 56px; margin-top: 24px;">
+      AI 安全帽 <span class="accent">=</span> 三件事
+    </h1>
+    <div class="glow-line anim-2" style="margin: 20px auto;"></div>
+    <div class="grid-3 anim-3" style="margin-top: 40px; max-width: 1400px;">
+      <div class="card" style="text-align: center; padding: 40px;">
+        <div style="font-size: 64px; margin-bottom: 16px;">🏗️</div>
+        <h3 style="font-size: 28px; margin-bottom: 12px;">智能班组的<br><span class="accent">物理层</span></h3>
+        <p style="font-size: 20px; color: var(--text-muted);">1400 万工人<br>数据采集终端</p>
+      </div>
+      <div class="card" style="text-align: center; padding: 40px;">
+        <div style="font-size: 64px; margin-bottom: 16px;">📦</div>
+        <h3 style="font-size: 28px; margin-bottom: 12px;">云筑网的<br><span class="blue">标准化品类</span></h3>
+        <p style="font-size: 20px; color: var(--text-muted);">110 万供应商体系<br>平台分发入口</p>
+      </div>
+      <div class="card" style="text-align: center; padding: 40px;">
+        <div style="font-size: 64px; margin-bottom: 16px;">🔄</div>
+        <h3 style="font-size: 28px; margin-bottom: 12px;">数据飞轮的<br><span class="green">启动器</span></h3>
+        <p style="font-size: 20px; color: var(--text-muted);">硬件→数据→模型<br>→保险→降价→更多采购</p>
+      </div>
+    </div>
+    <div class="anim-4" style="margin-top: 48px;">
+      <p style="font-size: 28px; color: var(--text-muted);">
+        不是<span style="text-decoration: line-through;">"AI 硬件很火所以要做"</span>
+      </p>
+      <p style="font-size: 32px; font-weight: 700; color: var(--accent); margin-top: 8px;">
+        而是"政策强制 × 平台赋能 × 数据飞轮"三者同时成立
+      </p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck-stage -->
+</div><!-- /deck-viewport -->
+
+<script>
+(function() {
+  const stage = document.getElementById('deckStage');
+  const slides = document.querySelectorAll('.slide');
+  const progressBar = document.getElementById('progressBar');
+  const slideNumber = document.getElementById('slideNumber');
+  let current = 0;
+  const total = slides.length;
+
+  function resize() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const scale = Math.min(vw / 1920, vh / 1080);
+    const x = (vw - 1920 * scale) / 2;
+    const y = (vh - 1080 * scale) / 2;
+    stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    progressBar.style.width = ((current + 1) / total * 100) + '%';
+    slideNumber.textContent = (current + 1) + ' / ' + total;
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+      e.preventDefault(); goTo(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault(); goTo(current - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault(); goTo(0);
+    } else if (e.key === 'End') {
+      e.preventDefault(); goTo(total - 1);
+    }
+  });
+
+  // Touch swipe
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  }, { passive: true });
+
+  // Click navigation (left third = prev, right two-thirds = next)
+  stage.addEventListener('click', function(e) {
+    if (e.target.closest('a, button, input, select, textarea')) return;
+    const rect = stage.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    x < 0.33 ? goTo(current - 1) : goTo(current + 1);
+  });
+
+  window.addEventListener('resize', resize);
+  resize();
+  goTo(0);
+})();
+</script>
+
+</body>
+</html>

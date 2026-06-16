@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUT-E · AI质量追溯链 — 成本归零重构法分析报告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   CSS Variables & Theme
+   ============================================ */
+:root {
+  --bg-deep: #0a0e17;
+  --bg-panel: #111827;
+  --bg-card: #1a1f2e;
+  --bg-elevated: #1f2937;
+  --border: #2a3345;
+  --border-accent: #3b4a66;
+  --text-primary: #e8edf5;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-cyan: #22d3ee;
+  --accent-blue: #3b82f6;
+  --accent-amber: #f59e0b;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+  --gradient-hero: linear-gradient(135deg, #0a0e17 0%, #1a1040 50%, #0f1a2e 100%);
+  --gradient-card: linear-gradient(180deg, rgba(59,130,246,0.08) 0%, rgba(17,24,39,0) 100%);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+  --print-bg: #ffffff;
+  --print-text: #1a1a2e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+.hero {
+  background: var(--gradient-hero);
+  padding: 80px 40px 60px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(34,211,238,0.06) 0%, transparent 50%),
+              radial-gradient(circle at 70% 50%, rgba(139,92,246,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero .badge {
+  display: inline-block;
+  background: rgba(34,211,238,0.12);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(34,211,238,0.25);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+  position: relative;
+}
+.hero h1 {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #e8edf5 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+.hero .subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin: 0 auto 32px;
+  position: relative;
+}
+.hero .meta-row {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  position: relative;
+}
+.hero .meta-row span { display: flex; align-items: center; gap: 6px; }
+.hero .meta-row .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.hero .meta-row .dot.cyan { background: var(--accent-cyan); }
+.hero .meta-row .dot.amber { background: var(--accent-amber); }
+.hero .meta-row .dot.purple { background: var(--accent-purple); }
+
+/* ============================================
+   Score Banner
+   ============================================ */
+.score-banner {
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.score-main {
+  text-align: center;
+}
+.score-main .big-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: var(--accent-amber);
+  line-height: 1;
+}
+.score-main .big-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.score-matrix {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.score-matrix td {
+  padding: 3px 12px;
+}
+.score-matrix td:first-child { color: var(--text-muted); }
+.score-matrix td:last-child {
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+.score-matrix .change-up { color: var(--accent-green); }
+.score-matrix .change-same { color: var(--text-muted); }
+
+/* ============================================
+   Radar Chart
+   ============================================ */
+.radar-section {
+  background: var(--bg-panel);
+  padding: 40px;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+.radar-container {
+  position: relative;
+  width: 360px;
+  height: 360px;
+}
+.radar-container svg { width: 100%; height: 100%; }
+.radar-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.radar-legend .item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+.radar-legend .swatch {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+}
+.radar-legend .val {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.radar-legend .dim-name { color: var(--text-secondary); min-width: 90px; }
+
+/* ============================================
+   Main Content
+   ============================================ */
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 40px;
+}
+
+/* Section headers */
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 48px 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-primary);
+}
+.section-title .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--accent-cyan);
+  background: rgba(34,211,238,0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+.card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+.card p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 12px; }
+.card p:last-child { margin-bottom: 0; }
+.card.accent-cyan { border-left: 3px solid var(--accent-cyan); }
+.card.accent-blue { border-left: 3px solid var(--accent-blue); }
+.card.accent-amber { border-left: 3px solid var(--accent-amber); }
+.card.accent-green { border-left: 3px solid var(--accent-green); }
+.card.accent-red { border-left: 3px solid var(--accent-red); }
+.card.accent-purple { border-left: 3px solid var(--accent-purple); }
+
+/* ============================================
+   Tables
+   ============================================ */
+.table-wrap {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+thead th {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--border-accent);
+  white-space: nowrap;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+tbody td:first-child { color: var(--text-primary); font-weight: 500; }
+
+/* Badge pills */
+.badge-pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-pill.red { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+.badge-pill.amber { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+.badge-pill.green { background: rgba(16,185,129,0.15); color: var(--accent-green); }
+.badge-pill.cyan { background: rgba(34,211,238,0.15); color: var(--accent-cyan); }
+.badge-pill.blue { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+
+/* Status dots */
+.status-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.status-dot.red { background: var(--accent-red); }
+.status-dot.amber { background: var(--accent-amber); }
+.status-dot.green { background: var(--accent-green); }
+.status-dot.cyan { background: var(--accent-cyan); }
+
+/* ============================================
+   Highlight boxes
+   ============================================ */
+.highlight-box {
+  background: var(--gradient-card);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 20px 0;
+}
+.highlight-box h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.highlight-box p, .highlight-box li {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   Flow / Architecture diagram (ASCII/CSS)
+   ============================================ */
+.arch-diagram {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* ============================================
+   Matrix
+   ============================================ */
+.matrix-grid {
+  display: grid;
+  grid-template-columns: 100px repeat(3, 1fr);
+  gap: 4px;
+  font-size: 0.85rem;
+  margin: 20px 0;
+}
+.matrix-grid .cell {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 6px;
+}
+.matrix-grid .cell.header { font-weight: 600; color: var(--text-primary); background: var(--bg-elevated); }
+.matrix-grid .cell.label { font-weight: 500; color: var(--text-muted); background: var(--bg-elevated); justify-content: flex-start; }
+.matrix-grid .cell.active { background: rgba(245,158,11,0.15); border: 2px solid var(--accent-amber); color: var(--accent-amber); font-weight: 700; }
+.matrix-grid .cell.inactive { background: rgba(100,116,139,0.06); color: var(--text-muted); }
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  :root {
+    --bg-deep: #ffffff;
+    --bg-panel: #ffffff;
+    --bg-card: #f8f9fa;
+    --bg-elevated: #e9ecef;
+    --border: #dee2e6;
+    --border-accent: #adb5bd;
+    --text-primary: #1a1a2e;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+  }
+  body { font-size: 12px; }
+  .hero { background: #fff; padding: 40px 20px 30px; border-bottom: 2px solid #1a1a2e; }
+  .hero h1 { font-size: 2rem; -webkit-text-fill-color: #1a1a2e; background: none; color: #1a1a2e; }
+  .hero .subtitle { color: #333; }
+  .hero .meta-row { color: #555; }
+  .hero .badge { background: #e9ecef; color: #1a1a2e; border-color: #adb5bd; }
+  .score-banner { background: #f8f9fa; border-bottom: 2px solid #dee2e6; }
+  .score-main .big-number { color: #1a1a2e; }
+  .radar-section { background: #fff; border-bottom: 2px solid #dee2e6; }
+  .section-title { border-bottom-color: #1a1a2e; }
+  .card { page-break-inside: avoid; }
+  .highlight-box { page-break-inside: avoid; }
+  .arch-diagram { page-break-inside: avoid; background: #f8f9fa; border-color: #dee2e6; color: #333; }
+  thead th { background: #e9ecef; color: #1a1a2e; border-bottom-color: #1a1a2e; }
+  tbody td { border-bottom-color: #dee2e6; color: #333; }
+  tbody td:first-child { color: #1a1a2e; }
+  .matrix-grid .cell.active { background: #fff3cd; border-color: #ffc107; color: #333; }
+  @page { margin: 15mm; size: A4; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="badge">FUT-E · 未来品类</div>
+  <h1>AI质量追溯链</h1>
+  <p class="subtitle">
+    AI让跨组织证据串联+责任归因成本趋零后，"谁供的→谁干的→什么时候检的→谁签的字"
+    全链条自动追溯。当前追责成本 7-15 天/次，归零后秒级出报告。
+  </p>
+  <div class="meta-row">
+    <span><span class="dot cyan"></span> 归零力：②协调归零 + ④判断民主化</span>
+    <span><span class="dot amber"></span> 总分：62/100 · 🟡技术跟踪</span>
+    <span><span class="dot purple"></span> 分析日期：2026-06-15</span>
+  </div>
+</section>
+
+<!-- ========== SCORE BANNER ========== -->
+<section class="score-banner">
+  <div class="score-main">
+    <div class="big-number">62</div>
+    <div class="big-label">四维综合评分 / 100</div>
+  </div>
+  <table class="score-matrix">
+    <tr><td>归零强度</td><td style="color:var(--accent-cyan)">20 / 30</td><td class="change-up">原15 ↑+5</td></tr>
+    <tr><td>解锁价值</td><td style="color:var(--accent-blue)">22 / 30</td><td class="change-up">原18 ↑+4</td></tr>
+    <tr><td>技术就绪度</td><td style="color:var(--accent-amber)">10 / 25</td><td class="change-up">原6 ↑+4</td></tr>
+    <tr><td>触发确定性</td><td style="color:var(--accent-purple)">10 / 15</td><td class="change-up">原10 ↑+4</td></tr>
+    <tr style="border-top:1px solid var(--border)"><td style="font-weight:700">总计</td><td style="font-weight:700">62 / 100</td><td class="change-up">原45 ↑+17</td></tr>
+  </table>
+</section>
+
+<!-- ========== RADAR CHART ========== -->
+<section class="radar-section">
+  <div class="radar-container">
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background rings -->
+      <defs>
+        <radialGradient id="ringGrad" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="200" cy="200" r="160" fill="url(#ringGrad)" stroke="#2a3345" stroke-width="1"/>
+      <circle cx="200" cy="200" r="120" fill="none" stroke="#2a3345" stroke-width="0.5" stroke-dasharray="4 4"/>
+      <circle cx="200" cy="200" r="80" fill="none" stroke="#2a3345" stroke-width="0.5" stroke-dasharray="4 4"/>
+      <circle cx="200" cy="200" r="40" fill="none" stroke="#2a3345" stroke-width="0.5" stroke-dasharray="4 4"/>
+
+      <!-- Axes (4 dimensions) -->
+      <!-- Top: 归零强度 (90°) -->
+      <line x1="200" y1="200" x2="200" y2="40" stroke="#2a3345" stroke-width="1"/>
+      <!-- Right: 解锁价值 (0°) -->
+      <line x1="200" y1="200" x2="360" y2="200" stroke="#2a3345" stroke-width="1"/>
+      <!-- Bottom: 技术就绪度 (270°) -->
+      <line x1="200" y1="200" x2="200" y2="360" stroke="#2a3345" stroke-width="1"/>
+      <!-- Left: 触发确定性 (180°) -->
+      <line x1="200" y1="200" x2="40" y2="200" stroke="#2a3345" stroke-width="1"/>
+
+      <!-- Data polygon: 归零强度20/30→66.7%, 解锁价值22/30→73.3%, 技术就绪度10/25→40%, 触发确定性10/15→66.7% -->
+      <!-- Radius = percentage * 160 -->
+      <!-- Top: 归零强度 66.7% → 106.7px -->
+      <!-- Right: 解锁价值 73.3% → 117.3px -->
+      <!-- Bottom: 技术就绪度 40% → 64px -->
+      <!-- Left: 触发确定性 66.7% → 106.7px -->
+      <polygon points="200,93.3 317.3,200 200,264 82.7,200"
+               fill="rgba(34,211,238,0.15)" stroke="#22d3ee" stroke-width="2"/>
+      <!-- Dots at data points -->
+      <circle cx="200" cy="93.3" r="5" fill="#22d3ee"/>
+      <circle cx="317.3" cy="200" r="5" fill="#22d3ee"/>
+      <circle cx="200" cy="264" r="5" fill="#22d3ee"/>
+      <circle cx="82.7" cy="200" r="5" fill="#22d3ee"/>
+
+      <!-- Labels -->
+      <text x="200" y="25" text-anchor="middle" fill="#22d3ee" font-size="13" font-weight="700" font-family="'Noto Sans SC',sans-serif">归零强度</text>
+      <text x="200" y="38" text-anchor="middle" fill="#64748b" font-size="11" font-family="'JetBrains Mono',monospace">20/30</text>
+      <text x="370" y="195" text-anchor="start" fill="#3b82f6" font-size="13" font-weight="700" font-family="'Noto Sans SC',sans-serif">解锁价值</text>
+      <text x="370" y="210" text-anchor="start" fill="#64748b" font-size="11" font-family="'JetBrains Mono',monospace">22/30</text>
+      <text x="200" y="385" text-anchor="middle" fill="#f59e0b" font-size="13" font-weight="700" font-family="'Noto Sans SC',sans-serif">技术就绪度</text>
+      <text x="200" y="398" text-anchor="middle" fill="#64748b" font-size="11" font-family="'JetBrains Mono',monospace">10/25</text>
+      <text x="30" y="195" text-anchor="end" fill="#8b5cf6" font-size="13" font-weight="700" font-family="'Noto Sans SC',sans-serif">触发确定性</text>
+      <text x="30" y="210" text-anchor="end" fill="#64748b" font-size="11" font-family="'JetBrains Mono',monospace">10/15</text>
+
+      <!-- Score labels (rings) -->
+      <text x="200" y="44" text-anchor="middle" fill="#64748b" font-size="9" font-family="'JetBrains Mono',monospace">30</text>
+      <text x="200" y="84" text-anchor="middle" fill="#64748b" font-size="9" font-family="'JetBrains Mono',monospace">20</text>
+      <text x="200" y="124" text-anchor="middle" fill="#64748b" font-size="9" font-family="'JetBrains Mono',monospace">10</text>
+    </svg>
+  </div>
+  <div class="radar-legend">
+    <div class="item"><span class="swatch" style="background:#22d3ee"></span><span class="dim-name">归零强度</span><span class="val">20<span style="font-weight:400;color:var(--text-muted)">/30</span></span></div>
+    <div class="item"><span class="swatch" style="background:#3b82f6"></span><span class="dim-name">解锁价值</span><span class="val">22<span style="font-weight:400;color:var(--text-muted)">/30</span></span></div>
+    <div class="item"><span class="swatch" style="background:#f59e0b"></span><span class="dim-name">技术就绪度</span><span class="val">10<span style="font-weight:400;color:var(--text-muted)">/25</span></span></div>
+    <div class="item"><span class="swatch" style="background:#8b5cf6"></span><span class="dim-name">触发确定性</span><span class="val">10<span style="font-weight:400;color:var(--text-muted)">/15</span></span></div>
+    <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+      <span class="badge-pill amber">🟡 技术跟踪</span>
+      <span style="font-size:0.78rem;color:var(--text-muted);margin-left:8px">原45分 🟢方向观察 → 现62分</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="content">
+
+<!-- 1. Current State -->
+<h2 class="section-title"><span class="num">01</span> 当前结构扫描</h2>
+
+<div class="card accent-amber">
+  <h3>质量问题追责链条断裂</h3>
+  <p>建筑行业质量事故后，标准追责流程涉及 <strong>6-8个独立组织</strong>：商混站 → 搅拌车 → 施工班组 → 养护工序 → 检测机构 → 监理/甲方代表。每个环节数据存储在不同系统中（或根本无数字化记录），串联证据需要 <strong>7-15个工作日</strong>，<strong>2-3人专职跟进</strong>。</p>
+  <p>结果：单次追溯成本约 5000-20000元。大部分质量纠纷因证据链断裂而不了了之，"各打五十大板"成为常态。</p>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>环节</th><th>数据来源</th><th>当前状态</th><th>串联成本</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>供材</td><td>商混站ERP / 云筑网订单</td><td>有数据但跨企业不可见</td><td>人工索要+核实，2-3天</td></tr>
+    <tr><td>运输</td><td>搅拌车GPS / 小票</td><td>小票纸面留存，GPS不共享</td><td>翻纸质记录，1天</td></tr>
+    <tr><td>施工</td><td>施工日志 / 班组记录</td><td>手写为主，少量钉钉打卡</td><td>找人+翻记录，1-2天</td></tr>
+    <tr><td>检测</td><td>检测机构报告 / 智慧工地摄像头</td><td>PDF报告非结构化</td><td>人工比对，1-3天</td></tr>
+    <tr><td>签收</td><td>纸质签收单 / 监理日志</td><td>分散在各档案室</td><td>人工调取，2-5天</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight-box">
+  <h4>被锁死的结构</h4>
+  <p><strong>"质量事故 → 追责成本太高 → 不了了之 → 下一次继续出事"</strong>的恶性循环。甲方明知质量问题存在但追责成本高于损失，总包想管分包但没有完整证据链抓手，优质供应商想做口碑但无法证明"我的材料比别人好"。</p>
+</div>
+
+<!-- 2. Zero-Cost Forces -->
+<h2 class="section-title"><span class="num">02</span> 归零力锁定</h2>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>归零力</th><th>作用于</th><th>归零前</th><th>归零后</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="badge-pill cyan">② 协调归零</span></td>
+      <td>跨组织证据串联</td>
+      <td>总包推分包、分包推材料商，靠人打电话/翻文档/开会确认 → 7-15天</td>
+      <td>AI Agent自动跨系统收集各环节数据，秒级串联成完整证据链</td>
+    </tr>
+    <tr>
+      <td><span class="badge-pill purple">④ 判断民主化</span></td>
+      <td>责任归属判断</td>
+      <td>需要资深工程师+法务综合判断"到底谁的锅" → 专家瓶颈</td>
+      <td>AI自动匹配证据链+规范条文+合同条款，输出初判 → 专人终审</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card accent-cyan">
+  <h3>②+④ 叠加效应：从"人工侦探"到"秒级出报告"</h3>
+  <p>仅②协调归零：数据串联了但没有判断能力 → 仍需专家逐个分析。</p>
+  <p>仅④判断民主化：有判断能力但没有数据源 → 巧妇难为无米之炊。</p>
+  <p><strong>②+④叠加</strong>：数据自动串联 → AI自动判断 → 质量问题的责任归属彻底告别"人工侦探"模式。</p>
+</div>
+
+<div class="highlight-box">
+  <h4>品类传导关系</h4>
+  <p><strong>B2B Agent协同（品类B）</strong> → 为全链追溯提供跨组织数据互通基础<br>
+  <strong>IS-B08 AI质量检测</strong> → 为追溯链提供"检出端"数据入口<br>
+  <strong>AI质量追溯链（品类E）</strong> → 水到渠成的终局应用</p>
+  <p style="margin-top:12px">品类E不是独立存在的，它是品类B（基础设施）+ IS-B08（应用层）的自然延伸。这解释了为什么它的技术就绪度受制于品类B的进展。</p>
+</div>
+
+<!-- 3. Future Architecture -->
+<h2 class="section-title"><span class="num">03</span> 应然结构推导</h2>
+
+<div class="arch-diagram">
+┌───────────────────────────────────────────────────────────┐
+│                   AI质量追溯链系统                          │
+│                                                            │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  │
+│  │ 材料溯源  │→│ 施工溯源  │→│ 检测溯源  │→│ 签收溯源  │  │
+│  │ 谁供的    │  │ 谁干的    │  │ 谁检的    │  │ 谁签的字  │  │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘  │
+│        ↓             ↓             ↓             ↓         │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │          AI证据链引擎（②协调归零 + ④判断民主化）      │  │
+│  │   · 自动跨系统数据串联                                │  │
+│  │   · 时间线自动重建                                    │  │
+│  │   · 责任链自动匹配合同+规范                            │  │
+│  │   · 置信度评分 + 人工复核入口                          │  │
+│  └──────────────────────────────────────────────────────┘  │
+│        ↓                                                   │
+│  ┌───────────┐ ┌───────────┐ ┌───────────┐               │
+│  │ 追责报告   │ │ 保险定价   │ │ 信用评分   │   ...         │
+│  └───────────┘ └───────────┘ └───────────┘               │
+└───────────────────────────────────────────────────────────┘
+</div>
+
+<div class="table-wrap" style="margin-top:24px">
+<table>
+  <thead>
+    <tr><th>功能模块</th><th>归零力</th><th>当前替代方案</th><th>AI后差异</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>材料批号全链追踪</td><td>②协调</td><td>纸面合格证+入场复检记录</td><td>扫码即见全链，从矿山到浇筑</td></tr>
+    <tr><td>施工过程数字存证</td><td>②协调</td><td>施工日志+照片（非结构化）</td><td>每个工序自动关联工人+材料+时间+影像</td></tr>
+    <tr><td>检测结果自动关联</td><td>②+④</td><td>PDF报告需人工解读</td><td>检测数据自动注入追溯链，异常自动标记</td></tr>
+    <tr><td>责任归属智能判断</td><td>④判断</td><td>总工+法务联合研判</td><td>AI初判+证据链呈现，人做终审</td></tr>
+    <tr><td>质量信用评分</td><td>③提取</td><td>行业口碑（无法量化）</td><td>基于全链数据的客观质量信用评分</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 4. Verification -->
+<h2 class="section-title"><span class="num">04</span> 验证三步追问</h2>
+
+<h3 style="font-size:1.1rem;margin-bottom:16px;color:var(--accent-red)">5.1 谁的利益被消解？</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>被消解方</th><th>当前利益</th><th>被消解机制</th><th>反抗强度</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>偷工减料的供应商</td><td>靠信息不对称以次充好，出事后推脱责任</td><td>全链追溯让每批材料来源和流向透明</td><td><span class="badge-pill red">极强</span></td></tr>
+    <tr><td>管理松散的分包商</td><td>施工记录不全，出事后"说不清就是我没错"</td><td>施工过程数字存证让每个环节有据可查</td><td><span class="badge-pill amber">中等</span></td></tr>
+    <tr><td>靠关系入场的低质供应商</td><td>靠关系而非质量获得订单</td><td>质量信用评分让"关系户"显形</td><td><span class="badge-pill red">强</span></td></tr>
+    <tr><td>想推脱责任的管理人员</td><td>签字后出问题可以推说"当时条件所限"</td><td>数字签名+时间戳让签字不可抵赖</td><td><span class="badge-pill amber">中等</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 style="font-size:1.1rem;margin:24px 0 16px;color:var(--accent-green)">5.2 谁是新受益者？</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>受益方</th><th>当前痛点</th><th>追溯链解锁的价值</th><th>付费意愿</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>甲方/业主</td><td>质量出问题找不到人为损失买单</td><td>精准追责，降低质量事故总损失</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td>总包/施工方（合规型）</td><td>想管分包但没有有效证据抓手</td><td>全链追溯提供管理抓手，降低连带责任风险</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td>优质材料供应商</td><td>质量好但无法证明"我更好"的客观数据</td><td>质量信用评分成为差异化竞争力 → 获得溢价</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td>保险公司</td><td>工程质量险定价无精算数据基础</td><td>全链数据支持精准风险定价 → 降低赔付率</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td>住建监管部门</td><td>质量事故调查成本高，周期长</td><td>事故响应从"数月调查"变成"秒级追溯"</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td>中建发展</td><td>IS-B08检测+追溯链→"检测-追溯-信用"三位一体</td><td>从AI检测（87分）向全链追溯自然延伸</td><td>战略价值最高</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 style="font-size:1.1rem;margin:24px 0 16px;color:var(--accent-blue)">5.3 时间窗口</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>阶段</th><th>时间</th><th>关键事件</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Phase 0（当前）</td><td>2026</td><td>IS-B08 AI质量检测推进中；感知层数据部分数字化；但各系统之间不通</td></tr>
+    <tr><td>Phase 1</td><td>2026-2027</td><td>IS-B08投产，累积质量检测结构化数据；B2B Agent协同（品类B）开始验证性POC</td></tr>
+    <tr><td>Phase 2</td><td>2027-2029</td><td>B2B Agent协同在供应链场景跑通；跨组织数据交换标准开始形成</td></tr>
+    <tr><td><strong>Phase 3（临界点）</strong></td><td><strong>2028-2030</strong></td><td>30-40%主流供应商接入Agent协同网络 + 住建部出台质量追溯政策 + 1-2个标杆项目</td></tr>
+    <tr><td>Phase 4</td><td>2030-2033</td><td>行业标配：甲方招标要求"接入质量追溯系统"，保险公司承保要求追溯数据</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 5. Three Key Questions -->
+<h2 class="section-title"><span class="num">05</span> 三个核心问题</h2>
+
+<h3 style="font-size:1.1rem;margin-bottom:16px;color:var(--accent-cyan)">Q1：触发条件 — 什么信号出现意味着可以启动？</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>#</th><th>触发信号</th><th>当前状态</th><th>可观测性</th><th>预计时间</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>T1</td><td>IS-B08 AI质量检测投产且稳定运行</td><td>87分/建议推进，POC阶段</td><td>⭐⭐⭐</td><td>2026-2027</td></tr>
+    <tr><td>T2</td><td>B2B Agent协同进入验证性POC阶段</td><td>73分/技术跟踪</td><td>⭐⭐⭐</td><td>2027-2028</td></tr>
+    <tr><td>T3</td><td>云筑网开放供应链数据互通API</td><td>已有技术基础，商业模式待定</td><td>⭐⭐⭐⭐</td><td>2027-2029</td></tr>
+    <tr><td>T4</td><td>住建部发布"工程质量追溯体系建设指导意见"</td><td>无明确信号，但政策方向一致</td><td>⭐⭐⭐⭐⭐</td><td>2028-2030</td></tr>
+    <tr><td>T5</td><td>头部保险公司推出"基于追溯数据的差异化定价"</td><td>市场空白</td><td>⭐⭐⭐</td><td>2028-2030</td></tr>
+    <tr><td>T6</td><td>至少1个标杆项目实现"全链追溯"且成本可控</td><td>无公开案例</td><td>⭐⭐⭐⭐⭐</td><td>2028-2030</td></tr>
+  </tbody>
+</table>
+</div>
+<p style="color:var(--text-muted);font-size:0.85rem;margin-top:8px"><strong>启动阈值</strong>：T1 + T2 同时满足（技术基础就位），或 T4 单点触发（政策强制），取先到者。</p>
+
+<h3 style="font-size:1.1rem;margin:32px 0 16px;color:var(--accent-blue)">Q2：储备动作 — 现在该准备什么？</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>#</th><th>储备动作</th><th>目标</th><th>投入</th><th>优先级</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>在IS-B08中预留追溯数据接口</td><td>确保IS-B08检测结果数据结构可被未来追溯链直接消费</td><td>边际成本极低</td><td><span class="badge-pill red">P0</span></td></tr>
+    <tr><td>R2</td><td>与B2B Agent协同品类保持技术跟踪</td><td>关注其技术选型和标准制定</td><td>1人兼职跟踪，季度复盘</td><td><span class="badge-pill red">P0</span></td></tr>
+    <tr><td>R3</td><td>与云筑网探讨质量数据互通方案</td><td>云筑网已有供应链全链路数据</td><td>1-2次战略对齐会议</td><td><span class="badge-pill amber">P1</span></td></tr>
+    <tr><td>R4</td><td>积累质量缺陷与责任链标注数据</td><td>为未来AI责任归因模型储备训练数据</td><td>从IS-B08数据中顺带标注</td><td><span class="badge-pill amber">P1</span></td></tr>
+    <tr><td>R5</td><td>调研Blockchain在建筑追溯中的应用</td><td>了解不可篡改存证的技术成熟度</td><td>1次深度调研</td><td><span class="badge-pill green">P2</span></td></tr>
+    <tr><td>R6</td><td>保持与住建部质量安全司的政策信息渠道</td><td>第一时间感知质量追溯政策动向</td><td>已有渠道+定期跟进</td><td><span class="badge-pill amber">P1</span></td></tr>
+    <tr><td>R7</td><td>关注国际标杆（欧洲BIM+Blockchain追溯）</td><td>时间机器验证</td><td>季度扫描1次</td><td><span class="badge-pill green">P2</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 style="font-size:1.1rem;margin:32px 0 16px;color:var(--accent-red)">Q3：先行者风险 — 如果现在冲进去，哪些坑会致命？</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>#</th><th>风险</th><th>危险程度</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>X1</td><td>技术就绪度不足，成为先烈</td><td><span class="badge-pill red">致命</span></td><td>当前技术就绪度仅10/25。现在需要自己去打通所有供应商/分包商/检测机构的数据接口</td></tr>
+    <tr><td>X2</td><td>单方面推动无法形成网络效应</td><td><span class="badge-pill red">致命</span></td><td>追溯链是"多方数据协同"产品，只推总包一方数据不完整</td></tr>
+    <tr><td>X3</td><td>在位者强烈抵制</td><td><span class="badge-pill amber">严重</span></td><td>偷工减料的供应商、管理松散的分包商会通过各种方式抵制</td></tr>
+    <tr><td>X4</td><td>数据归属权与隐私法律模糊</td><td><span class="badge-pill amber">严重</span></td><td>跨组织数据共享涉及商业秘密、数据安全法</td></tr>
+    <tr><td>X5</td><td>建筑行业数字化速度慢于预期</td><td><span class="badge-pill amber">严重</span></td><td>如果工地仍大量依赖纸质记录，追溯链的数据底座是空洞的</td></tr>
+    <tr><td>X6</td><td>Blockchain方案成本过高</td><td><span class="badge-pill green">中等</span></td><td>全量上链的Gas/存储成本在建筑体量下可能不可承受</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 6. Matrix -->
+<h2 class="section-title"><span class="num">06</span> 储备优先级矩阵定位</h2>
+
+<div class="matrix-grid">
+  <div class="cell"></div>
+  <div class="cell header">技术就绪度<br>高(20-25)</div>
+  <div class="cell header">技术就绪度<br>中(12-19)</div>
+  <div class="cell header">技术就绪度<br>低(&lt;12)</div>
+
+  <div class="cell label">归零强度<br>大(25-30)</div>
+  <div class="cell inactive">🔴 立即储备</div>
+  <div class="cell inactive">🟡 技术跟踪</div>
+  <div class="cell inactive">🟢 方向观察</div>
+
+  <div class="cell label">归零强度<br>中(15-24)</div>
+  <div class="cell inactive">🟡 验证性POC</div>
+  <div class="cell inactive">🟡 技术跟踪</div>
+  <div class="cell active">🟡 技术跟踪<br><span style="font-size:0.7rem">FUT-E 在此<br>归零20/技术10</span></div>
+
+  <div class="cell label">归零强度<br>小(&lt;15)</div>
+  <div class="cell inactive">🟢 方向观察</div>
+  <div class="cell inactive">⚪ 暂不投入</div>
+  <div class="cell inactive">⚪ 暂不投入</div>
+</div>
+
+<!-- 7. Benchmarking -->
+<h2 class="section-title"><span class="num">07</span> 穿越对标</h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>对标维度</th><th>参照对象</th><th>核心启示</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>国内跨行业</td><td>食品行业区块链追溯（茅台RFID溯源）</td><td>已成熟的追溯技术栈，可直接参照</td></tr>
+    <tr><td>国际建筑</td><td>欧洲BIM+Blockchain质量追溯试点</td><td>制度先行——欧洲建筑法规对追溯有明确要求</td></tr>
+    <tr><td>跨行业标杆</td><td>汽车行业零部件全生命周期追溯（召回体系）</td><td>每个零件可追溯到具体批次和产线——建筑业可类比</td></tr>
+    <tr><td>跨行业标杆</td><td>航空业螺丝钉可追溯</td><td>"每颗螺丝钉都知道谁拧的"——极致追溯的终局形态</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 8. Time-based Risk Cards -->
+<h2 class="section-title"><span class="num">08</span> 时间判断卡牌</h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>#</th><th>判断问题</th><th>回答</th><th>信号状态</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>T1</td><td>关键技术是否已有可用MVP？</td><td>IS-B08在POC阶段；B2B Agent协同在技术跟踪；跨组织数据标准不存在</td><td><span class="status-dot amber"></span>部分就绪</td></tr>
+    <tr><td>T2</td><td>市场窗口是否已打开？</td><td>未打开。需品类B建成+政策推动，预估3-5年</td><td><span class="status-dot red"></span>未打开</td></tr>
+    <tr><td>T3</td><td>在位者是否已开始布局？</td><td>无。追溯链是全新品类，无在位者</td><td><span class="status-dot green"></span>蓝海</td></tr>
+    <tr><td>T4</td><td>政策窗口是否可预测？</td><td>住建部2030 AI全面应用是确定性锚点</td><td><span class="status-dot amber"></span>可预测但不确定</td></tr>
+    <tr><td>T5</td><td>先行指标是否出现？</td><td>IS-B08推进中 / B2B Agent协同方向明确 / 云筑网数据基础设施存在</td><td><span class="status-dot green"></span>已有先行指标</td></tr>
+    <tr><td>T6</td><td>被压制的需求是否有替代方案？</td><td>当前替代是"人工追溯"（成本高、效果差），无其他系统方案</td><td><span class="status-dot green"></span>无替代方案</td></tr>
+    <tr><td>T7</td><td>技术成熟度曲线是否在爬坡？</td><td>LLM推理爬坡中 / Agent框架快速迭代 / 区块链成本下降中</td><td><span class="status-dot green"></span>技术方向正确</td></tr>
+    <tr><td>T8</td><td>如果今天启动，3年内能见到验证信号吗？</td><td>不能。核心依赖品类B（Agent协同）未建成，单方面启动验证失败</td><td><span class="status-dot red"></span>启动过早</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 9. Collaborative Map -->
+<h2 class="section-title"><span class="num">09</span> 协同图谱</h2>
+<div class="arch-diagram">
+                ┌────────────────────────┐
+                │   B2B Agent协同        │ ← 品类B（前提条件）
+                │   ②协调归零             │   提供跨组织数据互通管道
+                │   73分 🟡技术跟踪       │
+                └────────┬───────────────┘
+                         │ 数据互通基础
+                         ▼
+┌──────────────────┐    ┌────────────────────────┐    ┌──────────────────────┐
+│  IS-B08 AI质量检测│───▶│  FUT-E AI质量追溯链      │───▶│  质量信用评分          │
+│  感知层+检出端    │    │  ②+④归零叠加            │    │  供应商差异化定价       │
+│  87分 ✅推进     │    │  62分 🟡技术跟踪         │    │  保险精准定价          │
+└──────────────────┘    └───────────┬────────────┘    └──────────────────────┘
+        │                           │
+        │ 共享CV底座                  │ 闭环反馈
+        ▼                           ▼
+┌──────────────────┐    ┌────────────────────────┐
+│  安全管理AI化     │    │  SC-01 供应商风控       │
+│  72分 🟡验证POC   │    │  86分 ✅推进            │
+└──────────────────┘    └────────────────────────┘
+</div>
+
+<!-- 10. Summary -->
+<h2 class="section-title"><span class="num">10</span> 与原有分析的关键差异</h2>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>维度</th><th>原评分（方法论初稿）</th><th>本次深度分析</th><th>差异原因</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>归零强度</td><td>15</td><td style="color:var(--accent-green);font-weight:700">20</td><td>初稿低估了②+④叠加效应，未考虑与品类B的传导关系</td></tr>
+    <tr><td>解锁价值</td><td>18</td><td style="color:var(--accent-green);font-weight:700">22</td><td>初稿未量化质量事故年损失（200-500亿），连带保险/信用定价价值被忽略</td></tr>
+    <tr><td>技术就绪度</td><td>6</td><td style="color:var(--accent-green);font-weight:700">10</td><td>IS-B08(87分/推进中)确认为追溯链提供真实地基</td></tr>
+    <tr><td>触发确定性</td><td>6</td><td style="color:var(--accent-green);font-weight:700">10</td><td>识别出T1-T6六个可观测触发信号和明确的传导依赖链</td></tr>
+    <tr style="font-weight:700"><td>总分</td><td>45</td><td style="color:var(--accent-amber);font-weight:700">62</td><td>🟢方向观察 → 🟡技术跟踪。核心逻辑：从"空想"变为"有地基的远期品类"</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 11. Recommendations -->
+<h2 class="section-title"><span class="num">11</span> 建议</h2>
+<div class="card accent-green">
+  <h3>短期（0-1年）</h3>
+  <p>在IS-B08数据结构设计中预留追溯链扩展字段（R1，边际成本极低）；启动品类B技术跟踪（R2）；完成1次质量追溯法律合规评估。</p>
+</div>
+<div class="card accent-blue">
+  <h3>中期（1-3年）</h3>
+  <p>如IS-B08投产+品类B POC跑通，启动追溯链验证性POC，选择1个小型总包项目做端到端追溯验证，验证"数据可串联"和"归因准确率"两个核心假设。</p>
+</div>
+<div class="card accent-purple">
+  <h3>长期（3-5年）</h3>
+  <p>政策窗口打开后，从"全链追溯"向"质量信用评分+保险定价"延伸，构建三位一体（检测-追溯-信用）的质量数据飞轮。</p>
+</div>
+<div class="card accent-red">
+  <h3>退出条件</h3>
+  <p>如果品类B（B2B Agent协同）在3年内无明显进展，或建筑行业数字化速度远低于预期（2029年智慧工地渗透率仍<20%），应重新评估品类E的时间窗口是否仍然成立。</p>
+</div>
+
+</main>
+
+<footer class="footer">
+  <p>FUT-E · AI质量追溯链 | 成本归零重构法分析 | 2026-06-15</p>
+  <p style="margin-top:4px">分析方法：成本归零重构法 + 五步法穿越对标 + 时间判断卡牌 | 对应现有单元：IS-B08 AI质量检测</p>
+</footer>
+
+</body>
+</html>

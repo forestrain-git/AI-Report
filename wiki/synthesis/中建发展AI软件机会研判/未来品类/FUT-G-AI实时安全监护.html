@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUT-G AI实时安全监护 · 成本归零重构分析</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --border: #e0e0d8;
+    --accent: #c41e3a;
+    --accent-2: #2a5c8a;
+    --green: #2d7d46;
+    --amber: #b85c1a;
+    --red: #c41e3a;
+    --tag-bg: #f0efe8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* Header */
+  .report-header {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 40px 48px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+  .report-header .label {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .report-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.35;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .report-header .meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  /* Status bar */
+  .status-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .status-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .status-card .score {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .status-card .label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+  .score-high { color: var(--green); }
+  .score-mid { color: var(--amber); }
+  .score-red { color: var(--red); }
+
+  /* Matrix badge */
+  .matrix-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fef9e7;
+    border: 1px solid #f0d87e;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+  .matrix-dot {
+    width: 14px; height: 14px;
+    background: #f0c040;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* Sections */
+  section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 36px 40px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+    letter-spacing: 0.03em;
+  }
+  section h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 24px 0 12px;
+    color: var(--accent-2);
+  }
+  section h3:first-of-type { margin-top: 0; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  th {
+    background: #f7f6f0;
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tag-red { background: #fce4e4; color: var(--red); }
+  .tag-amber { background: #fef3e4; color: var(--amber); }
+  .tag-green { background: #e6f4ea; color: var(--green); }
+  .tag-blue { background: #e4eef7; color: var(--accent-2); }
+
+  /* Callout */
+  .callout {
+    border-left: 3px solid var(--accent-2);
+    background: #f7f9fb;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+  }
+  .callout-warn {
+    border-left-color: var(--amber);
+    background: #fefbf6;
+  }
+  .callout-danger {
+    border-left-color: var(--red);
+    background: #fef8f8;
+  }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    background: #f8f9fb;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    margin: 16px 0;
+    font-family: "SF Mono", "Cascadia Code", "Consolas", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* Risk grid */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .risk-item .risk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .risk-item .risk-name { font-weight: 700; font-size: 14px; }
+  .risk-item .risk-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* Score bar */
+  .score-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0;
+  }
+  .score-bar-label {
+    width: 80px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .score-bar-track {
+    flex: 1;
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .score-bar-val {
+    width: 36px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .fill-strong { background: var(--accent-2); }
+  .fill-mid { background: var(--amber); }
+  .fill-weak { background: #ccc; }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding: 20px 0;
+    margin: 16px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    padding-left: 44px;
+    margin-bottom: 24px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-2);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--accent-2);
+  }
+  .tl-item.now::before { background: var(--amber); box-shadow: 0 0 0 2px var(--amber); }
+  .tl-item.future::before { background: #ccc; box-shadow: 0 0 0 2px #ccc; }
+  .tl-period { font-weight: 700; font-size: 14px; }
+  .tl-desc { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* Footer */
+  .report-footer {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    .status-bar { grid-template-columns: repeat(2, 1fr); }
+    .risk-grid { grid-template-columns: 1fr; }
+    .container { padding: 24px 16px 48px; }
+    section { padding: 24px 20px; }
+    .report-header { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Header -->
+<header class="report-header">
+  <div class="label">未来品类 · 成本归零重构分析</div>
+  <h1>FUT-G AI实时安全监护</h1>
+  <p style="font-size:16px;color:var(--text-secondary);margin-top:8px;">从"离散抽样+事后审查"到"连续全覆盖+事前预警"——安全判断民主化的范式跃迁</p>
+  <div class="meta" style="margin-top:16px;">分析日期：2026-06-15 &nbsp;|&nbsp; 方法论：成本归零重构法 + 四维评分 + 时间判断卡牌 &nbsp;|&nbsp; 前瞻性分析，不构成当前行动建议</div>
+</header>
+
+<!-- Status -->
+<div class="status-bar">
+  <div class="status-card">
+    <div class="score score-high">82</div>
+    <div class="label">四维总分 / 100</div>
+  </div>
+  <div class="status-card">
+    <div class="score score-mid">24</div>
+    <div class="label">归零强度 / 30</div>
+  </div>
+  <div class="status-card">
+    <div class="score score-mid">24</div>
+    <div class="label">解锁价值 / 30</div>
+  </div>
+  <div class="status-card">
+    <div class="score score-mid">23</div>
+    <div class="label">技术就绪度 / 25</div>
+  </div>
+</div>
+
+<div class="matrix-badge">
+  <span class="matrix-dot"></span>
+  <span>矩阵定位：🟡 验证性POC —— 接近🔴立即储备边界。技术条件较好，以POC验证+数据积累+技术跟踪为核心储备姿态。</span>
+</div>
+
+<!-- Section 1: Cost Zero Reconstruction -->
+<section>
+  <h2>一、成本归零重构 · 五步推导</h2>
+
+  <h3>Step 1 · 扫描：找到"因为成本太高所以不得不这样"的结构</h3>
+  <table>
+    <tr><th style="width:5%">#</th><th style="width:38%">"不得不"的结构</th><th>根因</th></tr>
+    <tr><td>1</td><td>安全员只能靠"走、看、喊"做离散巡检</td><td>连续监控的人力成本太高</td></tr>
+    <tr><td>2</td><td>事故发生后才翻录像追责（事后审查）</td><td>实时判断需要同时盯几十个屏幕，认知负荷不可承受</td></tr>
+    <tr><td>3</td><td>安全培训和安全执行分离——培训知道"该系安全带"，干活时仍侥幸</td><td>培训效果的实时监督和校验成本太高</td></tr>
+  </table>
+  <div class="callout">
+    <strong>核心发现：</strong>建筑安全管理的根本矛盾不是"安全意识不够"，而是"安全判断的供给受限于人力成本，无法实现全覆盖"。
+  </div>
+
+  <h3>Step 2 · 锁定：对应哪种归零力？</h3>
+  <table>
+    <tr><th>归零力</th><th style="width:15%">权重</th><th>具体表现</th></tr>
+    <tr><td><strong>④ 判断民主化</strong>（主导）</td><td><span class="tag tag-red">70%</span></td><td>AI替代安全员做实时安全状态判断——"这人是否处于危险状态？"不再需要安全专家盯着看</td></tr>
+    <tr><td><strong>③ 模式提取归零</strong>（辅助）</td><td><span class="tag tag-amber">20%</span></td><td>AI从海量历史事故数据中提取精细化风险模式——"什么行为组合+环境条件=多少秒后可能发生什么事故"</td></tr>
+    <tr><td><strong>① 检索归零</strong>（次要）</td><td><span class="tag tag-blue">10%</span></td><td>AI实时调取工人历史安全记录、培训记录、当日身体状态做风险加权判断</td></tr>
+  </table>
+  <div class="callout callout-danger">
+    <strong>悬崖型归零：</strong>④判断民主化是四级归零力中唯一的"门槛跃迁"型。一旦跨过准确率阈值（误报率&lt;5%且漏报率&lt;1%），就不再需要安全员做初筛式的现场盯防。
+  </div>
+
+  <h3>Step 3 · 归零：假设成本被AI完全消除</h3>
+  <table>
+    <tr><th>判断维度</th><th>人类安全员</th><th>AI（归零假设）</th><th style="width:10%">归零度</th></tr>
+    <tr><td>安全带佩戴检测</td><td>目视，一次盯20人，遗漏率30%+</td><td>CV模型，同时盯500人，误检率&lt;5%</td><td><span class="tag tag-green">90%</span></td></tr>
+    <tr><td>边缘距离判断</td><td>靠经验目测，误差大</td><td>立体视觉+UWB定位，精度&lt;10cm</td><td><span class="tag tag-green">95%</span></td></tr>
+    <tr><td>危险行为预测</td><td>靠第六感和经验，无法量化</td><td>多模态融合，30秒预警窗口</td><td><span class="tag tag-amber">80%</span></td></tr>
+    <tr><td>夜间/恶劣天气监控</td><td>基本失能</td><td>红外+雷达，不受光照影响</td><td><span class="tag tag-green">95%</span></td></tr>
+    <tr><td>多工种交叉作业判断</td><td>认知过载，顾此失彼</td><td>并行处理，无瓶颈</td><td><span class="tag tag-green">100%</span></td></tr>
+  </table>
+
+  <h3>Step 4 · 推导："应然"架构</h3>
+  <div class="arch-diagram">┌─────────────────────────────────────────────────────┐
+│                  云端协同层                            │
+│  模型训练 · 模式提取 · 跨项目知识迁移 · 监管上报        │
+├─────────────────────────────────────────────────────┤
+│                  边缘推理层                            │
+│  多摄像头融合 · 实时姿态估计 · 危险行为识别 · 分级告警   │
+├─────────────────────────────────────────────────────┤
+│                  感知采集层                            │
+│  [智能安全帽] [AI摄像头] [UWB定位] [环境传感器]        │
+│  工人端设备     现场设备     定位设备    温/风/噪声     │
+└─────────────────────────────────────────────────────┘</div>
+  <p style="font-size:13px;color:var(--text-secondary);margin-top:8px;"><strong>分级告警机制：</strong>L1 工人手环震动提醒 → L2 现场声光告警 → L3 安全员终端推送 → L4 区域停工</p>
+
+  <h3>Step 5 · 验证：三步追问</h3>
+
+  <h4 style="font-size:14px;margin-top:20px;">5a) 谁的利益被消解？</h4>
+  <table>
+    <tr><th>被消解方</th><th>利益变化</th><th style="width:30%">反抗可能性</th></tr>
+    <tr><td>基层安全员</td><td>从"盯人器"变为"AI监督员+例外处理者"</td><td><span class="tag tag-amber">⚠️ 中等</span> 担心失业，但安全员本身是弱势群体</td></tr>
+    <tr><td>安全咨询公司</td><td>安全巡检外包业务减少</td><td><span class="tag tag-amber">⚠️ 中等</span> 高端咨询仍有需求</td></tr>
+    <tr><td>现有安防监控厂商</td><td>传统CCTV方案被AI方案替代</td><td><span class="tag tag-red">🔴 高</span> 被迫转型</td></tr>
+    <tr><td>包工头/班组长</td><td>不能再纵容工人冒险赶工</td><td><span class="tag tag-green">🟡 弱</span> 不敢公开反对</td></tr>
+  </table>
+
+  <h4 style="font-size:14px;margin-top:20px;">5b) 谁是新受益者？</h4>
+  <table>
+    <tr><th>新受益者</th><th>受益方式</th><th style="width:25%">当前需求状态</th></tr>
+    <tr><td>总包企业法人</td><td>避免安全生产法下刑事责任</td><td><span class="tag tag-red">极度强烈</span> 被严重低估的付费驱动力</td></tr>
+    <tr><td>项目经理</td><td>事故率下降→工期保障+保险降费</td><td><span class="tag tag-green">强烈被压制</span></td></tr>
+    <tr><td>保险公司</td><td>实时数据做差异化保费</td><td><span class="tag tag-amber">有需求缺数据</span></td></tr>
+    <tr><td>政府监管部门</td><td>远程接入工地安全数据</td><td><span class="tag tag-green">政策推动中</span></td></tr>
+    <tr><td>工人</td><td>自身安全得到更好保障</td><td><span class="tag tag-amber">受益但可能抗拒监控</span></td></tr>
+  </table>
+</section>
+
+<!-- Section 2: Three Core Questions -->
+<section>
+  <h2>二、三大核心问题</h2>
+
+  <h3>问题一：触发条件</h3>
+  <table>
+    <tr><th style="width:5%">#</th><th>触发信号</th><th style="width:18%">观测方式</th><th style="width:14%">当前状态</th><th style="width:12%">预计触发</th></tr>
+    <tr><td>T1</td><td>智能安全帽+边缘AI模组单价&lt;200元</td><td>跟踪芯片厂商报价</td><td>300-500元</td><td>2027-2028</td></tr>
+    <tr><td>T2</td><td>多模态安全行为识别准确率&gt;95%</td><td>CVPR/ICCV benchmark</td><td>88-92%</td><td>2027-2028</td></tr>
+    <tr><td>T3</td><td>住建部发布"智慧工地AI安全监控"专项政策</td><td>住建部官网</td><td>无AI专项</td><td>2027-2029</td></tr>
+    <tr><td>T4</td><td>头部央企公布AI安全监控事故率下降&gt;50%数据</td><td>上市建企ESG报告</td><td>无公开数据</td><td>2028-2029</td></tr>
+    <tr><td>T5</td><td>5G专网/边缘计算盒工地部署&lt;5000元/节点</td><td>华为/中兴报价</td><td>1-2万/节点</td><td>2027-2028</td></tr>
+    <tr><td>T6</td><td>重大事故调查报告指出"缺乏AI实时监控"</td><td>应急管理部报告</td><td>尚未出现</td><td>不可预测</td></tr>
+  </table>
+  <div class="callout">
+    <strong>启动判断：</strong>T1+T2同时满足 = 决定性信号（启动产品化开发）；T3或T4任一出现 = 加速信号（加速市场推广）。
+  </div>
+
+  <h3>问题二：储备动作</h3>
+  <table>
+    <tr><th style="width:5%">优先级</th><th>储备动作</th><th>具体内容</th><th style="width:12%">时间投入</th></tr>
+    <tr><td><span class="tag tag-red">P0</span></td><td>安全事故场景数据积累</td><td>收集历史事故报告+现场录像，标注坠落/碰撞/触电/物体打击四类数据</td><td>持续</td></tr>
+    <tr><td><span class="tag tag-red">P0</span></td><td>现有摄像头网络AI叠加测试</td><td>10个试点工地部署CV安全行为检测，实测准确率/误报率</td><td>3-6个月</td></tr>
+    <tr><td><span class="tag tag-amber">P1</span></td><td>多模态融合算法预研</td><td>视觉+UWB位置+工人历史行为三模融合判断</td><td>6-12个月</td></tr>
+    <tr><td><span class="tag tag-amber">P1</span></td><td>智能安全帽硬件合作伙伴评估</td><td>评估亮亮视野/0glasses/瑞欧威尔等厂商</td><td>3个月</td></tr>
+    <tr><td><span class="tag tag-blue">P2</span></td><td>安全判断业务规则库建设</td><td>将JGJ59等规范转化为AI可执行判断规则</td><td>6个月</td></tr>
+    <tr><td><span class="tag tag-blue">P2</span></td><td>工人隐私与数据合规方案</td><td>边缘处理+最小化采集+匿名化设计</td><td>3个月</td></tr>
+    <tr><td><span class="tag tag-blue">P3</span></td><td>国际对标跟踪</td><td>跟踪Triax/Newmetrix/Smartvid.io技术路线</td><td>持续</td></tr>
+  </table>
+
+  <h3>问题三：先行者风险</h3>
+  <div class="risk-grid">
+    <div class="risk-item">
+      <div class="risk-header"><span class="risk-name">R1 · 技术误判风险</span><span class="tag tag-red">🔴 致命</span></div>
+      <div class="risk-desc">误报率过高→"狼来了"效应→工人和管理层关闭告警→系统报废。缓解：误报率&lt;2%且漏报率&lt;0.5%才推向市场。</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-header"><span class="risk-name">R2 · 隐私与劳资风险</span><span class="tag tag-red">🔴 致命</span></div>
+      <div class="risk-desc">工人抵制24小时AI监控→引发劳资纠纷→监管介入限制。缓解：边缘处理+只上传告警事件，主动与工会沟通。</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-header"><span class="risk-name">R3 · 责任链风险</span><span class="tag tag-amber">🟡 重大</span></div>
+      <div class="risk-desc">AI预警后仍发生事故→"AI不准""人未响应""系统故障"三方推责。缓解：全链路日志不可篡改。</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-header"><span class="risk-name">R4 · 标准锁定风险</span><span class="tag tag-amber">🟡 重大</span></div>
+      <div class="risk-desc">技术方案与后续国标不兼容→沉没成本。缓解：主动参与住建部智慧工地标准制定。</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-header"><span class="risk-name">R5 · 成本回收风险</span><span class="tag tag-green">🟢 中等</span></div>
+      <div class="risk-desc">初期投入大，ROI需3-5年→管理层耐心耗尽。缓解：优先高事故率工地部署快速证明价值。</div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-header"><span class="risk-name">R6 · 技术替代风险</span><span class="tag tag-green">🟢 中等</span></div>
+      <div class="risk-desc">边缘AI芯片2-3年迭代。缓解：软硬解耦架构，算法与硬件标准化接口。</div>
+    </div>
+  </div>
+  <div class="callout callout-danger">
+    <strong>先行者风险总评：中高风险。</strong>R1（误判-狼来了）和R2（隐私-劳资）是致命级，一旦触发可能直接导致方向被否定。建议以"有限POC+数据积累+算法打磨"的低风险姿态做储备，不做全面部署。
+  </div>
+</section>
+
+<!-- Section 3: Four-Dimensional Scoring -->
+<section>
+  <h2>三、四维评分</h2>
+
+  <div class="score-bar-wrap"><span class="score-bar-label">归零强度</span><div class="score-bar-track"><div class="score-bar-fill fill-strong" style="width:80%"></div></div><span class="score-bar-val">24/30</span></div>
+  <p style="font-size:13px;color:var(--text-secondary);margin:4px 0 12px 92px;">安全判断从"离散抽样"变为"连续全覆盖"，改变了安全管理基本范式，但属于安全领域内变革而非跨价值链颠覆。</p>
+
+  <div class="score-bar-wrap"><span class="score-bar-label">解锁价值</span><div class="score-bar-track"><div class="score-bar-fill fill-strong" style="width:80%"></div></div><span class="score-bar-val">24/30</span></div>
+  <p style="font-size:13px;color:var(--text-secondary);margin:4px 0 12px 92px;">中国建筑业年事故直接+间接经济损失可达500亿+；AI全覆盖可预防50-70%事故，解锁价值150-350亿/年。</p>
+
+  <div class="score-bar-wrap"><span class="score-bar-label">技术就绪度</span><div class="score-bar-track"><div class="score-bar-fill fill-mid" style="width:92%"></div></div><span class="score-bar-val">23/25</span></div>
+  <p style="font-size:13px;color:var(--text-secondary);margin:4px 0 12px 92px;">CV安全检测已成熟，智能安全帽硬件量产，5G边缘计算商用；多模态融合判断尚需12-18个月工程化。</p>
+
+  <div class="score-bar-wrap"><span class="score-bar-label">触发确定性</span><div class="score-bar-track"><div class="score-bar-fill fill-mid" style="width:73%"></div></div><span class="score-bar-val">11/15</span></div>
+  <p style="font-size:13px;color:var(--text-secondary);margin:4px 0 12px 92px;">T1-T5触发信号可主动观测，但触发时序不确定——政策取决于不可控的政治议程，重大事故不可预测。</p>
+
+  <h3>评分修正说明（vs 方法论总表原始评分）</h3>
+  <table>
+    <tr><th>维度</th><th>原始</th><th>修正</th><th style="width:8%">变化</th><th>修正理由</th></tr>
+    <tr><td>归零强度</td><td>20</td><td>24</td><td><span style="color:var(--green);font-weight:700;">+4</span></td><td>深入分析发现是"悬崖型"判断民主化归零，从离散抽样到连续全覆盖是范式跃迁，非边际改善</td></tr>
+    <tr><td>解锁价值</td><td>18</td><td>24</td><td><span style="color:var(--green);font-weight:700;">+6</span></td><td>原评估低估了事故经济损失（直接+间接500亿+/年），且忽略了企业法人刑责风险规避这一隐性付费</td></tr>
+    <tr><td>技术就绪度</td><td>24</td><td>23</td><td><span style="color:var(--amber);font-weight:700;">-1</span></td><td>微调：多模态融合判断的工程化仍需12-18个月</td></tr>
+    <tr><td>触发确定性</td><td>10</td><td>11</td><td><span style="color:var(--green);font-weight:700;">+1</span></td><td>触发信号识别更清晰（T1-T5均可观测）</td></tr>
+    <tr style="font-weight:700;"><td>总分</td><td>72</td><td>82</td><td style="color:var(--green);">+10</td><td></td></tr>
+  </table>
+</section>
+
+<!-- Section 4: Time Judgment Cards -->
+<section>
+  <h2>四、时间判断卡牌</h2>
+  <p style="color:var(--text-secondary);margin-bottom:16px;">替代传统五步法的"硬伤卡牌"——对于未来品类，核心风险不是"做不做"，而是<strong>"什么时候做"</strong>。</p>
+  <table>
+    <tr><th style="width:3%">#</th><th>时间判断问题</th><th style="width:22%">当前答案</th><th style="width:8%">判断</th><th>行动指向</th></tr>
+    <tr><td>T1</td><td>核心技术的SOTA距"可用"阈值还有多远？</td><td>CV安全检测85-92%，可用阈值95%+</td><td><span class="tag tag-amber">2-3年</span></td><td>持续跟踪SOTA，不做产品化</td></tr>
+    <tr><td>T2</td><td>关键硬件成本曲线何时越过盈亏平衡点？</td><td>安全帽300-500元/顶，平衡点&lt;200元</td><td><span class="tag tag-amber">2-3年</span></td><td>等待芯片降价，先做算法储备</td></tr>
+    <tr><td>T3</td><td>政策窗口有明确的时间表吗？</td><td>智慧工地政策有但无AI专项要求</td><td><span class="tag tag-amber">模糊</span></td><td>参与标准制定，不做政策依赖</td></tr>
+    <tr><td>T4</td><td>用户的付费意愿是否已被"痛点事件"激活？</td><td>企业法人刑责焦虑存在但未转化为购买行为</td><td><span class="tag tag-amber">未被激活</span></td><td>等待触发事件</td></tr>
+    <tr><td>T5</td><td>底层基础设施（5G/边缘算力）是否已就绪？</td><td>5G工地覆盖&lt;10%，边缘盒1-2万/节点</td><td><span class="tag tag-amber">2-3年</span></td><td>技术验证可用LTE+本地GPU过渡</td></tr>
+    <tr><td>T6</td><td>是否已有先行者验证了商业可行性？</td><td>无。全球头部玩家(Triax/Newmetrix)仍亏损</td><td><span class="tag tag-red">未验证</span></td><td>观察国际先行者盈亏节点</td></tr>
+    <tr><td>T7</td><td>数据采集和标注的资源是否已就位？</td><td>安全事故数据分散，无公开标注数据集</td><td><span class="tag tag-amber">可自建</span></td><td>P0优先：中建体系内数据积累</td></tr>
+    <tr><td>T8</td><td>是否存在"一旦错过就追不上"的独占性窗口？</td><td>工地场景数据+工人行为数据可形成先发壁垒</td><td><span class="tag tag-amber">窗口存在</span></td><td>用数据积累而非系统部署来卡位</td></tr>
+    <tr><td>T9</td><td>先行者的风险是否大于等待的成本？</td><td>R1+R2（误判+隐私）致命风险 &gt; 等待的机会成本</td><td><span class="tag tag-red">等待更优</span></td><td>不做全面部署，做有限POC</td></tr>
+    <tr><td>T10</td><td>穿越对标中的先行者结果如何？</td><td>日本大成建设Smart Safety 5年ROI为负</td><td><span class="tag tag-red">先行者亏损</span></td><td>跟踪国际头部企业盈亏</td></tr>
+  </table>
+  <div class="callout callout-warn">
+    <strong>卡牌判定：</strong>3张🔴 + 7张🟡。<strong>不建议现在启动产品化</strong>，以"POC验证+数据积累+技术跟踪"的储备姿态等待T1+T2触发信号。
+  </div>
+</section>
+
+<!-- Section 5: Cross-Time Benchmarking -->
+<section>
+  <h2>五、穿越对标</h2>
+  <p style="color:var(--text-secondary);margin-bottom:16px;">不是对标当前竞品，而是穿越到其他行业/国家/历史阶段，找到<strong>"类似成本归零已经发生过"</strong>的先例。</p>
+
+  <h3>案例一：日本大成建设（Taisei）「Smart Safety」</h3>
+  <table>
+    <tr><th style="width:15%">维度</th><th>详情</th></tr>
+    <tr><td>启动时间</td><td>2018年（比我们早8年）</td></tr>
+    <tr><td>技术方案</td><td>AI摄像头+工人RFID标签+边缘盒子，实时检测6类危险行为</td></tr>
+    <tr><td>投入</td><td>5年累计约30亿日元（约1.5亿人民币）</td></tr>
+    <tr><td>结果</td><td><span class="tag tag-red">事故率下降约30%（未达50%预期），ROI为负</span></td></tr>
+    <tr><td>失败原因</td><td>(1)误报率15%导致"狼来了"效应，工人关闭告警；(2)RFID定位精度不够(&gt;2m误差)；(3)工会强烈抵制</td></tr>
+    <tr><td>核心教训</td><td><strong>"技术可用性"是安全AI的第一门槛——误报率>10%等于系统报废。准确率提升比功能全面性重要100倍。</strong></td></tr>
+  </table>
+
+  <h3>案例二：美国煤矿 MSHA Proximity Detection</h3>
+  <table>
+    <tr><th style="width:15%">维度</th><th>详情</th></tr>
+    <tr><td>触发事件</td><td>2006年Sago矿难（12人死亡）→ 国会立法强制</td></tr>
+    <tr><td>技术方案</td><td>矿工佩戴电磁感应标签，靠近大型设备自动告警（比"多模态AI"简单得多）</td></tr>
+    <tr><td>强制时间线</td><td>2006年事故→2008年法规→2015年全面强制（<strong>9年</strong>）</td></tr>
+    <tr><td>结果</td><td><span class="tag tag-green">煤矿死亡率下降70%+</span></td></tr>
+    <tr><td>核心教训</td><td>(1)重大事故是政策触发器但推进比预期慢；(2)技术方案不需要完美——单维度接近告警已能大幅降死亡率；(3)强制执行是推广关键。</td></tr>
+  </table>
+
+  <h3>案例三：以色列 IronSource（判断民主化归零的类比验证）</h3>
+  <table>
+    <tr><th style="width:15%">维度</th><th>详情</th></tr>
+    <tr><td>归零逻辑</td><td>移动广告归因——以前靠人分析哪个渠道用户质量高，AI让分钟级归因成本趋零</td></tr>
+    <tr><td>临界点</td><td>ML归因模型准确率超过人工分析师（2016年）</td></tr>
+    <tr><td>结果</td><td>市值从0→111亿美元（被Unity收购）</td></tr>
+    <tr><td>核心教训</td><td><strong>判断民主化的价值不等于"节约工资"，而在于"判断密度提升1000倍"——从每晚一份报告变成每次曝光实时判断。安全AI同理：价值不在于省安全员工资，而在于从"每小时扫一眼"变成"每秒都在判断"。</strong></td></tr>
+  </table>
+</section>
+
+<!-- Section 6: Timeline -->
+<section>
+  <h2>六、时间窗口推演</h2>
+  <div class="timeline">
+    <div class="tl-item now">
+      <div class="tl-period">2026-2027 · 单点技术验证期</div>
+      <div class="tl-desc">智能安全帽渗透率&lt;5%，CV安全检测准确率85-90%（不够）。先行者：头部央企做POC试点。中建：10个工地POC+数据积累。</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-period">2028-2029 · ⭐ 临界点窗口</div>
+      <div class="tl-desc">多模态融合算法成熟，误报率&lt;5%+漏报率&lt;1%。边缘AI芯片&lt;100元/节点。预计1-2起重大事故触发政策强制。中建：产品化开发+标准制定参与。</div>
+    </div>
+    <div class="tl-item future">
+      <div class="tl-period">2030-2032 · 规模部署期</div>
+      <div class="tl-desc">智能安全帽渗透率&gt;30%，智慧工地标配AI安全监护。安全生产监管平台接入全国工地数据。中建：规模化推广+生态构建。</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 7: Unit Economics -->
+<section>
+  <h2>七、单元模型初探（前瞻性测算）</h2>
+  <p style="color:var(--text-secondary);margin-bottom:16px;">基于2028-2030年成本结构假设，中型工地500工人/24个月工期。</p>
+  <table>
+    <tr><th>项目</th><th>金额</th><th>计算依据</th></tr>
+    <tr><td colspan="3"><strong>一次性投入</strong></td></tr>
+    <tr><td>智能安全帽（500顶×180元）</td><td>9万元</td><td>2028年预估单价（含边缘AI模组）</td></tr>
+    <tr><td>AI摄像头+边缘盒（20节点×3000元）</td><td>6万元</td><td>5G CPE+边缘GPU盒</td></tr>
+    <tr><td>UWB定位基站（10个×2000元）</td><td>2万元</td><td>覆盖500人作业面</td></tr>
+    <tr><td>部署集成费</td><td>3万元</td><td>安装+调试+培训</td></tr>
+    <tr><td><strong>一次性小计</strong></td><td><strong>20万元</strong></td><td></td></tr>
+    <tr><td colspan="3"><strong>年化运营成本</strong></td></tr>
+    <tr><td>AI安全监护SaaS（500人×800元/年）</td><td>40万元/年</td><td>含模型更新+云端协同</td></tr>
+    <tr><td>硬件维护+替换（年15%损耗）</td><td>2.6万元/年</td><td></td></tr>
+    <tr><td><strong>年化小计</strong></td><td><strong>42.6万元/年</strong></td><td></td></tr>
+    <tr><td colspan="3"><strong>成本对比</strong></td></tr>
+    <tr><td>AI方案（2年总成本）</td><td><strong>105.2万元</strong></td><td>20 + 42.6×2</td></tr>
+    <tr><td>人力方案（25名安全员×10万/年×2年）</td><td>500万元</td><td>当前方案（理论配比）</td></tr>
+    <tr><td>AI/人力比</td><td><strong>21%</strong></td><td>AI方案为人力方案的1/5</td></tr>
+  </table>
+  <div class="callout">
+    <strong>关键判断：</strong>AI方案的经济性不来自"省安全员工资"（那只是零头），而来自<strong>"避免事故的预期价值"</strong>——与穿越对标中IronSource的发现一致：判断民主化的价值在于"判断密度提升"，而非"人力成本节约"。
+  </div>
+</section>
+
+<!-- Section 8: Synergy -->
+<section>
+  <h2>八、与其他品类的关系</h2>
+  <table>
+    <tr><th>关联品类</th><th style="width:12%">关系类型</th><th>协同描述</th></tr>
+    <tr><td>QD-01 AI质量检测</td><td><span class="tag tag-red">强协同</span></td><td>共享CV底座，研发成本摊薄30-40%，共用工地摄像头网络</td></tr>
+    <tr><td>LW-01 工人技能画像</td><td><span class="tag tag-amber">中等协同</span></td><td>安全行为数据反哺技能评估；工人画像数据做安全风险加权</td></tr>
+    <tr><td>LW-05 工人信用体系</td><td><span class="tag tag-blue">弱协同</span></td><td>安全违规记录是信用评价的输入维度</td></tr>
+    <tr><td>B. B2B Agent协同</td><td><span class="tag tag-blue">远期协同</span></td><td>安全AI向供应商Agent自动发送安全整改指令</td></tr>
+    <tr><td>A. 统一智能层</td><td><span class="tag tag-blue">基础层依赖</span></td><td>安全告警数据汇入统一智能层，提供安全+进度+质量综合视图</td></tr>
+  </table>
+</section>
+
+<!-- Footer -->
+<footer class="report-footer">
+  <p>FUT-G AI实时安全监护 · 成本归零重构分析 &nbsp;|&nbsp; 2026-06-15</p>
+  <p style="margin-top:4px;">前瞻性分析，不构成当前行动建议。建议每半年更新技术就绪度和触发确定性评分。</p>
+  <p style="margin-top:4px;">方法论：<a href="方法论-成本归零重构法" style="color:var(--accent-2);">成本归零重构法</a> &nbsp;|&nbsp; 关联：<a href="../README" style="color:var(--accent-2);">28单元研判总表</a></p>
+</footer>
+
+</div>
+</body>
+</html>

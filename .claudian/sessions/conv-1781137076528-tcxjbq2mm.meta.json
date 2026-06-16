@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781137076528-tcxjbq2mm",
+  "providerId": "claude",
+  "title": "整理 PPT 文件夹并归档旧文件",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781137076528,
+  "updatedAt": 1781143539648,
+  "lastResponseAt": 1781143536479,
+  "sessionId": "5ef1b4d1-87ec-4fce-81ce-dba367512d62",
+  "providerState": {
+    "providerSessionId": "5ef1b4d1-87ec-4fce-81ce-dba367512d62"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 89432,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 88832,
+    "contextWindow": 200000,
+    "contextTokens": 178264,
+    "percentage": 89,
+    "contextWindowIsAuthoritative": true
+  }
+}

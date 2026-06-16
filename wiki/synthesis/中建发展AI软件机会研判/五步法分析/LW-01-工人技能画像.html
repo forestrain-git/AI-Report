@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>LW-01 工人技能画像+人岗匹配 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --blue: #1d4ed8; --blue-light: #dbeafe; --blue-50: #eff6ff;
+  --green: #16a34a; --green-bg: #dcfce7;
+  --amber: #d97706; --amber-bg: #fef3c7;
+  --red: #dc2626; --red-bg: #fee2e2;
+  --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0; --slate-300: #cbd5e1;
+  --slate-400: #94a3b8; --slate-500: #64748b; --slate-600: #475569; --slate-700: #334155;
+  --slate-800: #1e293b; --slate-900: #0f172a;
+  --radius: 12px; --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: var(--slate-800); font-size: 15px; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+.container { max-width: 480px; margin: 0 auto; padding: 0 0 40px; }
+.hero { background: var(--grad-header); padding: 28px 20px 16px; color: #fff; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); pointer-events: none; }
+.hero-code { display: inline-block; background: rgba(255,255,255,0.1); padding: 3px 14px; border-radius: 20px; font-size: 11px; color: #ffd700; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-badge-wrap { display: flex; justify-content: center; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-badge { width: 88px; height: 88px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.hero-badge .num { font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.hero-badge .unit { font-size: 11px; font-weight: 600; opacity: 0.8; margin-top: 1px; }
+.hero-title { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; position: relative; z-index: 1; }
+.hero-sub { font-size: 13px; opacity: 0.65; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-judgment { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px 6px 12px; font-size: 14px; font-weight: 600; position: relative; z-index: 1; }
+.dim-strip { background: #fff; margin: -12px 12px 16px; border-radius: 12px; padding: 16px 16px 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; z-index: 2; }
+.dim-strip-title { font-size: 12px; font-weight: 700; color: var(--slate-400); letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
+.dim-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label { width: 76px; font-size: 13px; font-weight: 600; color: var(--slate-700); flex-shrink: 0; }
+.dim-bar-wrap { flex: 1; display: flex; align-items: center; gap: 8px; }
+.dim-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--slate-100); overflow: hidden; }
+.dim-bar .fill { height: 100%; border-radius: 4px; }
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score { width: 48px; font-size: 13px; font-weight: 700; color: var(--slate-500); text-align: right; flex-shrink: 0; }
+.content { padding: 16px 16px 0; }
+.card { background: #fff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--slate-100); }
+.card h2 { font-size: 17px; font-weight: 700; color: var(--slate-900); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
+.card h2 .emoji-box { width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.card h3 { font-size: 15px; font-weight: 700; color: var(--slate-800); margin-bottom: 10px; margin-top: 18px; }
+.card h3:first-child { margin-top: 0; }
+.card p { font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 10px; }
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; letter-spacing: 0.01em; line-height: 1.5; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+.verdict-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; }
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+.summary-box { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; line-height: 1.7; color: var(--slate-700); margin-bottom: 12px; }
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box.yellow-border { border-left: 3px solid var(--amber); }
+.summary-box .sb-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.5; }
+table th { text-align: left; font-weight: 600; color: var(--slate-500); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 8px 6px 0; border-bottom: 1px solid var(--slate-200); }
+table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--slate-100); vertical-align: top; color: var(--slate-600); }
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+.summary-strip { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--slate-50); border-radius: var(--radius-sm); margin-bottom: 10px; }
+.summary-strip .strip-label { font-size: 12px; color: var(--slate-500); flex-shrink: 0; min-width: 52px; }
+.summary-strip .strip-bar { flex: 1; height: 6px; background: var(--slate-200); border-radius: 3px; overflow: hidden; }
+.summary-strip .strip-bar .strip-fill { height: 100%; border-radius: 3px; }
+.summary-strip .strip-val { font-size: 13px; font-weight: 700; flex-shrink: 0; min-width: 28px; text-align: right; }
+.ltv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.ltv-card { background: var(--slate-50); border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--slate-100); text-align: center; }
+.ltv-card .lc-label { font-size: 12px; color: var(--slate-500); margin-bottom: 4px; }
+.ltv-card .lc-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-val.amber { color: var(--amber); }
+.ltv-card .lc-sub { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.hs { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 700; color: #fff; }
+.hs-0 { background: var(--green); }
+.hs-1 { background: var(--amber); }
+.hs-2 { background: var(--amber); }
+.hs-3 { background: var(--red); }
+.assumption-item { display: flex; gap: 10px; padding: 10px 12px; border: 1px solid var(--slate-100); border-radius: var(--radius-sm); margin-bottom: 8px; }
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 1px; }
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label { font-size: 13px; font-weight: 600; color: var(--slate-800); }
+.assumption-item .ai-text .ai-meta { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.sens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.sens-item { background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: var(--radius-sm); padding: 10px; }
+.sens-item .si-label { font-size: 11px; color: var(--slate-400); margin-bottom: 2px; font-weight: 600; }
+.sens-item .si-title { font-size: 13px; font-weight: 600; color: var(--slate-800); margin-bottom: 2px; }
+.sens-item .si-desc { font-size: 11px; color: var(--slate-500); line-height: 1.4; }
+.action-card { background: var(--blue-50); border: 1px solid var(--blue-light); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; }
+.action-card .ac-title { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+.action-card .ac-desc { font-size: 13px; color: var(--slate-600); line-height: 1.6; }
+.check-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.check-list li { padding: 5px 0; font-size: 13px; color: var(--slate-600); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+.check-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-top: 7px; flex-shrink: 0; }
+.callout { border-left: 3px solid var(--blue); background: var(--slate-50); padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13px; color: var(--slate-600); margin: 10px 0; line-height: 1.6; }
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+.dir-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.dir-dot.blue { background: var(--blue); }
+.synergy-box { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 12px; line-height: 1.6; white-space: pre; overflow-x: auto; color: var(--slate-700); }
+.phase-bar { display: flex; gap: 6px; margin-bottom: 10px; }
+.phase-bar .phase { flex: 1; border-radius: 8px; padding: 8px 6px; text-align: center; }
+.phase-bar .phase .ph-time { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.phase-bar .phase .ph-label { font-size: 10px; margin-top: 2px; opacity: 0.7; }
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+.back-link { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 20px 0; padding: 10px; color: var(--slate-400); font-size: 14px; font-weight: 500; text-decoration: none; border-radius: var(--radius-sm); transition: all 0.15s; }
+.back-link:hover { color: var(--blue); background: var(--slate-50); }
+.footer { text-align: center; padding: 16px; font-size: 12px; color: var(--slate-400); line-height: 1.6; }
+.footer .brand { color: var(--slate-300); margin-top: 4px; }
+@media (max-width: 420px) { .hero { padding: 24px 14px 20px; } .hero-badge { width: 72px; height: 72px; } .hero-badge .num { font-size: 28px; } .card { padding: 16px; } .ltv-grid { grid-template-columns: 1fr; } .sens-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; LW-01</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge" style="background:var(--grad-yellow);box-shadow:0 4px 24px rgba(217,119,6,0.45);">
+      <span class="num">51</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">工人技能画像+人岗匹配</div>
+  <div class="hero-sub">云筑网 + 中建电商</div>
+  <div class="hero-judgment"><span style="font-size:16px;">&#x26A0;&#xFE0F;</span> 谨慎推进（需求真实但付费意愿弱，需验证商业模式）</div>
+</div>
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:50%"></div></div>
+      <span class="dim-score">9/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:58%"></div></div>
+      <span class="dim-score">10/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:58%"></div></div>
+      <span class="dim-score">10/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:52%"></div></div>
+      <span class="dim-score">9/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:50%"></div></div>
+      <span class="dim-score">8/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:53%"></div></div>
+      <span class="dim-score">8/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:-30%"></div></div>
+      <span class="dim-score">-3/10</span>
+    </div>
+  </div>
+</div>
+<div class="content">
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box yellow-border">
+      <div class="sb-row"><span class="sb-label">20张硬伤卡牌评分</span><span><span class="tag tag-yellow">7/20 中风险</span></span></div>
+      <div class="sb-row"><span class="sb-label">关键致命伤</span><span style="font-weight:600;color:var(--slate-700);">无 P0 级硬伤，但存在结构性约束</span></div>
+      <div class="sb-row"><span class="sb-label">主要风险项</span><span style="font-weight:600;color:var(--slate-700);font-size:13px;">#20 运营复杂度（3/5）— 数据分散在总包/分包/政府平台</span></div>
+      <div class="sb-row"><span class="sb-label">整体判定</span><span class="verdict-badge va">&#x26A0;&#xFE0F; 谨慎推进</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：数据产生层（实名制打卡/建安码/项目经历/考核）&#x2192; 数据汇聚层（云筑工匠/建筑港/政府平台）&#x2192; 算法模型层（技能画像引擎/知识图谱+BERT）&#x2192; 应用层（人岗匹配SaaS/培训推荐）&#x2192; 终端用户</p>
+    <p><strong>利润分配（100元）</strong>：数据采集与治理 10-15% | 算法模型研发 60-70% | 产品化与交付 30-40% | 销售与获客 15-25%</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">数据资产型</span> — 云筑网拥有 1400 万+ 工人实名制数据，是建筑行业最大的工人数据池。但数据分散在三方，汇聚难度大。</p>
+    <p><strong>可优化</strong>：熟人推荐班组达标率约 60%，网络招聘初试达标率仅 6%。</p>
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap"><table>
+      <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+      <tr><td>政策法规</td><td>实名制强制生物识别打卡，强制产生数据</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+      <tr><td>政策法规</td><td>农民工向产业工人转型，要求技能认证体系</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td>需求侧</td><td>高技能工人缺口420万，流动率3-8倍</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+      <tr><td>需求侧</td><td>工人老龄化严重（50岁以上占42%），四年流失超1600万</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td>新技术</td><td>知识图谱+BERT/GCN融合，匹配准确率72-85%</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td>新技术</td><td>大语言模型+知识图谱融合专利出现</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+    </table></div>
+    <div class="callout callout-yellow"><strong>判断：中等量级系统性变化</strong> — 政策+需求+技术三重驱动，但不足以支撑百亿级公司。核心原因：建筑行业利润率仅 2.3%，付费天花板有限。</div>
+    <h3>M3 预判稳态B</h3>
+    <p><strong>原子需求</strong>：总包HR（100-300元/人/次）| 劳务公司（50-200元/人/次）| 政府监管（50-200万/年）</p>
+    <div class="callout callout-yellow"><strong>稳态推演：</strong>实名制强制产生数据 &#x2192; 数据可汇聚 &#x2192; 叠加AI技术成熟+用工矛盾 &#x2192; <strong>从"熟人推荐"转向"数据驱动+AI匹配"，但受制于行业低利润率，付费转化率有限。</strong></div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">数据汇聚层核心节点</span> — 1400 万+ 工人数据，但数据真实性是关键变量。</p>
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索阶段。窗口还有 <strong>3-5 年</strong>。</p>
+    <p><span class="dir-dot yellow"></span><strong>太早风险</strong>：<span class="tag tag-yellow">中等偏高</span> — 数据分散，整合难度大</p>
+    <p><span class="dir-dot green"></span><strong>太晚风险</strong>：<span class="tag tag-green">低</span> — 尚无垄断者</p>
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap"><table>
+      <tr><th>方法</th><th>估算</th></tr>
+      <tr><td>直接数据</td><td>建筑劳务管理数字化 120亿/年（仅中建体系）</td></tr>
+      <tr><td>Top-down</td><td>5962万从业人员 × 200元 = 119亿，技能画像占15-20%</td></tr>
+      <tr><td>Bottom-up</td><td>1400万 × 5%活跃 × 200元 = 1.4亿（极度保守）</td></tr>
+      <tr><td>类比法</td><td>建筑港5590万用户、墨计Pre-A千万级</td></tr>
+    </table></div>
+    <p><strong>结论</strong>：<span class="tag tag-yellow">10-25亿元</span>，支撑数亿级体量公司。天花板不高，但具有战略卡位价值。</p>
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：极其分散，无头部玩家</p>
+    <p><strong>趋势</strong>：<span class="tag tag-yellow">A型（分散→较分散）— 非最佳</span></p>
+    <div class="callout callout-yellow"><strong>行业预判结论：</strong>5 模块通过（M6 偏弱），核心待验证：行业低利润率是否能支撑付费意愿。</div>
+  </div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：总包单位 HR / 劳务公司调度员 / 建筑企业人力资源部门</p>
+    <div class="tbl-wrap"><table>
+      <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+      <tr><td>项目开工招工</td><td>熟人推荐达标率仅60%，网络招聘初试达标率仅6%</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+      <tr><td>工人技能评估</td><td>缺乏标准化技能档案，只能靠"经验+试工"</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+      <tr><td>班组组建与匹配</td><td>工种、技能、经验匹配靠人工经验</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+      <tr><td>产业工人培育</td><td>持证率仅31.7%，政府要求提升但企业缺乏数据</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+    </table></div>
+    <div class="callout"><strong>需求评估三角形</strong>：<span class="tag tag-yellow">刚性中等偏上</span> · <span class="tag tag-yellow">中频</span> · <span class="tag tag-red">广泛</span></div>
+    <h3>Step 2 解决方案</h3>
+    <div class="callout"><strong>差异化定位：</strong>基于<strong>1400万工人真实项目经历+技能标签的AI精准匹配</strong> — 能回答"这个工人在类似项目上的实际表现如何"。</div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue">"简历写他会什么不重要，数据证明他做过什么才重要。"</span></p>
+    <div class="tbl-wrap"><table>
+      <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+      <tr><td>工人技能画像（项目经历+培训+考核）</td><td>通用招聘平台</td></tr>
+      <tr><td>AI人岗匹配（多维匹配）</td><td>劳务派遣业务</td></tr>
+      <tr><td>技能图谱可视化（768维语义向量）</td><td>硬件设备销售</td></tr>
+      <tr><td>培训推荐（基于技能缺口）</td><td>全流程劳务管理SaaS</td></tr>
+    </table></div>
+    <p><strong>MVP</strong>：选取1个工种（钢筋工）→ 1个项目做AI匹配试点 → 对比达标率、到岗周期、返工率</p>
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（ToB SaaS）</span> — 按企业年订阅 + 按匹配次数混合计费</p>
+    <div class="tbl-wrap"><table>
+      <tr><th>收入来源</th><th>第3年估算</th></tr>
+      <tr><td>总包单位HR 5万/年 × 50家</td><td>250万</td></tr>
+      <tr><td>劳务公司 2万/年 × 200家</td><td>400万</td></tr>
+      <tr><td>按次匹配费 100元/次 × 10万次</td><td>1000万</td></tr>
+      <tr><td>政府采购 100万/年 × 3个</td><td>300万</td></tr>
+      <tr style="background:#fffbeb;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--amber);font-size:15px;"><strong>1950万</strong></td></tr>
+    </table></div>
+    <div class="summary-strip"><span class="strip-label">毛利率</span><div class="strip-bar"><div class="strip-fill" style="width:41%;background:var(--grad-yellow);"></div></div><span class="strip-val" style="color:var(--amber);">41%</span></div>
+    <div class="ltv-grid">
+      <div class="ltv-card"><div class="lc-label">LTV / CAC</div><div class="lc-val amber">2.3</div><div class="lc-sub">&#x26A0;&#xFE0F; 偏低（&lt;3）</div></div>
+      <div class="ltv-card"><div class="lc-label">回收期</div><div class="lc-val amber">8.6月</div><div class="lc-sub">&#x26A0;&#xFE0F; 偏长</div></div>
+    </div>
+    <div class="callout callout-red"><strong>核心问题：</strong>LTV/CAC = 2.3，低于健康线 3.0。根本原因：建筑行业利润率仅 2.3%，付费意愿有限。</div>
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式</span> — 工人技能档案一旦建立，切换成本高</p>
+    <div class="phase-bar">
+      <div class="phase blue"><div class="ph-time">0-6月</div><div class="ph-label">商业验证</div></div>
+      <div class="phase amber"><div class="ph-time">6-18月</div><div class="ph-label">增长早期</div></div>
+      <div class="phase green"><div class="ph-time">18-36月</div><div class="ph-label">加速增长</div></div>
+    </div>
+    <div class="tbl-wrap"><table>
+      <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+      <tr><td>1</td><td>中建体系内复制</td><td>0</td></tr>
+      <tr><td>2</td><td>云筑网现有供应商转化</td><td>1-2万</td></tr>
+      <tr><td>3</td><td>行业协会/政府渠道</td><td>3-5万</td></tr>
+      <tr><td>4</td><td>劳务公司口碑传播</td><td>2-3万</td></tr>
+      <tr><td>5</td><td>内容营销+行业会议</td><td>5-8万</td></tr>
+    </table></div>
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap"><table>
+      <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+      <tr><td><strong>数据资产</strong></td><td>1400万+工人实名制数据</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td><strong>规模效应</strong></td><td>数据越多→画像越准→匹配越好</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td><strong>转化成本</strong></td><td>技能档案建立后切换成本中等</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td><strong>网络效应</strong></td><td>工人越多→匹配选择越多</td><td class="num"><span class="tag tag-yellow">中偏弱</span></td></tr>
+    </table></div>
+    <div class="callout callout-yellow"><strong>核心问题：</strong>数据壁垒强度偏弱 — 建筑港注册用户量（5590万）甚至超过云筑网（1400万），且工人数据不像交易数据那样具有独占性。</div>
+  </div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip"><span class="strip-label">总分</span><div class="strip-bar"><div class="strip-fill" style="width:35%;background:var(--grad-yellow);"></div></div><span class="strip-val" style="color:var(--amber);">7/20</span></div>
+    <div class="callout callout-yellow" style="margin-bottom:10px;"><strong>结论：</strong>中风险，13项未命中。关键扣分：#2痛点中等(2)、#4未外部验证(2)、#10 LTV/CAC偏低(2)、#20运营复杂度(3)。</div>
+    <div class="tbl-wrap injury-table"><table>
+      <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+      <tr><td>1-3</td><td>目标用户/痛点/频率</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-2">2</span> <span class="hs hs-1">1</span> <span class="tag tag-yellow" style="margin-left:6px;">#2中等 #3轻微</span></td></tr>
+      <tr><td>4-6</td><td>用户验证/本质区别/卖点</td><td colspan="2"><span class="hs hs-2">2</span> <span class="hs hs-1">1</span> <span class="hs hs-0">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#4未外部验证</span></td></tr>
+      <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0">0</span> <span class="hs hs-1">1</span> <span class="tag tag-green" style="margin-left:6px;">基本通过</span></td></tr>
+      <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-2">2</span> <span class="hs hs-0">0</span> <span class="hs hs-0">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#10 LTV/CAC偏低</span></td></tr>
+      <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-1">1</span> <span class="hs hs-0">0</span> <span class="hs hs-0">0</span> <span class="tag tag-green" style="margin-left:6px;">基本通过</span></td></tr>
+      <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-1">1</span> <span class="hs hs-0">0</span> <span class="hs hs-0">0</span> <span class="tag tag-green" style="margin-left:6px;">基本通过</span></td></tr>
+      <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+      <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度</td><td style="background:#fffbeb;"><span class="hs hs-3">3</span></td><td style="background:#fffbeb;"><span class="tag tag-red">中等 &#x26A0;&#xFE0F;</span></td></tr>
+    </table></div>
+  </div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item"><div class="ai-prio p0">P0</div><div class="ai-text"><div class="ai-label">H1：建筑企业愿意为AI人岗匹配付费</div><div class="ai-meta">客户访谈+试点 | 标准：≥5/10家确认愿付2万+/年</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p0">P0</div><div class="ai-text"><div class="ai-label">H3：项目经历数据比自述简历更能反映技能</div><div class="ai-meta">A/B对比测试 | 标准：AI匹配达标率≥75%</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p0">P0</div><div class="ai-text"><div class="ai-label">H5：100元/次的匹配定价能被市场接受</div><div class="ai-meta">价格测试 | 标准：≥30%试用企业转化为付费用户</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p1">P1</div><div class="ai-text"><div class="ai-label">H2：1400万数据质量足以支撑有效匹配</div><div class="ai-meta">数据质量审计 | 标准：完整度≥80%，标签准确率≥85%</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p1">P1</div><div class="ai-text"><div class="ai-label">H4：知识图谱+BERT匹配准确率稳定≥72%</div><div class="ai-meta">技术POC | 标准：3个工种测试均≥72%</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p1">P1</div><div class="ai-text"><div class="ai-label">H7：中建体系内项目部愿意试用AI匹配</div><div class="ai-meta">内部推广 | 标准：≥5个项目部同意试点</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p1">P1</div><div class="ai-text"><div class="ai-label">H8：匹配效果可量化且形成口碑</div><div class="ai-meta">试点数据 | 标准：匹配达标率提升≥15个百分点</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p2">P2</div><div class="ai-text"><div class="ai-label">H6：100元/次定价市场可接受</div><div class="ai-meta">价格敏感度测试 | 标准：用户流失率<10%</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p2">P2</div><div class="ai-text"><div class="ai-label">H9：云筑网数据维度丰富度显著优于竞品</div><div class="ai-meta">竞品对比 | 标准：项目经历+培训+考核覆盖≥80%工人</div></div></div>
+  </div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap"><table>
+      <tr><th>变量</th><th>基准</th><th>乐观(+20%)</th><th>悲观(-20%)</th></tr>
+      <tr><td>第3年客户数</td><td>253家</td><td>304家→2340万</td><td>202家→1560万</td></tr>
+      <tr><td>年均客单价</td><td>3.5万</td><td>4.2万</td><td>2.8万</td></tr>
+      <tr><td>匹配准确率</td><td>72%</td><td>86%→口碑加速</td><td>58%→价值不成立</td></tr>
+      <tr><td>月流失率</td><td>5%</td><td>6%→LTV=4.8万</td><td>4%→LTV=7.3万</td></tr>
+    </table></div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">匹配准确率</span> — 如果准确率无法显著优于传统方式（60%），产品价值主张就不成立。</p>
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--amber);"><div class="si-label">Plan A（首选）</div><div class="si-title">工人技能画像+AI人岗匹配SaaS</div><div class="si-desc">中建体系内1工种验证→多工种扩展→体系内复制→外部央企+劳务公司</div><div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年1950万，第5年6000万+</div></div>
+      <div class="sens-item" style="border-left:3px solid var(--blue);"><div class="si-label">Plan B（备选）</div><div class="si-title">产业工人培育数据服务</div><div class="si-desc">不做匹配，只做画像+培训推荐，输出给培训机构和政府</div><div style="font-size:11px;color:var(--blue);font-weight:600;margin-top:4px;">第3年300-500万/年</div></div>
+    </div>
+    <div class="callout callout-red"><strong>Plan C（退出条件）</strong>：匹配准确率<70% | ≥5个项目部拒绝试用 | LTV/CAC持续<2.0且无改善路径</div>
+  </div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card"><div class="ac-title">&#x1F4DD; 第一件事（本周）</div><div class="ac-desc">在中建体系内选择 1 个工程局的 1 个项目，针对"钢筋工"工种做一次 AI 匹配 vs 传统招工的 A/B 对比测试。</div></div>
+    <ul class="check-list">
+      <li>从云筑网数据库中筛选该项目所在城市的 500 名钢筋工</li>
+      <li>用技能画像引擎对每人生成标签（项目经历+培训+考核）</li>
+      <li>针对项目需求做 AI 匹配排序，推荐 Top 30</li>
+      <li>对照组：传统熟人推荐/平台招工的 30 人</li>
+      <li>追踪两组的到岗率、试工期通过率、30天留存率</li>
+    </ul>
+    <div class="summary-strip"><span class="strip-label">成功标准</span><div class="strip-bar"><div class="strip-fill" style="width:75%;background:var(--grad-yellow);"></div></div><span class="strip-val" style="color:var(--amber);">通过率≥75%</span></div>
+    <p style="font-size:12px;color:var(--slate-400);">成本：3周 + 1名算法工程师 + 1名项目经理 + 0元外部采购</p>
+  </div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F517;</span> 与 LW-02 协同关系</h2>
+    <p>LW-01（工人技能画像）与 LW-02（劳动力调度优化）是<strong>数据层→应用层的上下游关系</strong>：</p>
+    <div class="synergy-box">LW-01 工人技能画像（数据基础设施层）
+  ├── 技能标签体系 → 768维语义向量
+  ├── 项目经历画像 → 经验值量化
+  └── 培训/考核记录 → 能力评估
+        │
+        ▼
+LW-02 劳动力调度优化（应用变现层）
+  ├── 技能画像作为排班输入
+  ├── 经验值作为派工权重
+  └── 能力评估作为班组组建依据</div>
+    <div class="callout callout-yellow"><strong>建议：</strong>LW-01 和 LW-02 应作为"组合拳"推进 — 两者共享的核心挑战：<strong>建筑行业利润率仅 2.3%，企业付费意愿是最大的不确定性</strong>。建议优先验证付费意愿。</div>
+  </div>
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+</div>
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>LW-01 工人技能画像+人岗匹配 &middot; 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 &middot; 2026-06-15</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,665 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HW-08 建材入库AI识别仪 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: var(--slate-800);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+/* ===== Hero Header ===== */
+.hero {
+  background: var(--grad-header);
+  padding: 28px 20px 16px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.hero-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--grad-yellow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(239,108,0,0.45);
+}
+.hero-badge .num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero-badge .unit {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+.hero-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-judgment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 16px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Dimension Score Strip ===== */
+.dim-strip {
+  background: #fff;
+  margin: -12px 12px 16px;
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.dim-strip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.dim-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label {
+  width: 76px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+  flex-shrink: 0;
+}
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+.dim-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ===== Content Area ===== */
+.content {
+  padding: 16px 16px 0;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--slate-100);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.card h2 .emoji-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+.card h3:first-child { margin-top: 0; }
+.card p {
+  font-size: 14px;
+  color: var(--slate-600);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+
+/* ===== Tag Pills ===== */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* ===== Verdict Badge ===== */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--slate-700);
+  margin-bottom: 12px;
+}
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box.amber-border { border-left: 3px solid var(--amber); }
+.summary-box.red-border { border-left: 3px solid var(--red); }
+.summary-box .sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+
+/* ===== Table ===== */
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 8px 6px 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+  color: var(--slate-600);
+}
+table tr:last-child td { border-bottom: none; }
+
+/* ===== Summary Strip ===== */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.summary-strip .strip-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.summary-strip .strip-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--slate-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.summary-strip .strip-bar .strip-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.summary-strip .strip-val {
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Assumption Card ===== */
+.assumption-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+.assumption-item .ai-text .ai-meta {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Callout ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--slate-50);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+
+/* ===== Check List ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== Action Card ===== */
+.action-card {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.action-card .ac-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.action-card .ac-desc {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+.footer .brand {
+  color: var(--slate-300);
+  margin-top: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== Hero Header ===== -->
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; HW-08</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">69</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">建材入库AI识别仪</div>
+  <div class="hero-sub">中建发展AI硬件方向</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">⚠️</span> ⚠️谨慎推进
+  </div>
+</div>
+
+<!-- ===== Dimension Score Strip ===== -->
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:78%"></div></div>
+      <span class="dim-score">14/18</span>
+    </div>
+  </div>  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:71%"></div></div>
+      <span class="dim-score">12/17</span>
+    </div>
+  </div>  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:56%"></div></div>
+      <span class="dim-score">9/16</span>
+    </div>
+  </div>  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:67%"></div></div>
+      <span class="dim-score">10/15</span>
+    </div>
+  </div>  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:20%"></div></div>
+      <span class="dim-score">-2/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Content ===== -->
+<div class="content">
+
+  <!-- ===== 预判摘要 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box amber-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-yellow">6/20 命中</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge va">🟡 谨慎推进 — 优先验证模型可行性，再论证规模化部署</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">推进优先级</span>
+        <span><span class="tag tag-blue">T2·核心战役</span></span>
+      </div>
+    </div>
+    <p><strong>一句话结论：</strong>边缘AI摄像头+云筑网对接，把数字化采购延伸到物理收货验收环节，用独占交易数据训练专用识别模型。</p>
+  </div>
+
+  <!-- ===== 行业预判六模块 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>模块</th><th>名称</th><th>结果</th></tr>
+        <tr><td>M1</td><td>拆解行业</td><td><span class="tag tag-green">🟢 通过</span></td></tr>
+        <tr><td>M2</td><td>洞察变化</td><td><span class="tag tag-green">🟢 通过</span></td></tr>
+        <tr><td>M3</td><td>预判稳态</td><td><span class="tag tag-green">🟢 通过</span></td></tr>
+        <tr><td>M4</td><td>Timing时机</td><td><span class="tag tag-green">🟢 通过</span></td></tr>
+        <tr><td>M5</td><td>天花板大小</td><td><span class="tag tag-yellow">🟡 有条件通过</span></td></tr>
+        <tr><td>M6</td><td>集中度</td><td><span class="tag tag-green">🟢 通过</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 推进建议 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 推进建议</h2>
+    <div class="action-card">
+      <div class="ac-title">核心建议</div>
+      <div class="ac-desc">优先验证模型可行性，再论证规模化部署。收货验收是采购闭环最后一公里。</div>
+    </div>
+  </div>
+
+  <!-- ===== 关键假设 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总计</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:60%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">6 项</span>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">P1 级重要假设：3 项</div>
+        <div class="ai-meta">影响商业可行性 · 需试点验证</div>
+      </div>
+    </div>    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">P2 级次要假设：3 项</div>
+        <div class="ai-meta">可后续验证 · 不阻塞启动</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 风险提示 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 风险提示 &middot; 硬伤卡牌</h2>
+    <div class="summary-strip">
+      <span class="strip-label">命中数</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:30%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">6/20</span>
+    </div>
+    <ul class="check-list">
+      <li>#19 AI模型训练+硬件集成经验不足（3/5）</li>
+      <li>#20 4100+工地硬件部署运维（3/5）</li>
+
+    </ul>
+  </div>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>分析引擎：一堂五步法 x 20张硬伤卡牌 &middot; 2026-06-15</p>
+  <p class="brand">中建发展AI硬件方向</p>
+</div>
+
+</div>
+</body>
+</html>

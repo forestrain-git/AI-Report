@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781083725029-qg7v71c4w",
+  "providerId": "claude",
+  "title": "Review and optimize project logic",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781083725029,
+  "updatedAt": 1781091144548,
+  "lastResponseAt": 1781090537523,
+  "sessionId": "f25d2fa2-add7-41eb-bfbd-74097a48ff8d",
+  "providerState": {
+    "providerSessionId": "f25d2fa2-add7-41eb-bfbd-74097a48ff8d"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版-详细版.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 129,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 129152,
+    "contextWindow": 1000000,
+    "contextTokens": 129281,
+    "percentage": 13,
+    "contextWindowIsAuthoritative": true
+  }
+}

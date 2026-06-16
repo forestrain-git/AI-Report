@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781569364918-92tce009v",
+  "providerId": "claude",
+  "title": "我们来集中讨论软件ai选择。首先说，最终结论是什么",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1781569364918,
+  "updatedAt": 1781569563094,
+  "lastResponseAt": 1781569383445,
+  "sessionId": "35f511d9-de8a-4c3e-8237-c94e695c2541",
+  "providerState": {
+    "providerSessionId": "35f511d9-de8a-4c3e-8237-c94e695c2541"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 3789,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 36224,
+    "contextWindow": 1000000,
+    "contextTokens": 40013,
+    "percentage": 4
+  }
+}

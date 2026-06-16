@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781144592015-v9n0vz80g",
+  "providerId": "claude",
+  "title": "Fix text error in HTML deck slide 11",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781144592015,
+  "updatedAt": 1781144854449,
+  "lastResponseAt": 1781144782114,
+  "sessionId": "8b300119-463d-454f-86ba-af9f981ea4a5",
+  "providerState": {
+    "providerSessionId": "8b300119-463d-454f-86ba-af9f981ea4a5"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 64494,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 61696,
+    "contextWindow": 200000,
+    "contextTokens": 126190,
+    "percentage": 63,
+    "contextWindowIsAuthoritative": true
+  }
+}

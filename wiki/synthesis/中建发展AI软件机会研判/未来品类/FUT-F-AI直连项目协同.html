@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUT-F: AI直连项目协同 — 成本归零重构分析</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #666;
+    --border: #e8e6e1;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --slate: #f1f5f9;
+    --radius: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+
+  .banner {
+    background: var(--red-light);
+    border: 1px solid #fecaca;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--red);
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 28px 0 12px;
+    color: #333;
+  }
+
+  p { margin-bottom: 12px; }
+
+  .subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .score-bar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 24px 0 32px;
+  }
+
+  .score-item {
+    flex: 1;
+    min-width: 140px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .score-item .label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .score-item .value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .score-item .max {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .score-item.total {
+    border: 2px solid var(--accent);
+    background: var(--accent-light);
+  }
+
+  .score-item.total .value { font-size: 40px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  th {
+    background: var(--slate);
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #444;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .tag-red { background: var(--red-light); color: var(--red); }
+  .tag-amber { background: var(--amber-light); color: var(--amber); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 120px repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .matrix-grid > div {
+    background: var(--card-bg);
+    padding: 12px;
+    text-align: center;
+  }
+
+  .matrix-hdr {
+    background: var(--slate) !important;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  .matrix-highlight {
+    border: 3px solid var(--red) !important;
+    font-weight: 700;
+  }
+
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 8px 16px;
+    margin: 16px 0;
+    background: var(--accent-light);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 16px 0;
+  }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .flow-chart {
+    font-family: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    background: var(--slate);
+    padding: 16px;
+    border-radius: var(--radius);
+    margin: 16px 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .kpi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+
+  .kpi-card .kpi-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .kpi-card .kpi-value {
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  ul, ol {
+    margin: 8px 0 8px 24px;
+  }
+
+  li { margin-bottom: 4px; }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  .footer {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 64px;
+    text-align: center;
+  }
+
+  @media print {
+    body { background: white; padding: 24px; }
+    .card { break-inside: avoid; }
+    table { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <strong>前瞻性分析</strong> -- 本报告分析的是当前市场不存在、但AI技术发展必然催生的未来品类。不构成当前产品开发建议。
+</div>
+
+<h1>FUT-F: AI直连项目协同</h1>
+<p class="subtitle">成本归零重构法 · 深度分析 | 分析日期: 2026-06-15 | 下次重评: 2026-12-15 | 定位: <span class="tag tag-red">立即储备</span></p>
+
+<!-- Score Bar -->
+<div class="score-bar">
+  <div class="score-item">
+    <div class="label">归零强度</div>
+    <div class="value">22</div>
+    <div class="max">/30</div>
+  </div>
+  <div class="score-item">
+    <div class="label">解锁价值</div>
+    <div class="value">24</div>
+    <div class="max">/30</div>
+  </div>
+  <div class="score-item">
+    <div class="label">技术就绪度</div>
+    <div class="value">5</div>
+    <div class="max">/25</div>
+  </div>
+  <div class="score-item">
+    <div class="label">触发确定性</div>
+    <div class="value">4</div>
+    <div class="max">/15</div>
+  </div>
+  <div class="score-item total">
+    <div class="label">总分</div>
+    <div class="value">55</div>
+    <div class="max">/100</div>
+  </div>
+</div>
+
+<!-- Executive Summary -->
+<div class="card">
+  <div class="card-title">一句话总结</div>
+  <p style="font-size:16px; margin:0;">AI协调成本归零后，建筑业100年来"层层分包"的基础结构将坍塌 -- 总包直连100个终端从"不可能"变为"可行"。解锁价值5万亿/年，但技术就绪度至少还需3-5年。<strong>今天该做的不是建平台，是为建平台做系统性准备。</strong></p>
+</div>
+
+<!-- Section 1: Cost Zeroing Reconstruction -->
+<h2>一、成本归零重构法 · 推导五步</h2>
+
+<h3>Step 1: 扫描 -- 锁定"因为协调成本太高，所以不得不层层分包"</h3>
+<p>当前建筑项目组织结构：<strong>总包 → 专业分包 → 劳务分包 → 施工队</strong>。这不是最优设计，而是协调成本的强制妥协。一个大型项目可能涉及100+终端供应商/施工队，总包直接管理的沟通协调成本随N(N-1)/2增长 -- <strong>指数级爆炸</strong>。</p>
+
+<div class="flow-chart">业主（建设单位）
+  └── 总包（施工总承包单位）
+        ├── 专业分包A（机电安装）→ 劳务分包A1 → 施工班组
+        ├── 专业分包B（幕墙工程）→ 劳务分包B1 → 施工班组
+        ├── 专业分包C（消防工程）→ 劳务分包C1 → 施工班组
+        ├── 专业分包D（暖通空调）→ 劳务分包D1 → 施工班组
+        └── 专业分包E（装修装饰）→ 劳务分包E1 → 施工班组
+              ...（典型大型项目有15-30个专业分包）
+</div>
+
+<p><strong>关键发现</strong>：专业分包的存在价值中，协调中转功能占60-70%，真正的专业技术判断仅占30-40%。每加一层分包，增加5-15%的管理成本和利润分成。一个典型大型项目，<strong>管理层级吃掉15-25%的项目总造价</strong>。</p>
+
+<h3>Step 2: 锁定 -- ② 协调归零（核心归零力）</h3>
+
+<table>
+  <tr>
+    <th>归零力</th>
+    <th>适用判断</th>
+    <th>当前成本</th>
+  </tr>
+  <tr>
+    <td><strong>② 协调归零</strong></td>
+    <td>核心归零力。总包与100+终端之间的信息传递、进度确认、质量验收、变更协商、付款结算——全部靠人对人</td>
+    <td>项目经理70%时间"打电话确认状态"，分包经理50%时间"翻译信息"</td>
+  </tr>
+  <tr>
+    <td>① 检索归零</td>
+    <td>辅助归零力。跨终端供应商的合同条款、进度状态、质量记录——分散在几百份文档中</td>
+    <td>查一个供应商的变更记录需翻3个系统+找5个人</td>
+  </tr>
+  <tr>
+    <td>④ 判断民主化</td>
+    <td>未来叠加。AI做质量初验、安全巡检、变更合理性判断</td>
+    <td>当前必须分包经理凭经验判断"变更是否合理"</td>
+  </tr>
+</table>
+
+<h3>Step 3: 归零 -- AI让总包直连100个终端成为可能</h3>
+
+<div class="flow-chart">总包（AI增强的项目指挥部）
+  ├── AI进度排程Agent ──── 终端供应商1（钢结构加工）
+  ├── AI质量验收Agent ──── 终端供应商2（混凝土供应）
+  ├── AI物料调度Agent ──── 终端供应商3（防水施工队）
+  ├── AI安全巡检Agent ──── 终端供应商4（电气安装队）
+  ├── AI结算Agent     ──── 终端供应商5（暖通设备供应）
+  └── AI冲突仲裁Agent ──── ... 共100+终端供应商/施工队
+            │
+            └── 云筑网110万供应商池（数据底座+供应商画像）</div>
+
+<p style="margin-top:12px;"><strong>核心转变</strong>：协调从"人对人"变成"Agent对Agent"，人类项目经理从"协调者"变成"例外管理者"。</p>
+
+<h3>Step 5: 验证 -- 谁被消解 / 谁受益 / 临界点</h3>
+
+<!-- Stakeholder Analysis -->
+<div class="kpi-grid">
+  <div class="kpi-card" style="border-left: 3px solid var(--red);">
+    <div class="kpi-label">最大受损者</div>
+    <div class="kpi-value" style="color: var(--red);">专业分包商</div>
+    <div style="font-size:13px; color: var(--text-muted); margin-top:4px;">协调管理费（占其利润60-70%）被AI替代。反抗意愿强。</div>
+  </div>
+  <div class="kpi-card" style="border-left: 3px solid var(--green);">
+    <div class="kpi-label">最大受益者</div>
+    <div class="kpi-value" style="color: var(--green);">总包+终端</div>
+    <div style="font-size:13px; color: var(--text-muted); margin-top:4px;">总包降本10-20%，终端减少信息失真和资金截留。需求被"不可能"压制。</div>
+  </div>
+  <div class="kpi-card" style="border-left: 3px solid var(--amber);">
+    <div class="kpi-label">最早触发窗口</div>
+    <div class="kpi-value" style="color: var(--amber);">3-5年</div>
+    <div style="font-size:13px; color: var(--text-muted); margin-top:4px;">Agent可靠+数据就绪+试点成功。大规模采用需5-10年。</div>
+  </div>
+</div>
+
+<!-- Section 2: Adapted Wubufa -->
+<h2>二、五步法适配分析（未来品类版）</h2>
+
+<h3>M4: 穿越对标 -- 历史上类似的"协调成本归零"事件</h3>
+
+<table>
+  <tr>
+    <th>历史案例</th>
+    <th>被归零的成本</th>
+    <th>时间线</th>
+    <th>对建筑业的启示</th>
+  </tr>
+  <tr>
+    <td>电商去批发商（2003-2015）</td>
+    <td>品牌→省代→市代→门店 多层分销协调</td>
+    <td>12年</td>
+    <td>去中间层速度取决于终端数字化程度和信用体系成熟度</td>
+  </tr>
+  <tr>
+    <td>出行去调度中心（2012-2018）</td>
+    <td>用户→调度中心→出租车 匹配协调</td>
+    <td>6年</td>
+    <td>高频+标准化→快去中间层；低频+非标→慢</td>
+  </tr>
+  <tr>
+    <td>ERP去中层信息中转（1990-2010）</td>
+    <td>一线→科长→处长→部长 层层汇总</td>
+    <td>20年</td>
+    <td><strong>最接近建筑业的类比</strong>——软件替代人做信息聚合，时间线最长</td>
+  </tr>
+</table>
+
+<blockquote>
+  <strong>综合判断</strong>：建筑业的"去中间层"比以上所有案例更难——非标性最强、决策最重、监管最多、物理世界依赖。从第一个试点到渗透率20%+，预计<strong>10-15年</strong>。
+</blockquote>
+
+<h3>M5: 被解锁价值 -- 归零后释放的经济能量</h3>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-label">全行业年协调成本</div>
+    <div class="kpi-value">2.7-4.5万亿</div>
+    <div class="kpi-label" style="margin-top:4px;">占建筑业总产值9-15%</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">可释放空间（中位数）</div>
+    <div class="kpi-value">~5万亿/年</div>
+    <div class="kpi-label" style="margin-top:4px;">全行业长期稳态释放值</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">中建体系内释放空间</div>
+    <div class="kpi-value">3000-5000亿/年</div>
+    <div class="kpi-label" style="margin-top:4px;">中建年施工产值约2万亿</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">效率提升幅度</div>
+    <div class="kpi-value">~16.7%</div>
+    <div class="kpi-label" style="margin-top:4px;">参考电商去中间商降低流通成本20-30%</div>
+  </div>
+</div>
+
+<h3>时间判断卡牌（10张）</h3>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>卡牌</th>
+    <th>状态</th>
+  </tr>
+  <tr>
+    <td>T1</td>
+    <td>Agent可靠性：单Agent在协调任务上准确率≥95%？</td>
+    <td><span class="tag tag-red">未满足</span></td>
+  </tr>
+  <tr>
+    <td>T2</td>
+    <td>多Agent协作框架：多个Agent能自动协商、仲裁、升级？</td>
+    <td><span class="tag tag-red">未满足</span></td>
+  </tr>
+  <tr>
+    <td>T3</td>
+    <td>Agent间通信标准：不同企业的Agent能互相对话？</td>
+    <td><span class="tag tag-red">未满足</span></td>
+  </tr>
+  <tr>
+    <td>T4</td>
+    <td>法律认可：AI协商协议有法律效力？AI签章被认可？</td>
+    <td><span class="tag tag-red">未满足</span></td>
+  </tr>
+  <tr>
+    <td>T5</td>
+    <td>供应商数据质量：云筑网过程数据达到AI可用标准？</td>
+    <td><span class="tag tag-amber">部分满足</span></td>
+  </tr>
+  <tr>
+    <td>T6</td>
+    <td>工地IoT覆盖：足够多工地有实时数据采集能力？</td>
+    <td><span class="tag tag-amber">部分满足</span></td>
+  </tr>
+  <tr>
+    <td>T7</td>
+    <td>终端数字化意愿：中小施工队愿意被AI管理？</td>
+    <td><span class="tag tag-amber">部分满足</span></td>
+  </tr>
+  <tr>
+    <td>T8</td>
+    <td>总包组织变革意愿：接受AI替代中层协调？</td>
+    <td><span class="tag tag-amber">部分满足</span></td>
+  </tr>
+  <tr>
+    <td>T9</td>
+    <td>分包制度弹性：法规允许新型项目组织方式？</td>
+    <td><span class="tag tag-red">未满足</span></td>
+  </tr>
+  <tr>
+    <td>T10</td>
+    <td>先行者出现：至少1家企业成功试点AI直连50+终端？</td>
+    <td><span class="tag tag-red">未满足</span></td>
+  </tr>
+</table>
+
+<p><strong>卡牌统计</strong>：<span class="tag tag-green">满足 0</span> <span class="tag tag-amber">部分满足 4</span> <span class="tag tag-red">未满足 6</span> -- 整体处于"等待条件成熟"阶段。</p>
+
+<!-- Section 3: Three Key Questions -->
+<h2>三、核心三问</h2>
+
+<h3>Q1: 触发条件 -- 什么信号出现意味着可以正式启动？</h3>
+
+<table>
+  <tr>
+    <th>优先级</th>
+    <th>触发信号</th>
+    <th>可观测性</th>
+    <th>预计出现</th>
+  </tr>
+  <tr>
+    <td><span class="tag tag-red">P0</span></td>
+    <td>全球首例"AI协调50+终端供应商"的真实项目案例</td>
+    <td>高</td>
+    <td>3-5年</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-red">P0</span></td>
+    <td>LLM Agent在建筑项目协调任务上准确率达到90%+</td>
+    <td>中</td>
+    <td>3-5年</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-amber">P1</span></td>
+    <td>住建部发布"AI辅助项目管理"指导意见</td>
+    <td>高</td>
+    <td>3-7年</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-amber">P1</span></td>
+    <td>云筑网供应商过程履约数据覆盖率达60%+</td>
+    <td>高</td>
+    <td>3-5年</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-amber">P2</span></td>
+    <td>建筑业资质管理出现新型组织方式试点</td>
+    <td>高</td>
+    <td>5-10年</td>
+  </tr>
+</table>
+
+<p><strong>启动条件</strong>：满足任意3个P0/P1信号 = 可以启动MVP验证；满足4个 = 可以投入实质性资源。</p>
+
+<h3>Q2: 储备动作 -- 今天可以做的低成本不后悔准备</h3>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>储备动作</th>
+    <th>投入</th>
+    <th>产出</th>
+    <th>优先级</th>
+  </tr>
+  <tr>
+    <td>R1</td>
+    <td><strong>绘制"协调成本热力图"</strong>：梳理1个典型大型项目全部参与方的信息流转路径、时延、失真点</td>
+    <td>1人×2周</td>
+    <td>量化AI可归零成本的具体位置</td>
+    <td><span class="tag tag-red">本季度</span></td>
+  </tr>
+  <tr>
+    <td>R2</td>
+    <td><strong>供应商数据治理升级</strong>：云筑网增加过程履约数据采集（交期准确率、质量合格率、变更频率、纠纷次数）</td>
+    <td>系统改造+运营</td>
+    <td>供应商能力图谱V1.0</td>
+    <td><span class="tag tag-red">本季度</span></td>
+  </tr>
+  <tr>
+    <td>R3</td>
+    <td><strong>Agent技术跟踪</strong>：持续跟踪Multi-Agent框架+建筑业AI创业公司动态</td>
+    <td>1人×20%精力</td>
+    <td>半年度技术雷达报告</td>
+    <td><span class="tag tag-red">本季度</span></td>
+  </tr>
+  <tr>
+    <td>R4</td>
+    <td><strong>小规模Agent协作实验</strong>：选低风险场景（AI自动追踪10个供应商日报+汇总异常）</td>
+    <td>1小队×3个月</td>
+    <td>技术可行性报告+Demo</td>
+    <td><span class="tag tag-amber">1-3年</span></td>
+  </tr>
+  <tr>
+    <td>R5</td>
+    <td><strong>与领先项目部建立创新伙伴关系</strong>：找1-2个数字化意愿最强的项目经理共创蓝图</td>
+    <td>定期工作坊</td>
+    <td>需求蓝图V1.0</td>
+    <td><span class="tag tag-amber">1-3年</span></td>
+  </tr>
+  <tr>
+    <td>R6</td>
+    <td><strong>法律合规预研</strong>：研究AI自主签约法律效力+新型项目组织方式合规路径</td>
+    <td>法务费用</td>
+    <td>法律可行性备忘录</td>
+    <td><span class="tag tag-amber">1-3年</span></td>
+  </tr>
+</table>
+
+<h3>Q3: 先行者风险 -- 如果别人先做了，我们会损失什么？</h3>
+
+<p><strong>最可能的先行者</strong>：<strong style="color: var(--red);">广联达</strong>（最高可能性）—— 建筑数字化第一品牌，已有PM产品线，第三方中立定位无利益冲突。其次是大型地产商+科技公司联合体。</p>
+
+<table>
+  <tr>
+    <th>损失维度</th>
+    <th>严重度</th>
+    <th>具体损失</th>
+  </tr>
+  <tr>
+    <td>平台生态位</td>
+    <td><span class="tag tag-red">高</span></td>
+    <td>错失成为"建筑业项目协作操作系统"的机会，云筑网从"最大"变"之一"</td>
+  </tr>
+  <tr>
+    <td>数据护城河</td>
+    <td><span class="tag tag-red">高</span></td>
+    <td>竞品先积累10万+项目协同数据，AI精度飞轮无法追赶</td>
+  </tr>
+  <tr>
+    <td>供应商锁定</td>
+    <td><span class="tag tag-amber">中</span></td>
+    <td>110万供应商大量接入竞品平台，云筑网网络效应被稀释</td>
+  </tr>
+  <tr>
+    <td>定价权</td>
+    <td><span class="tag tag-amber">中</span></td>
+    <td>竞品定义"AI协同"收费模式，后入者只能跟随</td>
+  </tr>
+</table>
+
+<blockquote>
+  <strong>窗口期</strong>：从"先行者出现"到"需要做出反应"，估计有<strong>18-24个月</strong>。建筑业B2B采纳速度慢，先发者需要时间教育市场。但防御策略的核心是<strong>保持"6个月内快速跟进"的能力</strong>。
+</blockquote>
+
+<!-- Section 4: Strategic Positioning -->
+<h2>四、四维评分与储备优先级矩阵</h2>
+
+<div class="card">
+  <div class="card-title">储备优先级矩阵定位</div>
+  <div class="matrix-grid">
+    <div class="matrix-hdr"></div>
+    <div class="matrix-hdr">高 技术就绪<br>(20-25)</div>
+    <div class="matrix-hdr">中 技术就绪<br>(12-19)</div>
+    <div class="matrix-hdr">低 技术就绪<br>(<12)</div>
+
+    <div class="matrix-hdr">大 归零强度<br>(25-30)</div>
+    <div style="background: var(--red-light); color: var(--red);">🔴 立即储备</div>
+    <div style="background: var(--amber-light); color: var(--amber);">🟡 技术跟踪</div>
+    <div style="background: var(--green-light); color: var(--green);">🟢 方向观察</div>
+
+    <div class="matrix-hdr">中 归零强度<br>(15-24)</div>
+    <div style="background: var(--amber-light); color: var(--amber);">🟡 验证性POC</div>
+    <div style="background: var(--green-light); color: var(--green);">🟢 方向观察</div>
+    <div class="matrix-highlight" style="background: var(--amber-light); color: var(--amber); font-size:14px;">🟡<br>技术跟踪<br><small>FUT-F<br>归零22+技术5</small></div>
+
+    <div class="matrix-hdr">小 归零强度<br>(<15)</div>
+    <div style="background: var(--green-light); color: var(--green);">🟢 方向观察</div>
+    <div>⚪ 暂不投入</div>
+    <div>⚪ 暂不投入</div>
+  </div>
+  <p style="margin-top:12px; font-size:13px; color:var(--text-muted);">
+    <strong>调整建议</strong>：因解锁价值极高(24分)+云筑网独有战略资产，建议从"方向观察"升级至<strong style="color: var(--red);">"立即储备"</strong>——不是启动产品开发，是启动系统性储备。
+  </p>
+</div>
+
+<!-- Section 5: Synergy Map -->
+<h2>五、与其他未来品类的协同关系</h2>
+
+<table>
+  <tr>
+    <th>协同品类</th>
+    <th>关系</th>
+  </tr>
+  <tr>
+    <td><strong>B. B2B Agent协同</strong></td>
+    <td>B是"点"——解决两个组织间的Agent对话；F是"面"——解决100个组织间的Agent协同网络。B是F的技术前提</td>
+  </tr>
+  <tr>
+    <td><strong>A. 统一智能层</strong></td>
+    <td>A是"信息底座"，让总包一眼看到100个终端状态。F是"行动层"，让总包自动驱动100个终端</td>
+  </tr>
+  <tr>
+    <td><strong>C. 跨项目经验迁移</strong></td>
+    <td>C让AI从1000个项目学习规律，F让AI把规律应用到第1001个项目的100个终端管理中</td>
+  </tr>
+  <tr>
+    <td><strong>G. AI实时安全监护</strong></td>
+    <td>G是F在安全领域的垂直Agent应用——安全Agent是F平台上首批运行的Agent之一</td>
+  </tr>
+</table>
+
+<!-- Section 6: Next Action -->
+<h2>六、建议下一步（最小储备行动）</h2>
+
+<table>
+  <tr>
+    <th>时间</th>
+    <th>行动</th>
+    <th>验证标准</th>
+    <th>投入</th>
+  </tr>
+  <tr>
+    <td><strong>本周</strong></td>
+    <td>选1个典型大型项目，画出全部参与方的"协调关系网络图"，标注信息流时延和失真点</td>
+    <td>输出一份完整热力图</td>
+    <td>1分析师×2天</td>
+  </tr>
+  <tr>
+    <td><strong>本月</strong></td>
+    <td>完成云筑网供应商过程数据现状评估——哪些已有、缺失、可采集</td>
+    <td>数据质量评估报告</td>
+    <td>1PM+1DE×2周</td>
+  </tr>
+  <tr>
+    <td><strong>本季度</strong></td>
+    <td>完成R1+R2+R3三项储备动作，产出物通过内部评审</td>
+    <td>三份产出物评审通过</td>
+    <td>3人×约1个月</td>
+  </tr>
+</table>
+
+<div class="card">
+  <div class="card-title">Plan A / Plan B / Exit条件</div>
+  <ul>
+    <li><strong>Plan A（首选）</strong>：按储备动作R1-R6系统推进，等待触发信号（3-5年内出现）后启动MVP。利用中建"既是总包也是平台方"的双重身份，先在体系内项目验证，再向行业开放。</li>
+    <li><strong>Plan B（备选）</strong>：如果组织内部对"去分包层"的阻力过大，先做"AI增强分包层"（帮助分包商提升效率而非替代他们），积累Agent协同技术和数据，等时机成熟再升级为直连模式。</li>
+    <li><strong>Exit条件</strong>：如果触发信号在5年内未出现（Agent可靠性未达标+无先行者出现），将资源从"F-直连项目协同"转移到更近端的"A-统一智能层"或"B-Agent协同"。</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-label">归零力</div>
+    <div class="kpi-value" style="font-size:18px;">② 协调归零</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">解锁结构</div>
+    <div class="kpi-value" style="font-size:18px;">层层分包</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">市场状态</div>
+    <div class="kpi-value" style="font-size:18px;">萌芽</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-label">最早触发</div>
+    <div class="kpi-value" style="font-size:18px;">3-5年</div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>中建发展AI软件机会研判 | 未来品类前瞻分析 | FUT-F: AI直连项目协同</p>
+  <p>方法论：<a href="方法论-成本归零重构法">成本归零重构法</a> | 评分体系：四维矩阵（独立于现有品类七维评分）</p>
+  <p>生成日期：2026-06-15 | 下次重评：2026-12-15</p>
+</div>
+
+</body>
+</html>

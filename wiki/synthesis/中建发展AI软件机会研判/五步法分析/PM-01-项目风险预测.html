@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>PM-01 项目风险预测 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --blue: #1d4ed8; --blue-light: #dbeafe; --blue-50: #eff6ff;
+  --green: #16a34a; --green-bg: #dcfce7;
+  --amber: #d97706; --amber-bg: #fef3c7;
+  --red: #dc2626; --red-bg: #fee2e2;
+  --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b;
+  --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b; --slate-900: #0f172a;
+  --radius: 12px; --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: var(--slate-800); font-size: 15px; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+.container { max-width: 480px; margin: 0 auto; padding: 0 0 40px; }
+.hero { background: var(--grad-header); padding: 28px 20px 16px; color: #fff; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); pointer-events: none; }
+.hero-code { display: inline-block; background: rgba(255,255,255,0.1); padding: 3px 14px; border-radius: 20px; font-size: 11px; color: #ffd700; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-badge-wrap { display: flex; justify-content: center; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-badge { width: 88px; height: 88px; border-radius: 50%; background: var(--grad-yellow); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(217,119,6,0.45); }
+.hero-badge .num { font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.hero-badge .unit { font-size: 11px; font-weight: 600; opacity: 0.8; margin-top: 1px; }
+.hero-title { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; position: relative; z-index: 1; }
+.hero-sub { font-size: 13px; opacity: 0.65; margin-bottom: 14px; position: relative; z-index: 1; }
+.hero-judgment { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 6px 16px 6px 12px; font-size: 14px; font-weight: 600; position: relative; z-index: 1; }
+.dim-strip { background: #fff; margin: -12px 12px 16px; border-radius: 12px; padding: 16px 16px 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; z-index: 2; }
+.dim-strip-title { font-size: 12px; font-weight: 700; color: var(--slate-400); letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
+.dim-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label { width: 76px; font-size: 13px; font-weight: 600; color: var(--slate-700); flex-shrink: 0; }
+.dim-bar-wrap { flex: 1; display: flex; align-items: center; gap: 8px; }
+.dim-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--slate-100); overflow: hidden; }
+.dim-bar .fill { height: 100%; border-radius: 4px; }
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score { width: 48px; font-size: 13px; font-weight: 700; color: var(--slate-500); text-align: right; flex-shrink: 0; }
+.content { padding: 16px 16px 0; }
+.card { background: #fff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--slate-100); }
+.card h2 { font-size: 17px; font-weight: 700; color: var(--slate-900); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
+.card h2 .emoji-box { width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.card h3 { font-size: 15px; font-weight: 700; color: var(--slate-800); margin-bottom: 10px; margin-top: 18px; }
+.card h3:first-child { margin-top: 0; }
+.card p { font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 10px; }
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; letter-spacing: 0.01em; line-height: 1.5; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+.verdict-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; }
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+.summary-box { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; line-height: 1.7; color: var(--slate-700); margin-bottom: 12px; }
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box.yellow-border { border-left: 3px solid var(--amber); }
+.summary-box.red-border { border-left: 3px solid var(--red); }
+.summary-box .sb-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.5; }
+table th { text-align: left; font-weight: 600; color: var(--slate-500); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 8px 6px 0; border-bottom: 1px solid var(--slate-200); }
+table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--slate-100); vertical-align: top; color: var(--slate-600); }
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+.summary-strip { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--slate-50); border-radius: var(--radius-sm); margin-bottom: 10px; }
+.summary-strip .strip-label { font-size: 12px; color: var(--slate-500); flex-shrink: 0; min-width: 52px; }
+.summary-strip .strip-bar { flex: 1; height: 6px; background: var(--slate-200); border-radius: 3px; overflow: hidden; }
+.summary-strip .strip-bar .strip-fill { height: 100%; border-radius: 3px; }
+.summary-strip .strip-val { font-size: 13px; font-weight: 700; flex-shrink: 0; min-width: 28px; text-align: right; }
+.ltv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.ltv-card { background: var(--slate-50); border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--slate-100); text-align: center; }
+.ltv-card .lc-label { font-size: 12px; color: var(--slate-500); margin-bottom: 4px; }
+.ltv-card .lc-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-val.amber { color: var(--amber); }
+.ltv-card .lc-sub { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.hs { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 700; color: #fff; }
+.hs-0 { background: var(--green); }
+.hs-1 { background: #f59e0b; }
+.hs-2 { background: var(--amber); }
+.hs-3 { background: #ea580c; }
+.assumption-item { display: flex; gap: 10px; padding: 10px 12px; border: 1px solid var(--slate-100); border-radius: var(--radius-sm); margin-bottom: 8px; }
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 1px; }
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label { font-size: 13px; font-weight: 600; color: var(--slate-800); }
+.assumption-item .ai-text .ai-meta { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.sens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.sens-item { background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: var(--radius-sm); padding: 10px; }
+.sens-item .si-label { font-size: 11px; color: var(--slate-400); margin-bottom: 2px; font-weight: 600; }
+.sens-item .si-title { font-size: 13px; font-weight: 600; color: var(--slate-800); margin-bottom: 2px; }
+.sens-item .si-desc { font-size: 11px; color: var(--slate-500); line-height: 1.4; }
+.action-card { background: var(--blue-50); border: 1px solid var(--blue-light); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; }
+.action-card .ac-title { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+.action-card .ac-desc { font-size: 13px; color: var(--slate-600); line-height: 1.6; }
+.check-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.check-list li { padding: 5px 0; font-size: 13px; color: var(--slate-600); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+.check-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-top: 7px; flex-shrink: 0; }
+.synergy-box { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 12px; line-height: 1.6; white-space: pre; overflow-x: auto; color: var(--slate-700); }
+.phase-bar { display: flex; gap: 6px; margin-bottom: 10px; }
+.phase-bar .phase { flex: 1; border-radius: 8px; padding: 8px 6px; text-align: center; }
+.phase-bar .phase .ph-time { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.phase-bar .phase .ph-label { font-size: 10px; margin-top: 2px; opacity: 0.7; }
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+.callout { border-left: 3px solid var(--blue); background: var(--slate-50); padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13px; color: var(--slate-600); margin: 10px 0; line-height: 1.6; }
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+.dir-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.back-link { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 20px 0; padding: 10px; color: var(--slate-400); font-size: 14px; font-weight: 500; text-decoration: none; border-radius: var(--radius-sm); transition: all 0.15s; }
+.back-link:hover { color: var(--blue); background: var(--slate-50); }
+.footer { text-align: center; padding: 16px; font-size: 12px; color: var(--slate-400); line-height: 1.6; }
+.footer .brand { color: var(--slate-300); margin-top: 4px; }
+@media (max-width: 420px) { .hero { padding: 24px 14px 20px; } .hero-badge { width: 72px; height: 72px; } .hero-badge .num { font-size: 28px; } .ltv-grid { grid-template-columns: 1fr; } .sens-grid { grid-template-columns: 1fr; } .card { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; PM-01</div>
+  <div class="hero-badge-wrap"><div class="hero-badge"><span class="num">66</span><span class="unit">总分</span></div></div>
+  <div class="hero-title">AI项目管理与风险预测</div>
+  <div class="hero-sub">中建发展 + 云筑网 + 各工程局</div>
+  <div class="hero-judgment"><span style="font-size:16px;">&#x26A0;&#xFE0F;</span> 中风险 · 谨慎推进（核心假设需POC验证）</div>
+</div>
+
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item"><span class="dim-label">变化天花板</span><div class="dim-bar-wrap"><div class="dim-bar"><div class="fill fill-yellow" style="width:72%"></div></div><span class="dim-score">13/18</span></div></div>
+  <div class="dim-item"><span class="dim-label">终局时机</span><div class="dim-bar-wrap"><div class="dim-bar"><div class="fill fill-yellow" style="width:71%"></div></div><span class="dim-score">12/17</span></div></div>
+  <div class="dim-item"><span class="dim-label">需求真伪</span><div class="dim-bar-wrap"><div class="dim-bar"><div class="fill fill-yellow" style="width:65%"></div></div><span class="dim-score">11/17</span></div></div>
+  <div class="dim-item"><span class="dim-label">方案优劣</span><div class="dim-bar-wrap"><div class="dim-bar"><div class="fill fill-yellow" style="width:65%"></div></div><span class="dim-score">11/17</span></div></div>
+  <div class="dim-item"><span class="dim-label">商业模型</span><div class="dim-bar-wrap"><div class="dim-bar"><div class="fill fill-yellow" style="width:69%"></div></div><span class="dim-score">11/16</span></div></div>
+  <div class="dim-item"><span class="dim-label">增长壁垒</span><div class="dim-bar-wrap"><div class="dim-bar"><div class="fill fill-green" style="width:87%"></div></div><span class="dim-score">13/15</span></div></div>
+  <div class="dim-item"><span class="dim-label">风险扣分</span><div class="dim-bar-wrap"><div class="dim-bar"><div class="fill fill-red" style="width:50%"></div></div><span class="dim-score">-5/10</span></div></div>
+</div>
+
+<div class="content">
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box yellow-border">
+      <div class="sb-row"><span class="sb-label">20张硬伤卡牌评分</span><span><span class="tag tag-yellow">8/20 中高风险</span></span></div>
+      <div class="sb-row"><span class="sb-label">关键致命伤</span><span style="font-weight:600;color:var(--slate-700);font-size:13px;">H3（P0）：10万亿交易数据能否有效预测项目成本/工期风险（尚未验证）</span></div>
+      <div class="sb-row"><span class="sb-label">团队/运营风险</span><span style="font-weight:600;color:var(--slate-700);font-size:13px;">#19 ML预测建模经验（2/5）#20 数据整合复杂度（3/5）</span></div>
+      <div class="sb-row"><span class="sb-label">整体判定</span><span class="verdict-badge va">&#x26A0;&#xFE0F; 中风险谨慎推进（核心假设需POC验证）</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：数据源层（云筑网交易+项目进度+财务）→ 预测模型层（ML引擎）→ 应用交付层（SaaS+API）→ 终端（项目部/经营部/金融机构）</p>
+    <p><strong>利润分配（100元）</strong>：数据采集清洗 15-20% | ML模型研发 65-75% | 产品化SaaS 45-55% | 定制化集成 25-35%</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">数据资产型</span> — 云筑网10万亿真实交易履约数据是竞争对手无法获取的独占资源，与SC-01共享同一数据底座</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>需求侧</td><td>央企管理下沉，精细化指标密集出台（动态利润率&ge;10%、混凝土损耗&le;1%）</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>需求侧</td><td>全球建筑成本超支是行业最痛问题（大型项目平均超支45%+）</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>需求侧</td><td>国资委推动央企财务数智化转型，AI成本管控是核心方向</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>新技术</td><td>XGBoost/CatBoost在项目成本预测中R&sup2;&gt;0.84（学术界已验证）</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>供给侧</td><td>广联达PMSmart已向市场普及"AI精细化管理"理念</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>供给侧</td><td>中建CICC覆盖8200+项目，但缺乏成本预测模块</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>判断：中大型变化</strong> — 需求侧（管理下沉+财务数智化）+ 新技术（ML预测成熟），但缺少政策侧的单点爆发性驱动力。属于"需求拉动+技术成熟"的稳健型。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <p><strong>原子需求</strong>：项目部经理（提前发现超支风险，10-20万/年/项目）| 工程局经营部（全局几百项目自动预警，50-100万/年/局）| 金融机构（建筑项目贷后监控，30-50万/年）</p>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>央企管理下沉 → 成本预测从"事后核算"变为"事前预判"的刚需 → 叠加ML预测技术成熟 → <strong>建筑项目管理从"报表驱动"转向"AI驱动的实时预测"</strong>。拥有真实交易履约数据的平台建立模型精度壁垒。
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">模型差异化层独占者</span> — 10万亿交易数据提供"供应商履约行为→项目风险"的因果链训练数据，这是通用项目管理SaaS无法获取的数据维度。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索期。窗口<strong>已开</strong>，还有 <strong>2-3 年</strong>。</p>
+    <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-green">低</span> — 需求真实存在（成本超支是最痛问题），技术已成熟（XGBoost已验证），数据已就绪</p>
+    <p><span class="dir-dot yellow"></span><strong>太晚风险</strong>：<span class="tag tag-yellow">中</span> — 广联达或Procore如果先行开发成本预测模块并绑定客户，将形成用户习惯壁垒</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>AI建筑风险管理全球5-15亿美元(2025)，CAGR 25-30%</td></tr>
+        <tr><td>Top-down</td><td>中国建筑项目管理软件200亿 &times; 成本预测渗透率20% &times; 溢价30% = 12亿</td></tr>
+        <tr><td>Bottom-up</td><td>中建系8局&times;100项目&times;10万 + 外部央企&times;20万 = 0.8-2亿</td></tr>
+        <tr><td>类比法</td><td>STRABAG DARIA覆盖全部基建项目，成本节约数千万欧元</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：<span class="tag tag-yellow">50-100亿元可触达天花板</span>（含软件+数据+咨询服务），支撑十亿级体量公司。若叠加金融场景输出，天花板更高。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：极其分散，建筑项目管理软件有广联达/用友/Autodesk/Procore多玩家，但<strong>成本预测/工期预测是尚未形成的细分市场——当前处于"无人区"</strong>。</p>
+    <p><strong>趋势</strong>：<span class="tag tag-green">C型（分散→集中）最佳时机</span> — ML预测模型天生具有数据网络效应，先发者数据积累优势随时间递增，2-3年内将出现头部平台。</p>
+    <p><strong>策略</strong>：先发卡位 — 利用10万亿交易数据独占性，在成本预测"无人区"建立模型精度壁垒，再向项目管理全场景扩展。</p>
+    <div class="callout callout-yellow">
+      <strong>行业预判结论：</strong>🟡 5模块通过，M3稳态B推演有变数（取决于预测精度能否达到可用水平）。标记"核心假设待验证"。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：中建体系内各工程局的项目管理团队（项目经理+经营/商务/财务部门），延伸至外部建筑央企</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>项目成本月度管控</td><td>超支通常在完工50%后才暴露，纠偏空间极小</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>多项目全局风险监控</td><td>工程局同时监控几百个项目，人工逐一分析效率极低</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>工期延误预警</td><td>"发现晚了"是最大痛点，进度滞后20%才发现赶工成本翻倍</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>供应商履约风险传导</td><td>供应商异常→供货延迟→工期延误→成本超支，无联动机制</td><td class="num"><span class="tag tag-yellow">重要</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-red">
+      <strong>需求评估三角形</strong>：<span class="tag tag-red">刚性</span> 成本超支是行业最痛问题 · <span class="tag tag-red">高频</span> 每月成本分析会/每周进度检查 · <span class="tag tag-red">广泛</span> 所有建筑企业
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>广联达PMSmart告诉"你现在成本超了多少"，我们告诉<strong>"你未来会超多少，以及哪个供应商可能出问题"</strong> — 核心差异在于事后核算 vs 事前预测。
+    </div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"在项目亏钱之前，告诉你会亏在哪里。"</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>项目成本超支月度预测（ML模型）</td><td>成本核算/记账（广联达/用友在做）</td></tr>
+        <tr><td>工期延误概率预警</td><td>进度甘特图/计划编制（已有成熟产品）</td></tr>
+        <tr><td>供应商履约→项目风险联动预警</td><td>项目管理全流程SaaS（专注预测层）</td></tr>
+        <tr><td>风险因子归因分析</td><td>施工方案设计与优化</td></tr>
+        <tr><td>预测结果API输出（金融/担保）</td><td>金融放贷业务（只做风控输出）</td></tr>
+      </table>
+    </div>
+    <p><strong>MVP</strong>：选1-2个工程局历史项目数据 → XGBoost/CatBoost训练 → 对比"纯项目数据" vs "项目数据+交易数据" → 输出三类预警信号</p>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（ToB SaaS）</span> — 按企业/项目混合计费</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>中建体系内工程局 80万/年 &times; 8局</td><td>640万</td></tr>
+        <tr><td>外部建筑央企 50万/年 &times; 5家</td><td>250万</td></tr>
+        <tr><td>大型项目管理 15万/年 &times; 50个</td><td>750万</td></tr>
+        <tr><td>金融机构API 50万/年 &times; 3家</td><td>150万</td></tr>
+        <tr><td>数据服务输出 30万/年 &times; 5家</td><td>150万</td></tr>
+        <tr style="background:#fffbeb;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--amber);font-size:15px;"><strong>1,940万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:30%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">30%</span>
+    </div>
+    <p style="font-size:13px;color:var(--slate-500);margin-bottom:10px;">初期毛利偏低（数据整合成本高+定制化集成），第5年目标45%。</p>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">LTV / CAC</div>
+        <div class="lc-val amber">4.2</div>
+        <div class="lc-sub">&#x26A0;&#xFE0F; 健康（&gt;3）</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">回收期</div>
+        <div class="lc-val amber">4.8月</div>
+        <div class="lc-sub">&#x26A0;&#xFE0F; 合理</div>
+      </div>
+    </div>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式 + 数据网络效应</span> — 成本预测嵌入月度经营分析流程，用了就离不开；项目越多→模型越准→客户越多</p>
+    <div class="phase-bar">
+      <div class="phase blue"><div class="ph-time">0-9月</div><div class="ph-label">商业验证</div></div>
+      <div class="phase amber"><div class="ph-time">9-24月</div><div class="ph-label">增长早期</div></div>
+      <div class="phase green"><div class="ph-time">24-36月</div><div class="ph-label">加速增长</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>中建体系内复制（8个工程局）</td><td>5-10万</td></tr>
+        <tr><td>2</td><td>SC-01供应商风控客户交叉销售</td><td>10-15万</td></tr>
+        <tr><td>3</td><td>行业协会/主管部门推荐</td><td>15-20万</td></tr>
+        <tr><td>4</td><td>与PMSmart差异化合作（互补定位）</td><td>15-20万</td></tr>
+        <tr><td>5</td><td>金融机构联合推广</td><td>20-25万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>数据资产 &#x1F511;</strong></td><td>10万亿真实交易履约数据 — 训练成本预测模型的最佳特征输入</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>网络效应（数据侧）</strong></td><td>使用量越高→模型越准→用户越多（ML数据飞轮）</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>规模效应</strong></td><td>模型训练成本被客户数摊薄，边际成本趋零</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>转化成本</strong></td><td>嵌入月度经营分析流程，历史预测数据+模型个性化调参</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>央企身份+中建品牌提供信任背书</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：广联达 <span class="tag tag-yellow">可能但需2-3年</span>（缺交易数据）| STRABAG方式 <span class="tag tag-yellow">2-3年</span> | 新进入者 <span class="tag tag-red">几乎不可能</span></p>
+    <div class="callout callout-yellow">
+      <strong>与SC-01的关键差异：</strong>SC-01壁垒建立在"数据来源唯一性"上，PM-01壁垒建立在"数据与预测模型的组合"上 — 10万亿规模+110万供应商+已嵌入采购流程的组合是独占的。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:40%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">8/20</span>
+    </div>
+    <div class="callout callout-yellow" style="margin-bottom:10px;">
+      <strong>结论：</strong>中高风险。最致命的是#4（未做用户验证）和#20（低估数据整合复杂度）。与SC-01（5/20）的核心差异：SC-01有信融宝已上线运营作为验证基础，PM-01的核心前提（交易数据能预测成本风险）尚未技术验证。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1</td><td>目标用户是"所有人"？</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>3</td><td>需求频率极低？</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>6-7</td><td>说不清卖点/功能堆砌</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>10</td><td>算不清CAC/LTV？</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>12</td><td>没有行业基准对比？</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>14-18</td><td>人肉/引擎/护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-0">0</span>&times;5 <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td style="background:#fffbeb;">2</td><td style="background:#fffbeb;">痛点是"锦上添花"？</td><td style="background:#fffbeb;"><span class="hs hs-1">1</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 — "预测"vs"事后发现"的价值差异需验证</span></td></tr>
+        <tr><td style="background:#fffbeb;">4</td><td style="background:#fffbeb;">没有和真实用户验证？</td><td style="background:#fffbeb;"><span class="hs hs-3">3</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">中等 — 学术已验证，但中建体系内未做用户验证</span></td></tr>
+        <tr><td style="background:#fffbeb;">5</td><td style="background:#fffbeb;">和现有方案没有本质区别？</td><td style="background:#fffbeb;"><span class="hs hs-2">2</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 — 预测vs核算是本质差异，但广联达可能跟进</span></td></tr>
+        <tr><td style="background:#fffbeb;">8</td><td style="background:#fffbeb;">没有最小可用版本？</td><td style="background:#fffbeb;"><span class="hs hs-1">1</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 — MVP明确但需9个月研发</span></td></tr>
+        <tr><td style="background:#fffbeb;">11</td><td style="background:#fffbeb;">毛利极低？</td><td style="background:#fffbeb;"><span class="hs hs-2">2</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 — 初期30%偏低，第5年目标45%</span></td></tr>
+        <tr><td style="background:#fffbeb;">13</td><td style="background:#fffbeb;">只有一个获客渠道？</td><td style="background:#fffbeb;"><span class="hs hs-1">1</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 — 初期依赖体系内，有SC-01交叉销售</span></td></tr>
+        <tr><td style="background:#fffbeb;">19</td><td style="background:#fffbeb;">团队缺少必备能力？</td><td style="background:#fffbeb;"><span class="hs hs-2">2</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 — ML预测建模（XGBoost/特征工程）需补充</span></td></tr>
+        <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度？</td><td style="background:#fffbeb;"><span class="hs hs-3">3</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">中等 — 打通交易/进度/财务三维数据复杂度高</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item"><div class="ai-prio p0">P0</div><div class="ai-text"><div class="ai-label">H1：10万亿交易数据能训练出有效预测项目成本/工期风险的ML模型</div><div class="ai-meta">选取1-2个工程局历史数据回测 &nbsp;|&nbsp; 标准：AUC&ge;0.80，且融合模型比纯项目模型准确率提升&ge;15个百分点</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p0">P0</div><div class="ai-text"><div class="ai-label">H9：交易数据在法律上可以用于项目风险预测模型训练和对外输出</div><div class="ai-meta">法律合规审查 &nbsp;|&nbsp; 标准：法务出具合规意见书（与SC-01共用审查）</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p0">P0</div><div class="ai-text"><div class="ai-label">H3："项目数据+交易数据"融合模型准确率显著优于"纯项目数据"</div><div class="ai-meta">A/B对比测试 &nbsp;|&nbsp; 标准：准确率提升&ge;15个百分点</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p1">P1</div><div class="ai-text"><div class="ai-label">H2：中建各局项目部愿意为"预测"功能额外付费</div><div class="ai-meta">用户访谈+概念测试 &nbsp;|&nbsp; 标准：&ge;5/10个项目部表达购买意向</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p1">P1</div><div class="ai-text"><div class="ai-label">H4：ML预测模型在真实场景准确率&ge;75%</div><div class="ai-meta">POC期上线后持续追踪 &nbsp;|&nbsp; 标准：3个月后准确率&ge;75%</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p1">P1</div><div class="ai-text"><div class="ai-label">H7：中建体系内各局愿意试点AI成本预测</div><div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&ge;1个工程局同意提供历史数据用于POC</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p2">P2</div><div class="ai-text"><div class="ai-label">H5：第3年获取5家外部建筑央企客户</div><div class="ai-meta">增长验证 &nbsp;|&nbsp; 标准：第1年&ge;1家外部客户签约</div></div></div>
+    <div class="assumption-item"><div class="ai-prio p2">P2</div><div class="ai-text"><div class="ai-label">H6：金融机构为项目级风险预测API付费</div><div class="ai-meta">商务谈判 &nbsp;|&nbsp; 标准：&ge;1家银行表达合作意向</div></div></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观(+20%)</th><th>悲观(-20%)</th></tr>
+        <tr><td>预测模型准确率</td><td>80%</td><td>95% → 产品竞争力极强</td><td>65% → 勉强可用</td></tr>
+        <tr><td>第3年外部客户数</td><td>10家</td><td>12家 → 收入2,328万</td><td>8家 → 收入1,552万</td></tr>
+        <tr><td>年均客单价（外部）</td><td>50万</td><td>60万 → 收入+100万</td><td>40万 → 收入-100万</td></tr>
+        <tr><td>月流失率</td><td>5%</td><td>5.5% → LTV=75.8万</td><td>4.5% → LTV=92.6万</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">模型准确率</span> — 决定产品是否能从"锦上添花"变成"雪中送炭"。这是PM-01与SC-01最大的区别：SC-01的差异化不需要验证（数据独占性本身就是壁垒），而PM-01的核心价值完全取决于预测精度。</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">AI成本超支预测+工期延误SaaS</div>
+        <div class="si-desc">中建POC → 8局推广 → 外部央企 → 金融机构API</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年1,940万，第5年5,000万+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">轻量级项目风险指数API</div>
+        <div class="si-desc">不做完整SaaS，只做"供应商-项目风险联动指数"API输出给广联达/金融机构</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年10家API客户，500万/年</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>：POC后"交易数据"模型准确率无显著提升（&lt;10个百分点）| 数据合规审查不通过 | 中建各局均不愿提供项目成本数据
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">获取中建科技/云筑网内部1-2个工程局的历史项目数据，做一次最简版POC — 验证10万亿交易数据能否有效预测项目成本/工期风险。</div>
+    </div>
+    <ul class="check-list">
+      <li>联系1-2个工程局经营部，获取过去2-3年项目数据（月度成本、进度、供应商变更/索赔）</li>
+      <li>从云筑网提取对应项目的供应商履约数据（交货准时率、质量合格率、价格波动）</li>
+      <li>训练两组对照模型：A组（纯项目数据）vs B组（项目数据+交易数据）</li>
+      <li>对比两组模型在"成本超支预测"和"工期延误预测"上的准确率差异</li>
+    </ul>
+    <div class="summary-strip">
+      <span class="strip-label">成功标准</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:80%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">B组AUC&ge;0.80</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">成本：4-6周 + 1名ML工程师 + 1名数据工程师 + 0元外部采购 | 成功标准：B组AUC比A组高&ge;15个百分点</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F517;</span> 四维协同关系</h2>
+    <p>PM-01是中建发展"AI风控四维协同"的项目维核心：</p>
+    <div class="synergy-box">                中建发展AI风控四维协同
+                        │
+        ┌───────────────┼───────────────┐
+        │               │               │
+   【供应链维】      【项目维】       【劳务维】
+   SC-01 供应商风控   PM-01 项目风险    LW-04 劳务行情
+   SC-03 供应链金融   预测/工期预警     LW-02 劳动力调度
+        │               │               │
+        │   ┌───────────┤               │
+        └───┤ 供应商履约 ├───────────────┘
+            │ →项目风险  │  劳务短缺→项目风险
+            └───────────┘</div>
+    <p><strong>四维数据流</strong>：供应商经营异常→项目供货延迟预警（SC-01→PM-02）| 劳务短缺→人工成本预测（LW-04→PM-01）| 项目风险→金融贷后（PM-01→SC-03）</p>
+    <div class="callout callout-green">
+      <strong>建议推进顺序：</strong>SC-01（已就绪）→ PM-01（当前分析）→ SC-03（金融变现）→ LW-04（独占领补充）。四维共享同一数据底座，打包销售"建筑企业一体化风控解决方案"。
+    </div>
+  </div>
+
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+
+</div>
+
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>PM-01 项目风险预测 &middot; 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 &middot; 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

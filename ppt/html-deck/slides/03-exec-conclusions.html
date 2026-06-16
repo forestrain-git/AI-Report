@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P03 · 五句话结论</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 100px 36px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title { margin-bottom: 36px; }
+
+  /* 五句话结论：大号编号 + 左边色条 */
+  .conclusion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+  }
+  .conclusion-item {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 28px 32px 28px 36px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .conclusion-item:hover {
+    box-shadow: 0 4px 20px rgba(30,64,175,0.06);
+  }
+  .conclusion-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+  }
+  .conclusion-item:nth-child(1)::before { background: var(--brand-blue); }
+  .conclusion-item:nth-child(2)::before { background: #2563eb; }
+  .conclusion-item:nth-child(3)::before { background: #0ea5e9; }
+  .conclusion-item:nth-child(4)::before { background: #0891b2; }
+  .conclusion-item:nth-child(5)::before { background: #94a3b8; }
+
+  .conclusion-item .num {
+    font-family: "Inter", sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    min-width: 64px;
+    text-align: center;
+  }
+  .conclusion-item:nth-child(1) .num { color: var(--brand-blue); }
+  .conclusion-item:nth-child(2) .num { color: #2563eb; }
+  .conclusion-item:nth-child(3) .num { color: #0ea5e9; }
+  .conclusion-item:nth-child(4) .num { color: #0891b2; }
+  .conclusion-item:nth-child(5) .num { color: #94a3b8; }
+
+  .conclusion-item .text {
+    font-size: 26px;
+    color: var(--ink-title);
+    line-height: 1.5;
+    font-weight: 600;
+    flex: 1;
+  }
+  .conclusion-item .text b {
+    color: var(--brand-blue);
+  }
+  .conclusion-item .text .dim {
+    font-size: 20px;
+    color: var(--ink-dim);
+    font-weight: 400;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* 底部公式 */
+  .formula-bar {
+    text-align: center;
+    padding: 24px 0;
+    border-top: 2px solid #e2e8f0;
+    margin-top: 20px;
+  }
+  .formula-bar .formula {
+    font-family: "Inter", "Noto Sans SC", sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--ink-title);
+  }
+  .formula-bar .formula .hl { color: var(--brand-blue); }
+  .formula-bar .formula-sub {
+    font-family: "Noto Serif SC", serif;
+    font-size: 22px;
+    color: var(--ink-dim);
+    font-style: italic;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">五句话结论</div>
+
+<div class="conclusion-list">
+  <div class="conclusion-item">
+    <div class="num">01</div>
+    <div class="text">
+      <b>政策不是可选项，是必答题。</b>
+      <span class="dim">从国家意志到国资委考核，AI 指标已纳入央企负责人经营业绩评价。</span>
+    </div>
+  </div>
+
+  <div class="conclusion-item">
+    <div class="num">02</div>
+    <div class="text">
+      <b>建筑业的 1.5% 不是落后的证据，是领先者的窗口期。</b>
+      <span class="dim">当全球建筑高管 56% 计划加大 AI 投入时，先行者正在定义规则。</span>
+    </div>
+  </div>
+
+  <div class="conclusion-item">
+    <div class="num">03</div>
+    <div class="text">
+      <b>内部已验证：AI 可以把时间压缩一个数量级。</b>
+      <span class="dim">五个真实案例——从"月"到"天"到"小时"，一个人就是一个团队。</span>
+    </div>
+  </div>
+
+  <div class="conclusion-item">
+    <div class="num">04</div>
+    <div class="text">
+      <b>85% 的 AI 项目失败，但 80% 败在组织、数据、合规——而非技术。</b>
+      <span class="dim">技术已经就绪，真正的风险是"不会用"和"不敢用"。</span>
+    </div>
+  </div>
+
+  <div class="conclusion-item">
+    <div class="num">05</div>
+    <div class="text">
+      <b>30 天内可以启动，不需要等"条件成熟"。</b>
+      <span class="dim">选对场景、小步快跑、边做边学——这是央企 AI 落地的唯一正确姿势。</span>
+    </div>
+  </div>
+</div>
+
+<div class="formula-bar">
+  <div class="formula">
+    你的 <span class="hl">AI 价值</span> = 专业领域知识 × <span class="hl">AI 工具使用能力</span>
+  </div>
+  <div class="formula-sub">"最懂业务的人，现在最懂 AI。"</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">执行摘要</span>
+  <span class="page-num">3 / 50</span>
+</div>
+
+</body>
+</html>

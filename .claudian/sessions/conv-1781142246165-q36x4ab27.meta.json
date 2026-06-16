@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781142246165-q36x4ab27",
+  "providerId": "claude",
+  "title": "Fix HTML deck page navigation after click",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781142246165,
+  "updatedAt": 1781142535159,
+  "lastResponseAt": 1781142377457,
+  "sessionId": "ba807216-17bd-4e74-9c20-7ccb8d7df379",
+  "providerState": {
+    "providerSessionId": "ba807216-17bd-4e74-9c20-7ccb8d7df379"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 52155,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 51200,
+    "contextWindow": 200000,
+    "contextTokens": 103355,
+    "percentage": 52,
+    "contextWindowIsAuthoritative": true
+  }
+}

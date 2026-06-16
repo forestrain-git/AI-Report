@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>P02 · 执行摘要——四个核心数字</title>
+<link rel="stylesheet" href="../shared/tokens.css">
+<link rel="stylesheet" href="../shared/slide-system.css">
+<style>
+  body {
+    padding: 50px 100px 36px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+  }
+
+  .slide-title {
+    margin-bottom: 12px;
+  }
+  .slide-lead {
+    margin-bottom: 36px;
+    font-size: 24px;
+    color: var(--ink-dim);
+  }
+
+  /* 四张核心数字卡片 */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 36px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    transition: box-shadow 0.2s;
+  }
+  .stat-card:hover {
+    box-shadow: 0 8px 32px rgba(30,64,175,0.08);
+  }
+  .stat-card .big-num {
+    font-family: "Inter", -apple-system, sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--ink-title);
+  }
+  .stat-card .big-num.red { color: var(--red); }
+  .stat-card .big-num.green { color: var(--green); }
+  .stat-card .big-num.blue { color: var(--brand-blue); }
+  .stat-card .big-num .unit {
+    font-size: 28px;
+    font-weight: 500;
+    margin-left: 4px;
+  }
+  .stat-card .stat-label {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink-title);
+    line-height: 1.4;
+  }
+  .stat-card .stat-desc {
+    font-size: 17px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+  .stat-card .stat-source {
+    font-size: 14px;
+    color: var(--ink-subtle);
+    margin-top: auto;
+    padding-top: 12px;
+  }
+
+  /* 底部金句条 */
+  .kicker-bar {
+    text-align: center;
+    padding: 28px 40px;
+    border-top: 2px solid #dbeafe;
+    border-bottom: 2px solid #dbeafe;
+    margin-top: auto;
+  }
+  .kicker-bar .main {
+    font-family: "Noto Serif SC", serif;
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--brand-blue);
+    line-height: 1.4;
+  }
+  .kicker-bar .sub {
+    font-size: 20px;
+    color: var(--ink-dim);
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-title">执行摘要：四个你必须知道的数字</div>
+<p class="slide-lead">如果你只有 60 秒，记住这四件事</p>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="big-num red">1.5<span class="unit">%</span></div>
+    <div class="stat-label">建筑业 AI 采用率</div>
+    <div class="stat-desc">全球行业倒数第一，<br>但 56% 高管计划加大投入</div>
+    <div class="stat-source">RICS 2025 · PwC 2025</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="big-num red">85<span class="unit">%</span></div>
+    <div class="stat-label">AI 项目未达预期</div>
+    <div class="stat-desc">但 80% 失败源于<br>组织、数据、合规——非技术</div>
+    <div class="stat-source">RAND 2024 · Gartner 2024</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="big-num green">40<span class="unit">%</span></div>
+    <div class="stat-label">采购周期已缩短</div>
+    <div class="stat-desc">云筑网已验证：<br>AI 不是概念，是已兑现的成果</div>
+    <div class="stat-source">中建电商内部数据</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="big-num blue">10<span class="unit">x</span></div>
+    <div class="stat-label">时间压缩一个量级</div>
+    <div class="stat-desc">内部 5 个案例：<br>从"月"到"天"到"小时"</div>
+    <div class="stat-source">中建智能实践案例</div>
+  </div>
+</div>
+
+<div class="kicker-bar">
+  <div class="main">"这不是技术选项，是组织必答题。窗口期正在关闭。"</div>
+  <div class="sub">下面的 45 分钟，我们将告诉你：为什么急、为什么能、我们做到了什么、以及下一步怎么干。</div>
+</div>
+
+<div class="page-footer">
+  <span class="part-label">执行摘要</span>
+  <span class="page-num">2 / 50</span>
+</div>
+
+</body>
+</html>

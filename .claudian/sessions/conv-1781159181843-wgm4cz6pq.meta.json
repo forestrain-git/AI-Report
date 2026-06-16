@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781159181843-wgm4cz6pq",
+  "providerId": "claude",
+  "title": "复刻幻灯片 #53 样式",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781159181843,
+  "updatedAt": 1781167810011,
+  "lastResponseAt": 1781160169428,
+  "sessionId": "ec40c9ea-10db-4e38-82b0-9454759dbaa5",
+  "providerState": {
+    "providerSessionId": "ec40c9ea-10db-4e38-82b0-9454759dbaa5"
+  },
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 27,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 88192,
+    "contextWindow": 1000000,
+    "contextTokens": 88219,
+    "percentage": 9
+  }
+}

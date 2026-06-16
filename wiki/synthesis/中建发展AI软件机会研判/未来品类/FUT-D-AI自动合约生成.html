@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUT-D AI自动合约生成 · 成本归零重构法分析</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --text-muted: #888;
+    --border: #e8e8e4;
+    --accent: #d93025;       /* 红 — 立即储备 */
+    --accent-2: #e8a838;     /* 琥珀 — 触发条件 */
+    --accent-3: #1a73e8;     /* 蓝 — 数据/技术 */
+    --accent-4: #188038;     /* 绿 — 价值 */
+    --surface-warn: #fef7e0;
+    --surface-info: #e8f0fe;
+    --tag-bg: #f0f0ec;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* Header */
+  .header {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px 48px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .header .eyebrow {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .header .subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  /* Score Row */
+  .score-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .score-card {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .score-card .label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .score-card .value {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .score-card .max {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .score-total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 16px;
+    background: #fef2f2;
+    border-radius: 8px;
+    border: 1px solid #fecaca;
+  }
+
+  .score-total .total-label {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .score-total .total-value {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  .score-total .total-matrix {
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 700;
+    padding: 4px 12px;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #fecaca;
+  }
+
+  /* Tags Row */
+  .tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: var(--tag-bg);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .tag.accent { background: #fef2f2; color: var(--accent); }
+
+  /* Sections */
+  .section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 48px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 28px 0 12px;
+    color: #333;
+  }
+
+  .section h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 20px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .section p { margin-bottom: 12px; color: #444; }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  th {
+    background: var(--bg);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  /* Blockquote */
+  blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 12px 20px;
+    margin: 16px 0;
+    background: #fef9f9;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+    color: #555;
+  }
+
+  blockquote.info { border-left-color: var(--accent-3); background: var(--surface-info); }
+  blockquote.warn { border-left-color: var(--accent-2); background: var(--surface-warn); }
+  blockquote.green { border-left-color: var(--accent-4); background: #f0faf2; }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge.red { background: #fef2f2; color: var(--accent); }
+  .badge.amber { background: var(--surface-warn); color: #b06000; }
+  .badge.blue { background: var(--surface-info); color: var(--accent-3); }
+  .badge.green { background: #f0faf2; color: var(--accent-4); }
+
+  /* Code-like */
+  .flow {
+    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+    font-size: 13px;
+    background: #f8f8f6;
+    padding: 16px 20px;
+    border-radius: 8px;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.6;
+    margin: 12px 0;
+    border: 1px solid var(--border);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 16px; }
+    .header, .section { padding: 24px 20px; }
+    .header h1 { font-size: 24px; }
+    .score-row { grid-template-columns: repeat(2, 1fr); }
+    .score-total { flex-wrap: wrap; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; }
+    .section { box-shadow: none; break-inside: avoid; }
+  }
+
+  /* Step indicators */
+  .step-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .step-label.s1 { background: #e8f0fe; color: #1a73e8; }
+  .step-label.s2 { background: #fce8e6; color: #d93025; }
+  .step-label.s3 { background: #fef7e0; color: #b06000; }
+  .step-label.s4 { background: #e6f4ea; color: #188038; }
+  .step-label.s5 { background: #f3e8fd; color: #7627b2; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .mini-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .mini-card .mini-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .mini-card .mini-value {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  .footer-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 40px;
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ====== HEADER ====== -->
+<div class="header">
+  <div class="eyebrow">未来品类 · 成本归零重构法分析</div>
+  <h1>AI自动合约生成</h1>
+  <div class="subtitle">输入"钢结构分包、工期6个月、付款节点3个、风险偏好保守" → 输出完整合同 + 风险热力图 + 谈判要点清单</div>
+
+  <div class="tags">
+    <span class="tag accent">FUT-D</span>
+    <span class="tag">判断民主化</span>
+    <span class="tag">模式提取归零</span>
+    <span class="tag">法律科技</span>
+    <span class="tag">合同AI</span>
+    <span class="tag">IS-A04垫脚石</span>
+  </div>
+
+  <div class="score-row">
+    <div class="score-card">
+      <div class="label">归零强度</div>
+      <div class="value" style="color:var(--accent)">22</div>
+      <div class="max">/ 30</div>
+    </div>
+    <div class="score-card">
+      <div class="label">解锁价值</div>
+      <div class="value" style="color:var(--accent-4)">22</div>
+      <div class="max">/ 30</div>
+    </div>
+    <div class="score-card">
+      <div class="label">技术就绪度</div>
+      <div class="value" style="color:var(--accent-3)">22</div>
+      <div class="max">/ 25</div>
+    </div>
+    <div class="score-card">
+      <div class="label">触发确定性</div>
+      <div class="value" style="color:var(--accent-2)">14</div>
+      <div class="max">/ 15</div>
+    </div>
+  </div>
+
+  <div class="score-total">
+    <span class="total-label">四维总分</span>
+    <span class="total-value">80</span>
+    <span class="total-matrix">🔴 立即储备</span>
+  </div>
+</div>
+
+<!-- ====== SECTION 1: 五步推导 ====== -->
+<div class="section">
+  <h2>一、五步推导</h2>
+
+  <h3><span class="step-label s1">Step 1</span> 扫描 — 找到"因为成本高所以不得不这样"的结构</h3>
+  <p>当前大型工程合同从需求到定稿需要3-6周，高度依赖法务人员逐条起草、审查、修改。被成本锁死的五个结构：</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>结构</th><th>为什么"不得不这样"</th><th>成本根因</th></tr>
+    <tr><td><strong>模板化而非定制化</strong></td><td>每份合同从零起草成本太高，必须复用模板</td><td>专业法律判断太贵</td></tr>
+    <tr><td><strong>审查而非创作</strong></td><td>法务精力花在"检查别人写的"而非"自己设计最优合同"</td><td>起草时间成本远高于审查</td></tr>
+    <tr><td><strong>关键合同才配律师</strong></td><td>只有大额EPC合同才配资深法务，小合同用模板凑合</td><td>资深法务供给有限</td></tr>
+    <tr><td><strong>知识锁在个人</strong></td><td>每个法务自己积累"什么条款在什么情况下有效"的经验</td><td>跨人提炼成本高</td></tr>
+    <tr><td><strong>谈判靠经验驱动</strong></td><td>底线在哪、该让步什么——全凭个人直觉</td><td>系统性分析成本太高</td></tr>
+  </table>
+  </div>
+
+  <blockquote>核心洞察：IS-A04（合同审查）解决的只是漏斗最末端的"检查"环节。真正被锁死的是漏斗入口——创作环节本身。AI让法律判断成本趋零后，整个漏斗应该倒过来：AI从零起草 → 人工终审。</blockquote>
+
+  <h3><span class="step-label s2">Step 2</span> 锁定 — 归零力识别</h3>
+  <p><strong>主导归零力：<span class="badge red">④判断民主化</span></strong> — 合同起草需要"懂工程+懂法律+懂商务"三重判断力，AI让这种复合判断的成本趋零。</p>
+  <p><strong>辅助归零力：<span class="badge amber">③模式提取归零</span></strong> — AI从1000+历史合同执行结果中提取"什么条款导致纠纷最多"等模式。</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>判断类型</th><th>当前成本</th><th>AI之后</th></tr>
+    <tr><td>"钢结构分包用固定总价还是成本加酬金？"</td><td>资深法务10年经验积累</td><td>AI检索全集团历史条款+执行结果，秒级推荐</td></tr>
+    <tr><td>"付款节点3个，按什么比例？"</td><td>人工经验判断，靠个人习惯</td><td>AI分析现金流模型，推荐最优结构</td></tr>
+    <tr><td>"风险保守时质保金该定多少？要不要背靠背？"</td><td>法务逐条翻类似合同对比</td><td>AI生成3套方案+风险收益对比</td></tr>
+    <tr><td>"在湖北还是北京仲裁对这类条款更有利？"</td><td>必须咨询跨地域经验律师</td><td>AI索引各地仲裁案例判决倾向</td></tr>
+  </table>
+  </div>
+
+  <h3><span class="step-label s3">Step 3</span> 归零 — 假设判断成本被AI消除</h3>
+  <p><strong>核心假设</strong>：AI对建筑行业合同条款的法律判断能力，达到"可以独立生成初稿、由资深法务终审"的水平。</p>
+  <p>当前技术验证：通用LLM已能生成合格法律合同文本；Harvey AI/中国法研已证明AI理解复杂法律条款。欠缺的是<strong>建筑行业垂直知识</strong>——EPC/FIDIC条款体系、工程变更计价规则、各类分包合同行业惯例。</p>
+
+  <blockquote class="info">归零不是"AI代替律师"，而是"AI让每个项目都能获得顶级律师级别的合同初稿，律师只做战略判断和例外处理"。</blockquote>
+
+  <h3><span class="step-label s4">Step 4</span> 推导 — 设计"没有约束"的新结构</h3>
+
+  <p><strong>新品类定义</strong>：</p>
+  <blockquote class="green">AI自动合约生成系统 — 输入项目参数（类型/规模/工期/付款结构/风险偏好），输出完整合同 + 风险热力图 + 谈判要点清单 + 备选条款方案。从"审别人的合同"进化到"从零创作最优合同"。</blockquote>
+
+  <div class="flow">
+输入层                          生成层                           输出层
+├─ 项目参数（类型/规模/工期）    ├─ 条款推理引擎                 ├─ 完整合同文本
+├─ 甲方/乙方角色                ├─ 风险偏好适配器               ├─ 风险热力图
+├─ 付款结构偏好                  ├─ 历史执行数据关联分析          ├─ 谈判要点清单
+├─ 风险偏好（保守/平衡/进取）    ├─ 行业惯例匹配器               ├─ 替代条款方案
+├─ 特殊要求（质保金/背靠背等）   ├─ 合规检查器（46号令等）       └─ 关键条款注释
+└─ 历史同类合同偏好              └─ 谈判策略生成器
+  </div>
+
+  <p><strong>与IS-A04的关系</strong>：IS-A04是FUT-D的必要垫脚石。先积累合同审查知识库和行业规则，再向上游延伸到"写合同"。两条路径共享同一个建筑行业合同知识引擎。</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th></th><th>IS-A04 合同风险识别（现有）</th><th>FUT-D AI自动合约生成（未来）</th></tr>
+    <tr><td>输入</td><td>已有合同文本</td><td>项目需求参数</td></tr>
+    <tr><td>输出</td><td>风险标注 + 修改建议</td><td>全新合同 + 风险预判 + 谈判策略</td></tr>
+    <tr><td>方向</td><td>从后往前看（审查已写好的）</td><td>从前往后写（从需求创作）</td></tr>
+    <tr><td>状态</td><td>辅助审查工具</td><td>创作+审查一体化</td></tr>
+  </table>
+  </div>
+
+  <h3><span class="step-label s5">Step 5</span> 验证 — 三步追问</h3>
+
+  <h4>a) 谁的利益被消解？</h4>
+  <div class="card-grid">
+    <div class="mini-card">
+      <div class="mini-title">外部律所（基础合同起草业务）</div>
+      <div class="mini-value" style="color:var(--accent-2); font-size:18px;">🟡 中等反抗</div>
+      <p style="font-size:13px;color:#888;margin-top:8px;">转向高复杂度合同+战略顾问；这是"升级"而非"消灭"</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">企业初级法务</div>
+      <div class="mini-value" style="color:var(--accent-2); font-size:18px;">🟡 中等反抗</div>
+      <p style="font-size:13px;color:#888;margin-top:8px;">角色从"写手"变为"AI训练师+终审官"</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">资深法务/总法</div>
+      <div class="mini-value" style="color:var(--accent-4); font-size:18px;">🟢 低反抗</div>
+      <p style="font-size:13px;color:#888;margin-top:8px;">AI增强而非替代；他们是推动者</p>
+    </div>
+  </div>
+
+  <h4>b) 谁是新受益者？</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>受益者</th><th>当前痛点</th><th>被压制的需求</th></tr>
+    <tr><td><strong>项目经理</strong></td><td>签合同等法务排期2-5天，工期不等人</td><td>"我要能自己生成合同初稿就好了"（不敢说，怕越权）</td></tr>
+    <tr><td><strong>中小企业分包商</strong></td><td>请不起律师，只能接受甲方格式合同</td><td>"我也想要公平的合同条款保护"（没筹码和能力）</td></tr>
+    <tr><td><strong>法务总监</strong></td><td>团队80%时间花在重复性起草</td><td>"我想让团队做更有价值的战略判断"</td></tr>
+    <tr><td><strong>集团管理层</strong></td><td>不知道全集团合同的"最佳实践"是什么</td><td>"我想知道什么条款组合能最小化纠纷"</td></tr>
+  </table>
+  </div>
+
+  <h4>c) 时间窗口？</h4>
+  <div class="flow">
+2024-2025 │ GPT-4/Claude 通用法律文本生成已验证（Harvey AI $100M+）
+2025-2026 │ 中国法研"星法"、幂律智能建成法律知识库（审查成熟）
+2026-2027 │ 建筑行业合同知识库从零建设（EPC/FIDIC/分包条款结构化）★
+2027-2028 │ AI辅助起草在各央企法务部试点（从"审"到"写"的跨越）
+2028-2030 │ 建筑行业AI合约生成"信任墙"被突破，头部率先采用
+2030+    │ "AI起草+人工终审"成为行业常态
+  </div>
+</div>
+
+<!-- ====== SECTION 2: 穿越对标 ====== -->
+<div class="section">
+  <h2>二、穿越对标 — 历史上类似的"判断民主化"事件</h2>
+
+  <h3>对标案例1：法律检索 — Westlaw（1980s → 2020s）</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>维度</th><th>法律检索革命</th><th>AI合约生成</th></tr>
+    <tr><td>归零成本</td><td>图书馆翻判例 → 秒级搜索</td><td>从零起草 → 秒级生成初稿</td></tr>
+    <tr><td>三阶段</td><td>电子数据库 → 自然语言搜索 → AI写法律意见书</td><td>模板库 → AI辅助审查(IS-A04) → AI从零起草(FUT-D)</td></tr>
+    <tr><td>关键转折</td><td>自然语言搜索成熟后3年颠覆行业</td><td>建筑知识结构化后3-5年颠覆合同起草</td></tr>
+    <tr><td>先行者结果</td><td>Westlaw/LexisNexis持续领先（先发+数据网络效应）</td><td>需同时拥有AI+建筑数据+客户信任</td></tr>
+  </table>
+  </div>
+
+  <h3>对标案例2：税务申报 — TurboTax（1984 → 至今）</h3>
+  <p>TurboTax用了30年覆盖60%+美国个人报税市场。<strong>关键启示</strong>：用户愿意接受"机器做80%、人确认20%"的模式；关键是信任建设——TurboTax靠"准确度保证"消解了用户顾虑。AI合约生成需要类似的准确度背书机制。</p>
+
+  <h3>对标案例3：CAD颠覆手绘蓝图（1982 → 2000s）</h3>
+  <p>AutoCAD 50%渗透率用了15年。关键启示：CAD最早被"最不抗拒的细分市场"采纳（年轻设计师+新项目）。AI合约生成应优先从<strong>"标准化程度高+法务供给不足"</strong>的场景切入——推荐采购订单合同 + 标准分包合同。</p>
+
+  <div class="card-grid">
+    <div class="mini-card">
+      <div class="mini-title">结论 1</div>
+      <p style="font-size:14px;">"判断民主化"创新都经历"辅助→建议→独立创作"三阶段</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">结论 2</div>
+      <p style="font-size:14px;">先行者优势取决于数据壁垒——Westlaw、TurboTax第一名都靠数据飞轮</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">结论 3</div>
+      <p style="font-size:14px;">信任建设周期≈5-7年——从"能用吗"到"不用就是落伍"</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">结论 4</div>
+      <p style="font-size:14px;">最大敌人不是技术，是习惯——CAD被抗拒10年但最终全面替代</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 3: 被解锁价值 ====== -->
+<div class="section">
+  <h2>三、被解锁价值测算 — 替代传统市场规模</h2>
+
+  <h3>第一笔：直接法律人力成本</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>合同类型</th><th>当前起草时间</th><th>人工成本</th><th>中建年合同量</th><th>年总成本</th></tr>
+    <tr><td>EPC总包合同</td><td>40-80h</td><td>4-8万/份</td><td>~500份</td><td>2000-4000万</td></tr>
+    <tr><td>大中型分包合同</td><td>10-30h</td><td>1-3万/份</td><td>~5000份</td><td>5000万-1.5亿</td></tr>
+    <tr><td>小型分包/采购合同</td><td>2-5h</td><td>1000-5000元/份</td><td>~50000份</td><td>5000万-2.5亿</td></tr>
+    <tr><td>租赁/劳务合同</td><td>1-3h</td><td>500-2000元/份</td><td>~100000份</td><td>5000万-2亿</td></tr>
+    <tr style="font-weight:700;background:#fef9f9;"><td>中建体系合计</td><td></td><td></td><td></td><td>1.7亿-6.4亿/年</td></tr>
+    <tr style="font-weight:700;background:#fef9f9;"><td>全行业（建筑业）</td><td></td><td></td><td></td><td>80亿-300亿/年</td></tr>
+  </table>
+  </div>
+
+  <h3>第二笔：合同质量损失</h3>
+  <div class="card-grid">
+    <div class="mini-card">
+      <div class="mini-title">合同纠纷诉讼</div>
+      <div class="mini-value" style="color:var(--accent);">~2000亿/年</div>
+      <p style="font-size:12px;color:#888;">全行业涉案金额（裁判文书网）</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">条款不清导致的变更/索赔</div>
+      <div class="mini-value" style="color:var(--accent);">~500亿/年</div>
+      <p style="font-size:12px;color:#888;">行业估算</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">不利条款被动风险</div>
+      <div class="mini-value" style="color:var(--accent);">~300亿/年</div>
+      <p style="font-size:12px;color:#888;">分包商被动承担</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">合同质量损失合计</div>
+      <div class="mini-value" style="color:var(--accent-4);">~2800亿/年</div>
+      <p style="font-size:12px;color:#888;">减少20%即释放560亿</p>
+    </div>
+  </div>
+
+  <h3>汇总</h3>
+  <div class="card-grid">
+    <div class="mini-card">
+      <div class="mini-title">中建体系 · 年可释放价值</div>
+      <div class="mini-value" style="color:var(--accent-4);">~16-20亿</div>
+      <p style="font-size:12px;color:#888;">直接人力1.7-6.4亿 + 质量损失14亿</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">全行业 · 年可释放价值</div>
+      <div class="mini-value" style="color:var(--accent-4);">~640-860亿</div>
+      <p style="font-size:12px;color:#888;">直接人力80-300亿 + 质量损失560亿</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">2030年 · 预计实际释放</div>
+      <div class="mini-value" style="color:var(--accent-3);">~64-86亿</div>
+      <p style="font-size:12px;color:#888;">按10%渗透率估算</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">合同周转效率提升</div>
+      <div class="mini-value" style="color:var(--accent-3);">~50%</div>
+      <p style="font-size:12px;color:#888;">3-6周 → 1-3周</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 4: 三个核心输出 ====== -->
+<div class="section">
+  <h2>四、三个核心输出</h2>
+
+  <h3>Q1：触发条件</h3>
+  <p>必须同时满足的<strong>"双扳机"</strong>：</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>扳机</th><th>触发信号</th><th>可观测指标</th><th>状态</th></tr>
+    <tr>
+      <td><span class="badge red">🔴 扳机A：知识就绪</span></td>
+      <td>建筑行业合同知识库覆盖≥80%常见合同类型</td>
+      <td>IS-A04知识库建设进度+覆盖率数据</td>
+      <td>⏳ 尚未开始</td>
+    </tr>
+    <tr>
+      <td><span class="badge amber">🟡 扳机B：信任跨越</span></td>
+      <td>集团法务部AI合同审查采纳率≥70%，且主动提出"帮我们写"</td>
+      <td>IS-A04用户数+法务满意度+NPS</td>
+      <td>⏳ 2年后可观测</td>
+    </tr>
+    <tr>
+      <td><span class="badge amber">🟢 扳机C：竞争信号</span></td>
+      <td>幂律智能/中国法研推出"合同起草"且获≥2家央企签约</td>
+      <td>竞品产品更新+客户公开案例</td>
+      <td>⏳ 预计2027-2028</td>
+    </tr>
+    <tr>
+      <td><span class="badge blue">🟢 扳机D：政策催化</span></td>
+      <td>国资委/住建部明确鼓励AI辅助法律文书生成</td>
+      <td>政策文件或指导性意见</td>
+      <td>⏳ 尚未发生</td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="flow">
+A+B 同时满足 → 🔴 正式立项启动产品开发
+C 单独触发    → 🟡 加速储备，开始MVP验证（竞争防御）
+D 单独触发    → 🟡 政策窗口打开，快速响应
+  </div>
+
+  <h3>Q2：储备动作（今天可以做、低成本不后悔）</h3>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>优先级</th><th>储备动作</th><th>投入</th><th>为什么"不后悔"</th></tr>
+    <tr>
+      <td><span class="badge red">P0</span></td>
+      <td><strong>建设建筑行业合同结构化知识库</strong><br>将中建体系内历史合同的条款、风险点、执行结果结构化标注</td>
+      <td>2-3人×6月<br>100-150万</td>
+      <td>即使FUT-D不启动，IS-A04也必须有这个知识库</td>
+    </tr>
+    <tr>
+      <td><span class="badge red">P0</span></td>
+      <td><strong>IS-A04推进中探测"生成"需求</strong><br>每次用户访谈加入"输入需求出合同初稿，你会用吗？"</td>
+      <td>0额外成本</td>
+      <td>嵌入已有访谈，无额外成本</td>
+    </tr>
+    <tr>
+      <td><span class="badge amber">P1</span></td>
+      <td><strong>合同条款"因果图谱"研究</strong><br>"条款-场景-执行结果"关系数据库</td>
+      <td>1人×3月<br>30万</td>
+      <td>即使不独立产品化，也能大幅提升合同审查深度</td>
+    </tr>
+    <tr>
+      <td><span class="badge amber">P1</span></td>
+      <td><strong>法律科技圈建立存在感</strong><br>参加峰会、与Harvey AI/中国法研建立技术交流</td>
+      <td>0-5万/年</td>
+      <td>第一时间感知竞品动向</td>
+    </tr>
+    <tr>
+      <td><span class="badge blue">P2</span></td>
+      <td><strong>采购订单合同自动生成POC</strong><br>最简合同类型的端到端验证</td>
+      <td>1人×2月<br>10万</td>
+      <td>POC成本极低，失败浪费少</td>
+    </tr>
+  </table>
+  </div>
+
+  <blockquote class="info">核心策略：IS-A04的每一次推进，都是在为FUT-D铺路。不需要单独为FUT-D立项——而是确保IS-A04的产品路线图中包含"知识库结构化"和"用户需求探测"这两个可延展的设计。</blockquote>
+
+  <h3>Q3：先行者风险</h3>
+  <p><strong>重要前提</strong>：FUT-D的先行者必须是同时拥有AI能力+建筑行业数据+法务客户信任的组织。潜在先行者只有三类：</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>先行者类型</th><th>代表</th><th>优势</th><th>中建失去什么</th></tr>
+    <tr>
+      <td><strong>法律AI公司向下沉</strong></td>
+      <td>幂律智能/中国法研</td>
+      <td>AI强+法务渠道广+已有央企客户</td>
+      <td>数据被外部垄断 / 客户被锁定 / 从定义者沦为购买者</td>
+    </tr>
+    <tr>
+      <td><strong>建筑央企自研</strong></td>
+      <td>中铁/中交/中铁建</td>
+      <td>行业数据+客户关系+资金</td>
+      <td>品牌红利丧失 / 竞争压力 / 战略尴尬</td>
+    </tr>
+    <tr>
+      <td><strong>互联网大厂+律所</strong></td>
+      <td>百度/字节+大成/金杜</td>
+      <td>AI底座+法律专业+资金</td>
+      <td>平台级碾压 / 行业被泛化成子品类</td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="card-grid">
+    <div class="mini-card">
+      <div class="mini-title">数据主权损失</div>
+      <div class="mini-value" style="color:var(--accent); font-size:22px;">永久</div>
+      <p style="font-size:12px;color:#888;">百万份合同数据被外部标注=永久丧失壁垒</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">品牌错失损失</div>
+      <div class="mini-value" style="color:var(--accent-2); font-size:22px;">3-5年先发优势</div>
+      <p style="font-size:12px;color:#888;">估值溢价30-50%</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">战略被动损失</div>
+      <div class="mini-value" style="color:var(--accent-2); font-size:22px;">2-3年可追赶</div>
+      <p style="font-size:12px;color:#888;">但代价远高于主动布局</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 5: 行动路径 ====== -->
+<div class="section">
+  <h2>五、储备优先级与行动路径</h2>
+
+  <h3>矩阵定位：<span class="badge red">🔴 立即储备</span></h3>
+
+  <div class="flow">
+              技术就绪度 → 高(20-25)    中(12-19)      低(<12)
+归零强度 ↓
+大(25-30)              🔴 立即储备     🟡 技术跟踪     🟢 方向观察
+中(15-24)              🔴 立即储备     🟢 方向观察     ⚪ 暂不投入
+小(<15)               🟢 方向观察     ⚪ 暂不投入     ⚪ 暂不投入
+
+                                              ★ FUT-D 在这里 (22, 22)
+  </div>
+
+  <h3>三阶段路径</h3>
+  <div class="flow">
+Phase 1: 知识储备（2026-2027）          Phase 2: 能力验证（2027-2028）         Phase 3: 产品化（2028+）
+┌──────────────────────────┐   ┌──────────────────────────┐   ┌──────────────────────────┐
+│ IS-A04 合同审查推进       │──▶│ AI起草辅助模式上线         │──▶│ AI自动合约生成独立产品     │
+│ ├─ 建筑合同知识库建设     │   │ ├─ 法务输入参数→AI出初稿   │   │ ├─ 5类合同全覆盖           │
+│ ├─ 条款风险标注数据积累   │   │ ├─ 法务修改→AI学习         │   │ ├─ 谈判策略模拟引擎         │
+│ └─ 用户"写合同"需求探测   │   │ └─ 内部试点+信任积累      │   │ └─ 外部建筑央企扩展         │
+└──────────────────────────┘   └──────────────────────────┘   └──────────────────────────┘
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>阶段</th><th>关键动作</th><th>扳机判断</th><th>投入</th></tr>
+    <tr><td><strong>Phase 1</strong><br>2026-2027</td><td>① 合同知识库结构化<br>② 条款因果图谱POC<br>③ 采购合同自动生成POC</td><td>IS-A04推进中持续观测</td><td>150-200万</td></tr>
+    <tr><td><strong>Phase 2</strong><br>2027-2028</td><td>④ AI起草辅助功能开发<br>⑤ 内部试点+迭代</td><td>IS-A04法务采纳率≥50%</td><td>300-500万</td></tr>
+    <tr><td><strong>Phase 3</strong><br>2028+</td><td>⑥ 独立产品立项<br>⑦ 5类合同全覆盖<br>⑧ 外部央企扩展</td><td>法务主动要求"生成"功能</td><td>800-1500万</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- ====== SECTION 6: 一纸速览 ====== -->
+<div class="section">
+  <h2>六、一纸速览</h2>
+
+  <div class="card-grid">
+    <div class="mini-card">
+      <div class="mini-title">品类</div>
+      <p style="font-size:18px;font-weight:700;">AI自动合约生成（FUT-D）</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">矩阵</div>
+      <p style="font-size:18px;font-weight:700;color:var(--accent);">🔴 立即储备</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">四维总分</div>
+      <p style="font-size:28px;font-weight:800;color:var(--accent);">80</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">垫脚石</div>
+      <p style="font-size:18px;font-weight:700;">IS-A04 合同风险识别</p>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="mini-card">
+      <div class="mini-title">归零力</div>
+      <p>④判断民主化 + ③模式提取</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">解锁价值（全行业）</div>
+      <p style="font-size:22px;font-weight:800;color:var(--accent-4);">640-860亿/年</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">触发条件</div>
+      <p style="font-size:13px;">🔴 知识库覆盖≥80%<br>🟡 法务采纳率≥70%</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-title">当前最小行动</div>
+      <p style="font-size:13px;">采购订单合同POC<br>10万 / 2个月</p>
+    </div>
+  </div>
+
+  <blockquote class="warn">最大风险：不是AI不会写合同，而是法务不敢用AI写的合同。这是信任问题，不是技术问题。解决路径是"辅助→建议→独立"的渐进式信任建设——这正是IS-A04正在做的事。</blockquote>
+</div>
+
+<div class="footer-note">
+  前瞻性分析 | 基于"方法论-成本归零重构法 v1.0" | 2026-06-15 | 不构成当前行动建议<br>
+  关联：<a href="FUT-D-AI自动合约生成.md" style="color:inherit;">MD版本</a> | 相关：IS-A04合同风险识别 | 方法论-成本归零重构法 | 行动清单-未来品类五步法
+</div>
+
+</div>
+</body>
+</html>

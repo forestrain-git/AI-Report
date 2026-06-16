@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781150148674-ln5dhgbr3",
+  "providerId": "claude",
+  "title": "查看 HTML PPT 并反向修改逐页提示词",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781150148674,
+  "updatedAt": 1781156546907,
+  "lastResponseAt": 1781150624341,
+  "sessionId": "89b6b124-5f9a-4e5a-b445-5b7e072c576f",
+  "providerState": {
+    "providerSessionId": "89b6b124-5f9a-4e5a-b445-5b7e072c576f"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 101703,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 101632,
+    "contextWindow": 200000,
+    "contextTokens": 203335,
+    "percentage": 100,
+    "contextWindowIsAuthoritative": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781142157877-hqxvsht1u",
+  "providerId": "claude",
+  "title": "修复点击导致左右翻页失效",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781142157877,
+  "updatedAt": 1781142198984,
+  "lastResponseAt": 1781142192288,
+  "sessionId": "645db9e0-1cdc-47d7-8dfb-4b95a7c867d9",
+  "providerState": {
+    "providerSessionId": "645db9e0-1cdc-47d7-8dfb-4b95a7c867d9"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 50302,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 50176,
+    "contextWindow": 200000,
+    "contextTokens": 100478,
+    "percentage": 50
+  }
+}

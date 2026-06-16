@@ -1,0 +1,334 @@
+{
+  "id": "conv-1781091116135-01hlposdb",
+  "providerId": "claude",
+  "title": "Find and reorganize duplicate cases",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781091116135,
+  "updatedAt": 1781093180856,
+  "lastResponseAt": 1781093100498,
+  "sessionId": "a1f03113-f96f-43db-a632-c77c7e322a8d",
+  "providerState": {
+    "providerSessionId": "a1f03113-f96f-43db-a632-c77c7e322a8d",
+    "subagentData": {
+      "call_00_W84DJbXxMhCrMTSFaEJ59735": {
+        "id": "call_00_W84DJbXxMhCrMTSFaEJ59735",
+        "description": "Search for Liu Li and Huanneng references",
+        "prompt": "Search the entire vault at D:\\Projects\\AI-Report for all files that mention \"刘力\" or \"环能\" or \"财务辅助\" or \"康养\" or \"智慧养老\". Use Grep to find all occurrences. Then Read each file that has matches to understand the context. Report back:\n1. Every file and line that mentions these terms\n2. Whether the file describes the SAME story or a DIFFERENT one\n3. Any contradictions you find between files\n\nFocus on finding wiki pages, synthesis pages, and other notes that might also contain the \"环能财务评审\" or \"中建方程康养\" stories.",
+        "status": "completed",
+        "toolCalls": [
+          {
+            "id": "call_00_tQB0TYkJhPgBT439G5Zv6977",
+            "name": "Grep",
+            "input": {
+              "pattern": "刘力",
+              "path": "D:\\Projects\\AI-Report",
+              "output_mode": "content",
+              "-n": true
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "index.md:174:- **2026-06-09**: 新增 PPT 大纲 v4「董事长版」（53 页 75 分钟）。叙事升级：个人→组织→时代→行动。新增组织转型实践、最好的时代/最坏的时代、行动框架，融入刘力/黄天赐/吴迪/王佳男等同事成果\n.claudian\\sessions\\conv-1781045795296-eso9zcq3j.meta.json:240:[Omitted long matching line]\n.claudian\\sessions\\conv-1781045795296-eso9zcq3j.meta.json:260:[Omitted long matching line]\n.claudian\\sessions\\conv-1781045795296-eso9zcq3j.meta.json:264:[Omitted long matching line]\nppt\\assets\\国企AI宣讲-中高层完整版.html:912:      <p style=\"margin-top:8px\">刘力用AI搭建中建方程社区运营大系统demo</p>\nppt\\assets\\国企AI宣讲-中高层完整版.html:1222:        <tr><td><strong>智慧养老平台</strong></td><td>刘力一人全栈交付</td><td><span class=\"chip chip-green\">可演示</span></td></tr>\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:148:[Omitted long matching line]\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:337:[Omitted long matching line]\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:778:[Omitted long matching line]\n.claudian\\sessions\\conv-1781058848740-myjn9zo6n.meta.json:109:[Omitted long matching line]\n.claudian\\sessions\\conv-1781068976941-b27ccgdit.meta.json:27:[Omitted long matching line]\n.claudian\\sessions\\conv-1781068976941-b27ccgdit.meta.json:185:[Omitted long matching line]\n.claudian\\sessions\\conv-1781068976941-b27ccgdit.meta.json:209:[Omitted long matching line]\n.claudian\\sessions\\conv-1781068976941-b27ccgdit.meta.json:276:[Omitted long matching line]\nppt\\outlines\\国企AI宣讲-中高层完整版.md:182:- **谁**：刘力（研发人员）\nppt\\outlines\\国企AI宣讲-中高层完整版.md:433:  - 刘力：智慧养老平台——一个人全栈交付，已部署可演示\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:168:| | 黄天赐 | 王桂平 | 刘力 | 王佳男 | 吴迪 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:180:> - [ ] P10 刘力：确认 VPN/内网已连接，浏览器打开 [223.71.143.154:39001](http://223.71.143.154:39001/)\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:218:#### P10：案例三 · 刘力——产品经理出前端，1 周说服政府\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:224:- **谁**：刘力（产品经理，**不会写代码**，1人）\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:271:| 维度 | 黄天赐 | 王桂平 | 刘力 | 王佳男 | 吴迪 | 规律 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:283:3. **角色边界被 AI 融化了**：王桂平（后端）补前端，黄天赐（前端）补后端，刘力（产品经理）补开发，王佳男（商务经理）补全部技术。**每个人原来都缺某个角色能力，AI 把缺口填上了。**\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1007:| 刘力 | **产品经理** | 1 周出 29 页养老平台前端，拿去说服政府 | 替代了\"开发工程师\" | 3+ 人月 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1011:**核心逻辑**：四个人原来都缺某个角色能力——王桂平不会前端，刘力不会写代码，黄天赐不擅长后端，王佳男什么都不懂——**AI 把每个人的能力缺口填上了**。结果：一个人 = 一个团队。\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1104:| 迭代增效 | 6-12月 | 场景扩容 | 正向ROI成型 | 刘力智慧养老、王佳男商务平台——扩展场景边界 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1192:│  环能评审：刘力免费做。环能总经理：\"太好了，太快了\"    │\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1210:4. **环能口碑**：刘力给环能免费做的财务辅助评审系统，总经理看了说\"太好了，太快了\"。现在后续需求还在接着做。免费是敲门砖——做得好，对方自然想继续。第一单不赚钱，第二单开始赚钱。\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1233:  | 财务辅助评审 | 中建环能（刘力） | 总经理高度认可，后续合作持续中 |\nppt\\outlines\\AI-01c-综合版-v5-统一版.md:231:- **刘力**：智慧养老平台——一个人全栈交付，已部署可演示\nppt\\outlines\\AI-01c-综合版-v5-全员版.md:178:- **产品研发**：刘力的养老平台、黄天赐的人才系统——一个人全栈交付\nppt\\outlines\\AI-01c-综合版-v4.md.bak:258:- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示\nppt\\outlines\\AI-01c-综合版-v4.md:255:- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示"
+          },
+          {
+            "id": "call_01_8KUGUoxGCuT7qgMa7YFJ7280",
+            "name": "Grep",
+            "input": {
+              "pattern": "环能",
+              "path": "D:\\Projects\\AI-Report",
+              "output_mode": "content",
+              "-n": true
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "log.md:209:  - 核心业务: 产业投资、生态环保（中建生态环境/中建环能）、产业数字化（中建电商/中建智能）、绿色低碳/双碳\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:183:[Omitted long matching line]\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:217:[Omitted long matching line]\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:373:[Omitted long matching line]\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:813:[Omitted long matching line]\nppt\\slides\\架构总览.html:355:        <strong>P22</strong> 生态·碳科技·环能 <span style=\"font-size:10px;color:rgba(255,255,255,0.4);\">合1页</span><br>\nraw\\inbox\\中国建筑发展有限公司通讯录2025.6.13(1)(1).md:58:|  中建环能科技股份有限公司  |   |   |   |   |   |   |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:900:> **本章节核心定位**：说完外部压力，回到自己。电商是主力军，生态/碳科技/环能合1页。说得谦逊、扎实，不铺张。\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:930:#### P28：生态·碳科技·环能——AI合作探索（1页）\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:932:> **演讲备注**：三个板块三种合作模式——碳科技联合开发、环能积极推动、生态借平台落地。让班子看到发展各板块都在以不同方式切入AI。\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:938:| **中建环能**  | **财务报表 AI 辅助评审系统**：AI辅助财务合规审查、异常识别、报表审核                                       | 🔥 非常积极推动，与中建智能合作开发中                                                                                           |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:940:- **三种合作模式**：碳科技（联合开发，从头共建）→ 环能（业务方积极推动，需求明确）→ 生态（**自建 Dify 中台，已上线**，招 1 人即完成）\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1105:| 全域规模化 | 1-2年 | 全场景覆盖 | 规模化价值释放 | 碳科技能碳平台、环能财务评审——多板块复制 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1192:│  环能评审：刘力免费做。环能总经理：\"太好了，太快了\"    │\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1210:4. **环能口碑**：刘力给环能免费做的财务辅助评审系统，总经理看了说\"太好了，太快了\"。现在后续需求还在接着做。免费是敲门砖——做得好，对方自然想继续。第一单不赚钱，第二单开始赚钱。\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1233:  | 财务辅助评审 | 中建环能（刘力） | 总经理高度认可，后续合作持续中 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1247:| ② | **系统开发底座** | 统一认证+权限+API网关+部署 | 信息化条线+业务线 | 碳科技/环能/生态已在此底座上运行 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1260:  ② **系统开发底座**：中建智能统一技术底座——认证鉴权、RBAC权限、API网关、容器化部署。碳科技能碳平台、环能财务评审、生态运营赋能三个板块已在此底座运行。新系统不用从零搭建基础设施。\nppt\\outlines\\PPT大纲总览.html:406:        <div class=\"page-label\">生态·碳科技·环能——AI合作探索</div>\nppt\\outlines\\PPT大纲总览.html:407:        <div class=\"page-desc\">生态：运营赋能平台 · 碳科技：能碳方案自动生成 · 环能：财务报表自动审核探索。均在和中建智能合作推进</div>\nppt\\outlines\\AI-01c-综合版-v4.md.bak:249:- 财务计划 AI 审核（服务中建环能）\nppt\\outlines\\AI-01c-综合版-v4.md:246:- 财务计划 AI 审核（服务中建环能）\nppt\\outlines\\AI-01-AI入门与知识库构建.md.bak:899:| **生态环保** | 中建生态环境、中建环能 | 水环境、村镇污水、环保装备、土壤修复 |\nppt\\outlines\\AI-01-AI入门与知识库构建.md.bak:905:- 中建环能：专利 232 项（发明专利 61 项），国家科技进步二等奖 1 项\nppt\\outlines\\AI-01-AI入门与知识库构建.md.bak:907:- 中建环能 + 江苏华大：集团仅有的两家国家级专精特新\"小巨人\"企业"
+          },
+          {
+            "id": "call_02_fcIjWUUcrraqK6QB1YZo6683",
+            "name": "Grep",
+            "input": {
+              "pattern": "财务辅助",
+              "path": "D:\\Projects\\AI-Report",
+              "output_mode": "content",
+              "-n": true
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1210:4. **环能口碑**：刘力给环能免费做的财务辅助评审系统，总经理看了说\"太好了，太快了\"。现在后续需求还在接着做。免费是敲门砖——做得好，对方自然想继续。第一单不赚钱，第二单开始赚钱。\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1233:  | 财务辅助评审 | 中建环能（刘力） | 总经理高度认可，后续合作持续中 |"
+          },
+          {
+            "id": "call_03_ay5OdZwXq5KT1wQHgBG13143",
+            "name": "Grep",
+            "input": {
+              "pattern": "康养",
+              "path": "D:\\Projects\\AI-Report",
+              "output_mode": "content",
+              "-n": true
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "No matches found"
+          },
+          {
+            "id": "call_04_WfSgaaTzcw4XzzfR8juA1743",
+            "name": "Grep",
+            "input": {
+              "pattern": "智慧养老",
+              "path": "D:\\Projects\\AI-Report",
+              "output_mode": "content",
+              "-n": true
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "index.md:127:  - 大量现场演示链接（智慧养老/人才服务/水务监控/商务系统）\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:148:[Omitted long matching line]\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:337:[Omitted long matching line]\n.claudian\\sessions\\conv-1781008964914-gu6lxopk3.meta.json:778:[Omitted long matching line]\n.claudian\\sessions\\conv-1781058848740-myjn9zo6n.meta.json:109:[Omitted long matching line]\n.claudian\\sessions\\conv-1781045795296-eso9zcq3j.meta.json:240:[Omitted long matching line]\n.claudian\\sessions\\conv-1781045795296-eso9zcq3j.meta.json:260:[Omitted long matching line]\nppt\\assets\\国企AI宣讲-架构图.html:415:        <div class=\"page-note\">档案系统→二期150万 / 招采平台 / 智慧养老 / 水务大屏</div>\nppt\\assets\\国企AI宣讲-中高层完整版.html:1222:        <tr><td><strong>智慧养老平台</strong></td><td>刘力一人全栈交付</td><td><span class=\"chip chip-green\">可演示</span></td></tr>\n.claudian\\sessions\\conv-1781068976941-b27ccgdit.meta.json:27:[Omitted long matching line]\n.claudian\\sessions\\conv-1781068976941-b27ccgdit.meta.json:209:[Omitted long matching line]\n.claudian\\sessions\\conv-1781068976941-b27ccgdit.meta.json:276:[Omitted long matching line]\nppt\\outlines\\国企AI宣讲-中高层完整版.md:433:  - 刘力：智慧养老平台——一个人全栈交付，已部署可演示\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:171:| **系统** | 人才档案 | 智能评标 | 智慧养老 | 商务管理 | 水务监控 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:225:- **做了什么**：用 AI 辅助搭建中建方程智慧养老平台前端——面向高端 CCRC 社区的智慧化管理平台，覆盖养老业务/物业服务/社区管理/资源管理/运营管理/设备接入中台全链路（Vue3，AI 全程辅助）\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1104:| 迭代增效 | 6-12月 | 场景扩容 | 正向ROI成型 | 刘力智慧养老、王佳男商务平台——扩展场景边界 |\nppt\\outlines\\AI-01c-综合版-v4.md:26:| 中建智慧养老平台 | P29 现场演示 | 已部署 |\nppt\\outlines\\AI-01c-综合版-v4.md:255:- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示\nppt\\outlines\\AI-01c-综合版-v4.md:268:- 产品研发：智慧养老 / 人才系统 / 水务监控 —— 全栈交付\nppt\\outlines\\AI-01c-综合版-v5-统一版.md:231:- **刘力**：智慧养老平台——一个人全栈交付，已部署可演示\nppt\\outlines\\AI-01c-综合版-v4.md.bak:258:- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示\nppt\\outlines\\AI-01c-综合版-v4.md.bak:271:- 产品研发：智慧养老 / 人才系统 / 水务监控 —— 全栈交付"
+          },
+          {
+            "id": "call_00_rOkCwb8u0FrnUmTw5Jf21776",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\index.md",
+              "offset": 120,
+              "limit": 60
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "120\t  - 含锐利思考（背锅侠 / 物化 / 不依赖外界评估的存在价值）+ 学 AI 投入建议\n121\t- [[ppt/outlines/AI-01c-综合版\\|PPT-AI 觉醒经历分享（综合版 v3）]] — **上级单位 70 分钟分享 · 实战版**（41 页）\n122\t- [[ppt/outlines/AI-01c-综合版-v4\\|PPT-AI 觉醒经历分享（综合版 v4 · 董事长版）]] — **上级单位 75 分钟分享 · 拔高版**（53 页）\n123\t  - 叙事升级：个人经历为引 → 组织成果为证 → 时代判断为纲 → 行动建议为果\n124\t  - 新增 Part 2「中建智能 AI 转型实践」：管理层/产品研发/商务全员成果\n125\t  - 新增 Part 3「最好的时代与最坏的时代」：获悉即学会/数字永生/物种差距/黑箱困境\n126\t  - 新增 Part 4「怎么应对」：花钱哲学/2080+斯坦福学习法/安全警示\n127\t  - 大量现场演示链接（智慧养老/人才服务/水务监控/商务系统）\n128\t  - 在 v2 基础上扩展：含素材清单（4 个本地 PDF/PNG/HTML + 5 个在线链接）\n129\t  - 9 段节奏控制表，6 句核心金句精确落位\n130\t  - 现场动作明确（P8/P11/P27/P34/P35 切窗口打开链接/PDF）\n131\t  - 配套演讲稿 → [[ppt/scripts/AI-01c-演讲稿]]\n132\t- [[ppt/outlines/国企AI宣讲-中高层完整版\\|PPT-国企中高层 AI 宣讲完整版]] — **国企中高层管理者 60-75 分钟宣讲专用**（40 页）\n133\t  - 十个Part结构：封面+开场钩子+政策锚定+技术祛魅+同行压力+落地路径+组织保障+风险预判+行动倡议+收尾\n134\t  - 政策驱动：国资委\"AI+\"专项行动、新质生产力、考核指标体系、信创要求\n135\t  - 案例为证：中国石油/国家电网/南方电网/中建五局/黑龙江交投/厦门银华机械/中智集团\n136\t  - 行动导向：吴恩达五步法+四阶段模型+美的架构+30/60/90天行动计划+Quick Wins\n137\t  - 全篇引用8个知识库页面，每个数据标注来源\n138\t  - 不讲公式、不讲代码，全程类比+案例+决策树\n139\t  - **P41 会后学习资源包**：5个二维码（快速入门/通识课/30天挑战/工具速查/社群） → [[ppt/assets/会后学习资源包|资源包设计]] + `ppt/assets/会后学习资源包.html`\n140\t\n141\t### 演讲稿 (ppt/scripts/)\n142\t- [[ppt/scripts/AI-01c-演讲稿\\|AI 觉醒经历分享 演讲稿（综合版 v3）]] — **41 页逐字稿，70 分钟，约 10000 字主体**\n143\t  - 第一人称口语，可直接照念\n144\t  - 含舞台提示（停顿、笑一下、切窗口）和过渡衔接\n145\t  - 含 Q&A 储备 6 题（备问不备答）\n146\t- [[ppt/scripts/AI-01c-演讲稿-工作版\\|AI 觉醒经历分享 演讲稿（综合版 v3 · 工作版）]] — **39 页应用用户全部修订后的工作版本**\n147\t  - 在源稿基础上应用 cc-001 ~ cc-009 + cc-090 全部修订\n148\t  - 结构调整：Part 3 改为「把建议捋一遍」（P38-P39），删去原 Part 3 思考 + Part 4 收尾；综合案例删去 P38（deeptutor）\n149\t  - 重排页码：P1-P39 连续无重复，累计时长对齐 70 分钟\n150\t  - P21 增加现场链接（arc.csceccloud.net）；P26/P27 逻辑理顺\n151\t  - 补充 5 项专家建议：P21 ROI 数字、P31 风险对冲铁律、P36 数据安全分级、P39 具体行动指令 + 今晚动手包二维码\n152\t  - 配套素材：`ppt/assets/今晚动手包.md`（可直接复制到飞书文档）\n153\t  - Reveal.js 演示：`ppt/index.html`（39 页幻灯片 + 演讲者备注）\n154\t\n155\t---\n156\t\n157\t## 源文件摘要 (wiki/sources/)\n158\t\n159\t- [[wiki/sources/AI_tools_nontechnical|AI_tools_nontechnical]] — 非技术人员完整AI学习路线图，12周零基础路径，含CLEAR提示词框架、十大常见错误、六大行业方案\n160\t- [[wiki/sources/Microsoft_AI_for_Beginners|Microsoft AI for Beginners]] — 微软官方AI入门课程（12周24课），含高管精简学习路径\n161\t- [[wiki/sources/AI_for_Everyone_Andrew_Ng|AI for Everyone (Andrew Ng)]] — Coursera 4.8分经典AI通识课，7小时零门槛，专为企业管理者设计\n162\t- [[wiki/sources/Elements_of_AI|Elements of AI]] — 赫尔辛基大学出品，200万+学员，25+语言含中文，欧盟官方背书的免费AI通识课\n163\t- [[wiki/sources/Anthropic_Claude_Tutorial|Anthropic Claude Tutorial]] — Anthropic官方9章交互式提示工程教程+5大课程模块+67个Cookbook案例，覆盖零基础到生产级部署\n164\t\n165\t---\n166\t\n167\t## 最近更新\n168\t\n169\t- **2026-06-10 15:30**: 4个子代理并行搜索全球建筑企业AI案例（欧洲/北美/亚太/全球趋势），覆盖Vinci/Skanska/Bouygues/STRABAG/Eiffage/Ferrovial/AECOM/Bechtel/Turner/DPR/Taisei/Takenaka/Shimizu/Kajima/Samsung/Hyundai/Lendlease等20+企业。新增 [[wiki/synthesis/全球建筑企业AI应用案例]]（20+案例+McKinsey/PwC/Deloitte/RICS权威报告+中外对比+PPT建议），更新 [[wiki/industry/建筑与环保]] 全球标杆章节，植入 [[ppt/outlines/国企AI宣讲-中高层完整版]] P12b全球视野页+P22国际对标列\n170\t- **2026-06-09 22:30**: 8个子代理并行全网搜索2026年全球企业中高层AI培训内容，覆盖市场规模、咨询公司、科技巨头、商学院、中国企业、AI素养框架、培训效果、新兴模式八大维度。新增 3 个页面：[[wiki/synthesis/全球企业AI培训全景2026]]（市场规模$7.49B/七大咨询公司/科技巨头对比/商学院项目/培训模式创新/ROI数据）、[[wiki/industry/企业AI培训实践]]（央企/国企+民企AI培训案例）、[[wiki/concepts/AI素养与领导力]]（OECD/UNESCO/EU AI Act框架/AI领导力能力模型）\n171\t- **2026-06-09 16:00**: 针对\"国企中高层AI宣讲\"补充组织保障/ROI/政策/风险/行动模板五大模块。新增 4 个宣讲素材页面：[[wiki/synthesis/国企AI宣讲-政策锚定]]、[[wiki/synthesis/国企AI宣讲-组织保障与ROI]]、[[wiki/synthesis/国企AI宣讲-风险合规]]、[[wiki/synthesis/国企AI宣讲-行动模板]]\n172\t- **2026-06-09 18:00**: 全网搜集补充知识库五大维度（政策锚定/技术祛魅/同行压力/落地路径/风险预判）。新增 4 个页面：[[wiki/synthesis/AI政策与国资导向]]、[[wiki/concepts/Agent]]、[[wiki/synthesis/AI落地路径]]、[[wiki/synthesis/AI转型风险与对策]]；深化 [[wiki/industry/国有企业AI应用案例]] 中国家电网/南方电网/厦门银华机械案例\n173\t- **2026-06-09 17:00**: AnySearch 全网搜索培训相关成功案例并纳入知识库。覆盖央企数字化、建筑智能建造、环保水务、投资投研、双碳 ESG、企业 AI 培训六大维度，共 20+ 标杆案例，来源均附链接。更新 [[wiki/industry/国有企业AI应用案例]] + [[wiki/industry/建筑与环保]]\n174\t- **2026-06-09**: 新增 PPT 大纲 v4「董事长版」（53 页 75 分钟）。叙事升级：个人→组织→时代→行动。新增组织转型实践、最好的时代/最坏的时代、行动框架，融入刘力/黄天赐/吴迪/王佳男等同事成果\n175\t- **2026-06-09 15:00**: 新增知识库页面 2 个——[[wiki/synthesis/AI学习资源汇总|非技术高管 AI 学习资源汇总]]（5 项精选资源 + 3 条学习路径）+ [[wiki/industry/国有企业AI应用案例|国有企业 AI 应用案例]]（8 家央企/国企标杆案例 + 宣讲金句 + 场景速查表）\n176\t- **2026-05-05 16:00**: 二次修订工作版（39 页）。P21 增加 arc.csceccloud.net 现场链接；P26/P27 逻辑理顺（范式→实现，各归其位）；删去 P38（deeptutor 案例）；页码重排 P1-P39，时长对齐 70 分钟\n177\t- **2026-05-05 14:00**: 应用 10 处用户修订到工作版演讲稿（40 页）。结构调整：Part 3 改为「把建议捋一遍」行动倡导，删去原思考/收尾；页码重排 P1-P40，时长对齐 70 分钟\n178\t- **2026-05-05 12:30**: 完成综合版 v3 演讲稿（41 页 / 70 分钟 / 约 10000 字）。第一人称口语、含舞台提示、6 句金句精确落位、含 Q&A 储备\n179\t- **2026-05-04 11:30**: 新增 PPT 大纲 v2——\"AI 觉醒经历分享\"（35 页 60 分钟），主基调\"分享经历 → 建议行动 → 不吹不黑不说教\"。原 v1（\"AI 入门与知识库构建\"）保留作并行版本"
+          },
+          {
+            "id": "call_01_8NaRI8SQd54qpVOuYFB42075",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md",
+              "offset": 160,
+              "limit": 130
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "160\t---\n161\t\n162\t### P7：中建智能的五个真实案例——你也能做到\n163\t\n164\t> **演讲备注**：这是全场的第一个\"震撼时刻\"。不讲外面的案例，先看身边人三个月AI重度使用能进化到什么程度。四个主案例各一页，吴迪半页快速过，制造\"一个比一个震撼\"的递进效果。\n165\t\n166\t**五个案例速览**（全部可现场演示）：\n167\t\n168\t| | 黄天赐 | 王桂平 | 刘力 | 王佳男 | 吴迪 |\n169\t|------|------|------|------|------|------|\n170\t| **身份** | 前端开发 | 后端开发 | **产品经理** | **商务经理** | **总工** |\n171\t| **系统** | 人才档案 | 智能评标 | 智慧养老 | 商务管理 | 水务监控 |\n172\t| **页面/视图** | 16 | 33 | 29 | 19 | 1（大屏） |\n173\t| **AI 耗时** | 1 周 | 半天 | 1 周 | 数天 | 碎片 |\n174\t| **传统估时** | 2 人月 | 3-6 人月 | 3+ 人月 | 3×3 人月 | 1-2 周 |\n175\t| **演示方式** | 🌐 公网 | 🌐 公网 | 🌐 内网/VPN | 💻 U盘本地 | 📄 本地HTML |\n176\t\n177\t> **🎯 演讲前检查清单**：\n178\t> - [ ] P8 黄天赐：浏览器打开 [arc.csceccloud.net:8443](https://arc.csceccloud.net:8443)，登录 admin / Zjzn@2026\n179\t> - [ ] P9 王桂平：浏览器打开 [bid.forestrain.top](https://bid.forestrain.top/#/dashboard)，登录 admin / admin\n180\t> - [ ] P10 刘力：确认 VPN/内网已连接，浏览器打开 [223.71.143.154:39001](http://223.71.143.154:39001/)\n181\t> - [ ] P11 王佳男：双击 U 盘 exe 启动，浏览器打开 [localhost:8002/dashboard](http://localhost:8002/dashboard)，登录 admin / 123456\n182\t> - [ ] P12 吴迪：双击桌面 ，秒开，无需服务器\n183\t> - [ ] 五个系统各开一个浏览器 Tab/窗口，演讲时 Alt+Tab 切换\n184\t\n185\t---\n186\t\n187\t#### P8：案例一 · 黄天赐——人才档案系统，1 周完成 80%\n188\t\n189\t> **🖥️ 现场演示**：[https://arc.csceccloud.net:8443/](https://arc.csceccloud.net:8443/)  \n190\t> 🔑 用户名 `admin` / 密码 `Zjzn@2026`\n191\t\n192\t> **演讲备注**：第一个案例。有姓名有故事，业主当场拍合同——最真实。演示时重点展示 100+ 字段的档案表单和 68 家单位的规模感。\n193\t\n194\t- **谁**：黄天赐（研发人员，1人）\n195\t- **做了什么**：用 Claude Code + 主流前后端框架，从零搭建中建人才服务系统——完整的人事档案管理平台\n196\t- **花了多久**：**1 周完成 80% 功能**（传统流程至少 2 个月）\n197\t- **系统规模**：16 个视图页面，7 大信息区（基本信息/政治面貌/户籍家庭/工作单位/社保公积金等），100+ 表单字段，68 家中建系单位在库，完整 RBAC 权限体系\n198\t- **效果**：照片识别自动归档。业主看到后立即推动合同签订。**已签合同并完成交付**，二期推进中（信创全栈）\n199\t\n200\t---\n201\t\n202\t#### P9：案例二 · 王桂平——智能评标中心，半天从零到上线\n203\t\n204\t> **🖥️ 现场演示**：[https://bid.forestrain.top/#/dashboard](https://bid.forestrain.top/#/dashboard)  \n205\t> 🔑 用户名 `admin` / 密码 `admin`\n206\t\n207\t> **演讲备注**：第二个案例。有完整叙事弧线——业主质疑→总工焦虑→AI破局→赢得信任签合同。演示时重点展示 33 个菜单项和 7 间评标室实时状态。\n208\t\n209\t- **谁**：王桂平（研发人员，1人）\n210\t- **做了什么**：用 Claude Code 从零搭建首企阳光智能评标中心\n211\t- **花了多久**：**半天**（传统外包开发至少 3-6 人月）\n212\t- **系统规模**：**33 个独立视图**——项目管理/开评标管理/信息发布/在线监督/音视频归档/远程评标/专家签到/智能储物柜/智能门禁/系统设置，覆盖招投标全流程 + 物联网硬件集成。数据库已有 30 个项目，7 间评标室实时状态\n213\t- **故事背景**：业主不相信中建智能能做 → 总工吴迪很着急，原计划全体加班三天出前端 → 王桂平半天做出来了 → 吴迪拿前端去给业主董事长演示 → 赢得信任 → **已签合同**\n214\t- **效果**：没有外包、没有美工，AI 直接生成可运行系统，半天上线给客户看，拿下了合同\n215\t\n216\t---\n217\t\n218\t#### P10：案例三 · 刘力——产品经理出前端，1 周说服政府\n219\t\n220\t> **🖥️ 现场演示**：[http://223.71.143.154:39001/](http://223.71.143.154:39001/)（内网/VPN 环境，演讲电脑已配置好）\n221\t\n222\t> **演讲备注**：第三个案例。产品经理不会写代码，但用 AI 直接出了前端——客户要的就是前端快速反应去说服政府、确认需求。强调：最懂需求的人直接出产品，跳过\"写文档→等研发\"的环节。\n223\t\n224\t- **谁**：刘力（产品经理，**不会写代码**，1人）\n225\t- **做了什么**：用 AI 辅助搭建中建方程智慧养老平台前端——面向高端 CCRC 社区的智慧化管理平台，覆盖养老业务/物业服务/社区管理/资源管理/运营管理/设备接入中台全链路（Vue3，AI 全程辅助）\n226\t- **花了多久**：**1 周**（传统团队需要 3+ 人月）\n227\t- **系统规模**：**29 个视图页面**——出入院管理/健康监测中心/照护任务管理/用药安全管理/康复训练管理/远程医疗/安防监控中心/设备运维管理/能源环境管理/助餐管理/家属互动平台等 7 大模块。Dashboard 含 6 大指标卡片、7 类实时告警、IoT 设备概览\n228\t- **为什么是前端就够了**：客户当前阶段需要前端快速反应——拿去给政府看、确认需求、签合同。后端不是做不到，是不需要\n229\t- **效果**：产品经理跳过\"写需求文档→等研发排期\"，直接出可交互前端去说服政府\n230\t\n231\t---\n232\t\n233\t#### P11：案例四 · 王佳男——商务经理自己建系统\n234\t\n235\t> **🖥️ 现场演示**：U 盘 `王佳男-商务系统.exe`，双击运行后浏览器打开 [http://localhost:8002/dashboard](http://localhost:8002/dashboard)  \n236\t> 🔑 用户名 `admin` / 密码 `123456`  \n237\t> 📌 演讲前检查：确保 exe 已启动，浏览器已打开并登录\n238\t\n239\t> **演讲备注**：第四个案例，终极震撼。前面三个都是研发人员——这个不是。商务经理，不会写代码，用无代码工具搭出了 125 亿合同数据跑着的商务管理平台。演示时重点展示经营总览的 17 项待办 + 17 条预警，以及 4 类智能预警系统。翻完这页停顿 3 秒，然后翻总结页。\n240\t\n241\t- **谁**：王佳男（商务经理，**非程序员**，1人）\n242\t- **做了什么**：用 WorkBuddy 无代码搭建 CSCEC 智能商务管理平台（拖拽式 AI 工具，完全不用写代码）\n243\t- **花了多久**：**数天**（传统方式需产品 1 人 + 前端 1 人 + 后端 1 人 + 测试 0.5 人 × 3 个月）\n244\t- **系统规模**：**19 个视图页面**——经营总览/数据看板 6 页/业务管理 3 页/项目实施 4 页（招标/成本/收付款/进度）/跨平台数据集成/数据分析（静态+动态+导出）/系统管理。演示数据 125 亿合同总额（mock），系统实际运行中建智能全套商务数据。**4 类智能预警**：项目亏损自动标记、收付款倒挂报警、产值确认倒挂报警、合同结算差异自动生成待办\n245\t- **效果**：非技术人员独立搭建系统，编码门槛降至零。\"等研发排期\" → \"今天想到今天上线\"\n246\t\n247\t---\n248\t\n249\t#### P12：附加案例 · 吴迪（总工）——水务监控大屏，AI 权重优化引擎\n250\t\n251\t> **🖥️ 现场演示**：双击桌面 `water_control_dashboard.html`，浏览器直接打开  \n252\t> 📌 纯静态 HTML 文件，无需服务器，无需登录，秒开\n253\t\n254\t> **演讲备注**：第五个案例，20 秒快速过。重点是双重身份——他既是王桂平故事里那个焦虑的总工，自己也上手写了系统。讲完直接翻总结页。\n255\t\n256\t- **谁**：吴迪（总工，1人）\n257\t- **做了什么**：用 AI 写了一个水务实时监控大屏——云控恒进水系统。1095 行纯前端代码，ECharts 可视化\n258\t- **花了多久**：碎片时间完成\n259\t- **系统规模**：单页大屏——4 大实时数据卡片（液位/来水/预测/时变化系数）→ 2 个 ECharts 图表（24h 流量趋势 + 12h 预测）→ 调度面板 → 实时告警 → 4 台泵状态 → 预测明细表 → **AI 权重优化建议引擎**（前3天准确度 92.3% / 上周 88.7% / 降雨 76.5%，自动生成优化建议文字）→ 紧急停止 → 站点切换\n260\t- **双重身份**：① 王桂平故事里那个焦虑的总工——业主质疑→着急→催化了评标系统的诞生 ② 自己也上手用 AI 写系统\n261\t- **信号**：\"连总工都在亲手写代码。这不是研发部的事，是每个人的事。\"\n262\t\n263\t---\n264\t\n265\t### P13：五个案例，一个规律\n266\t\n267\t> **演讲备注**：翻完五个案例后翻到这页。先停 2 秒让观众消化，然后一条一条出。最后出公式和金句。\n268\t\n269\t**横向对比**：\n270\t\n271\t| 维度 | 黄天赐 | 王桂平 | 刘力 | 王佳男 | 吴迪 | 规律 |\n272\t|------|------|------|------|------|------|------|\n273\t| 系统规模 | 16 页 | 33 页 | 29 页 | 19 页 | 1 页 | **不拼规模拼价值** |\n274\t| AI 耗时 | 1 周 | 半天 | 1 周 | 数天 | 碎片 | **以\"天\"为单位** |\n275\t| 传统 | 2 人月 | 3-6 人月 | 3+ 人月 | 3×3 人月 | 1-2 周 | **压缩 10-100 倍** |\n276\t| 人数 | 1 人 | 1 人 | 1 人 | 1 人 | 1 人 | **一个人 = 一个团队** |\n277\t| 主业 → AI补了什么 | 前端 → 后端 | 后端 → 前端 | 产品 → 开发 | 商务 → 全部 | 总工 → 开发 | **角色边界融化** |\n278\t\n279\t**五个核心洞察**：\n280\t\n281\t1. **时间被压缩了一个数量级**：从\"月\"到\"天\"到\"小时\"。不是效率提升，是维度跃迁。\n282\t2. **一个人就是一个团队**：五个系统合计 98 个视图页面，全部一人完成。\n283\t3. **角色边界被 AI 融化了**：王桂平（后端）补前端，黄天赐（前端）补后端，刘力（产品经理）补开发，王佳男（商务经理）补全部技术。**每个人原来都缺某个角色能力，AI 把缺口填上了。**\n284\t4. **总工也在写代码**：吴迪（总工）既催化了王桂平的评标系统诞生，自己也用 AI 写出了云控恒进水务监控大屏——1095 行纯前端，4 台泵实时数据，AI 权重优化引擎。连总工都在亲手干了。\n285\t\n286\t**核心公式**：\n287\t```\n288\t你的 AI 价值 = 你的专业领域知识 × AI 工具使用能力\n289\t```"
+          },
+          {
+            "id": "call_02_Rdkfo0hK3Xw35l5opg5K4335",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md",
+              "offset": 890,
+              "limit": 60
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "890\t**中建八局——\"路智纵横\"全国首创**\n891\t- 道路附属智能建造体系，全国首创，边沟装备效率提升 **50%+**\n892\t\n893\t- **给班子的信号**：从三局的成本测算到科工的机器人再到八局的智能建造——中建系AI已覆盖「算」「造」「管」全链条\n894\t- **金句**：\"从五局的培训到科工的机器人到八局的智能建造，中建集团AI布局已覆盖'人'和'机'两条线。\"\n895\t\n896\t---\n897\t\n898\t### 3.5 中建发展内部实践（2页）\n899\t\n900\t> **本章节核心定位**：说完外部压力，回到自己。电商是主力军，生态/碳科技/环能合1页。说得谦逊、扎实，不铺张。\n901\t\n902\t#### P27：中建电商——云筑网的产业互联网智能化（1页）\n903\t\n904\t> **演讲备注**：云筑网累计履约额超10万亿，AI不是实验，是跑在真实交易上的系统。只说最核心的三个信号和最关键的数字。\n905\t\n906\t**三个国家级信号**：\n907\t1. **国家网信办备案**：云筑AI大模型通过备案（2025年）\n908\t2. **国家数据局典型案例**：建筑行业供应链高质量数据集入选（2025年8月）\n909\t3. **中国建筑数字化转型一等奖**：供应链招采寻源与商机撮合平台（2025年11月）\n910\t\n911\t**云智采1.0核心成效**：\n912\t\n913\t| 指标 | 数据 |\n914\t|:---|:---|\n915\t| 采购周期 | 缩短 **40%** |\n916\t| 综合成本 | 降低 **20%** |\n917\t| 约标发布速度 | **30秒** |\n918\t| 合规风险 | 下降 **75%** |\n919\t\n920\t**寻源平台规模**：\n921\t- 110万+供应商中毫秒级匹配，每年搜索寻源 **500万次**，商机超 **10万**\n922\t- 资审智检服务 **6万+家**企业，累计生成检测报告近 **18万份**\n923\t\n924\t- **金句**：\"当别的企业还在讨论AI要不要做的时候，云筑网已经把AI做成了建筑行业的国家标准。\"\n925\t\n926\t> 来源：2025云顶大会公开发布、云筑网官方数据、中建发展官网\n927\t\n928\t---\n929\t\n930\t#### P28：生态·碳科技·环能——AI合作探索（1页）\n931\t\n932\t> **演讲备注**：三个板块三种合作模式——碳科技联合开发、环能积极推动、生态借平台落地。让班子看到发展各板块都在以不同方式切入AI。\n933\t\n934\t| 板块        | AI探索方向                                                                        | 合作模式 & 进展                                                                                                      |\n935\t| :-------- | :---------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------- |\n936\t| **中建生态**  | **江阴农污 AI 运营平台**：自建 Dify 智能体中台，嵌入运营平台，上线 **2 个智能体**（知识库问答 + 问数助手），7×24 服务一线运营 | 🔥 **已上线**，招 **1 人**搭建完成。地址：yunying.cwepc.cn/jiangyin-ai                                                       |\n937\t| **中建碳科技** | **能碳平台**：上传可研报告/测算表 → AI 自动提取关键指标（安装容量、发电量、电价等，置信度+溯源）→ 七步审核流（草稿→提取→审核→业务测算→财务测算→输出→完成）→ 自动生成碳中和方案 | ✅ 联合开发中，原型已出。7 个页面：光伏项目 / 资料库(AI解析) / 模块管理(七步流) / 指标审核 / 测算表版本 / 指标库 / 模块配置 |\n938\t| **中建环能**  | **财务报表 AI 辅助评审系统**：AI辅助财务合规审查、异常识别、报表审核                                       | 🔥 非常积极推动，与中建智能合作开发中                                                                                           |\n939\t\n940\t- **三种合作模式**：碳科技（联合开发，从头共建）→ 环能（业务方积极推动，需求明确）→ 生态（**自建 Dify 中台，已上线**，招 1 人即完成）\n941\t- **核心定位**：不是\"做不做\"的问题，是\"怎么更快落地\"的问题——三个板块，三种路径，都在跑\n942\t- **关键信号**：无论 AI 谁来建，底座都在中建智能的系统上——这是一个平台级的定位\n943\t\n944\t- **金句**：\"发展的每个板块都在动——不是等总部发令，是自己在找AI的入口。\"\n945\t\n946\t> 来源：中建发展各业务板块AI合作规划 + raw/inbox/能碳平台原型\n947\t\n948\t---\n949\t"
+          },
+          {
+            "id": "call_03_UUk3SmpkEvAJRa3b6Srf6389",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md",
+              "offset": 1180,
+              "limit": 90
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "1180\t│   核心公式：先跑起来 → 尝到甜头 → 自己就想跑了       │\n1181\t│                                                  │\n1182\t├──────────────────────────────────────────────────┤\n1183\t│  AI时代二八学习法                                  │\n1184\t│  ① 让AI提炼20%核心知识 → ② 用这20%直接做MVP        │\n1185\t│  ③ 逐个摸清知识点       → ④ 用起来以后回过头补理论   │\n1186\t│  \"别先学再用——直接用，在用中学\"                      │\n1187\t├──────────────────────────────────────────────────┤\n1188\t│                                                  │\n1189\t│  管理学院：黄天赐边学边干，一周做完。我以为黄了，      │\n1190\t│           结果她已经全部干完了 → 中建AI第一单         │\n1191\t│                                                  │\n1192\t│  环能评审：刘力免费做。环能总经理：\"太好了，太快了\"    │\n1193\t│           → 后续合作持续中                          │\n1194\t│                                                  │\n1195\t│  没任务的时候，就找任务。每做一个，队伍强一分。         │\n1196\t│                                                  │\n1197\t└──────────────────────────────────────────────────┘\n1198\t```\n1199\t\n1200\t- 配图建议：左右对比图 + 核心公式突出 + 二八学习法四步流程\n1201\t\n1202\t**现场展开要点**（PPT上不写，供演讲者参考）：\n1203\t\n1204\t1. **团队蜕变**：三个月前研发团队等需求、等排期，不急不慢。我以身作则天天搞AI，每周开会点评——表扬先进、鼓励落后。慢慢有人尝到甜头了。以前从不加班的团队，现在天天最后走。有人跑来跟我说搞到凌晨三点、五点起来接着干，周末自觉来。\n1205\t\n1206\t2. **管理学院第一单**：黄天赐边学边干，一周做完。我报了价对方没回，以为黄了。过了一阵随口一问，发现她已经全部干完了。赶紧约管理学院，对方一看说你们交付态度太好了。合同紧锣密鼓推进。价格不高，但是中建AI第一单。\n1207\t\n1208\t3. **免费练兵**：没有任务的时候，就找任务。给西南院做投标打分、给办公厅做制度评审、给海外部做项目资料OCR——全部免费。西南院的没完全推下去，海外部的最累——几个T的材料。重点不是每个都成功。重点是每做一个，人就强一分。半天交付、一周上线的能力，不是培训出来的，是拿真实项目喂出来的。\n1209\t\n1210\t4. **环能口碑**：刘力给环能免费做的财务辅助评审系统，总经理看了说\"太好了，太快了\"。现在后续需求还在接着做。免费是敲门砖——做得好，对方自然想继续。第一单不赚钱，第二单开始赚钱。\n1211\t\n1212\t**金句**：\n1213\t> \"不是有了动力才行动——是行动了才有动力。\"\n1214\t> \"队伍是一个一个小胜利练出来的。\"\n1215\t> \"把AI用起来——想方设法用起来。\"\n1216\t\n1217\t**详细内容要点**：\n1218\t—— AI时代二八学习法（来源：中建智能内部实践 + deck-ai-awakening P22）：\n1219\t  - 核心理念：别先学再用，直接用，在用中学\n1220\t  - 四步流程：AI提炼领域20%核心知识 → 用20%直接做MVP → 逐个摸清知识点 → 用起来后补理论\n1221\t  - 对比传统路径（先看书→看视频→做练习→实战），速度提升一个数量级\n1222\t—— 团队转型关键举措：\n1223\t  - 以身作则：负责人自己先跑起来，天天搞AI\n1224\t  - 每周点评：表扬先进、鼓励落后，不批评不施压\n1225\t  - 真实项目练兵：没任务就找任务，免费给兄弟单位做系统\n1226\t  - 核心公式：先跑起来 → 尝到甜头 → 内在动力点燃 → 半天/一天/一周交付成为可能\n1227\t—— 免费练兵项目列表（部分）：\n1228\t  | 项目 | 对象 | 状态 |\n1229\t  |:---|:---|:---|\n1230\t  | 投标打分系统 | 西南院（拉上二局） | 演示完成，未完全推进 |\n1231\t  | 制度评审系统 | 集团办公厅 | 已使用（最近5.26），持续优化 |\n1232\t  | 海外项目资料整理 | 集团海外部（美国公司） | 跑通了OCR最佳路径和schema-extraction-validation架构 |\n1233\t  | 财务辅助评审 | 中建环能（刘力） | 总经理高度认可，后续合作持续中 |\n1234\t  | 管理学院平台 | 中建管理学院（黄天赐） | 已签合同交付，中建AI第一单 |\n1235\t\n1236\t> 来源：中建智能内部实践 + [[wiki/synthesis/AI落地路径]] §框架二（教-学-管-评）\n1237\t\n1238\t---\n1239\t\n1240\t### P35：我们能提供什么——五个支撑能力\n1241\t\n1242\t> **演讲备注**：这是整场唯一可以\"推销\"自己的地方——用事实说话。五个能力的叙述逻辑都是\"我们做过了→验证有效→沉淀下来了→你可以用\"。不是\"我们能做\"，是\"我们已经做了，你可以复用\"。\n1243\t\n1244\t| # | 能力 | 是什么 | 谁可以用 | 验证 |\n1245\t|:---|:---|:---|:---|:---|\n1246\t| ① | **培训赋能体系** | 分层课程+实战训练+持续陪伴 | 全员（领导→中层→骨干→技术） | 中建五局4万人94%活跃率已验证同模式 |\n1247\t| ② | **系统开发底座** | 统一认证+权限+API网关+部署 | 信息化条线+业务线 | 碳科技/环能/生态已在此底座上运行 |\n1248\t| ③ | **方法论与模板** | 从5+案例提炼的开发SOP、场景模板、评估框架 | 所有AI项目负责人 | 每个成功案例都沉淀了可复用模板 |\n1249\t| ④ | **工具链** | WorkBuddy（无代码）+ Claude Code（编程）+ 国产大模型接入 | 业务人员→信息化条线，全覆盖 | 王佳男模式可复制到任何业务线 |\n1250\t| ⑤ | **标杆复制能力** | 档案系统/评标系统/商务管理系统→场景迁移 | 有类似需求的业务板块 | 黄天赐模式→档案/合同/资产，同一套方法论 |\n1251\t\n1252\t**配图建议**：五个能力卡片，每个卡片含图标+一句话+验证案例\n1253\t\n1254\t**金句**：\n1255\t> \"前端越轻，后端越要扎实。每个业务人员能用AI建系统，背后是我们的统一底座在支撑。\"\n1256\t\n1257\t**详细内容要点**：\n1258\t—— 五个支撑能力详解：\n1259\t  ① **培训赋能体系**：参考中建五局近4万人、94%活跃率的培训模式，提供分层课程（领导班子→中层干部→业务骨干→技术人员→全员）+ 实战训练营 + 持续陪伴式辅导。\"教-学-管-评\"全链条闭环。\n1260\t  ② **系统开发底座**：中建智能统一技术底座——认证鉴权、RBAC权限、API网关、容器化部署。碳科技能碳平台、环能财务评审、生态运营赋能三个板块已在此底座运行。新系统不用从零搭建基础设施。\n1261\t  ③ **方法论与模板**：从5个成功案例中提炼的开发流程——需求→MVP→迭代→交付。每个案例沉淀了可复用的场景模板：档案管理模板、评标管理模板、商务管理模板、IoT数据看板模板。避免重复造轮子。\n1262\t  ④ **工具链**：WorkBuddy——拖拽式无代码，业务人员半天上手（王佳男模式）；Claude Code——AI编程，信息化条线深度工具；国产大模型接入——DeepSeek/通义千问/文心一言/华为盘古，按场景和合规要求选型。\n1263\t  ⑤ **标杆复制能力**：黄天赐的档案系统模式→可复制到合同管理、资产管理、人事管理；王桂平的评标系统模式→可复制到任何招投标场景；王佳男的商务管理模式→可复制到任何业务管理场景。不是\"再做一遍\"，是\"模板+定制\"。\n1264\t\n1265\t> 来源：中建智能内部实践 + [[wiki/synthesis/AI落地路径]] + [[wiki/synthesis/国企AI宣讲-组织保障与ROI]] §三\n1266\t\n1267\t---\n1268\t\n1269\t### P36：如果想试试——几个最容易的切入点"
+          },
+          {
+            "id": "call_04_p050w5FVfF5x40EBOn8T1225",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版.md",
+              "offset": 170,
+              "limit": 30
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "170\t- **效果**：没有外包、没有美工，全是 AI 顶上去，能上线给客户看\n171\t- **现场演示**：[查看系统](https://bid.csceccloud.net:8443/#/dashboard)\n172\t\n173\t**案例二：管理学院档案系统——一周完成 80% 功能**\n174\t- **谁**：黄天赐（研发人员）\n175\t- **做了什么**：用 AI 搭建管理学院档案管理系统\n176\t- **传统流程**：至少 **2 个月**\n177\t- **AI 辅助**：**1 周完成 80% 功能**\n178\t- **效果**：照片识别自动归档，完整权限体系，业主看到后立即推动合同签订\n179\t- **现场演示**：[查看系统](https://arc.csceccloud.net:8443/)\n180\t\n181\t**案例三：社区运营大系统——一人完成全流程**\n182\t- **谁**：刘力（研发人员）\n183\t- **做了什么**：用 AI 搭建中建方程社区运营大系统 demo\n184\t- **花了多久**：**1 周**\n185\t- **效果**：一人完成需求梳理 + 生成代码，真正的\"全栈\"\n186\t\n187\t**案例四：商务系统——商务经理自己建系统**\n188\t- **谁**：王佳男（商务经理，非程序员）\n189\t- **做了什么**：用 WorkBuddy 搭建商务系统\n190\t- **效果**：大幅提高工作效率，编码门槛大幅降低\n191\t- **现场演示**：U 盘拷贝 exe 文件，现场打开运行\n192\t\n193\t**关键信号**：\n194\t- 商务经理不是程序员——但用 AI 搭出了系统\n195\t- 一周完成 80% 功能——不是概念验证，是能跑的系统\n196\t- 半天从零到上线——不需要等研发排期\n197\t\n198\t**金句**：\"最懂业务的人，现在最懂 AI。\"\n199\t"
+          },
+          {
+            "id": "call_05_hiSm6GolLiBRFkmbE1e65283",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版.md",
+              "offset": 420,
+              "limit": 30
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "420\t- **110+评审规则**全覆盖\n421\t- **即将与集团签约**\n422\t- **给班子的信号**：AI已在实际业务中创造价值，不是概念验证\n423\t- **给员工的信号**：规则明确、重复性高的工作——AI最擅长这个\n424\t\n425\t#### P19：业务线多点突破\n426\t- **管理学院档案系统**：一期交付→二期150万推进，信创全栈\n427\t  - **震撼数据**：传统流程至少 2 个月 → 黄天赐 1 周完成 80% 功能，业主看到后立即推动合同签订\n428\t  - **现场演示**：[查看系统](https://arc.csceccloud.net:8443/)\n429\t- **首企阳光招采平台**：成本优势碾压上市公司\n430\t  - **震撼数据**：半天从零搭骨架到能上线给客户看，没有外包、没有美工\n431\t  - **现场演示**：[查看系统](https://bid.csceccloud.net:8443/#/dashboard)\n432\t- **全员实践成果**：\n433\t  - 刘力：智慧养老平台——一个人全栈交付，已部署可演示\n434\t  - 黄天赐：人才服务系统——照片识别自动归档，完整权限体系\n435\t  - 吴迪：水务实时监控大屏——液位/流量/KPI + 趋势预测\n436\t- **给班子的信号**：不是单一项目，是多个业务线同时跑通\n437\t- **给员工的信号**：每个业务线都在用AI——这不是研发部的事\n438\t\n439\t> **演讲备注**：这两个案例在 P10.5 已经详细介绍过，这里可以快速带过，重点强调\"批量突破\"的态势。\n440\t\n441\t#### P20：商务侧的AI突破——最关键的组织变革\n442\t- **王佳男**：商务经理用AI独立建系统\n443\t- **过去**：研发等商务提需求，排期、评审、开发、测试\n444\t- **现在**：商务自己用AI建工具，当天上线、当天使用\n445\t- **关键逆转**：AI不是研发的专利——每个岗位都能用\n446\t- **金句**：\"最懂业务的人，现在最懂AI。\"\n447\t- **现场演示**：U盘拷贝 exe 文件，现场打开运行\n448\t\n449\t> **演讲备注**：这个案例在 P10.5 已经详细介绍过，这里可以快速带过，重点强调\"非程序员也能用AI建系统\"的颠覆性。"
+          },
+          {
+            "id": "call_00_nhMusHrgLMsCZ4bLKl635964",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\assets\\国企AI宣讲-中高层完整版.html",
+              "limit": 30,
+              "offset": 900
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "900\t      <div class=\"org\" style=\"color:var(--green)\">案例二 · 档案系统</div>\n901\t      <h3>一周完成80%功能</h3>\n902\t      <p style=\"margin-top:8px\">黄天赐（研发人员）用AI搭建管理学院档案系统</p>\n903\t      <div class=\"metric-row\" style=\"margin-top:12px\">\n904\t        <div class=\"metric-box\"><div class=\"val red\">2个月</div><div class=\"lbl\">传统流程</div></div>\n905\t        <div class=\"metric-box\"><div class=\"val green\">1周</div><div class=\"lbl\">AI辅助</div></div>\n906\t      </div>\n907\t      <p style=\"font-size:14px;color:var(--ink-muted);margin-top:6px\">业主看到后立即推动合同签订</p>\n908\t    </div>\n909\t    <div class=\"flex-1 case-card\" style=\"border-top-color:var(--accent)\">\n910\t      <div class=\"org\" style=\"color:var(--accent)\">案例三 · 社区运营</div>\n911\t      <h3>一人完成全流程</h3>\n912\t      <p style=\"margin-top:8px\">刘力用AI搭建中建方程社区运营大系统demo</p>\n913\t      <div class=\"metric-row\" style=\"margin-top:12px\">\n914\t        <div class=\"metric-box\"><div class=\"val amber\">1人</div><div class=\"lbl\">团队规模</div></div>\n915\t        <div class=\"metric-box\"><div class=\"val amber\">1周</div><div class=\"lbl\">开发周期</div></div>\n916\t      </div>\n917\t      <p style=\"font-size:14px;color:var(--ink-muted);margin-top:6px\">真正的「全栈」：需求梳理+生成代码</p>\n918\t    </div>\n919\t    <div class=\"flex-1 case-card\" style=\"border-top-color:#8B5CF6\">\n920\t      <div class=\"org\" style=\"color:#8B5CF6\">案例四 · 商务系统</div>\n921\t      <h3>商务经理自己建系统</h3>\n922\t      <p style=\"margin-top:8px\">王佳男（商务经理，非程序员）用WorkBuddy搭建</p>\n923\t      <div class=\"metric-row\" style=\"margin-top:12px\">\n924\t        <div class=\"metric-box\"><div class=\"val\" style=\"color:#8B5CF6\">非程序员</div><div class=\"lbl\">开发者身份</div></div>\n925\t      </div>\n926\t      <p style=\"font-size:14px;color:var(--ink-muted);margin-top:6px\">编码门槛大幅降低，当天上线当天使用</p>\n927\t    </div>\n928\t  </div>\n929\t  <div class=\"quote\" style=\"text-align:center;border-left:none;font-size:28px;margin-top:14px\">"
+          },
+          {
+            "id": "call_01_d8jyNFFGgxURCncvDCmN4456",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\assets\\国企AI宣讲-中高层完整版.html",
+              "limit": 30,
+              "offset": 1210
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "1210\t        <li><strong>os-系列五个项目</strong>：评标→机构治理→项目风控</li>\n1211\t        <li><strong>7步LLM流水线</strong>，~18次LLM调用/项目，<span class=\"num\">3分钟</span>端到端</li>\n1212\t        <li><strong>110+评审规则</strong>全覆盖</li>\n1213\t        <li>即将与集团签约</li>\n1214\t      </ul>\n1215\t    </div>\n1216\t    <div class=\"flex-1\">\n1217\t      <h3 style=\"margin-bottom:12px\">💼 业务线多点突破</h3>\n1218\t      <table style=\"font-size:15px\">\n1219\t        <tr><th style=\"font-size:13px;padding:8px 10px\">项目</th><th style=\"font-size:13px;padding:8px 10px\">亮点</th><th style=\"font-size:13px;padding:8px 10px\">状态</th></tr>\n1220\t        <tr><td><strong>管理学院档案</strong></td><td>一期交付→二期150万</td><td><span class=\"chip chip-green\">推进中</span></td></tr>\n1221\t        <tr><td><strong>首企阳光招采</strong></td><td>成本碾压上市公司</td><td><span class=\"chip chip-green\">已上线</span></td></tr>\n1222\t        <tr><td><strong>智慧养老平台</strong></td><td>刘力一人全栈交付</td><td><span class=\"chip chip-green\">可演示</span></td></tr>\n1223\t        <tr><td><strong>人才服务系统</strong></td><td>照片识别自动归档</td><td><span class=\"chip chip-green\">交付中</span></td></tr>\n1224\t        <tr><td><strong>水务监控大屏</strong></td><td>液位/流量+趋势预测</td><td><span class=\"chip chip-blue\">开发中</span></td></tr>\n1225\t      </table>\n1226\t      <div class=\"card\" style=\"margin-top:16px;padding:16px;background:var(--accent-light)\">\n1227\t        <p style=\"font-size:17px;color:#92400E\"><strong>核心公式：</strong></p>\n1228\t        <p style=\"font-size:20px;font-weight:700;color:var(--primary);margin-top:4px\">你的AI价值 = 专业领域知识 × AI工具能力</p>\n1229\t      </div>\n1230\t    </div>\n1231\t  </div>\n1232\t  <div class=\"quote-sm\">「AI不是降本增效的工具——是拓展业务边界的武器。」</div>\n1233\t  <div class=\"slide-num\">22</div>\n1234\t</div>\n1235\t</section>\n1236\t\n1237\t<!-- P23: 场景速查表 -->\n1238\t<section>\n1239\t<div class=\"slide\" style=\"padding:40px 70px 35px\">"
+          },
+          {
+            "id": "call_02_T9FmT1ndEYisNMoqgSFD2008",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v4.md",
+              "limit": 30,
+              "offset": 240
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "240\t\n241\t#### P28 其他成果速览\n242\t\n243\t- 龙泉驿环卫智能体：7 天 POC，1 人 + Claude Code\n244\t- 中建发展十五五规划知识库\n245\t- 集团制度评审平台（服务中建集团办公厅）\n246\t- 财务计划 AI 审核（服务中建环能）\n247\t- 西南院 AI 投标系统\n248\t\n249\t---\n250\t\n251\t### 全员的 AI 实践（P29-P31）\n252\t\n253\t#### P29 产品研发的 AI 交付 **→ 现场演示**\n254\t\n255\t- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示\n256\t- **黄天赐 · 中建人才服务综合业务系统**：干部人事档案全生命周期管理，照片识别自动归档，完整权限体系，已部署 `arc.csceccloud.net`\n257\t- **吴迪 · 云控恒进水系统**：水务实时监控大屏，液位/流量/泵站 KPI + 24h 趋势 + 12h 预测 + 实时告警，ECharts 可视化\n258\t\n259\t#### P30 商务侧的 AI 突破 **→ 现场演示**\n260\t\n261\t- **王佳男 · 商务系统**：商务经理用 AI 独立搭建，不再依赖研发排期\n262\t- 知识库替代人脑记忆——项目经验可沉淀、可复用\n263\t- 关键逆转：**过去是研发等商务提需求，现在是商务自己用 AI 建工具**\n264\t\n265\t#### P31 AI 注入所有岗位\n266\t\n267\t- 管理层：海外体系 / 管理学院 / 首企阳光 —— 战略拓展\n268\t- 产品研发：智慧养老 / 人才系统 / 水务监控 —— 全栈交付\n269\t- 商务：自建系统 —— 摆脱研发依赖"
+          },
+          {
+            "id": "call_03_Ddjl7fVBExi0wbDWqiQN4021",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v5-统一版.md",
+              "limit": 20,
+              "offset": 220
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "220\t#### P25 海外系统现场演示 **→ 打开系统**\n221\t\n222\t- 快速展示：从上传材料到输出评审意见，3 分钟全流程\n223\t- **演讲备注**：1 分钟，展示即可，不要操作演示\n224\t\n225\t---\n226\t\n227\t### 全员实践（P26-P28，5 分钟）\n228\t\n229\t#### P26 产品研发的 AI 交付\n230\t\n231\t- **刘力**：智慧养老平台——一个人全栈交付，已部署可演示\n232\t- **黄天赐**：人才服务系统——照片识别自动归档，完整权限体系\n233\t- **吴迪**：水务实时监控大屏——液位/流量/KPI +趋势预测\n234\t- **演讲备注**：每句话一个人，快速过\n235\t\n236\t#### P27 商务侧的 AI 突破\n237\t\n238\t- **王佳男**：商务经理用 AI 独立建系统\n239\t- 过去是研发等商务提需求"
+          },
+          {
+            "id": "call_04_b10G4Enh9G9nZdsrR6UV2284",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v4.md.bak",
+              "limit": 30,
+              "offset": 245
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "245\t\n246\t- 龙泉驿环卫智能体：7 天 POC，1 人 + Claude Code\n247\t- 中建发展十五五规划知识库\n248\t- 集团制度评审平台（服务中建集团办公厅）\n249\t- 财务计划 AI 审核（服务中建环能）\n250\t- 西南院 AI 投标系统\n251\t\n252\t---\n253\t\n254\t### 全员的 AI 实践（P26-P28）\n255\t\n256\t#### P26 产品研发的 AI 交付 **→ 现场演示**\n257\t\n258\t- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示\n259\t- **黄天赐 · 中建人才服务综合业务系统**：干部人事档案全生命周期管理（档案入库/转移/查阅/证明信/收费），照片识别自动归档，完整权限体系，已部署 `arc.csceccloud.net`\n260\t- **吴迪 · 云控恒进水系统**：水务实时监控大屏，液位/流量/泵站 KPI + 24h 趋势 + 12h 预测 + 实时告警，ECharts 可视化\n261\t\n262\t#### P27 商务侧的 AI 突破 **→ 现场演示**\n263\t\n264\t- **王佳男 · 商务系统**：商务经理用 AI 独立搭建，不再依赖研发排期\n265\t- 知识库替代人脑记忆——项目经验可沉淀、可复用\n266\t- 关键逆转：**过去是研发等商务提需求，现在是商务自己用 AI 建工具**\n267\t\n268\t#### P28 AI 注入所有岗位\n269\t\n270\t- 管理层：海外体系 / 管理学院 / 首企阳光 —— 战略拓展\n271\t- 产品研发：智慧养老 / 人才系统 / 水务监控 —— 全栈交付\n272\t- 商务：自建系统 —— 摆脱研发依赖\n273\t- 一句话：**不是一个人的觉醒，是一家公司整个能力结构的重塑**\n274\t"
+          },
+          {
+            "id": "call_05_53OdN2Rg3YCScw8TNsOM3855",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v5-全员版.md",
+              "limit": 20,
+              "offset": 170
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "170\t- 过去：几十份文件、五六个部门、上百条规则——人工评审要数周\n171\t- 现在：AI 3 分钟端到端完成，110+ 规则全覆盖\n172\t- **给你的启发**：你手上有没有这类规则明确、重复性高的工作？AI 最擅长的就是这个。\n173\t- **演讲备注**：不用展开技术细节，重点是\"这类工作可以被 AI 替代\"——让听众想到自己的工作\n174\t\n175\t### P21 全员成果速览\n176\t\n177\t- **管理层**：海外体系、档案系统——用 AI 拓展业务边界\n178\t- **产品研发**：刘力的养老平台、黄天赐的人才系统——一个人全栈交付\n179\t- **商务侧**：王佳男自己用 AI 建系统——商务不再依赖研发排期\n180\t- **关键逆转**：过去是研发等商务提需求，现在是商务自己用 AI 建工具\n181\t- **演讲备注**：每句话一个人，快速过。目的是展示\"AI 不是研发的专利，每个岗位都在用\"\n182\t\n183\t### P22 这意味着什么\n184\t\n185\t- 6 个月前：公司用 AI 聊天\n186\t- 现在：公司用 AI 建系统、拿项目、拓边界\n187\t- AI 不是降本增效的工具——是拓展能力的武器\n188\t- **给你带来的好处**：你可以不用等 IT 排期，自己就能解决很多问题\n189\t- **演讲备注**：这是给普通员工的直接利益点——学会 AI = 减少对别人的依赖"
+          },
+          {
+            "id": "call_06_cQ3N87VwZcoDQazYAwy52425",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\log.md",
+              "limit": 15,
+              "offset": 202
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "202\t- 更新: [[index.md]]、[[log.md]]\n203\t- 目标受众: 中建发展总部员工，零基础，落脚 Claude Code + Obsidian 知识库构建\n204\t\n205\t## [2026-04-27] update | 针对性调整 PPT — 融入中建发展业务场景\n206\t- 背景调研:\n207\t  - 搜索中建发展定位、业务、组织架构\n208\t  - 确认目标实体: 中建发展集团有限公司（CSCEC二级子公司，总部北京）\n209\t  - 核心业务: 产业投资、生态环保（中建生态环境/中建环能）、产业数字化（中建电商/中建智能）、绿色低碳/双碳\n210\t  - 战略: \"123N\" — 1个核心+2个聚焦（生态环保+产业数字化）+3支队伍+N家上市公司\n211\t- PPT 调整内容:\n212\t  1. 页数从 35 页扩展到 **40 页**\n213\t  2. **开场破冰**: 加入中建发展元素，用宁夏二泉环境（污水处理企业）案例引发共鸣\n214\t  3. **AI比喻**: 从\"工厂进化\"改为\"建筑行业进化\"\n215\t  4. **新增\"中建发展四大业务×AI\"页**: 投资/环保/数字化/双碳各配 AI 应用场景\n216\t  5. **演示案例全面替换为真实业务场景**:"
+          },
+          {
+            "id": "call_07_NyXGSX9XM3u4NVIADQBg2671",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\outlines\\PPT大纲总览.html",
+              "limit": 15,
+              "offset": 398
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "398\t        <div class=\"page-label\">中建电商·云筑网</div>\n399\t        <div class=\"page-desc\">三大国家级认证（网信办备案·国家数据局典型案例·中建一等奖） · 云智采：采购周期↓40%·成本↓20% · 110万供应商毫秒级匹配</div>\n400\t        <div class=\"jinquote\">「当别的企业还在讨论AI要不要做的时候，云筑网已经把AI做成了建筑行业的国家标准。」</div>\n401\t      </div>\n402\t    </div>\n403\t    <div class=\"page-item\">\n404\t      <div class=\"page-num\">P21</div>\n405\t      <div class=\"page-content\">\n406\t        <div class=\"page-label\">生态·碳科技·环能——AI合作探索</div>\n407\t        <div class=\"page-desc\">生态：运营赋能平台 · 碳科技：能碳方案自动生成 · 环能：财务报表自动审核探索。均在和中建智能合作推进</div>\n408\t        <div class=\"jinquote\">「发展的每个板块都在动——不是等总部发令，是自己在找AI的入口。」</div>\n409\t      </div>\n410\t    </div>\n411\t\n412\t    <!-- 3.6 -->"
+          },
+          {
+            "id": "call_00_hRH1MAMWWvPuTZmFBHDo1391",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\raw\\inbox\\中国建筑发展有限公司通讯录2025.6.13(1)(1).md",
+              "limit": 10,
+              "offset": 54
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "54\t|  贺金相 | -- | 15810907161 | 有限总经理 | 李 彬 | -- | 13219071719 副总经理  |\n55\t|  马森杰 | -- | 13910805806 | 有限总经理 | 说明：本表所列座机号码，均为8808开头号码。公司内部直接所列出4位号码即可 地址：北京市海淀区三里河路15号 中建大厦A座 邮编：100037 总机：010-88082660 公司网站：cacdc.caccc.com 24小时值班电话：13121995867 更新日期：2025.6.13  |   |   |\n56\t|  周 锡 | -- | 15911068701 | 副员工程师  |   |   |   |\n57\t|  邓 逸 | -- | 15210379325 | 章家会秘书  |   |   |   |\n58\t|  中建环能科技股份有限公司  |   |   |   |   |   |   |\n59\t|  徐庆远 | -- | 18611390941 | 党委书记 章家长  |   |   |   |\n60\t|  倪明亮 | -- | -- | 高管家长  |   |   |   |\n61\t|  王哲娟 | -- | 13401019733 | 党委副书记 章家 创建 章家会秘书  |   |   |   |\n62\t|  胡永涛 | -- | 13718718381 | 党委副书记 工会主席  |   |   |   |\n63\t|  叶 鹏 | -- | 13901100051 | 党委委员 副总裁  |   |   |   |"
+          },
+          {
+            "id": "call_01_Mb2dKQXgNAHac35CCaFR9257",
+            "name": "Read",
+            "input": {
+              "file_path": "D:\\Projects\\AI-Report\\ppt\\slides\\架构总览.html",
+              "limit": 10,
+              "offset": 350
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "350\t      <div class=\"layer-pages\">\n351\t        <strong>P20</strong> 中建电商 云筑网 <span style=\"font-size:10px;color:rgba(255,255,255,0.4);\">1页</span><br>\n352\t        <span style=\"font-size:10px\">三个国家级认证 · 采购周期↓40%</span><br>\n353\t        <strong>P21</strong> 中建智能 <span style=\"font-size:10px;color:rgba(255,255,255,0.4);\">1页</span><br>\n354\t        <span style=\"font-size:10px\">海外突破 · 业务线批量 · 组织突破</span><br>\n355\t        <strong>P22</strong> 生态·碳科技·环能 <span style=\"font-size:10px;color:rgba(255,255,255,0.4);\">合1页</span><br>\n356\t        <span style=\"font-size:10px\">都在与智能合作 · 方向预告</span>\n357\t      </div>\n358\t    </div>\n359\t"
+          },
+          {
+            "id": "call_00_JXWEPneE87br4Zg6q7aw9470",
+            "name": "Grep",
+            "input": {
+              "pattern": "中建方程",
+              "path": "D:\\Projects\\AI-Report",
+              "output_mode": "content",
+              "-n": true,
+              "glob": "*.{md,html}"
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "ppt\\assets\\国企AI宣讲-中高层完整版.html:912:      <p style=\"margin-top:8px\">刘力用AI搭建中建方程社区运营大系统demo</p>\nppt\\outlines\\AI-01c-综合版-v4.md:255:- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:225:- **做了什么**：用 AI 辅助搭建中建方程智慧养老平台前端——面向高端 CCRC 社区的智慧化管理平台，覆盖养老业务/物业服务/社区管理/资源管理/运营管理/设备接入中台全链路（Vue3，AI 全程辅助）\nppt\\outlines\\国企AI宣讲-中高层完整版.md:183:- **做了什么**：用 AI 搭建中建方程社区运营大系统 demo"
+          },
+          {
+            "id": "call_01_5Yewnn2ifjTVVrVB5QVs6451",
+            "name": "Grep",
+            "input": {
+              "pattern": "财务.*评审|评审系统",
+              "path": "D:\\Projects\\AI-Report",
+              "output_mode": "content",
+              "-n": true,
+              "glob": "*.{md,html}"
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:938:| **中建环能**  | **财务报表 AI 辅助评审系统**：AI辅助财务合规审查、异常识别、报表审核                                       | 🔥 非常积极推动，与中建智能合作开发中                                                                                           |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1105:| 全域规模化 | 1-2年 | 全场景覆盖 | 规模化价值释放 | 碳科技能碳平台、环能财务评审——多板块复制 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1210:4. **环能口碑**：刘力给环能免费做的财务辅助评审系统，总经理看了说\"太好了，太快了\"。现在后续需求还在接着做。免费是敲门砖——做得好，对方自然想继续。第一单不赚钱，第二单开始赚钱。\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1231:  | 制度评审系统 | 集团办公厅 | 已使用（最近5.26），持续优化 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1233:  | 财务辅助评审 | 中建环能（刘力） | 总经理高度认可，后续合作持续中 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1260:  ② **系统开发底座**：中建智能统一技术底座——认证鉴权、RBAC权限、API网关、容器化部署。碳科技能碳平台、环能财务评审、生态运营赋能三个板块已在此底座运行。新系统不用从零搭建基础设施。"
+          },
+          {
+            "id": "call_02_iK19YCgZgWmCqUZiLxWp9833",
+            "name": "Grep",
+            "input": {
+              "pattern": "养老|CCRC",
+              "path": "D:\\Projects\\AI-Report\\ppt\\outlines",
+              "output_mode": "content",
+              "-n": true,
+              "glob": "*.md"
+            },
+            "status": "completed",
+            "isExpanded": false,
+            "result": "ppt\\outlines\\国企AI宣讲-中高层完整版.md:433:  - 刘力：智慧养老平台——一个人全栈交付，已部署可演示\nppt\\outlines\\AI-01c-综合版-v5-全员版.md:178:- **产品研发**：刘力的养老平台、黄天赐的人才系统——一个人全栈交付\nppt\\outlines\\AI-01c-综合版-v5-统一版.md:231:- **刘力**：智慧养老平台——一个人全栈交付，已部署可演示\nppt\\outlines\\AI-01c-综合版-v4.md:26:| 中建智慧养老平台 | P29 现场演示 | 已部署 |\nppt\\outlines\\AI-01c-综合版-v4.md:255:- **刘力 · 中建方程智慧养老平台**：面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台，Vue3 全栈，已部署可演示\nppt\\outlines\\AI-01c-综合版-v4.md:268:- 产品研发：智慧养老 / 人才系统 / 水务监控 —— 全栈交付\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:171:| **系统** | 人才档案 | 智能评标 | 智慧养老 | 商务管理 | 水务监控 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:225:- **做了什么**：用 AI 辅助搭建中建方程智慧养老平台前端——面向高端 CCRC 社区的智慧化管理平台，覆盖养老业务/物业服务/社区管理/资源管理/运营管理/设备接入中台全链路（Vue3，AI 全程辅助）\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1007:| 刘力 | **产品经理** | 1 周出 29 页养老平台前端，拿去说服政府 | 替代了\"开发工程师\" | 3+ 人月 |\nppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md:1104:| 迭代增效 | 6-12月 | 场景扩容 | 正向ROI成型 | 刘力智慧养老、王佳男商务平台——扩展场景边界 |"
+          }
+        ],
+        "isExpanded": false,
+        "result": "I now have a comprehensive picture. Let me compile the full report.\n\n---\n\n## 完整报告：搜索 \"刘力\"、\"环能\"、\"财务辅助\"、\"康养\"、\"智慧养老\"\n\n### 重要说明：关于搜索词的命中情况\n\n\"**康养**\" 在整个 `D:\\Projects\\AI-Report` 仓库中 **没有命中任何文件**。该术语不存在于当前 vault 中。所有其他四个搜索词都有命中。\n\n---\n\n### 第 1 部分：每个文件/行的发生位置\n\n#### 一、关键词 \"刘力\"\n\n| # | 文件 (绝对路径) | 行号 | 上下文摘要 |\n|---|---|---|---|\n| 1 | `D:\\Projects\\AI-Report\\index.md` | 174 | 更新日志：PPT v4 \"融入刘力/黄天赐/吴迪/王佳男等同事成果\" |\n| 2 | `D:\\Projects\\AI-Report\\ppt\\assets\\国企AI宣讲-中高层完整版.html` | 912 | \"刘力用AI搭建中建方程社区运营大系统demo\" |\n| 3 | `D:\\Projects\\AI-Report\\ppt\\assets\\国企AI宣讲-中高层完整版.html` | 1222 | \"智慧养老平台 -- 刘力一人全栈交付 -- 可演示\" |\n| 4 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版.md` | 182 | \"谁：刘力（研发人员）\" (案例三) |\n| 5 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版.md` | 433 | \"刘力：智慧养老平台——一个人全栈交付\" |\n| 6 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 168 | 五人对比表 (黄天赐/王桂平/刘力/王佳男/吴迪) |\n| 7 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 180 | 演讲前检查：刘力 - VPN/内网 http://223.71.143.154:39001 |\n| 8 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 218 | \"P10：案例三 · 刘力——产品经理出前端，1周说服政府\" |\n| 9 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 224 | \"谁：刘力（产品经理，不会写代码，1人）\" |\n| 10 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 271 | 规律对比表 — 刘力列 |\n| 11 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 283 | \"刘力（产品经理）补开发\" — 角色边界融化 |\n| 12 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 1007 | 刘力：产品经理 → 1周出29页前端 → 替代开发工程师 |\n| 13 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 1011 | \"刘力不会写代码 — AI把每个人的能力缺口填上了\" |\n| 14 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 1104 | \"刘力智慧养老……扩展场景边界\" |\n| 15 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 1192 | \"环能评审：刘力免费做。环能总经理：太好了，太快了\" |\n| 16 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 1210 | \"刘力给环能免费做的财务辅助评审系统\" |\n| 17 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 1233 | \"财务辅助评审 — 中建环能（刘力）\" |\n| 18 | `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v5-统一版.md` | 231 | \"刘力：智慧养老平台——一个人全栈交付\" |\n| 19 | `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v5-全员版.md` | 178 | \"刘力的养老平台……一个人全栈交付\" |\n| 20 | `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v4.md.bak` | 258 | \"刘力 · 中建方程智慧养老平台\" |\n| 21 | `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v4.md` | 255 | \"刘力 · 中建方程智慧养老平台\" |\n\n#### 二、关键词 \"环能\"\n\n| # | 文件 | 行号 | 上下文 |\n|---|---|---|---|\n| 1 | `D:\\Projects\\AI-Report\\log.md` | 209 | 核心业务包含\"中建环能\" |\n| 2 | `D:\\Projects\\AI-Report\\raw\\inbox\\中国建筑发展有限公司通讯录2025.6.13(1)(1).md` | 58 | \"中建环能科技股份有限公司\" (含徐庆远、倪明亮等人) |\n| 3 | `D:\\Projects\\AI-Report\\ppt\\slides\\架构总览.html` | 355 | \"P22 生态·碳科技·环能 (合1页)\" |\n| 4-18 | `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` | 900, 930, 932, 938(环能财务评审), 940, 1105, 1192, 1210, 1233, 1247, 1260 | 多个位置，详见下文 |\n| 19 | `D:\\Projects\\AI-Report\\ppt\\outlines\\PPT大纲总览.html` | 406-407 | \"生态·碳科技·环能——AI合作探索 … 环能：财务报表自动审核探索\" |\n| 20-22 | `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v4.md` | 246; 也见于.bak在249 | \"财务计划 AI 审核（服务中建环能）\" |\n| 23-26 | `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01-AI入门与知识库构建.md.bak` | 899, 905, 907 | 中建环能公司介绍、专利、专精特新 |\n\n#### 三、关键词 \"财务辅助\"\n\n仅在两处明确出现这两个汉字：\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` 第 1210 行：\"刘力给环能免费做的财务辅助评审系统\"\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` 第 1233 行：表格中的 \"财务辅助评审 — 中建环能（刘力）\"\n\n此外，该系统的上位描述是\"财务报表 AI 辅助评审系统\"（第 938 行），\"财务计划 AI 审核（服务中建环能）\"（v4 和 AI-01 文件）。\n\n#### 四、关键词 \"智慧养老\"\n\n除了前述刘力相关的行之外，提及此项目的文件和行号包括：\n- `D:\\Projects\\AI-Report\\index.md` 第 127 行（演示链接列表）\n- `D:\\Projects\\AI-Report\\ppt\\assets\\国企AI宣讲-架构图.html` 第 415 行\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v4.md` 第 26、255、268 行\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v4.md.bak` 第 258、271 行\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v5-统一版.md` 第 231 行\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01c-综合版-v5-全员版.md` 第 178 行\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版.md` 第 433 行\n- `D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md` 多处（第 171、225、1007、1104 行）\n\n---\n\n### 第 2 部分：这些文件是否描述了相同的故事还是不同的故事\n\n**它们都描述了中建智能内部同一组相互关联的真实故事**（有两段不同的叙事弧线），属于同一个 PPT/宣讲生态系统。它们不是独立的项目——它们是不同版本、不同受众的同一组宣讲材料，反复交叉引用相同的案例。\n\n具体来说，这些材料包含了 **两个关于刘力的故事**：\n\n#### 故事 A：刘力的\"智慧养老平台\"\n\n- **在哪个文件**：所有五个主要的 .md 提纲文件 + HTML 资产文件\n- **是什么**：刘力（产品经理，不会写代码）使用 AI 在 1 周内构建了\"中建方程智慧养老平台\"前端——29 页，Vue3，面向高端 CCRC 社区，覆盖养老业务/物业服务/社区管理/设备接入中台。它部署在内网 `223.71.143.154:39001` 上，可向政府演示。\n- **项目名称差异**：在同一个版本之间称为：\n  - \"中建方程智慧养老平台\"（详细版、v4、v5）\n  - \"中建方程社区运营大系统 demo\"（在 `国企AI宣讲-中高层完整版.md` 第 183 行和其 `.html` 资产中）\n  - 这是 **同一个系统**，但在较简单的提纲中被简化概括——\"社区运营大系统\"是这个项目的更高层/更业务侧的描述。这种命名差异是合理的等效描述，但**此处存在细微矛盾**——`国企AI宣讲-中高层完整版.md`（第 182 行）将刘力描述为\"研发人员\"，而详细版（第 224 行）则明确表示他是\"产品经理，不会写代码\"。见下方矛盾。\n\n#### 故事 B：刘力的\"环能财务辅助评审系统\"\n\n- **仅在以下文件中找到**：`D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md`（第 930-940, 1192, 1210, 1233, 1260 行），以及 `AI-01c-综合版-v4.md`（第 246 行 \"财务计划 AI 审核 服务中建环能\"）\n- **是什么**：刘力免费为中建环能构建了一个财务报表 AI 辅助评审系统。环能总经理说：\"太好了，太快了\"。后续需求在跟进中。这是一个与\"智慧养老平台\"不同的项目，为不同的客户（环能 vs. 方程）解决不同的问题（财务评审 vs. 养老运营管理）。\n- **在 `AI-01c-综合版-v4.md` 中提及**为\"财务计划 AI 审核（服务中建环能）\"（与其他 5 个速览项目并列），在 `AI-01c-综合版-v4.md.bak`（第 249 行）中重复。该 .bak 文件中没有\"环能财务评审\"的详细故事，并**没有**出现在 `ppts\\outlines\\AI-01c-综合版-v5-统一版.md` 或 `v5-全员版.md` 中——它在 v5 迭代中从速览列表中被删除。\n\n---\n\n### 第 3 部分：跨文件发现的矛盾\n\n**矛盾 1：刘力的角色/身份**\n\n| 文件 | 描述 |\n|---|---|\n| `国企AI宣讲-中高层完整版.md` 第 182 行 | **\"刘力（研发人员）\"** |\n| `国企AI宣讲-中高层完整版-详细版.md` 第 224 行 | **\"刘力（产品经理，不会写代码，1人）\"** |\n| `国企AI宣讲-中高层完整版.html` 第 912 行 | 没有任何角色标签（仅提到\"刘力\"） |\n\n结论：完整版 `.md` 将刘力归类为\"研发人员\"，但详细版（该文件后面的同一故事）特意将他归类为\"产品经理\"并强调他\"不会写代码\"。在详细版第 1007 行的表格中，刘力的角色也是\"产品经理\"。**简版 `.md` 是错误的或不精确的——详细版提供了准确、一致的叙述**（产品经理，非研发人员）。HTML 版本 `国企AI宣讲-中高层完整版.html` 在第 912 行没有赋予角色，所以没有矛盾。\n\n**矛盾 2：项目名称不一致**\n\n| 来源 | 项目名称 |\n|---|---|\n| `国企AI宣讲-中高层完整版.md` 第 182-183 行 | \"中建方程社区运营大系统 demo\" |\n| `国企AI宣讲-中高层完整版-详细版.md` 第 225 行 | \"中建方程智慧养老平台\"（29 页，CCRC，7 大模块） |\n| `AI-01c-综合版-v4.md` 第 255 行 | \"刘力 · 中建方程智慧养老平台\" |\n| `ppt/assets/国企AI宣讲-中高层完整版.html` 第 912 行 | \"中建方程社区运营大系统 demo\" |\n\n这是 **同一个项目**，但命名不同。`国企AI宣讲-中高层完整版.md` 和其 `.html` 渲染文件将其概括为\"社区运营大系统\"，而所有详细版本（详细版、v4、v5）都精确地称之为\"智慧养老平台\"。\"社区运营大系统\"可能是该项目面向高层管理的更广泛名称，而\"智慧养老平台\"是其明确的领域。这不是一个真正的矛盾——这是同样范围的粗略概括与精确描述——但如果有听众看到两份材料，可能会造成混淆。\n\n**矛盾 3：环能财务评审系统在 v5 中的缺失**\n\n在 `AI-01c-综合版-v4.md`（第 246 行）中，\"财务计划 AI 审核（服务中建环能）\"被列为\"其他成果速览\"中的 5 个项目之一。然而，在 `AI-01c-综合版-v5-统一版.md` 和 `AI-01c-综合版-v5-全员版.md` 中，环能项目**完全消失**——根本没有提及。它仅作为\"环能评审\"和\"环能财务评审\"的详细故事保留在 `国企AI宣讲-中高层完整版-详细版.md` 中。这是**内容衰减**：一个项目在 v4 中存在，但在 v5 中被移除，同时在另一个独立的提纲文件中保留为一个完整（且高度赞许）的详细故事。\n\n**矛盾 4：P7 案例对比表中刘力的\"传统估时\"与详细矛盾**\n\n- 刘力的表格条目（`国企AI宣讲-中高层完整版-详细版.md` 第 168-175 行）使用的对比为：AI 耗时 1 周，传统估时 3+ 人月。这与描述（第 224-228 行）一致：1 周 vs 传统 3+ 人月。\n- 第 1007 行的同一对比表说：1 周 AI，**传统 3+ 人月**。两者一致。**这里没有矛盾**。\n\n---\n\n### 第 4 部分：附加文件及发现\n\n1. **`D:\\Projects\\AI-Report\\raw\\inbox\\中国建筑发展有限公司通讯录2025.6.13(1)(1).md`** 第 58-63 行 -- 列出中建环能的高级管理层（徐庆远、倪明亮、王哲娟、胡永涛、叶鹏）。这是公司地址簿，不包含故事；它提供了\"环能\"提到的上下文信息，作为中建发展旗下的一个子公司。\n\n2. **`D:\\Projects\\AI-Report\\ppt\\outlines\\PPT大纲总览.html`** 第 406-407 行 -- \"生态·碳科技·环能——AI合作探索。生态：运营赋能平台 · 碳科技：能碳方案自动生成 · 环能：财务报表自动审核探索。均在和中建智能合作推进。\"\n\n3. **`D:\\Projects\\AI-Report\\ppt\\slides\\架构总览.html`** 第 355 行 -- 确认幻灯片的架构映射：P22 将生态、碳科技和环能合并为一页。\n\n4. **`D:\\Projects\\AI-Report\\ppt\\outlines\\国企AI宣讲-中高层完整版-详细版.md`** 第 900 行 -- 明确的章节定位：\"生态/碳科技/环能合1页。说得谦逊、扎实，不铺张。\"\n\n5. **`D:\\Projects\\AI-Report\\ppt\\outlines\\AI-01-AI入门与知识库构建.md.bak`** -- 包含中建环能的公司数据（232 项专利，61 项发明专利，国家科技进步二等奖）。这是背景/行业信息，而非项目叙事。\n\n---\n\n### 总结表\n\n| 故事 | 关键词 | 出现于哪些文件 | 描述 |\n|---|---|---|---|\n| **刘力的智慧养老平台** | 刘力, 智慧养老, 中建方程 | 所有主要 ppt 提纲文件 + 所有 HTML 资产 | 产品经理用 AI 构建智慧养老平台前端（29 页） |\n| **刘力的环能财务辅助评审系统** | 刘力, 环能, 财务辅助, 评审 | 仅在详细版 `国企AI宣讲-中高层完整版-详细版.md` + 部分提及于 v4 .bak | 为中建环能构建的财务评审系统；免费完成；总经理高度认可 |\n| **中建环能公司简介** | 环能 | `log.md`, `AI-01入门...bak`, `通讯录` | 公司背景信息，非项目叙事 |\n\n**整体结论**：这些文件是同一组 PPT 宣讲材料的多个版本（完整版、详细版、v4、v5、统一版、全员版）——它们都描述了中建智能内部同事在 AI 驱动开发方面的真实案例。刘力在两个独立的故事中出现：智慧养老平台（主要故事，出现在所有版本中）和环能财务辅助评审系统（次要故事，仅出现在详细版和 v4 中，在 v5 中缺失）。所报告的两个问题——刘力的角色在完整版中错误地被归类为\"研发人员\"而非\"产品经理\"，以及环能项目在 v5 中从速览列表中消失——是影响叙述一致性的编辑问题。\n\n未找到与\"**康养**\"相关的文件。"
+      }
+    }
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-中高层完整版-详细版.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 69,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 158464,
+    "contextWindow": 1000000,
+    "contextTokens": 158533,
+    "percentage": 16
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781228776143-wolkbfun9",
+  "providerId": "claude",
+  "title": "央企AI考核指标体系",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1781228776143,
+  "updatedAt": 1781484644142,
+  "lastResponseAt": 1781321119468,
+  "sessionId": "bca800f2-87dd-4191-b6f2-1cbb6ce2bf0e",
+  "providerState": {
+    "providerSessionId": "bca800f2-87dd-4191-b6f2-1cbb6ce2bf0e"
+  },
+  "currentNote": "wiki/synthesis/国企AI宣讲-政策锚定.md",
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 681,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 109440,
+    "contextWindow": 1000000,
+    "contextTokens": 110121,
+    "percentage": 11
+  }
+}

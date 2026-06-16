@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>LW-02 劳动力调度优化 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: var(--slate-800);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+/* ===== Hero Header ===== */
+.hero {
+  background: var(--grad-header);
+  padding: 28px 20px 16px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.hero-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--grad-green);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(67,160,71,0.45);
+}
+.hero-badge .num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero-badge .unit {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+.hero-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-judgment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 16px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Dimension Score Strip ===== */
+.dim-strip {
+  background: #fff;
+  margin: -12px 12px 16px;
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.dim-strip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.dim-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label {
+  width: 76px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+  flex-shrink: 0;
+}
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+.dim-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-align: right;
+  flex-shrink: 0;
+}
+  min-width: 26px;
+  text-align: right;
+}
+
+/* ===== Content Area ===== */
+.content {
+  padding: 16px 16px 0;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--slate-100);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.card h2 .emoji-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+.card h3:first-child { margin-top: 0; }
+.card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 8px;
+  margin-top: 4px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--slate-600);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+
+/* ===== Tag Pills ===== */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* ===== Verdict Badge ===== */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--slate-700);
+  margin-bottom: 12px;
+}
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box .sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+
+/* ===== Table ===== */
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 8px 6px 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+  color: var(--slate-600);
+}
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+
+/* ===== Summary Strip Progress Bar ===== */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.summary-strip .strip-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.summary-strip .strip-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--slate-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.summary-strip .strip-bar .strip-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.summary-strip .strip-val {
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Progress Bar (inline) ===== */
+.progress-strip {
+  height: 6px;
+  background: var(--slate-100);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-strip .fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ===== LTV Grid ===== */
+.ltv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ltv-card {
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid var(--slate-100);
+  text-align: center;
+}
+.ltv-card .lc-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-bottom: 4px;
+}
+.ltv-card .lc-val {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-sub {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Injury Table ===== */
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.injury-table table td:nth-child(2) { color: var(--slate-600); }
+.hs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.hs-0 { background: var(--green); }
+.hs-2 { background: var(--amber); }
+
+/* ===== Assumption Card ===== */
+.assumption-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+.assumption-item .ai-text .ai-meta {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Sensitivity ===== */
+.sens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.sens-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+.sens-item .si-label {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.sens-item .si-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 2px;
+}
+.sens-item .si-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+
+/* ===== Action Card ===== */
+.action-card {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.action-card .ac-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.action-card .ac-desc {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* ===== Check List ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== Synergy Box ===== */
+.synergy-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--slate-700);
+}
+
+/* ===== Phase Bar ===== */
+.phase-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.phase-bar .phase {
+  flex: 1;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.phase-bar .phase .ph-time {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.phase-bar .phase .ph-label {
+  font-size: 10px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+
+/* ===== Callout ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--slate-50);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+
+/* ===== Dir Dot ===== */
+.dir-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.dir-dot.blue { background: var(--blue); }
+
+/* ===== Back Link ===== */
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  padding: 10px;
+  color: var(--slate-400);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.back-link:hover {
+  color: var(--blue);
+  background: var(--slate-50);
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+.footer .brand {
+  color: var(--slate-300);
+  margin-top: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .dim-item .dim-bar { width: 36px; }
+  .dim-item { font-size: 10px; }
+  .ltv-grid { grid-template-columns: 1fr; }
+  .sens-grid { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== Hero Header ===== -->
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; LW-02</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">76</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">劳动力调度优化</div>
+  <div class="hero-sub">中建电商 + 云筑网</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">&#x2705;</span> 可推进（需优先验证付费意愿和数据打通可行性）
+  </div>
+</div>
+
+<!-- ===== Dimension Score Strip ===== -->
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 · 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:72%"></div></div>
+      <span class="dim-score">13/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:82%"></div></div>
+      <span class="dim-score">14/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:65%"></div></div>
+      <span class="dim-score">11/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:76%"></div></div>
+      <span class="dim-score">13/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:88%"></div></div>
+      <span class="dim-score">14/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:93%"></div></div>
+      <span class="dim-score">14/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:30%"></div></div>
+      <span class="dim-score">-3/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Content ===== -->
+<div class="content">
+
+  <!-- ===== 预判摘要 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box green-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-yellow">6/20 中风险</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">关键致命伤</span>
+        <span style="font-weight:600;color:var(--slate-700);">无 P0 级硬伤</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">团队/运营风险</span>
+        <span style="font-weight:600;color:var(--slate-700);font-size:13px;">#20 运营复杂度（3/5 — 跨项目数据打通难度高）</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge va">&#x26A0;&#xFE0F; 谨慎推进（需优先验证付费意愿和数据打通可行性）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 行业预判六模块 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：数据源层（实名制考勤/技能标签/项目进度/工价）&#x2192; 算法平台层（调度算法引擎/人岗匹配/工期预测/成本优化）&#x2192; 应用层（项目级排班SaaS/跨项目调配/供需监测/劳动力市场）&#x2192; 终端用户（项目经理/劳务公司/政府/金融机构）</p>
+    <p><strong>利润分配（100元）</strong>：工人工资 65-70% | 劳务公司管理费 10-15%（毛利 15-25%）| 窝工闲置浪费 18-22% | 调度管理成本 3-5%</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">数据资产型</span> — 1400万+工人实名制数据</p>
+    <p><strong>可优化</strong>：窝工/闲置浪费率 18%-22%</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>需求侧</td><td>从业人数两年流失超1600万</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>需求侧</td><td>用工荒与工人闲置并存</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>供给侧</td><td>工人老龄化50岁以上42%</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>新技术</td><td>A3C强化学习+遗传算法，工期压缩12%</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>新技术</td><td>大语言模型多班组调度仿真</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>政策法规</td><td>实名制强制考勤</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>政策法规</td><td>专户发薪制度</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>判断：系统性变化，但行业在萎缩</strong> — 供需两端均有结构性变化，但建筑行业整体下行是主要风险。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <p><strong>原子需求</strong>：总包项目经理排班（3-8万/年）| 跨班组调配（含订阅）| 劳务公司多项目调配（2-5万/年）| 用工需求预测（含企业版）</p>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>从"包工头经验驱动"转向"AI数据驱动" — 实名制数据积累 &#x2192; 调度算法训练 &#x2192; 窝工率下降 &#x2192; 项目经理采纳 &#x2192; 数据闭环增强。
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">数据层潜在主导者</span> — 1400万+工人实名制数据是核心资产。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索期。窗口 <strong>3-5 年</strong>。</p>
+    <p><span class="dir-dot yellow"></span><strong>太早风险</strong>：<span class="tag tag-yellow">中等</span> — 市场教育成本高，项目经理习惯经验派工</p>
+    <p><span class="dir-dot green"></span><strong>太晚风险</strong>：<span class="tag tag-green">中低</span> — 竞品尚未形成数据壁垒</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>全球建筑装饰用工平台 74.18亿&#x2192;103.1亿</td></tr>
+        <tr><td>Top-down</td><td>31万亿 &#x00D7; 20% &#x00D7; 5-10% = 3100-6200亿</td></tr>
+        <tr><td>Bottom-up</td><td>5000项目 &#x00D7; 20万 = 10亿</td></tr>
+        <tr><td>类比</td><td>筑链云 56.6亿</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：<span class="tag tag-green">50-150亿元</span>（SaaS收入口径）。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：极其分散</p>
+    <p><strong>趋势</strong>：<span class="tag tag-green">C型（分散&#x2192;集中）最佳时机</span> — 数据+算法构成双重壁垒，谁先跑通数据闭环谁赢。</p>
+    <p><strong>策略</strong>：利用中建体系内数据优势快速做深，形成行业标准。</p>
+    <div class="callout callout-yellow">
+      <strong>行业预判结论：</strong>&#x1F7E1; 5 模块通过，行业在萎缩是主要扣分项。
+    </div>
+  </div>
+
+  <!-- ===== 五步法逐层分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：总包项目经理 + 劳务公司调度员</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>日常排班</td><td>依赖包工头经验，窝工率18-22%</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+        <tr><td>跨班组调配</td><td>项目间人力不均，闲置与短缺并存</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+        <tr><td>多项目调配</td><td>劳务公司管理5-10个项目，调度靠Excel</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+        <tr><td>用工需求预测</td><td>无法提前预判各工种需求量</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>需求评估三角形</strong>：<span class="tag tag-yellow">优化型</span> 锦上添花 · <span class="tag tag-yellow">高频</span> 每日排班 · <span class="tag tag-green">广泛</span> 全行业适用
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>传统排班靠包工头经验，我们是<strong>"1400万+工人数据 + 强化学习调度算法"</strong> — 用数据派工替代经验派工，精准匹配人岗、压缩窝工。
+    </div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"包工头用经验派工，我们用数据派工。"</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>项目级AI排班</td><td>考勤打卡硬件</td></tr>
+        <tr><td>跨班组智能调配</td><td>劳务交易撮合</td></tr>
+        <tr><td>工期预测与优化</td><td>全流程项目管理</td></tr>
+        <tr><td>用工需求预测</td><td>C端工人接单</td></tr>
+      </table>
+    </div>
+    <p><strong>MVP</strong>：1个工程局 3-5 个项目验证，考勤数据做AI排班 vs 人工排班回测对比</p>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户 ToB SaaS</span> — 按项目年订阅</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>中建体系内（230项目&#x00D7;15万）</td><td>3000万</td></tr>
+        <tr><td>外部大型企业</td><td>600万</td></tr>
+        <tr><td>劳务公司</td><td>300万</td></tr>
+        <tr><td>需求预测报告</td><td>250万</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--green);font-size:15px;"><strong>4150万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:65%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">65%</span>
+    </div>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">LTV / CAC</div>
+        <div class="lc-val green">5.0</div>
+        <div class="lc-sub">&#x2705; 健康</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">CAC 回收期</div>
+        <div class="lc-val green">4月</div>
+        <div class="lc-sub">&#x2705; 快速回收</div>
+      </div>
+    </div>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式</span> — 数据积累越多算法越准，切换成本递增</p>
+    <div class="phase-bar">
+      <div class="phase blue">
+        <div class="ph-time">0-6月</div>
+        <div class="ph-label">商业验证</div>
+      </div>
+      <div class="phase amber">
+        <div class="ph-time">6-18月</div>
+        <div class="ph-label">增长早期</div>
+      </div>
+      <div class="phase green">
+        <div class="ph-time">18-36月</div>
+        <div class="ph-label">加速增长</div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>中建体系内推广</td><td>0</td></tr>
+        <tr><td>2</td><td>云筑网现有客户</td><td>2-3万</td></tr>
+        <tr><td>3</td><td>行业协会/政府</td><td>4-6万</td></tr>
+        <tr><td>4</td><td>劳务公司</td><td>3-4万</td></tr>
+        <tr><td>5</td><td>内容营销</td><td>6-10万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>数据资产</strong></td><td>1400万+工人实名制数据 — 竞品无法获取</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>规模效应</strong></td><td>数据越多算法越准，边际成本趋零</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>转化成本</strong></td><td>项目级定制排班方案，切换需重新训练</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>技术壁垒</strong></td><td>A3C强化学习+遗传算法调度引擎</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>中建品牌背书+行业标准参与</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：广联达 <span class="tag tag-yellow">2-3年</span> | 筑链云 <span class="tag tag-yellow">2-3年</span> | 新进入者 <span class="tag tag-red">极难</span></p>
+  </div>
+
+  <!-- ===== 20张硬伤卡牌 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:30%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">6/20</span>
+    </div>
+    <div class="callout callout-yellow" style="margin-bottom:10px;">
+      <strong>结论：</strong>中风险，15项未命中，4项轻微扣分，#20为主要风险项（3/5）。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1</td><td>目标用户不清</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>2</td><td>痛点不痛</td><td><span class="hs hs-2">1</span></td><td><span class="tag tag-yellow">轻微</span></td></tr>
+        <tr><td>3</td><td>使用频率低</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td>4</td><td>用户验证不足</td><td><span class="hs hs-2">2</span></td><td><span class="tag tag-yellow">需补充验证</span></td></tr>
+        <tr><td>5-12</td><td>本质区别/卖点/功能/MVP/单元模型/CAC-LTV/毛利/基准</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>13</td><td>获客渠道不清</td><td><span class="hs hs-2">1</span></td><td><span class="tag tag-yellow">轻微</span></td></tr>
+        <tr><td>14-18</td><td>人肉/增长引擎/护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-2">1</span></td><td><span class="tag tag-yellow">轻微</span></td></tr>
+        <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度</td><td style="background:#fffbeb;"><span class="hs hs-2">3</span></td><td style="background:#fffbeb;"><span class="tag tag-red">主要风险 &#x26A0;</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 关键假设清单 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H1：窝工率可通过AI消除的比例</div>
+        <div class="ai-meta">试点对比 &nbsp;|&nbsp; 标准：AI排班窝工率&#x2264;10%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H3：AI排班方案可执行</div>
+        <div class="ai-meta">访谈+试点 &nbsp;|&nbsp; 标准：&#x2265;70%采纳</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H9：工人数据合规可用于调度</div>
+        <div class="ai-meta">法律审查 &nbsp;|&nbsp; 标准：合规意见书</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H2：项目经理愿意切换到AI推荐</div>
+        <div class="ai-meta">行为观察 &nbsp;|&nbsp; 标准：AI使用率&#x2265;60%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H4：跨项目数据打通可行</div>
+        <div class="ai-meta">技术POC &nbsp;|&nbsp; 标准：&#x2265;3个项目打通</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H5：项目愿意付费15万/年</div>
+        <div class="ai-meta">内部调研 &nbsp;|&nbsp; 标准：&#x2265;50个项目</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H7：项目经理采纳AI推荐</div>
+        <div class="ai-meta">试点观察 &nbsp;|&nbsp; 标准：采纳率&#x2265;60%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H6：外部企业愿意接入</div>
+        <div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&#x2265;5家</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H8：外部央企愿意接入</div>
+        <div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&#x2265;2家</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 敏感性分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观(+20%)</th><th>悲观(-20%)</th></tr>
+        <tr><td>窝工率优化</td><td>降至10%</td><td>8%</td><td>14%</td></tr>
+        <tr><td>项目数</td><td>230个</td><td>276&#x2192;4980万</td><td>184&#x2192;3320万</td></tr>
+        <tr><td>客单价</td><td>15万</td><td>18万</td><td>12万</td></tr>
+        <tr><td>采纳率</td><td>70%</td><td>85%</td><td>55%</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">项目经理采纳率</span> — 直接决定付费意愿和续约率</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">建筑行业AI劳动力调度SaaS</div>
+        <div class="si-desc">中建体系内验证&#x2192;外部央企推广&#x2192;劳务公司覆盖&#x2192;行业平台</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年4150万，第5年1.5亿+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">劳动力调度数据产品</div>
+        <div class="si-desc">不做调度引擎，只输出用工需求预测报告</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年500万/年</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>：窝工率优化 &lt; 5个百分点 | 采纳率 &lt; 40% | 数据合规不通过
+    </div>
+  </div>
+
+  <!-- ===== 下一步行动 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">在中建体系内选1个工程局1个项目，用考勤数据做AI排班 vs 人工排班回测对比。</div>
+    </div>
+    <ul class="check-list">
+      <li>选取1个在建项目的近3个月考勤+排班数据</li>
+      <li>用强化学习+遗传算法做AI排班方案</li>
+      <li>对比AI排班与实际人工排班的窝工率差异</li>
+    </ul>
+    <div class="summary-strip">
+      <span class="strip-label">成功标准</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:60%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">&#x2264;12%</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">成本：3周 + 1名算法工程师 | 目标：AI排班窝工率&#x2264;12%，较人工降低&#x2265;6个百分点</p>
+  </div>
+
+  <!-- ===== 协同关系 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F517;</span> 与 LW-01 协同关系</h2>
+    <p>LW-02（劳动力调度优化）和 LW-01 是<strong>天然上下游关系</strong>：</p>
+    <div class="synergy-box">数据层（共享）
+  &#x2514;&#x2500;&#x2500; 1400万+工人实名制数据 + 项目进度数据
+        &#x2502;
+        &#x251C;&#x2500;&#x2500;&#x2192; LW-01 上游场景
+        &#x2502;      需求预测 / 供需匹配 / 市场监测
+        &#x2502;
+        &#x2514;&#x2500;&#x2500;&#x2192; LW-02 下游执行
+              项目级排班 / 跨项目调配 / 成本优化</div>
+    <p><strong>组合效应</strong>：LW-01预测用工需求 &#x2192; LW-02做精准排班调度；LW-01监测劳动力市场供需 &#x2192; LW-02优化跨项目调配；共享数据中台，分层服务。</p>
+    <div class="callout callout-green">
+      <strong>建议：</strong>共享数据底座，LW-01侧重"预测"，LW-02侧重"执行"。<span class="tag tag-green">两者协同可形成建筑行业劳动力管理完整闭环。</span>
+    </div>
+  </div>
+
+  <!-- ===== 返回链接 ===== -->
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>LW-02 劳动力调度优化 · 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 · 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

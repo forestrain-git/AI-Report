@@ -1,0 +1,24 @@
+{
+  "id": "conv-1781145204970-uy3lzbuxx",
+  "providerId": "claude",
+  "title": "Analyze policy anchor section placement",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781145204970,
+  "updatedAt": 1781150107791,
+  "lastResponseAt": 1781148844578,
+  "sessionId": "adc7944e-9890-4245-9699-d13508ba28e1",
+  "providerState": {
+    "providerSessionId": "adc7944e-9890-4245-9699-d13508ba28e1"
+  },
+  "currentNote": "ppt/outlines/国企AI宣讲-逐页提示词-PPT生成用.md",
+  "usage": {
+    "model": "haiku",
+    "inputTokens": 93997,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 93696,
+    "contextWindow": 200000,
+    "contextTokens": 187693,
+    "percentage": 94,
+    "contextWindowIsAuthoritative": true
+  }
+}

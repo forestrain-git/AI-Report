@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781536175550-pzaapgulv",
+  "providerId": "claude",
+  "title": "中建发展中AI软件方面的选择，你全面回顾，梳理出一个逻辑，我要把它做到file:///D:/Proj...",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1781536175550,
+  "updatedAt": 1781569232551,
+  "lastResponseAt": 1781537968450,
+  "sessionId": "203185ae-c766-4871-9401-013a77556b5d",
+  "providerState": {
+    "providerSessionId": "203185ae-c766-4871-9401-013a77556b5d"
+  },
+  "currentNote": "wiki/synthesis/中建发展AI软件机会研判/行动清单-未来品类五步法.md",
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 810,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 108608,
+    "contextWindow": 1000000,
+    "contextTokens": 109418,
+    "percentage": 11
+  }
+}

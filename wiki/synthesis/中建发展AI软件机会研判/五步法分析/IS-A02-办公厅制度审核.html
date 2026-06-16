@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IS-A02 办公厅制度审核 · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: var(--slate-800);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+/* ===== Hero Header ===== */
+.hero {
+  background: var(--grad-header);
+  padding: 28px 20px 16px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.hero-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--grad-yellow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(239,108,0,0.45);
+}
+.hero-badge .num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero-badge .unit {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+.hero-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-judgment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 16px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Dimension Score Strip ===== */
+.dim-strip {
+  background: #fff;
+  margin: -12px 12px 16px;
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.dim-strip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.dim-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label {
+  width: 76px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+  flex-shrink: 0;
+}
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+.dim-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ===== Content Area ===== */
+.content {
+  padding: 16px 16px 0;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--slate-100);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.card h2 .emoji-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+.card h3:first-child { margin-top: 0; }
+.card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 8px;
+  margin-top: 4px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--slate-600);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+
+/* ===== Tag Pills ===== */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* ===== Verdict Badge ===== */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--slate-700);
+  margin-bottom: 12px;
+}
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box.yellow-border { border-left: 3px solid var(--amber); }
+.summary-box .sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+
+/* ===== Table ===== */
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 8px 6px 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+  color: var(--slate-600);
+}
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+
+/* ===== Summary Strip Progress Bar ===== */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.summary-strip .strip-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.summary-strip .strip-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--slate-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.summary-strip .strip-bar .strip-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.summary-strip .strip-val {
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Progress Bar (inline) ===== */
+.progress-strip {
+  height: 6px;
+  background: var(--slate-100);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-strip .fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ===== LTV Grid ===== */
+.ltv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ltv-card {
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid var(--slate-100);
+  text-align: center;
+}
+.ltv-card .lc-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-bottom: 4px;
+}
+.ltv-card .lc-val {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-val.amber { color: var(--amber); }
+.ltv-card .lc-sub {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Injury Table ===== */
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.injury-table table td:nth-child(2) { color: var(--slate-600); }
+.hs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.hs-0 { background: var(--green); }
+.hs-2 { background: var(--amber); }
+
+/* ===== Assumption Card ===== */
+.assumption-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+.assumption-item .ai-text .ai-meta {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Sensitivity ===== */
+.sens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.sens-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+.sens-item .si-label {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.sens-item .si-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 2px;
+}
+.sens-item .si-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+
+/* ===== Action Card ===== */
+.action-card {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.action-card .ac-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.action-card .ac-desc {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* ===== Check List ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== Synergy Box ===== */
+.synergy-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--slate-700);
+}
+
+/* ===== Phase Bar ===== */
+.phase-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.phase-bar .phase {
+  flex: 1;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.phase-bar .phase .ph-time {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.phase-bar .phase .ph-label {
+  font-size: 10px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+
+/* ===== Callout ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--slate-50);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+
+/* ===== Dir Dot ===== */
+.dir-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.dir-dot.blue { background: var(--blue); }
+
+/* ===== Back Link ===== */
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  padding: 10px;
+  color: var(--slate-400);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.back-link:hover {
+  color: var(--blue);
+  background: var(--slate-50);
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+.footer .brand {
+  color: var(--slate-300);
+  margin-top: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .dim-item .dim-bar { width: 36px; }
+  .dim-item { font-size: 10px; }
+  .ltv-grid { grid-template-columns: 1fr; }
+  .sens-grid { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== Hero Header ===== -->
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; IS-A02</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">65</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">办公厅制度审核</div>
+  <div class="hero-sub">集团办公厅 + 子企业办公室</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">&#x26A0;&#xFE0F;</span> 谨慎推进
+  </div>
+</div>
+
+<!-- ===== Dimension Score Strip ===== -->
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:72%"></div></div>
+      <span class="dim-score">13/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:65%"></div></div>
+      <span class="dim-score">11/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:71%"></div></div>
+      <span class="dim-score">12/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:71%"></div></div>
+      <span class="dim-score">12/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:69%"></div></div>
+      <span class="dim-score">11/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:60%"></div></div>
+      <span class="dim-score">9/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:30%"></div></div>
+      <span class="dim-score">-3/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Content ===== -->
+<div class="content">
+
+  <!-- ===== 预判摘要 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box yellow-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-yellow">5/20 低风险</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">关键致命伤</span>
+        <span style="font-weight:600;color:var(--slate-700);">无 P0 级硬伤</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">团队/运营风险</span>
+        <span style="font-weight:600;color:var(--slate-700);font-size:13px;">#20 低估运营复杂度（2/5）— OA系统适配和数据迁移工作量可能超预期</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge va">&#x26A0;&#xFE0F; 谨慎推进（建议作为内部管理AI化的优先落地场景）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 行业预判六模块 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：制度制定层（国资委/行业主管）&#x2192; 制度管理层（集团办公厅/综合管理部）&#x2192; 制度执行层（各业务部门/三级单位）&#x2192; 监管层（审计/纪检）</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">技术壁垒型</span> + <span class="tag tag-blue">渠道控制型</span> — AI审核引擎准确率是技术核心，集团办公厅"制度性推广"是渠道核心</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>政策法规</td><td>国资委46号令(2025.12)追责情形从72种扩至98种</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>政策法规</td><td>穿透式监管要求制度全级次穿透</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>新技术</td><td>大模型+RAG实现制度智能比对和合规核查</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>新技术</td><td>文档解析+差异检测技术成熟度高</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>需求侧</td><td>央企制度管理痛点高度统一（版本混乱、合规困难）</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>供给侧</td><td>OA厂商(致远/泛微)开始嵌入AI模块</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>判断：系统性变化，但变化量级偏中等</strong> — 政策+需求+技术三重共振，但制度审核是管理效率工具而非业务增长引擎，天花板有限。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <p><strong>原子需求</strong>：集团办公厅（制度合规审核，已有系统）| 子企业办公室（版本管理+合规自查，10-30万/年）| 业务部门员工（制度查询解读，含在订阅中）</p>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>46号令追责情形扩大 &#x2192; 制度合规审核从"锦上添花"变为"硬性要求" &#x2192; 穿透式监管要求全级次覆盖 &#x2192; <strong>央企制度管理从"人工经验驱动"转向"AI+规则驱动"</strong>，集团办公厅系统向全级次子企业延伸成为标准配置。
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">制度审核AI先行者</span> — 已有集团办公厅正式使用案例，技术底座经过真实业务验证，具备"一次开发、N次复制"的最佳条件。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索阶段，窗口<strong>2-3年</strong>。</p>
+    <p>46号令2025年12月发布，各央企子企业的合规压力将在2026-2027年集中释放。OA厂商（致远/泛微）正在加速AI化，需尽快抢占"制度审核"细分赛道。</p>
+    <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-green">低</span> — 集团办公厅系统已正式使用(2026.5.26)</p>
+    <p><span class="dir-dot red"></span><strong>太晚风险</strong>：<span class="tag tag-yellow">中</span> — 致远AI公文已有46场景覆盖，若扩展至制度审核将削弱先发优势</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>企业制度管理SaaS市场约50-80亿(2025)</td></tr>
+        <tr><td>Top-down</td><td>央企100家 &#x00D7; 平均50家二级单位 &#x00D7; 20万/年 = 100亿</td></tr>
+        <tr><td>Bottom-up</td><td>中建体系30-50个核心节点 &#x00D7; 20万/年 = 600-1000万</td></tr>
+        <tr><td>类比</td><td>致远AI模块央企级部署约数十万-数百万/年</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：<span class="tag tag-yellow">30-80亿元</span>，支撑数亿级体量业务。天花板不算高，但作为"开箱即用"的内部管理工具，投入产出比优秀。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：极其分散 — 无全国性制度审核AI寡头，中核制汇内部自用不对外，OA厂商AI模块聚焦公文</p>
+    <p><strong>趋势</strong>：<span class="tag tag-yellow">A型偏C型（分散&#x2192;分散，但央企集团自上而下推广可能催生集中趋势）</span></p>
+    <p><strong>策略</strong>：利用集团办公厅背书+已验证系统，在中建体系内做深做透，形成标杆后再跨集团复制。</p>
+    <div class="callout callout-yellow">
+      <strong>行业预判结论：</strong>&#x1F7E1; 5 模块通过（M6集中度偏弱），补充假设后进入五步法分析。
+    </div>
+  </div>
+
+  <!-- ===== 五步法逐层分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：央企集团及子企业的办公室/综合管理部门（非"所有人"，聚焦制度管理职能）</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>制度合规性审核</td><td>人工逐条比对效率低、遗漏多，平均审核周期1-2周</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>制度版本管理</td><td>同一制度多版本并存，新旧差异不清</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+        <tr><td>制度查询与解读</td><td>员工难以快速查询制度条文，依赖"老员工经验"</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+        <tr><td>制度编写辅助</td><td>新制度编写缺少模板和合规校验</td><td class="num"><span class="tag tag-green">改善型</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-yellow">
+      <strong>需求评估三角形</strong>：<span class="tag tag-red">刚性</span> 46号令驱动 &middot; <span class="tag tag-yellow">中频</span> 按季度/年度批次 &middot; <span class="tag tag-red">广泛</span> 所有央企子企业
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>致远/泛微是"OA系统+AI公文助手"，和合信诺是"制度全生命周期管理SaaS"，我们是<strong>"央企制度合规审核专家系统"</strong> — 核心卖点：<strong>"集团办公厅用什么，你的办公室就用什么。"</strong>
+    </div>
+    <p><strong>产品内核：</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>制度合规审核（与上级制度/法规自动比对）</td><td>OA全流程管理（不替代致远/泛微）</td></tr>
+        <tr><td>制度版本差异检测（新旧版本自动高亮）</td><td>制度全生命周期管理</td></tr>
+        <tr><td>制度智能问答（员工查询制度条文）</td><td>通用文档审核（不扩展至合同/公文）</td></tr>
+        <tr><td>审核规则模板复用（集团规则&#x2192;子企业一键套用）</td><td>外部市场通用产品（先做中建体系内）</td></tr>
+      </table>
+    </div>
+    <p><strong>MVP</strong>：集团办公厅审核规则模板化 &#x2192; "制度上传&#x2192;自动合规检测&#x2192;差异报告"标准流程 &#x2192; 1-2家工程局办公室试点 &#x2192; 收集反馈迭代</p>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（ToB SaaS）</span> — 按企业年订阅，含制度库容量和用户数阶梯定价</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>二级单位办公室（15万/年 &#x00D7; 30家）</td><td>450万</td></tr>
+        <tr><td>三级单位办公室（8万/年 &#x00D7; 50家）</td><td>400万</td></tr>
+        <tr><td>体系外央企复制（20万/年 &#x00D7; 5家）</td><td>100万</td></tr>
+        <tr style="background:#fffbeb;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--amber);font-size:15px;"><strong>950万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:13%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">12.6%</span>
+    </div>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">LTV / CAC</div>
+        <div class="lc-val green">16.7</div>
+        <div class="lc-sub">&#x2705; 极健康</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">回收期</div>
+        <div class="lc-val green">3月</div>
+        <div class="lc-sub">&#x2705; 优秀</div>
+      </div>
+    </div>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式</span> — 制度审核嵌入办公室日常工作，制度库积累越多、切换成本越高</p>
+    <div class="phase-bar">
+      <div class="phase blue">
+        <div class="ph-time">0-6月</div>
+        <div class="ph-label">商业验证</div>
+      </div>
+      <div class="phase amber">
+        <div class="ph-time">6-18月</div>
+        <div class="ph-label">增长早期</div>
+      </div>
+      <div class="phase green">
+        <div class="ph-time">18-36月</div>
+        <div class="ph-label">加速增长</div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>集团办公厅制度性推广</td><td>0</td></tr>
+        <tr><td>2</td><td>工程局办公室试点&#x2192;口碑扩散</td><td>1-2万</td></tr>
+        <tr><td>3</td><td>集团综合管理会议/培训</td><td>2-3万</td></tr>
+        <tr><td>4</td><td>国资委/行业协会渠道</td><td>5-8万</td></tr>
+        <tr><td>5</td><td>OA厂商合作/集成</td><td>3-5万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>转化成本</strong></td><td>制度库积累+审核规则定制+OA对接</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>集团办公厅背书+"制度性推广"资质</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>技术壁垒</strong></td><td>制度审核规则引擎+建筑行业合规知识库</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>规模效应</strong></td><td>规则模板复用率随客户数增加而提升</td><td class="num"><span class="tag tag-green">弱-中</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：OA厂商 <span class="tag tag-yellow">1-2年</span> | 其他央企自建 <span class="tag tag-yellow">2-3年</span> | 专业厂商 <span class="tag tag-yellow">1-2年</span></p>
+  </div>
+
+  <!-- ===== 20张硬伤卡牌 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:25%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">5/20</span>
+    </div>
+    <div class="callout callout-yellow" style="margin-bottom:10px;">
+      <strong>结论：</strong>低风险，16项未命中，4项轻微扣分，无P0级硬伤。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1-3</td><td>目标用户/痛点/频率</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-2" style="margin-left:4px;">2</span> <span class="tag tag-yellow" style="margin-left:6px;">#3 轻微 — 中频</span></td></tr>
+        <tr><td>4-6</td><td>用户验证/本质区别/卖点</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-2" style="margin-left:4px;">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#5 轻微 — 功能重叠</span></td></tr>
+        <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-2" style="margin-left:4px;">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#11 轻微 — 初期毛利低</span></td></tr>
+        <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-2">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#13 轻微 — 单渠道依赖</span></td></tr>
+        <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-2">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#16 轻微 — 壁垒偏弱</span></td></tr>
+        <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度</td><td style="background:#fffbeb;"><span class="hs hs-2">2</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 &#x26A0; OA适配+数据迁移</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 关键假设清单 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H1：46号令的合规压力足以驱动子企业主动接入</div>
+        <div class="ai-meta">调研5-10家子企业办公室主任 &nbsp;|&nbsp; 标准：&#x2265;6/10有明确采购意向</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H3：集团办公厅审核规则可模板化，&#x2265;70%规则可复用</div>
+        <div class="ai-meta">规则拆解+3家子企业试套用 &nbsp;|&nbsp; 标准：模板覆盖率&#x2265;70%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H7：集团办公厅愿意发通知推动子企业接入</div>
+        <div class="ai-meta">与办公厅沟通确认 &nbsp;|&nbsp; 标准：出具推广支持函或纳入年度工作计划</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H2：制度审核"中频"特性不影响持续付费</div>
+        <div class="ai-meta">试点企业使用数据 &nbsp;|&nbsp; 标准：月均活跃&#x2265;4次/企业，续费率&#x2265;90%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H4：单企业首次数据迁移成本&#x2264;2人天</div>
+        <div class="ai-meta">3家试点企业实测 &nbsp;|&nbsp; 标准：平均迁移成本&#x2264;2人天</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H8：子企业办公室主任有采购决策权或能推动立项</div>
+        <div class="ai-meta">调研子企业采购流程 &nbsp;|&nbsp; 标准：&#x2265;5/10家确认可内部立项</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H9：办公厅背书+先发优势能抵御竞争</div>
+        <div class="ai-meta">竞品动态监测 &nbsp;|&nbsp; 标准：12个月内无OA厂商推出同等深度制度审核模块</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H5：第3年覆盖30家二级+50家三级单位</div>
+        <div class="ai-meta">增长追踪 &nbsp;|&nbsp; 标准：第1年&#x2265;10家二级单位</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H6：体系外央企客单价可达20万/年</div>
+        <div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&#x2265;1家外部央企确认意向</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 敏感性分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观(+20%)</th><th>悲观(-20%)</th></tr>
+        <tr><td>第3年客户数</td><td>85家</td><td>102家&#x2192;1140万</td><td>68家&#x2192;760万</td></tr>
+        <tr><td>年均客单价</td><td>12万</td><td>14.4万</td><td>9.6万</td></tr>
+        <tr><td>系统集成成本</td><td>200万</td><td>240万&#x2192;毛利80万</td><td>160万&#x2192;毛利160万</td></tr>
+        <tr><td>月流失率</td><td>2%</td><td>2.4%&#x2192;LTV=42万</td><td>1.6%&#x2192;LTV=63万</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">客户数</span> — 受"办公厅是否推动"和"子企业OA适配难度"双重制约</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">办公厅推动全覆盖</div>
+        <div class="si-desc">2-3家工程局试点&#x2192;办公厅发文推广&#x2192;二级全覆盖&#x2192;三级逐步渗透</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年950万，第5年3000万+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">OA增值模块</div>
+        <div class="si-desc">审核规则引擎封装为API/插件，嵌入致远/泛微OA系统</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">借助OA厂商客户基础快速铺量</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>：办公厅明确不支持推广 | 规则模板复用率&lt;50% | 试点企业反馈"可有可无"
+    </div>
+  </div>
+
+  <!-- ===== 下一步行动 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">与集团办公厅沟通，确认推广意愿和审核规则模板化的可行性（H3+H7）。</div>
+    </div>
+    <ul class="check-list">
+      <li>与办公厅负责人面谈，了解推广意愿和时间表</li>
+      <li>梳理现有审核规则，按"通用规则"和"定制规则"分类</li>
+      <li>选取1家工程局办公室，用模板规则试套用其制度库</li>
+    </ul>
+    <div class="summary-strip">
+      <span class="strip-label">成功标准</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:70%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">覆盖率&#x2265;70%</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">成本：1周 + 1名产品经理 + 0元外部采购 | 目标：办公厅明确表态支持推广</p>
+  </div>
+
+  <!-- ===== 协同关系 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F517;</span> 与 IS-A01 协同关系</h2>
+    <p>IS-A02（办公厅制度审核）与 IS-A01（海外部投标评审）共享<strong>同一套文档智能审查技术底座</strong>：</p>
+    <div class="synergy-box">文档智能审查引擎（技术底座）
+  &#x2514;&#x2500;&#x2500; IS-A01 海外部投标评审 &#x2192; 多语言文档审查、条款比对
+  &#x2514;&#x2500;&#x2500; IS-A02 办公厅制度审核 &#x2192; 制度合规比对、版本差异检测
+  &#x2514;&#x2500;&#x2500; IS-A03 财务辅助审核   &#x2192; 财务报表审查、数据校验
+  &#x2514;&#x2500;&#x2500; IS-A04 法务合同风险   &#x2192; 合同条款审查、风险标注</div>
+    <p><strong>组合效应</strong>：IS-A02 的成功落地将为 IS-A01/03/04 的推广提供标杆效应和组织信任基础。</p>
+    <div class="callout callout-green">
+      <strong>建议：</strong>IS-A02 应作为"内部管理AI化"产品矩阵中的<span class="tag tag-green">优先落地场景</span> — 原因：(1) 技术成熟度最高（已正式使用）；(2) 推广路径最短（办公厅行政推动）；(3) 复制成本最低（规则模板可复用）。
+    </div>
+  </div>
+
+  <!-- ===== 返回链接 ===== -->
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>IS-A02 办公厅制度审核 &middot; 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 &middot; 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

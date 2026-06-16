@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SC-03 供应链金融AI · 五步法深度分析</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #1d4ed8;
+  --blue-light: #dbeafe;
+  --blue-50: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #dcfce7;
+  --amber: #d97706;
+  --amber-bg: #fef3c7;
+  --red: #dc2626;
+  --red-bg: #fee2e2;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --grad-green: linear-gradient(135deg, #43a047, #66bb6a);
+  --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726);
+  --grad-red: linear-gradient(135deg, #e53935, #ef5350);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #f5f6fa;
+  color: var(--slate-800);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+/* ===== Hero Header ===== */
+.hero {
+  background: var(--grad-header);
+  padding: 28px 20px 16px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  pointer-events: none;
+}
+.hero-code {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  padding: 3px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #ffd700;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--grad-green);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(67,160,71,0.45);
+}
+.hero-badge .num {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.hero-badge .unit {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-top: 1px;
+}
+.hero-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+}
+.hero-sub {
+  font-size: 13px;
+  opacity: 0.65;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+.hero-judgment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 6px 16px 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Dimension Score Strip ===== */
+.dim-strip {
+  background: #fff;
+  margin: -12px 12px 16px;
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+.dim-strip-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--slate-400);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.dim-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+}
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label {
+  width: 76px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-700);
+  flex-shrink: 0;
+}
+.dim-bar-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dim-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--slate-100);
+  overflow: hidden;
+}
+.dim-bar .fill {
+  height: 100%;
+  border-radius: 4px;
+}
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-align: right;
+  flex-shrink: 0;
+}
+  min-width: 26px;
+  text-align: right;
+}
+
+/* ===== Content Area ===== */
+.content {
+  padding: 16px 16px 0;
+}
+
+/* ===== Card ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 1px solid var(--slate-100);
+}
+.card h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+.card h2 .emoji-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--slate-800);
+  margin-bottom: 10px;
+  margin-top: 18px;
+}
+.card h3:first-child { margin-top: 0; }
+.card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 8px;
+  margin-top: 4px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--slate-600);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+
+/* ===== Tag Pills ===== */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* ===== Verdict Badge ===== */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.verdict-badge.vg { background: var(--green-bg); color: var(--green); }
+.verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.verdict-badge.vr { background: var(--red-bg); color: var(--red); }
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--slate-700);
+  margin-bottom: 12px;
+}
+.summary-box.green-border { border-left: 3px solid var(--green); }
+.summary-box .sb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
+
+/* ===== Table ===== */
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.5;
+}
+table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--slate-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 8px 6px 0;
+  border-bottom: 1px solid var(--slate-200);
+}
+table td {
+  padding: 8px 8px 8px 0;
+  border-bottom: 1px solid var(--slate-100);
+  vertical-align: top;
+  color: var(--slate-600);
+}
+table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+
+/* ===== Summary Strip Progress Bar ===== */
+.summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.summary-strip .strip-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.summary-strip .strip-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--slate-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.summary-strip .strip-bar .strip-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+.summary-strip .strip-val {
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ===== Progress Bar (inline) ===== */
+.progress-strip {
+  height: 6px;
+  background: var(--slate-100);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.progress-strip .fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ===== LTV Grid ===== */
+.ltv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ltv-card {
+  background: var(--slate-50);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  border: 1px solid var(--slate-100);
+  text-align: center;
+}
+.ltv-card .lc-label {
+  font-size: 12px;
+  color: var(--slate-500);
+  margin-bottom: 4px;
+}
+.ltv-card .lc-val {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ltv-card .lc-val.green { color: var(--green); }
+.ltv-card .lc-sub {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Injury Table ===== */
+.injury-table { margin-bottom: 10px; }
+.injury-table table td:first-child { font-weight: 600; color: var(--slate-700); min-width: 24px; }
+.injury-table table td:nth-child(2) { color: var(--slate-600); }
+.hs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+.hs-0 { background: var(--green); }
+.hs-2 { background: var(--amber); }
+
+/* ===== Assumption Card ===== */
+.assumption-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+}
+.assumption-item .ai-text .ai-meta {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-top: 2px;
+}
+
+/* ===== Sensitivity ===== */
+.sens-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.sens-item {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-100);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+.sens-item .si-label {
+  font-size: 11px;
+  color: var(--slate-400);
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.sens-item .si-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate-800);
+  margin-bottom: 2px;
+}
+.sens-item .si-desc {
+  font-size: 11px;
+  color: var(--slate-500);
+  line-height: 1.4;
+}
+
+/* ===== Action Card ===== */
+.action-card {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-light);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.action-card .ac-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.action-card .ac-desc {
+  font-size: 13px;
+  color: var(--slate-600);
+  line-height: 1.6;
+}
+
+/* ===== Check List ===== */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.check-list li {
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ===== Synergy Box ===== */
+.synergy-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 10px;
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--slate-700);
+}
+
+/* ===== Phase Bar ===== */
+.phase-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.phase-bar .phase {
+  flex: 1;
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.phase-bar .phase .ph-time {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.phase-bar .phase .ph-label {
+  font-size: 10px;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+.phase-bar .phase.blue { background: var(--blue-light); color: var(--blue); }
+.phase-bar .phase.amber { background: var(--amber-bg); color: var(--amber); }
+.phase-bar .phase.green { background: var(--green-bg); color: var(--green); }
+
+/* ===== Callout ===== */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--slate-50);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--slate-600);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+
+/* ===== Dir Dot ===== */
+.dir-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.dir-dot.blue { background: var(--blue); }
+
+/* ===== Back Link ===== */
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+  padding: 10px;
+  color: var(--slate-400);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.back-link:hover {
+  color: var(--blue);
+  background: var(--slate-50);
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--slate-400);
+  line-height: 1.6;
+}
+.footer .brand {
+  color: var(--slate-300);
+  margin-top: 4px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+  .hero { padding: 24px 14px 20px; }
+  .hero-badge { width: 72px; height: 72px; }
+  .hero-badge .num { font-size: 28px; }
+  .dim-item .dim-bar { width: 36px; }
+  .dim-item { font-size: 10px; }
+  .ltv-grid { grid-template-columns: 1fr; }
+  .sens-grid { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== Hero Header ===== -->
+<div class="hero">
+  <div class="hero-code">五步法深度分析 &middot; SC-03</div>
+  <div class="hero-badge-wrap">
+    <div class="hero-badge">
+      <span class="num">86</span>
+      <span class="unit">总分</span>
+    </div>
+  </div>
+  <div class="hero-title">供应链金融AI</div>
+  <div class="hero-sub">云筑网 + 中建发展 + 中建资本</div>
+  <div class="hero-judgment">
+    <span style="font-size:16px;">&#x2705;</span> 强烈推荐立即启动
+  </div>
+</div>
+
+<!-- ===== Dimension Score Strip ===== -->
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 · 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:94%"></div></div>
+      <span class="dim-score">17/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:88%"></div></div>
+      <span class="dim-score">15/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:94%"></div></div>
+      <span class="dim-score">16/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:88%"></div></div>
+      <span class="dim-score">15/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:94%"></div></div>
+      <span class="dim-score">15/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:93%"></div></div>
+      <span class="dim-score">14/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:30%"></div></div>
+      <span class="dim-score">-3/10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Content ===== -->
+<div class="content">
+
+  <!-- ===== 预判摘要 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <div class="summary-box green-border">
+      <div class="sb-row">
+        <span class="sb-label">20张硬伤卡牌评分</span>
+        <span><span class="tag tag-green">3/20 极低风险</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">关键致命伤</span>
+        <span style="font-weight:600;color:var(--slate-700);">无 P0 级硬伤</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">唯一风险项</span>
+        <span style="font-weight:600;color:var(--slate-700);font-size:13px;">#20 运营复杂度（2/5）— 已有信融宝验证</span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">整体判定</span>
+        <span class="verdict-badge vg">&#x2705; 强烈推荐（22个单元最高分 86）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 行业预判六模块 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+    <h3>M1 拆解行业</h3>
+    <p><strong>产业链</strong>：资金端（银行/保理）&#x2192; 平台端（云筑网/中建资本）&#x2192; 资产端（应收/订单/存货融资）&#x2192; 终端（中小供应商/核心企业）</p>
+    <p><strong>利润分配（100元）</strong>：资金成本 3-5% | 风控与合规 60-70% | 平台运营 30-40% | 获客 15-25%</p>
+    <p><strong>关键控制节点</strong>：<span class="tag tag-blue">数据资产型</span> + <span class="tag tag-blue">渠道控制型</span> — 云筑网同时控制数据（10万亿交易记录）和渠道（110万供应商入口）</p>
+    <p><strong>可优化</strong>：传统审批3-7天 &#x2192; AI模式压缩至小时级</p>
+
+    <h3>M2 洞察变化</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+        <tr><td>政策法规</td><td>77号文推动"数据信用"替代"主体信用"，鼓励"脱核"</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>政策法规</td><td>应收账款凭证付款期限&#x2264;6个月</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>需求侧</td><td>中小供应商回款难，行业应收107-127万亿</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+        <tr><td>新技术</td><td>AI风控44个关键节点全自动稽查</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>供给侧</td><td>信融宝已实现产品闭环，13家银行直连，700亿+</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td>供给侧</td><td>竞品加速：电建AI审单、陕建数据ABS</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-green">
+      <strong>判断：系统性变化</strong> — 政策 + 需求 + 技术三重共振，足以支撑百亿级平台。
+    </div>
+
+    <h3>M3 预判稳态B</h3>
+    <p><strong>原子需求</strong>：中小供应商（应收融资，愿付年化6-12%）| 核心企业（优化效率，0成本）| 银行（获取资产，分润0.5-1%）</p>
+    <div class="callout callout-yellow">
+      <strong>稳态推演：</strong>77号文推动"脱核" &#x2192; 交易数据自动化审批合规 &#x2192; AI降低坏账率 &#x2192; 银行更愿接入 &#x2192; <strong>从"核心企业信用背书"转向"数据信用驱动"</strong>，平台方成为金融机构基础设施。
+    </div>
+    <p><strong>中建发展位置</strong>：<span class="tag tag-blue">数据+渠道双垄断者</span> — 10万亿数据做风控，110万供应商做入口，13家银行做通道。</p>
+
+    <h3>M4 Timing</h3>
+    <p><strong>周期</strong>：早期探索 &#x2192; 爆发增长临界点。窗口<strong>刚刚完全打开</strong>，还有 <strong>2-3 年</strong>。</p>
+    <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-green">极低</span> — 信融宝已运营多年</p>
+    <p><span class="dir-dot red"></span><strong>太晚风险</strong>：<span class="tag tag-yellow">中高</span> — 电建/陕建已发布AI产品</p>
+
+    <h3>M5 天花板大小</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方法</th><th>估算</th></tr>
+        <tr><td>直接数据</td><td>供应链金融41.8-45.8万亿(2024)，年增13.5-18.6%</td></tr>
+        <tr><td>Top-down</td><td>建筑资产107-127万亿 &#x00D7; 5%渗透 = 5.4-6.4万亿 &#x2192; 270-640亿收入空间</td></tr>
+        <tr><td>Bottom-up</td><td>110万供应商 &#x00D7; 10%融资 &#x00D7; 50万/年均 = 550亿</td></tr>
+        <tr><td>类比</td><td>联易融12亿港元营收 &#x2192; 中建至少同等体量</td></tr>
+      </table>
+    </div>
+    <p><strong>结论</strong>：<span class="tag tag-green">千亿级可触达市场</span>（平台收入口径），支撑百亿级平台。</p>
+
+    <h3>M6 集中度</h3>
+    <p><strong>现状</strong>：有头部玩家但建筑垂直领域未形成垄断</p>
+    <p><strong>趋势</strong>：<span class="tag tag-green">C型（分散&#x2192;集中）最佳时机</span> — 数据+资金通道构成双重壁垒，不合规小平台将被淘汰。</p>
+    <p><strong>策略</strong>：利用现有优势在中建体系内快速做深，再向外央企复制。</p>
+    <div class="callout callout-green">
+      <strong>行业预判结论：</strong>&#x1F7E2; 6 模块全部通过，且全部为强通过。
+    </div>
+  </div>
+
+  <!-- ===== 五步法逐层分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+    <h3>Step 1 需求</h3>
+    <p><strong>目标用户</strong>：中小建筑供应商（资金需求方）+ 银行/保理公司（资金供给方）+ 核心建筑企业（供应链管理者）</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+        <tr><td>应收账款融资</td><td>回款周期6-12月，现金流断裂风险高</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>订单融资</td><td>中标后需垫资采购材料</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>银行获取资产</td><td>缺乏建筑交易数据做风控</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+        <tr><td>核心企业优化账期</td><td>延长账期导致供应商流失</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+      </table>
+    </div>
+    <div class="callout callout-red">
+      <strong>需求评估三角形</strong>：<span class="tag tag-red">刚性</span> 雪中送炭 · <span class="tag tag-red">高频</span> 每笔订单 · <span class="tag tag-red">极广泛</span> 107-127万亿市场
+    </div>
+
+    <h3>Step 2 解决方案</h3>
+    <div class="callout">
+      <strong>差异化定位：</strong>联易融/中企云链是"跨行业平台"，我们是<strong>"建筑行业数据信用基础设施"</strong> — 云筑网拥有10万亿真实交易数据，银行通过我们做风控更准、更快、更便宜。
+    </div>
+    <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"银行缺的不是钱，是敢放贷的数据"</span></p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+        <tr><td>AI风控模型升级（规则引擎&#x2192;ML）</td><td>自己放贷（不做金融牌照）</td></tr>
+        <tr><td>数据信用评估输出给银行</td><td>跨行业扩展（专注建筑）</td></tr>
+        <tr><td>多品类融资（应收/订单/存货）</td><td>个人消费金融</td></tr>
+        <tr><td>"脱核"模式—供应商凭数据融资</td><td>仅依赖核心企业确权</td></tr>
+      </table>
+    </div>
+    <p><strong>MVP</strong>：信融宝模型升级&#x2192;1家银行试点&#x2192;对比效率/坏账率&#x2192;推广12家银行</p>
+
+    <h3>Step 3 商业模式</h3>
+    <p><span class="tag tag-blue">单客户（ToB 平台）</span> — 按撮合抽佣 + 风控服务费</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入来源</th><th>第3年估算</th></tr>
+        <tr><td>撮合分润（0.3-0.5%）</td><td>1800-3000万</td></tr>
+        <tr><td>风控服务费（15家银行&#x00D7;200万）</td><td>3000万</td></tr>
+        <tr><td>供应商增值服务</td><td>500万</td></tr>
+        <tr><td>平台技术服务费</td><td>500万</td></tr>
+        <tr style="background:#f0fdf4;"><td><strong>第3年合计</strong></td><td style="font-weight:800;color:var(--green);font-size:15px;"><strong>5800-6800万</strong></td></tr>
+      </table>
+    </div>
+    <div class="summary-strip">
+      <span class="strip-label">毛利率</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:62%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">59-65%</span>
+    </div>
+    <div class="ltv-grid">
+      <div class="ltv-card">
+        <div class="lc-label">银行 LTV / CAC</div>
+        <div class="lc-val green">30</div>
+        <div class="lc-sub">&#x2705; 极健康</div>
+      </div>
+      <div class="ltv-card">
+        <div class="lc-label">供应商 LTV / CAC</div>
+        <div class="lc-val green">&#x221E;</div>
+        <div class="lc-sub">&#x2705; 无获客成本</div>
+      </div>
+    </div>
+
+    <h3>Step 4 增长</h3>
+    <p><strong>增长引擎</strong>：<span class="tag tag-blue">黏着式 + 双边网络效应</span> — 银行切换成本高，供应商越多数据越丰富</p>
+    <div class="phase-bar">
+      <div class="phase blue">
+        <div class="ph-time">0-6月</div>
+        <div class="ph-label">商业验证</div>
+      </div>
+      <div class="phase amber">
+        <div class="ph-time">6-18月</div>
+        <div class="ph-label">增长早期</div>
+      </div>
+      <div class="phase green">
+        <div class="ph-time">18-36月</div>
+        <div class="ph-label">加速增长</div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>优先级</th><th>渠道</th><th>CAC</th></tr>
+        <tr><td>1</td><td>现有信融宝客户升级</td><td>0</td></tr>
+        <tr><td>2</td><td>中建体系内推广</td><td>0</td></tr>
+        <tr><td>3</td><td>微众银行深度合作（已授信35亿）</td><td>10万</td></tr>
+        <tr><td>4</td><td>其他央企平台接入</td><td>50-100万</td></tr>
+        <tr><td>5</td><td>数据交易所挂牌</td><td>20万</td></tr>
+      </table>
+    </div>
+
+    <h3>Step 5 壁垒</h3>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+        <tr><td><strong>数据资产</strong></td><td>10万亿真实交易数据—银行/竞品无法获取</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>网络效应</strong></td><td>双边网络：供应商越多&#x2192;数据越好&#x2192;银行越愿接入</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>转化成本</strong></td><td>银行系统直连+数据接口深度绑定</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+        <tr><td><strong>规模效应</strong></td><td>风控模型边际成本趋零</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+        <tr><td><strong>无形资产</strong></td><td>央企身份+中建品牌=金融机构天然信任</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      </table>
+    </div>
+    <p><strong>可复制性</strong>：联易融/中企云链 <span class="tag tag-red">极难</span>（无建筑数据）| 其他建筑央企 <span class="tag tag-yellow">2-3年</span> | 银行自建 <span class="tag tag-red">极难</span></p>
+  </div>
+
+  <!-- ===== 20张硬伤卡牌 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+    <div class="summary-strip">
+      <span class="strip-label">总分</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:15%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">3/20</span>
+    </div>
+    <div class="callout callout-green" style="margin-bottom:10px;">
+      <strong>结论：</strong>极低风险，19项未命中，仅#20轻微扣分（2/5）。
+    </div>
+    <div class="tbl-wrap injury-table">
+      <table>
+        <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+        <tr><td>1-3</td><td>目标用户/痛点/频率</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>4-6</td><td>用户验证/本质区别/卖点</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+        <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-0">0</span></td><td><span class="tag tag-green">未命中</span></td></tr>
+        <tr><td style="background:#fffbeb;">20</td><td style="background:#fffbeb;">低估运营复杂度</td><td style="background:#fffbeb;"><span class="hs hs-2">2</span></td><td style="background:#fffbeb;"><span class="tag tag-yellow">轻微 &#x26A0;</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 关键假设清单 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H1：交易数据能显著降低银行坏账率</div>
+        <div class="ai-meta">回测+试点 &nbsp;|&nbsp; 标准：坏账率降低&#x2265;30%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H3：ML模型优于规则引擎</div>
+        <div class="ai-meta">A/B测试 &nbsp;|&nbsp; 标准：审批准确率提升&#x2265;15%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H7：中建资本支持独立发展</div>
+        <div class="ai-meta">内部沟通 &nbsp;|&nbsp; 标准：出具书面支持</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">H9：数据确权合规</div>
+        <div class="ai-meta">法务+外部律师双签</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H2：银行接受"数据信用"模式</div>
+        <div class="ai-meta">1家银行试点 &nbsp;|&nbsp; 标准：实际采用</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H4：至少1家银行接受纯数据审批</div>
+        <div class="ai-meta">商务谈判 &nbsp;|&nbsp; 标准：签约</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H5：第3年新增撮合600亿</div>
+        <div class="ai-meta">业务规划 &nbsp;|&nbsp; 标准：年化增速&#x2265;50%</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p1">P1</div>
+      <div class="ai-text">
+        <div class="ai-label">H8：其他央企愿意接入</div>
+        <div class="ai-meta">商务接触 &nbsp;|&nbsp; 标准：&#x2265;1家签约</div>
+      </div>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p2">P2</div>
+      <div class="ai-text">
+        <div class="ai-label">H6：银行付费200万/年</div>
+        <div class="ai-meta">商务谈判 &nbsp;|&nbsp; 标准：&#x2265;3家签约</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 敏感性分析 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变量</th><th>基准</th><th>乐观(+20%)</th><th>悲观(-20%)</th></tr>
+        <tr><td>第3年撮合额</td><td>600亿</td><td>720亿&#x2192;3600万</td><td>480亿&#x2192;1440万</td></tr>
+        <tr><td>风控服务费/银行</td><td>200万/年</td><td>240万</td><td>160万</td></tr>
+        <tr><td>银行合作数</td><td>15家</td><td>18家</td><td>12家</td></tr>
+        <tr><td>坏账率</td><td>1.5%</td><td>1.2%</td><td>1.8%</td></tr>
+      </table>
+    </div>
+    <p><strong>最敏感：</strong><span class="tag tag-red">撮合额增速</span> — 直接决定分润收入</p>
+
+    <h3>备选路径</h3>
+    <div class="sens-grid">
+      <div class="sens-item" style="border-left:3px solid var(--green);">
+        <div class="si-label">Plan A（首选）</div>
+        <div class="si-title">数据信用供应链金融平台</div>
+        <div class="si-desc">信融宝AI升级&#x2192;脱核试点&#x2192;多银行推广&#x2192;行业复制</div>
+        <div style="font-size:11px;color:var(--green);font-weight:600;margin-top:4px;">第3年6000万+，第5年3亿+</div>
+      </div>
+      <div class="sens-item" style="border-left:3px solid var(--amber);">
+        <div class="si-label">Plan B（备选）</div>
+        <div class="si-title">风控数据输出服务</div>
+        <div class="si-desc">不撮合，只做风控API，更轻资产</div>
+        <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">第3年2000万/年</div>
+      </div>
+    </div>
+    <div class="callout callout-red">
+      <strong>Plan C（退出条件）</strong>：中建资本反对独立发展 | 77号文限制数据对外 | 试点坏账率高于行业均值
+    </div>
+  </div>
+
+  <!-- ===== 下一步行动 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+    <div class="action-card">
+      <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+      <div class="ac-desc">选择信融宝现有1家合作银行（建议微众银行，已授信35亿），用历史数据做"数据信用" vs "核心企业确权"的审批效果对比。</div>
+    </div>
+    <ul class="check-list">
+      <li>取信融宝近2年1000笔融资记录（含已知坏账样本）</li>
+      <li>分别用"规则引擎+确权"和"ML模型+数据信用"做审批决策</li>
+      <li>对比审批通过率、审批时长、坏账率</li>
+    </ul>
+    <div class="summary-strip">
+      <span class="strip-label">成功标准</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:90%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">AUC &#x2265; 0.90</span>
+    </div>
+    <p style="font-size:12px;color:var(--slate-400);">成本：3周 + 2名算法工程师 + 0元外部采购 | 审批：3天&#x2192;4小时 | 坏账率&#x2264;1.5%</p>
+  </div>
+
+  <!-- ===== 协同关系 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F517;</span> 与 SC-01 协同关系</h2>
+    <p>SC-03（供应链金融AI）和 SC-01（供应商智能风控）是<strong>同一数据资产的两层变现</strong>：</p>
+    <div class="synergy-box">数据资产层（共享）
+  &#x2514;&#x2500;&#x2500; 10万亿交易履约数据 + 110万供应商画像
+        &#x2502;
+        &#x251C;&#x2500;&#x2500;&#x2192; SC-01 风控输出层（基础设施）
+        &#x2502;      准入审核 / 履约监控 / 围串标识别
+        &#x2502;      &#x2192; 收入：SaaS订阅 + API调用
+        &#x2502;
+        &#x2514;&#x2500;&#x2500;&#x2192; SC-03 金融变现层（核心引擎）
+              应收账款融资 / 订单融资 / 存货融资
+              &#x2192; 收入：撮合分润 + 风控服务费</div>
+    <p><strong>组合效应</strong>：SC-01建立信用评分&#x2192;SC-03做贷款审批输入；SC-01持续监控履约&#x2192;SC-03做贷后风控；SC-01围串标识别&#x2192;SC-03排除高风险融资申请。</p>
+    <div class="callout callout-green">
+      <strong>建议：</strong>共享技术底座（数据中台+AI模型），分层变现。<span class="tag tag-green">SC-03变现能力远强于SC-01，应优先投入"脱核"模式验证。</span>
+    </div>
+  </div>
+
+  <!-- ===== 返回链接 ===== -->
+  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <p>基于一堂五步法 + 业务预判 + 行业预判方法论</p>
+  <p>SC-03 供应链金融AI · 深度分析报告</p>
+  <p class="brand">中建发展AI软件方向 · 2026-06-15</p>
+</div>
+
+</div>
+</body>
+</html>

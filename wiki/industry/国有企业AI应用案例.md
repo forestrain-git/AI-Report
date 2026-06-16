@@ -2,7 +2,7 @@
 type: industry
 related_tools: ["tools/ChatGPT.md", "tools/Kimi.md", "tools/Claude-Code.md"]
 related_models: ["models/DeepSeek.md", "models/GPT-4.md"]
-last_updated: "2026-06-10 10:30"
+last_updated: "2026-06-12 10:00"
 tags: ["国企", "央企", "数字化转型", "落地案例", "宣讲素材"]
 ---
 
