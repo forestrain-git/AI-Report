@@ -3,368 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>中建发展AI硬件方向 · 五步法预判评分报告</title>
+<title>中建发展AI硬件方向 · 总括</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: #2c3e50; padding: 16px; }
-.container { max-width: 480px; margin: 0 auto; }
-h1 { font-size: 20px; font-weight: 700; margin: 16px 0 4px; color: #1a1a2e; }
-.date { font-size: 12px; color: #999; margin-bottom: 16px; }
-.summary-card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-.summary-card h2 { font-size: 14px; opacity: 0.8; margin-bottom: 8px; }
-.summary-card .big-num { font-size: 48px; font-weight: 800; line-height: 1; }
-.summary-card .sub { font-size: 13px; opacity: 0.7; margin-top: 4px; }
-.summary-row { display: flex; gap: 12px; margin-top: 16px; }
-.summary-item { flex: 1; text-align: center; }
-.summary-item .num { font-size: 24px; font-weight: 700; }
-.summary-item .label { font-size: 11px; opacity: 0.7; }
-
-.section-title { font-size: 16px; font-weight: 700; margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }
-.section-title .badge { font-size: 11px; background: #e8e8e8; padding: 2px 8px; border-radius: 10px; font-weight: 400; color: #666; }
-
-.direction-group { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-.dir-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; display: flex; align-items: center; gap: 8px; }
-.dir-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-
-.item { padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
-.item:last-child { border-bottom: none; }
-.item-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-.item-left { flex: 1; min-width: 0; }
-.item-code { font-size: 11px; color: #999; font-weight: 600; }
-.item-name { font-size: 14px; font-weight: 600; margin: 2px 0; line-height: 1.3; }
-.item-summ { font-size: 12px; color: #666; line-height: 1.5; margin-top: 4px; }
-.item-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
-.tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
-.tag-green { background: #e8f5e9; color: #2e7d32; }
-.tag-yellow { background: #fff8e1; color: #f57f17; }
-.tag-red { background: #ffebee; color: #c62828; }
-.tag-blue { background: #e3f2fd; color: #1565c0; }
-.item-right { text-align: right; flex-shrink: 0; margin-left: 12px; }
-.score-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; margin: 0 auto 4px; }
-.score-high { background: linear-gradient(135deg, #43a047, #66bb6a); }
-.score-mid { background: linear-gradient(135deg, #ef6c00, #ffa726); }
-.score-low { background: linear-gradient(135deg, #e53935, #ef5350); }
-.score-label { font-size: 10px; color: #999; }
-
-.summary-strip { display: flex; align-items: center; gap: 8px; margin: 16px 0 8px; }
-.summary-strip .bar { flex: 1; height: 8px; border-radius: 4px; background: #eee; overflow: hidden; }
-.summary-strip .bar-inner { height: 100%; border-radius: 4px; }
-
-.legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0; font-size: 12px; color: #666; }
-.legend-item { display: flex; align-items: center; gap: 4px; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-
-.footer { text-align: center; font-size: 11px; color: #bbb; padding: 24px 0 40px; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --blue: #1d4ed8; --blue-light: #dbeafe; --blue-50: #eff6ff; --green: #16a34a; --green-bg: #dcfce7; --amber: #d97706; --amber-bg: #fef3c7; --red: #dc2626; --red-bg: #fee2e2; --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0; --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b; --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b; --slate-900: #0f172a; --radius: 12px; --radius-sm: 8px; --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); --grad-green: linear-gradient(135deg, #43a047, #66bb6a); --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726); --grad-red: linear-gradient(135deg, #e53935, #ef5350); }
+body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: var(--slate-800); font-size: 15px; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+.container { max-width: 520px; margin: 0 auto; padding: 0 0 40px; }
+.hero { background: var(--grad-header); padding: 32px 20px 20px; color: #fff; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); pointer-events: none; }
+.hero-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; position: relative; z-index: 1; }
+.hero-sub { font-size: 13px; opacity: 0.65; margin-bottom: 10px; position: relative; z-index: 1; }
+.hero-meta { font-size: 11px; opacity: 0.5; position: relative; z-index: 1; }
+.content { padding: 16px 16px 0; }
+.card { background: #fff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--slate-100); }
+.card h2 { font-size: 17px; font-weight: 700; color: var(--slate-900); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
+.card h2 .emoji-box { width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.card h3 { font-size: 15px; font-weight: 700; color: var(--slate-800); margin-bottom: 10px; margin-top: 18px; }
+.card h3:first-child { margin-top: 0; }
+.card p { font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 10px; }
+.card p:last-child { margin-bottom: 0; }
+.card p strong { color: var(--slate-800); }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; letter-spacing: 0.01em; line-height: 1.5; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+.tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; line-height: 1.5; }
+table th { text-align: left; font-weight: 600; color: var(--slate-500); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 8px 6px 0; border-bottom: 1px solid var(--slate-200); }
+table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--slate-100); vertical-align: top; color: var(--slate-600); }
+table tr:last-child td { border-bottom: none; }
+.callout { border-left: 3px solid var(--blue); background: var(--slate-50); padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13px; color: var(--slate-600); margin: 10px 0; line-height: 1.6; }
+.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.footer { text-align: center; padding: 16px; font-size: 12px; color: var(--slate-400); line-height: 1.6; }
+.footer .brand { color: var(--slate-300); margin-top: 4px; }
+@media (max-width: 420px) { .hero { padding: 24px 14px 20px; } .card { padding: 16px; } }
 </style>
 </head>
 <body>
 <div class="container">
-
-<h1>中建发展 AI硬件方向 · 五步法预判评分报告</h1>
-<div class="date">2026年6月15日 · 覆盖 21 个硬件方向 · 5 大类别 · 完整五步法+20张卡牌</div>
-
-<div class="summary-card">
-  <h2>硬伤卡牌评分概览</h2>
-  <div style="display:flex; align-items:baseline; gap:8px;">
-    <span class="big-num">21</span>
-    <span style="font-size:14px; opacity:0.7;">个方向完成完整五步法预判</span>
-  </div>
-  <div class="summary-row">
-    <div class="summary-item"><div class="num" style="color:#66bb6a;">3</div><div class="label">低风险 0-4张</div></div>
-    <div class="summary-item"><div class="num" style="color:#ffa726;">12</div><div class="label">中风险 5-7张</div></div>
-    <div class="summary-item"><div class="num" style="color:#ef5350;">6</div><div class="label">高风险 8+张</div></div>
-    <div class="summary-item"><div class="num" style="color:#42a5f5;">3</div><div class="label">最低(分)</div></div>
-  </div>
-  <div class="summary-strip">
-    <span style="font-size:11px; opacity:.7;">低</span>
-    <div class="bar"><div class="bar-inner" style="width:14%;background:#66bb6a;"></div></div>
-    <div class="bar"><div class="bar-inner" style="width:57%;background:#ffa726;"></div></div>
-    <div class="bar"><div class="bar-inner" style="width:29%;background:#ef5350;"></div></div>
-    <span style="font-size:11px; opacity:.7;">高</span>
-  </div>
+<div class="hero">
+  <div class="hero-title">中建发展AI硬件方向 · 总括</div>
+  <div class="hero-sub">22个方向 → 五步法 + 七维评分 → 战略性结论</div>
+  <div class="hero-meta">2026-06-16 · 最终更新</div>
 </div>
+<div class="content">
 
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#66bb6a;"></div> 低风险 0-4</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#ffa726;"></div> 中风险 5-7</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#ef5350;"></div> 高风险 8+</div>
-  <div class="legend-item" style="font-size:11px;color:#999;">卡牌数/20</div>
-</div>
-
-<!-- 优先推荐 -->
-<div class="section-title">🏆 优先推进 <span class="badge">低风险 + 可启动</span></div>
-<div style="background:#fff; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-<div class="item">
-  <div class="item-top">
-    <div class="item-left">
-      <div class="item-code">HW-16</div>
-      <div class="item-name">泵站AI巡检终端</div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">⚙️</span> 执行流程</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>阶段</th><th>结果</th></tr>
+        <tr><td>Phase 1 穷举</td><td>165款AI硬件 → 删除6款幻觉 + 修正10款</td></tr>
+        <tr><td>Phase 2 排除</td><td>排除115款（消费级/通用/人形/停产）→ 保留36款+建筑机器人</td></tr>
+        <tr><td>Phase 3 分析</td><td>22份五步法深度分析</td></tr>
+        <tr><td>Phase 4 修正</td><td>7个方向经实际情况校正（用户提供事实）</td></tr>
+        <tr><td>Phase 5 结论</td><td>从22个方向中筛选出2个战略性方向</td></tr>
+      </table>
     </div>
-    <div class="score-circle" style="background:linear-gradient(135deg,#43a047,#66bb6a);">3</div>
-  </div>
-  <div class="item-summ">21个方向中评分最优。行业预判6/6通过，LTV/CAC=53极健康。唯一瓶颈是泵站故障标签数据可获得性。</div>
-  <div class="item-tags"><span class="tag tag-green">低风险</span><span class="tag tag-blue">T2·核心战役</span></div>
-</div>
-<div class="item">
-  <div class="item-top">
-    <div class="item-left">
-      <div class="item-code">HW-02</div>
-      <div class="item-name">AI翻译集成（Timekettle/iFlytek）</div>
-    </div>
-    <div class="score-circle" style="background:linear-gradient(135deg,#43a047,#66bb6a);">4</div>
-  </div>
-  <div class="item-summ">25个海外机构刚需。采购+对接零研发，T1立即可出成果。</div>
-  <div class="item-tags"><span class="tag tag-green">低风险</span><span class="tag tag-blue">T1·先跑</span></div>
-</div>
-<div class="item">
-  <div class="item-top">
-    <div class="item-left">
-      <div class="item-code">HW-17</div>
-      <div class="item-name">建筑AI能效诊断仪</div>
-    </div>
-    <div class="score-circle" style="background:linear-gradient(135deg,#43a047,#66bb6a);">5</div>
-  </div>
-  <div class="item-summ">6/6行业预判全通过。热成像+AI双碳风口，LTV/CAC=12.3。数据+渠道双重壁垒，12-18月窗口期。</div>
-  <div class="item-tags"><span class="tag tag-green">低风险</span><span class="tag tag-blue">T2·核心战役</span></div>
-</div>
-</div>
-
-<!-- 类别一：市场扫描 -->
-<div class="section-title">📡 类别一：市场扫描——集成现有硬件 <span class="badge">4个方向</span></div>
-<div class="direction-group">
-  <div class="dir-title"><span class="dir-dot" style="background:#1a1a2e;"></span> 穷举165款后收敛，集成市场上已有的成熟硬件</div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-01</div><div class="item-name">AI录音集成（Plaud/iFlytek）</div></div>
-      <div class="score-circle score-low">10</div>
-    </div>
-    <div class="item-summ">高风险。纯采购+对接，六大壁垒全不占。不作为独立业务，并入IS-A02配套。</div>
-    <div class="item-tags"><span class="tag tag-red">高风险</span><span class="tag tag-blue">并入软件方向</span></div>
   </div>
 
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-02</div><div class="item-name">AI翻译集成（Timekettle/iFlytek）</div></div>
-      <div class="score-circle score-high">4</div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">🏆</span> 建议推进</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>#</th><th>方向</th><th>总分</th><th>路径</th></tr>
+        <tr><td>1</td><td><a href="五步法分析/HW-03-AI安全帽.html" style="color:var(--slate-800);text-decoration:none;font-weight:700;"><strong>AI安全帽</strong></a></td><td><span class="tag tag-green">85 ✅</span></td><td>自研，已量产</td></tr>
+      </table>
     </div>
-    <div class="item-summ">低风险。25个海外机构真实刚需，硬件成熟。T1先跑，配套IS-A01投标评审。</div>
-    <div class="item-tags"><span class="tag tag-green">T1·先跑</span></div>
+    <div class="callout callout-green">
+      <strong>核心逻辑：</strong>59元已量产走经销商，1400万工人数据+4100工地+云筑网+供应链金融四重独占。AI数据变现（保险/工程局年费）是第二增长曲线。
+    </div>
   </div>
 
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-03</div><div class="item-name">AI安全帽（WakeCap+云筑网）</div></div>
-      <div class="score-circle score-mid">7</div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">⚠️</span> 谨慎推进（60-74分）</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>#</th><th>方向</th><th>总分</th><th>核心约束</th></tr>
+        <tr><td>2</td><td><a href="五步法分析/HW-22-建筑机器人.html" style="color:var(--slate-800);text-decoration:none;font-weight:600;">建筑机器人（投资）</a></td><td><span class="tag tag-yellow">66 ⚠️</span></td><td>赛道最优（3500亿天花板），缺M&A能力</td></tr>
+        <tr><td>3</td><td><a href="五步法分析/HW-17-建筑AI能效诊断仪.html" style="color:var(--slate-800);text-decoration:none;font-weight:600;">建筑AI能效诊断仪</a></td><td><span class="tag tag-yellow">72 ⚠️</span></td><td>能碳平台刚POC，建议检测服务先行</td></tr>
+        <tr><td>4</td><td><a href="五步法分析/HW-11-微型AI安全训导仪.html" style="color:var(--slate-800);text-decoration:none;font-weight:600;">微型AI安全训导仪</a></td><td><span class="tag tag-yellow">71 ⚠️</span></td><td>LW-03未开始，先做独立简易版</td></tr>
+        <tr><td>5</td><td><a href="五步法分析/HW-16-泵站AI巡检终端.html" style="color:var(--slate-800);text-decoration:none;font-weight:600;">泵站AI巡检终端</a></td><td><span class="tag tag-yellow">65 ⚠️</span></td><td>技术可行但天花板缩至4-8亿</td></tr>
+      </table>
     </div>
-    <div class="item-summ">核心战役。行业预判6/6全过。三重壁垒+三层收入，LTV/CAC=15.1。风险在工人接受度和工地运维。</div>
-    <div class="item-tags"><span class="tag tag-yellow">中风险</span><span class="tag tag-blue">T2·核心战役</span></div>
   </div>
 
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-04</div><div class="item-name">边缘推理底座（NVIDIA Jetson）</div></div>
-      <div class="score-circle score-mid">5</div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--red-bg);color:var(--red);">❌</span> 已淘汰（17个）</h2>
+    <p>60分以下全部淘汰。代表性淘汰原因：</p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>方向</th><th>淘汰原因</th></tr>
+        <tr><td>建材入库AI识别仪</td><td>物理部署方案根基性未解决</td></tr>
+        <tr><td>AI水质哨兵</td><td>CMA认证——官方不认可无人买单</td></tr>
+        <tr><td>混凝土试块AI养护</td><td>不是AI硬件，是IoT硬件</td></tr>
+        <tr><td>其余14个</td><td>天花板小、壁垒弱、或定位不匹配</td></tr>
+      </table>
     </div>
-    <div class="item-summ">技术底座。不宜独立先行，等腿一+腿二跑通后自然衍生。团队缺跨界能力(4/5)。</div>
-    <div class="item-tags"><span class="tag tag-yellow">T3·同步储备</span></div>
-  </div>
-</div>
-
-<!-- 类别二：小模型封装 -->
-<div class="section-title">🧠 类别二：小模型+硬件封装 <span class="badge">3个方向</span></div>
-<div class="direction-group">
-  <div class="dir-title"><span class="dir-dot" style="background:#7c3aed;"></span> 独占数据 → 专用小模型 → 封装硬件。市场上没有，因为只有中建发展有这些数据</div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-05</div><div class="item-name">档案智能扫描仪</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">"好配件不是好生意"。产品逻辑成立但商业天花板仅3000-6000万。并入IS-B01做配套，不独立立项。</div>
-    <div class="item-tags"><span class="tag tag-yellow">并入IS-B01</span></div>
   </div>
 
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-06</div><div class="item-name">工地AI摄像头·自训模型版</div></div>
-      <div class="score-circle score-low">9</div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">🎯</span> 战略结论</h2>
+    <p>从中建发展作为<strong>"创新业务孵化平台"</strong>的定位出发，两个方向撑起AI硬件版图：</p>
+
+    <h3>🥇 建筑机器人（投资）— 赛道级叙事</h3>
+    <div class="callout callout-green">
+      天花板3500亿，6/6赛道全过。已接触方石/自筑/自砌等创始人，欢迎参股。符合"战略性新兴产业孵化"使命，跟集团可讲"布局建筑机器人赛道"的故事。<br><br>
+      <strong>瓶颈：</strong>M&A团队能力缺失。<br>
+      <strong>建议：</strong>引进1-2名产业投资背景人才，第一笔L1投资3000-5000万。
     </div>
-    <div class="item-summ">高风险。海康大华6-12月可追赶数据壁垒。不建议独立推进，作为HW-03安全帽的配套方案。</div>
-    <div class="item-tags"><span class="tag tag-red">高风险</span><span class="tag tag-blue">配套HW-03</span></div>
+
+    <h3>🥈 AI安全帽（自研）— 产品级基础</h3>
+    <div class="callout callout-green">
+      59元已量产，经销商已验证。四重独占资源（工人数据+工地+云筑网+供应链金融）不可复制。当前从"卖帽子"升级到"AI数据平台"。<br><br>
+      <strong>瓶颈：</strong>保险数据变现模式待验证。<br>
+      <strong>建议：</strong>用历史数据训练安全评分模型，找保险公司做PoC。
+    </div>
+
+    <h3>协同关系</h3>
+    <div class="callout">
+      建筑机器人获得中建体系的场景+数据赋能；AI安全帽积累的工人数据反哺机器人AI模型；训导仪作为安全帽配套功能不独立立项。软硬件合力形成"建筑科技生态"的叙事。
+    </div>
   </div>
 
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-07</div><div class="item-name">管网检测AI盒子（博铭维硬件+自训模型）</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">谨慎推进。核心风险在博铭维自有AI已召回率93%，中建模型必须在精度上显著领先。先验证模型再投入。</div>
-    <div class="item-tags"><span class="tag tag-yellow">先验证模型</span></div>
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">🔗</span> 关联文件</h2>
+    <p>
+      · <a href="五步法分析/HW-03-AI安全帽.html" style="color:var(--blue);">HW-03 AI安全帽（85分）</a><br>
+      · <a href="五步法分析/HW-22-建筑机器人.html" style="color:var(--blue);">HW-22 建筑机器人（66分）</a><br>
+      · <a href="五步法分析/HW-17-建筑AI能效诊断仪.html" style="color:var(--blue);">HW-17 建筑AI能效诊断仪（72分）</a><br>
+      · <a href="五步法分析/HW-11-微型AI安全训导仪.html" style="color:var(--blue);">HW-11 微型AI安全训导仪（71分）</a><br>
+      · <a href="五步法分析/HW-16-泵站AI巡检终端.html" style="color:var(--blue);">HW-16 泵站AI巡检终端（65分）</a><br><br>
+      · 全景分析：<a href="中建发展AI硬件方向-全景分析.html" style="color:var(--blue);">全景分析</a><br>
+      · 评分总表：<a href="七维评分汇总.html" style="color:var(--blue);">七维评分汇总</a><br>
+      · 领导提案：<a href="领导决策提案-AI硬件战略.html" style="color:var(--blue);">领导决策提案</a><br>
+      · 投资战略：<a href="AI硬件投资平台战略.html" style="color:var(--blue);">AI硬件投资平台战略</a>
+    </p>
   </div>
-</div>
-
-<!-- 类别三：业务断点 -->
-<div class="section-title">🔌 类别三：业务断点·软硬集成 <span class="badge">5个方向</span></div>
-<div class="direction-group">
-  <div class="dir-title"><span class="dir-dot" style="background:#2563eb;"></span> 从数字到物理的断点处，长出硬件填补缺口</div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-08</div><div class="item-name">建材入库AI识别仪</div></div>
-      <div class="score-circle score-mid">6</div>
-    </div>
-    <div class="item-summ">6/6行业预判全过。云筑网数据+采购流程嵌入+SC-01/SC-04集成三位一体壁垒。先验证工地现场模型精度。</div>
-    <div class="item-tags"><span class="tag tag-yellow">先验证模型</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-09</div><div class="item-name">混凝土试块AI养护+检测</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">需求刚性强（国标强制）。定位在"人工标养室"和"中铁无人试验室"之间。走自研设计+OEM代工路线。</div>
-    <div class="item-tags"><span class="tag tag-yellow">谨慎推进</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-10</div><div class="item-name">智能地磅+AI料仓识别</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">核心价值不在硬件，在作为SC-02建材价格预测的"数据入口"。12-24月窗口内部署建立数据飞轮。</div>
-    <div class="item-tags"><span class="tag tag-yellow">谨慎推进</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-11</div><div class="item-name">微型AI安全训导仪</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">行业预判6/6全过。毛利率78%，成本几十元。对接LW-03(78分)形成"大脑+嘴巴"闭环。先做ESP32原型验证。</div>
-    <div class="item-tags"><span class="tag tag-yellow">T2·核心战役</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-12</div><div class="item-name">非侵入式AI电力监测模块</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">成本50元/售价200-300元，毛利率60-75%。对接IS-B05能碳平台。先做用户付费意愿访谈+技术验证。</div>
-    <div class="item-tags"><span class="tag tag-yellow">先验证付费意愿</span></div>
-  </div>
-</div>
-
-<!-- 类别四：软件倒推 -->
-<div class="section-title">🔄 类别四：软件方向倒推硬件 <span class="badge">9个方向</span></div>
-<div class="direction-group">
-  <div class="dir-title"><span class="dir-dot" style="background:#059669;"></span> 从22个软件方向倒推，如果配上硬件会怎样</div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-13</div><div class="item-name">红头文件AI校对仪</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">6/6行业预判全过。对接IS-A02(85分)。先纯软件验证用户是否真的需要专用设备，再决定硬件投入。</div>
-    <div class="item-tags"><span class="tag tag-yellow">先软件验证</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-14</div><div class="item-name">档案AI审阅工作台</div></div>
-      <div class="score-circle score-low">8</div>
-    </div>
-    <div class="item-summ">高风险。硬件壳不创造额外价值。不建议独立立项，退回IS-B01的可选交付形态。</div>
-    <div class="item-tags"><span class="tag tag-red">退回软件方向</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-15</div><div class="item-name">AI水质哨兵</div></div>
-      <div class="score-circle score-mid">8</div>
-    </div>
-    <div class="item-summ">中风险上边界。三步推进：先验证AI→OEM验证市场→最后才自研硬件。与HW-16形成水务AI双子星。</div>
-    <div class="item-tags"><span class="tag tag-yellow">三步梯次推进</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-16</div><div class="item-name">泵站AI巡检终端</div></div>
-      <div class="score-circle score-high">3</div>
-    </div>
-    <div class="item-summ">21方向最优。6/6行业预判全过。18-24月窗口。工业PHM厂商受"创新者窘境"制约，通用平台不觉得赛道够大。</div>
-    <div class="item-tags"><span class="tag tag-green">低风险</span><span class="tag tag-blue">可推进</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-17</div><div class="item-name">建筑AI能效诊断仪</div></div>
-      <div class="score-circle score-high">5</div>
-    </div>
-    <div class="item-summ">6/6全过。双重壁垒。海康/Hikmicro 12-18月可追，必须在此期间建立数据+渠道壁垒。</div>
-    <div class="item-tags"><span class="tag tag-green">可推进</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-18</div><div class="item-name">管网AI窥探头</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">方向逻辑自洽但天花板有限(3-10亿)。核心瓶颈在硬件供应链而非AI。与HW-07+IS-B04形成三级闭环。</div>
-    <div class="item-tags"><span class="tag tag-yellow">配套IS-B04</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-19</div><div class="item-name">班组AI数据中枢</div></div>
-      <div class="score-circle score-mid">6</div>
-    </div>
-    <div class="item-summ">硬件是壳软件是魂。AI派工未验证前硬件投入是浪费。先做1个工地人工模拟AI派工验证算法价值。</div>
-    <div class="item-tags"><span class="tag tag-yellow">先软件验证</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-20</div><div class="item-name">海外AI工作终端</div></div>
-      <div class="score-circle score-low">11</div>
-    </div>
-    <div class="item-summ">21方向最高风险。自研三防硬件是错误解法。Plan B降维：IS-A01 Docker镜像装到现有笔记本，零硬件成本。</div>
-    <div class="item-tags"><span class="tag tag-red">降维纯软件</span></div>
-  </div>
-
-  <div class="item">
-    <div class="item-top">
-      <div class="item-left"><div class="item-code">HW-21</div><div class="item-name">AI混凝土回弹仪</div></div>
-      <div class="score-circle score-mid">7</div>
-    </div>
-    <div class="item-summ">值得做的不是硬件是AI修正算法。战略价值在作为QD-01(87分)的"数据入口"。先做手机APP外挂MVP验证。</div>
-    <div class="item-tags"><span class="tag tag-yellow">先APP验证</span></div>
-  </div>
-</div>
-
-<!-- 核心模式总结 -->
-<div class="section-title">💡 核心模式：反复出现的判断逻辑</div>
-<div style="background:#fff; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-
-<div class="item">
-  <div class="item-summ" style="font-weight:700; color:#2e7d32; margin-bottom:8px;">模式一："硬件是壳，软件/模型是魂"</div>
-  <div class="item-summ">HW-05(扫描仪)、HW-13(校对仪)、HW-19(班组中枢)、HW-21(回弹仪) — 五步法反复诊断出同一个问题：产品内核是软件/模型，硬件壳不创造额外价值。正确路径是<strong>先验软件再定硬件</strong>。</div>
-</div>
-
-<div class="item">
-  <div class="item-summ" style="font-weight:700; color:#ef6c00; margin-bottom:8px;">模式二："天花板有限但协同价值高"</div>
-  <div class="item-summ">HW-05(3000万市场)、HW-10(2-10亿)、HW-18(3-10亿) — 单个硬件方向天花板有限，但作为<strong>软件方向的"数据入口+锁客工具"</strong>价值远超独立营收。不计独立盈亏，按协同定价。</div>
-</div>
-
-<div class="item">
-  <div class="item-summ" style="font-weight:700; color:#1565c0; margin-bottom:8px;">模式三："硬件基因空白是系统性问题"</div>
-  <div class="item-summ">中建发展无硬件供应链/制造品控/售后维修团队，卡牌#19+#20几乎在所有方向命中。这不是某个方向的问题，是<strong>做硬件这件事本身的能力缺口</strong>。解决路径：AI自研+硬件OEM合作。</div>
-</div>
 
 </div>
-
-<div class="footer">分析引擎：一堂五步法 x 20张硬伤卡牌 · 2026-06-15</div>
-
+<div class="footer">
+  <p>中建发展AI硬件方向 · 22个方向五步法预判总结</p>
+  <p class="brand">分析引擎：一堂五步法 + 七维评分</p>
+</div>
 </div>
 </body>
 </html>

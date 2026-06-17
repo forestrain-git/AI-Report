@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中建发展AI软件机会研判 · 评分修正终版</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+    --blue-500: #3b82f6;
+    --blue-600: #2563eb;
+    --blue-700: #1d4ed8;
+    --green-500: #22c55e;
+    --green-600: #16a34a;
+    --amber-500: #f59e0b;
+    --red-500: #ef4444;
+    --red-600: #dc2626;
+    --rose-500: #f43f5e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--slate-50);
+    color: var(--slate-800);
+    line-height: 1.6;
+  }
+
+  /* === Header === */
+  .header {
+    background: linear-gradient(135deg, var(--slate-900) 0%, #1e3a5f 100%);
+    color: white;
+    padding: 80px 40px 60px;
+    text-align: center;
+  }
+  .header h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+  }
+  .header .subtitle {
+    font-size: 1.1rem;
+    color: var(--slate-300);
+    font-weight: 300;
+  }
+  .header .meta {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--slate-400);
+  }
+
+  /* === Container === */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* === Section === */
+  .section { margin-bottom: 48px; }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--slate-900);
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--blue-600);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--blue-600);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .lead-text {
+    font-size: 1.05rem;
+    color: var(--slate-600);
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: white;
+    border-radius: 10px;
+    border-left: 4px solid var(--blue-500);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  /* === Table === */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: white;
+  }
+  th {
+    background: var(--slate-800);
+    color: white;
+    font-weight: 600;
+    padding: 12px 16px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--slate-200);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--slate-50); }
+  .rank-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .rank-1 { background: #fbbf24; color: #1e293b; }
+  .rank-2 { background: #e2e8f0; color: #1e293b; }
+  .rank-3 { background: #e2e8f0; color: #1e293b; }
+  .rank-default { background: transparent; color: var(--slate-500); }
+  .score-down { color: var(--red-500); font-weight: 600; }
+  .score-up { color: var(--green-600); font-weight: 600; }
+  .score-same { color: var(--slate-400); }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .tag-green { background: #dcfce7; color: #166534; }
+  .tag-yellow { background: #fef3c7; color: #92400e; }
+  .tag-red { background: #fee2e2; color: #991b1b; }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+
+  /* === Card Grid === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--slate-300);
+    transition: transform 0.15s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .card.card-high { border-top-color: var(--green-500); }
+  .card.card-mid { border-top-color: var(--amber-500); }
+  .card.card-low { border-top-color: var(--red-500); }
+  .card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .card .card-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--slate-900);
+  }
+  .card .card-score {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--slate-600);
+  }
+  .card .card-score.high { color: var(--green-600); }
+  .card .card-score.mid { color: var(--amber-500); }
+  .card .card-body { font-size: 0.85rem; color: var(--slate-600); line-height: 1.6; }
+  .card .card-body p + p { margin-top: 6px; }
+  .card .card-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--slate-400);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 8px;
+  }
+  .card .card-risk {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #fef2f2;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--red-600);
+  }
+
+  /* === Insight === */
+  .insight-list { list-style: none; }
+  .insight-list li {
+    padding: 16px 20px;
+    background: white;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    font-size: 0.95rem;
+    color: var(--slate-700);
+    border-left: 4px solid var(--blue-500);
+  }
+  .insight-list li strong { color: var(--slate-900); }
+  .insight-list li .emoji { margin-right: 6px; }
+
+  /* === Footer === */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--slate-400);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--slate-200);
+  }
+
+  @media (max-width: 640px) {
+    .header { padding: 48px 20px 36px; }
+    .header h1 { font-size: 1.6rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    th, td { padding: 8px 10px; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>中建发展AI软件机会研判</h1>
+  <div class="subtitle">评分修正终版 · 七维评分体系</div>
+  <div class="meta">基于实际数据逐项事实核查 · 2026-06-16</div>
+</div>
+
+<div class="container">
+
+  <!-- === 一、修正总览 === -->
+  <div class="section">
+    <div class="section-title"><span class="num">一</span> 修正总览</div>
+    <div class="lead-text">
+      本次对28个方向中排名前9的方向逐项进行事实核查，发现<strong>4个方向评分严重虚高</strong>。
+      共性问题：原始报告将<strong>"假设"当成了"事实"</strong>——4100摄像头、77号文强制、瓴维可用、
+      数据无需合规审查——这些经不起一句"实际情况是……"。
+    </div>
+    <div class="lead-text">
+      修正幅度最大的是<strong>IS-B08 AI质量检测（87→66，-21分）</strong>。
+      原报告假设"4100+工地摄像头可用于质量缺陷检测"；
+      实际数据为<strong>414项目/4606摄像头/装在塔吊出入口用于安防</strong>，核心假设不成立。
+    </div>
+  </div>
+
+  <!-- === 二、最终排名 === -->
+  <div class="section">
+    <div class="section-title"><span class="num">二</span> 最终排名（TOP 9）</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>排名</th>
+            <th>编码</th>
+            <th>方向</th>
+            <th>原分</th>
+            <th>修正</th>
+            <th>核心原因</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank-num rank-1">1</span></td>
+            <td><span class="tag tag-green">LW-04</span></td>
+            <td>劳务市场行情指数</td>
+            <td><span class="score-same">84</span></td>
+            <td><strong>81</strong> <span class="score-down">-3</span></td>
+            <td>数据质量待验证（实名制≠工价）+PIPL合规+广联达bundle威胁</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-2">2</span></td>
+            <td><span class="tag tag-blue">SC-03</span></td>
+            <td>供应链金融AI</td>
+            <td><span class="score-same">91</span></td>
+            <td><strong>80</strong> <span class="score-down">-11</span></td>
+            <td>77号文为鼓励非强制+数据信用尚在POC+中建资本协调不确定</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-2">3</span></td>
+            <td><span class="tag tag-yellow">IS-A01</span></td>
+            <td>海外部投标评审</td>
+            <td><span class="score-same">78</span></td>
+            <td><strong>80</strong> <span class="score-up">+2</span></td>
+            <td>实际成本更低（3人团队），正向盈利，定位集团AI落地样板</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-default">4</span></td>
+            <td><span class="tag tag-blue">SC-04</span></td>
+            <td>招投标合规审查</td>
+            <td><span class="score-same">79</span></td>
+            <td><strong>79</strong> <span class="score-same">—</span></td>
+            <td>未修正。八部门政策真实强制，技术已验证，无内部博弈</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-default">5</span></td>
+            <td><span class="tag tag-yellow">IS-A06</span></td>
+            <td>AI审图</td>
+            <td><span class="score-same">86</span></td>
+            <td><strong>77</strong> <span class="score-down">-9</span></td>
+            <td>八局不放瓴维需从零自建+品览已成势+政府自建平台挤压</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-default">6</span></td>
+            <td><span class="tag tag-green">IS-B07</span></td>
+            <td>AI施工进度优化</td>
+            <td><span class="score-same">79</span></td>
+            <td><strong>76</strong> <span class="score-down">-3</span></td>
+            <td>摄像头为安防用途无法实时追踪进度，需另寻采集方案</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-default">7</span></td>
+            <td><span class="tag tag-blue">SC-01</span></td>
+            <td>供应商智能风控</td>
+            <td><span class="score-same">86</span></td>
+            <td><strong>76</strong> <span class="score-down">-10</span></td>
+            <td>数据对外合规红线+外部央企竞合+体系外付费意愿不确定</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-default">8</span></td>
+            <td><span class="tag tag-green">LW-02</span></td>
+            <td>劳动力调度优化</td>
+            <td><span class="score-same">76</span></td>
+            <td><strong>76</strong> <span class="score-same">—</span></td>
+            <td>未修正。ROI验证是核心问题，项目经理行为习惯改变阻力大</td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-default">9</span></td>
+            <td><span class="tag tag-red">IS-B08</span></td>
+            <td><del>AI质量检测</del></td>
+            <td><span class="score-same">87</span></td>
+            <td><strong>66</strong> <span class="score-down">-21</span></td>
+            <td>原第1名。摄像头为安防用途，核心假设不成立，暴跌出✅推进区间</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- === 三、修正幅度排行 === -->
+  <div class="section">
+    <div class="section-title"><span class="num">三</span> 修正幅度排行</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>方向</th><th>原分</th><th>修正</th><th>幅度</th><th>核心原因</th></tr></thead>
+        <tbody>
+          <tr><td>IS-B08 AI质量检测</td><td>87</td><td>66</td><td><span class="score-down">-21</span></td><td>核心假设不成立（摄像头不可用）</td></tr>
+          <tr><td>SC-03 供应链金融AI</td><td>91</td><td>80</td><td><span class="score-down">-11</span></td><td>政策非强制+技术未验证+组织博弈</td></tr>
+          <tr><td>SC-01 供应商智能风控</td><td>86</td><td>76</td><td><span class="score-down">-10</span></td><td>合规红线+竞合困境</td></tr>
+          <tr><td>IS-A06 AI审图</td><td>86</td><td>77</td><td><span class="score-down">-9</span></td><td>内部竞争+外部竞品+政府挤压</td></tr>
+          <tr><td>LW-04 劳务指数</td><td>84</td><td>81</td><td><span class="score-down">-3</span></td><td>数据质量+PIPL+广联达bundle</td></tr>
+          <tr><td>IS-B07 施工进度</td><td>79</td><td>76</td><td><span class="score-down">-3</span></td><td>摄像头不可用（影响程度较小）</td></tr>
+          <tr><td>IS-A01 海外部投标</td><td>78</td><td>80</td><td><span class="score-up">+2</span></td><td>唯一上调，实际数据更好+战略定位清晰</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- === 四、各方向风险摘要 === -->
+  <div class="section">
+    <div class="section-title"><span class="num">四</span> 各方向关键风险摘要</div>
+    <div class="card-grid">
+
+      <div class="card card-high">
+        <div class="card-header">
+          <span class="card-title">LW-04 劳务市场行情指数</span>
+          <span class="card-score high">81</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>1400万 vs 竞品6万条数据碾压，70%毛利，寡头终局清晰。</p>
+          <p><strong>致命风险：</strong>实名制考勤数据≠直接可用工价指数；PIPL合规（工人工资属个人敏感信息）；广联达可通过造价软件bundle竞争。</p>
+          <div class="card-risk"><strong>待核实：</strong>数据清洗后实际可用"工种×地区×时间"三维数据量</div>
+        </div>
+      </div>
+
+      <div class="card card-high">
+        <div class="card-header">
+          <span class="card-title">SC-03 供应链金融AI</span>
+          <span class="card-score high">80</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>10万亿交易数据独占+13家银行直连+信融宝200亿放款验证。</p>
+          <p><strong>致命风险：</strong>77号文为鼓励非强制；纯数据信用尚未被银行大规模接受；中建资本内部协调不确定。</p>
+          <div class="card-risk"><strong>待核实：</strong>1家银行纯数据信用审批试点</div>
+        </div>
+      </div>
+
+      <div class="card card-high">
+        <div class="card-header">
+          <span class="card-title">IS-A01 海外部投标评审</span>
+          <span class="card-score high">80</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>已交付运行中，3人团队即正向盈利，集团AI落地样板。</p>
+          <p><strong>致命风险：</strong>天花板5-10亿有限。定位为内部工具+战略入口，非独立商业产品。</p>
+          <div class="card-risk"><strong>待核实：</strong>无。可直接启动</div>
+        </div>
+      </div>
+
+      <div class="card card-mid">
+        <div class="card-header">
+          <span class="card-title">SC-04 招投标合规审查</span>
+          <span class="card-score mid">79</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>八部门强制时间表，2027年全国推广；140万招标数据独占；浙江火眼/贵州91%属实率验证。</p>
+          <p><strong>致命风险：</strong>新点软件占据招投标系统50%+市场份额，可bundle AI审查；政府采购是否接受中建系存在竞合顾虑。</p>
+          <div class="card-risk"><strong>待核实：</strong>政府公共资源交易中心是否接受中建系企业作为审查服务商</div>
+        </div>
+      </div>
+
+      <div class="card card-mid">
+        <div class="card-header">
+          <span class="card-title">IS-A06 AI审图</span>
+          <span class="card-score mid">77</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>住建部政策驱动+设计院楼内便利可快速POC。</p>
+          <p><strong>致命风险：</strong>八局不放瓴维需从零自建；品览150+客户已成势；各地可能自建BIM审查平台挤压商业空间。</p>
+          <div class="card-risk"><strong>待核实：</strong>中建发展能否绕过八局自建施工图AI审查能力</div>
+        </div>
+      </div>
+
+      <div class="card card-mid">
+        <div class="card-header">
+          <span class="card-title">IS-B07 AI施工进度优化</span>
+          <span class="card-score mid">76</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>10万亿交易数据+1400万工人数据独占。</p>
+          <p><strong>致命风险：</strong>摄像头不可用于实时进度追踪；排程算法+运筹优化跨学科团队极难组建。</p>
+          <div class="card-risk"><strong>待核实：</strong>项目经理是否愿意从"经验排程"切换到"AI推荐排程"</div>
+        </div>
+      </div>
+
+      <div class="card card-mid">
+        <div class="card-header">
+          <span class="card-title">SC-01 供应商智能风控</span>
+          <span class="card-score mid">76</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>10万亿交易数据独占壁垒。</p>
+          <p><strong>致命风险：</strong>数据对外合规红线（P0）— 供应商协议是否授权？外部央企因竞合不愿接入。</p>
+          <div class="card-risk"><strong>待核实：</strong>云筑网供应商入驻协议是否授权交易数据用于第三方风控</div>
+        </div>
+      </div>
+
+      <div class="card card-mid">
+        <div class="card-header">
+          <span class="card-title">LW-02 劳动力调度优化</span>
+          <span class="card-score mid">76</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>1400万工人实名制数据。</p>
+          <p><strong>致命风险：</strong>项目经理行为习惯改变阻力大；18-22%窝工率的理论优化空间vs实际可落地空间不确定。</p>
+          <div class="card-risk"><strong>待核实：</strong>1个工程局的AI排班 vs 人工排班回测对比</div>
+        </div>
+      </div>
+
+      <div class="card card-low">
+        <div class="card-header">
+          <span class="card-title">IS-B08 AI质量检测</span>
+          <span class="card-score" style="color:var(--red-500);">66</span>
+        </div>
+        <div class="card-body">
+          <p><strong>核心优势：</strong>质量终身责任制需求真实。</p>
+          <p><strong>致命风险：</strong>摄像头为安防用途不可用于质量检测；核心假设不成立。</p>
+          <div class="card-risk"><strong>建议：</strong>已核实完毕，建议放弃或重新定义为手机拍照方案</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- === 五、方向级均分 === -->
+  <div class="section">
+    <div class="section-title"><span class="num">五</span> 方向级均分</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>方向</th><th>单元数</th><th>均分</th><th>建议</th><th>推进（≥75）</th><th>谨慎（50-74）</th></tr></thead>
+        <tbody>
+          <tr><td>供应链AI</td><td>5</td><td><strong>65.2</strong></td><td><span class="tag tag-yellow">谨慎推进</span></td><td>SC-03, SC-04</td><td>SC-01, SC-02</td></tr>
+          <tr><td>内部管理流程AI化</td><td>6</td><td><strong>67.8</strong></td><td><span class="tag tag-yellow">谨慎推进</span></td><td>IS-A01</td><td>IS-A06, IS-A05, 安全, IS-A02, IS-B01</td></tr>
+          <tr><td>劳务AI</td><td>5</td><td><strong>62.2</strong></td><td><span class="tag tag-yellow">谨慎推进</span></td><td>LW-04, LW-02</td><td>LW-03, LW-05, LW-01</td></tr>
+          <tr><td>业务赋能</td><td>7</td><td><strong>69.0</strong></td><td><span class="tag tag-yellow">谨慎推进</span></td><td>IS-B07</td><td>IS-B08, IS-B05, IS-B04, IS-B06</td></tr>
+          <tr><td>项目管理AI</td><td>1</td><td><strong>66.0</strong></td><td><span class="tag tag-yellow">谨慎推进</span></td><td>—</td><td>PM-01</td></tr>
+          <tr><td>Token出海</td><td>2</td><td><strong>35.5</strong></td><td><span class="tag tag-red">暂缓</span></td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:0.85rem;color:var(--slate-500);margin-top:-12px;">
+      * 28个方向经修正后，无一方向均分达到≥75的"建议推进"水平。最接近的是业务赋能（69.0）。</div>
+  </div>
+
+  <!-- === 六、核心启示 === -->
+  <div class="section">
+    <div class="section-title"><span class="num">六</span> 核心启示</div>
+    <ul class="insight-list">
+      <li><strong>假设必须验证。</strong>报告中最大的问题不是"分打错了"，而是把假设当成了事实。4100摄像头、77号文强制、瓴维可用——每一条看似合理的假设，在真实世界面前都不成立。</li>
+      <li><strong>组织博弈是隐形杀手。</strong>八局不放瓴维、中建资本利益协调、外部央企竞合——这些因素比技术风险更难预测、更难解决，且足以直接否掉一个方向。</li>
+      <li><strong>已交付的东西比未验证的PPT值钱得多。</strong>IS-A01是唯一已交付的方向，3人团队、几十万启动成本、从一开始就正向盈利——稳定性远超其他高分方向。</li>
+      <li><strong>最便宜的方向可能是最好的起点。</strong>IS-A01（海外部投标评审）应作为优先启动的桥头堡。它不只是一个产品，更是中建发展在集团内部建立"能落地"口碑的战略入口。</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">
+  中建发展AI软件机会研判 · 评分修正终版 · 基于七维评分体系 · 2026-06-16
+</div>
+
+</body>
+</html>

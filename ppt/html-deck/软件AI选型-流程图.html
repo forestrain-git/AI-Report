@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中建发展 · AI软件机会 · 方法论流程</title>
+<style>
+:root{--ivory:#FAF9F5;--slate:#141413;--clay:#D97757;--oat:#E3DACC;--olive:#788C5D;--rust:#B04A3F;--gray-150:#F0EEE6;--gray-300:#D1CFC5;--gray-500:#87867F;--gray-700:#3D3D3A;--serif:ui-serif,Georgia,"Times New Roman",serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ivory);color:var(--slate);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding:56px 24px 96px}
+.sheet{max-width:980px;margin:0 auto}
+header{margin-bottom:40px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-500);margin-bottom:10px}
+h1{font-family:var(--serif);font-weight:500;font-size:34px;letter-spacing:-0.01em;margin-bottom:12px}
+.lead{font-size:14.5px;line-height:1.6;color:var(--gray-700);max-width:640px;margin-bottom:24px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start}@media(max-width:920px){.layout{grid-template-columns:1fr}}
+.canvas{border:1.5px solid var(--gray-300);border-radius:14px;background:#fff;padding:24px;overflow-x:auto}
+svg.flow{display:block;width:100%;height:auto}
+.flow text{font-family:var(--mono);font-size:11px;fill:var(--slate);pointer-events:none}
+.flow .zh{font-family:var(--sans);font-size:11px}
+.flow .sub{font-size:10px;fill:var(--gray-500)}
+.node rect{fill:#fff;stroke:var(--gray-300);stroke-width:1.5;rx:8}
+.node.term rect{fill:var(--gray-150);rx:20}
+.node.ok rect{fill:rgba(120,140,93,.12);stroke:var(--olive)}
+.node.bad rect{fill:rgba(176,74,63,.10);stroke:var(--rust)}
+.node.gate path{fill:#fff;stroke:var(--gray-300);stroke-width:1.5}
+.node{cursor:pointer;transition:transform 120ms ease}.node:hover{transform:translateY(-1px)}.node.active rect,.node.active path{stroke:var(--clay);stroke-width:2}
+.edge{stroke:var(--gray-500);stroke-width:1.5;fill:none;marker-end:url(#arrow)}
+.edge.yes{stroke:var(--olive);marker-end:url(#arrow-olive)}
+.edge.no{stroke:var(--rust);stroke-dasharray:4 4;marker-end:url(#arrow-rust)}
+.sidebar{position:sticky;top:24px}
+.sidebar h3{font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px}
+.sidebar .desc{font-size:13px;line-height:1.6;color:var(--gray-700);margin-bottom:16px}
+.sidebar .stats{background:var(--gray-150);border-radius:10px;padding:16px}
+.sidebar .stats dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-500);margin-top:8px}
+.sidebar .stats dt:first-child{margin-top:0}
+.sidebar .stats dd{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--slate);margin:2px 0 0}
+.sidebar .stats .note{font-size:11px;color:var(--gray-500);margin-top:1px}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.04em;padding:2px 6px;border-radius:999px;text-transform:uppercase;background:var(--gray-150);color:var(--gray-500)}
+.tag-g{background:rgba(120,140,93,.12);color:var(--olive)}.tag-a{background:rgba(211,119,87,.12);color:var(--clay)}.tag-r{background:rgba(176,74,63,.12);color:var(--rust)}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">方法论流程</div>
+  <h1>AI软件机会 · 全链路分析管线</h1>
+  <p class="lead">从素材搜索到最终评分的四阶段流水线。点击每个节点查看详情。</p>
+</header>
+
+<div class="layout">
+  <div class="canvas">
+    <svg class="flow" viewBox="0 0 600 680" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10" fill="var(--gray-500)"/></marker>
+        <marker id="arrow-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10" fill="var(--olive)"/></marker>
+        <marker id="arrow-rust" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10" fill="var(--rust)"/></marker>
+      </defs>
+
+      <!-- Phase 1 -->
+      <g class="node term active" data-id="p1">
+        <rect x="40" y="10" width="520" height="60"/>
+        <text x="60" y="34" font-weight="600" class="zh">Phase 1 · 素材搜索</text>
+        <text x="60" y="52" class="sub" class="zh">4路子代理并行（anysearch+last30days+web-access）→ 5份素材卡</text>
+      </g>
+      <path class="edge" d="M300,70 L300,100"/>
+
+      <!-- Gate: 盲区补齐 -->
+      <g class="node gate" data-id="gap">
+        <path d="M260,100 L300,80 L340,100 L300,120 Z"/>
+        <text x="300" y="104" text-anchor="middle" font-size="9" class="zh">盲区补齐</text>
+      </g>
+      <path class="edge yes" d="M300,120 L300,150"/>
+      <text x="310" y="138" font-size="9" fill="var(--olive)" class="zh">全球300+案例</text>
+
+      <!-- Phase 2 -->
+      <g class="node term" data-id="p2">
+        <rect x="40" y="150" width="520" height="60"/>
+        <text x="60" y="174" font-weight="600" class="zh">Phase 2 · 五步法预判</text>
+        <text x="60" y="192" class="sub" class="zh">22路并行调用一堂五步法技能 → 28份五步法分析报告</text>
+      </g>
+      <path class="edge" d="M300,210 L300,240"/>
+
+      <!-- 行业预判 split -->
+      <g class="node ok" data-id="m1">
+        <rect x="40" y="240" width="160" height="40"/>
+        <text x="120" y="264" text-anchor="middle" font-size="10" class="zh">M1 拆解行业</text>
+      </g>
+      <g class="node ok" data-id="m2">
+        <rect x="220" y="240" width="160" height="40"/>
+        <text x="300" y="264" text-anchor="middle" font-size="10" class="zh">M2 洞察变化</text>
+      </g>
+      <g class="node ok" data-id="m3">
+        <rect x="400" y="240" width="160" height="40"/>
+        <text x="480" y="264" text-anchor="middle" font-size="10" class="zh">M3 预判稳态B</text>
+      </g>
+      <path class="edge" d="M300,210 L120,260 M300,210 L300,260 M300,210 L480,260"/>
+      <g class="node ok" data-id="m4">
+        <rect x="40" y="295" width="160" height="40"/>
+        <text x="120" y="319" text-anchor="middle" font-size="10" class="zh">M4 Timing</text>
+      </g>
+      <g class="node ok" data-id="m5">
+        <rect x="220" y="295" width="160" height="40"/>
+        <text x="300" y="319" text-anchor="middle" font-size="10" class="zh">M5 天花板大小</text>
+      </g>
+      <g class="node ok" data-id="m6">
+        <rect x="400" y="295" width="160" height="40"/>
+        <text x="480" y="319" text-anchor="middle" font-size="10" class="zh">M6 集中度</text>
+      </g>
+      <path class="edge" d="M120,280 L120,295 M300,280 L300,295 M480,280 L480,295"/>
+
+      <!-- Converge -->
+      <path class="edge" d="M120,335 L120,360 L300,360"/>
+      <path class="edge" d="M300,335 L300,360"/>
+      <path class="edge" d="M480,335 L480,360 L300,360"/>
+      <path class="edge" d="M300,360 L300,380"/>
+
+      <!-- Phase 3 -->
+      <g class="node term" data-id="p3">
+        <rect x="40" y="380" width="520" height="60"/>
+        <text x="60" y="404" font-weight="600" class="zh">Phase 3 · 七维评分 + 硬伤筛查</text>
+        <text x="60" y="422" class="sub" class="zh">行业35分 + 能力65分 - 致命硬伤20分 → 排序</text>
+      </g>
+      <path class="edge" d="M300,440 L300,470"/>
+
+      <!-- Gate: ≥75? -->
+      <g class="node gate" data-id="score-gate">
+        <path d="M260,470 L300,450 L340,470 L300,490 Z"/>
+        <text x="300" y="474" text-anchor="middle" font-size="9" class="zh">≥75?</text>
+      </g>
+
+      <!-- Branch: Pass -->
+      <path class="edge yes" d="M340,470 L540,470 L540,500"/>
+      <text x="460" y="464" font-size="9" fill="var(--olive)" class="zh">✅ 推进</text>
+
+      <!-- Branch: Caution -->
+      <path class="edge" d="M300,490 L300,520 L420,520"/>
+      <text x="370" y="514" font-size="9" fill="var(--gray-500)" class="zh">⚠️ 谨慎</text>
+
+      <!-- Branch: Fail -->
+      <path class="edge no" d="M260,470 L60,470 L60,500"/>
+      <text x="80" y="464" font-size="9" fill="var(--rust)" class="zh">❌ 调整</text>
+
+      <!-- Phase 4 -->
+      <g class="node term" data-id="p4">
+        <rect x="40" y="580" width="520" height="60"/>
+        <text x="60" y="604" font-weight="600" class="zh">Phase 4 · 交叉验证 & 交付</text>
+        <text x="60" y="622" class="sub" class="zh">28单元全景 → HTML报告 → Cloudflare部署</text>
+      </g>
+      <path class="edge" d="M540,500 L540,520 L540,540 L540,580"/>
+      <path class="edge" d="M420,520 L420,540 L300,540 L300,580"/>
+      <path class="edge" d="M60,500 L60,540 L60,580"/>
+
+      <!-- Legend -->
+      <text x="40" y="670" font-size="10" fill="var(--gray-500)" class="zh">总耗时 ~12分钟（28单元并行，22次五步法调用）</text>
+    </svg>
+  </div>
+
+  <div class="sidebar">
+    <div class="stats" id="detail-panel">
+      <h3>📋 阶段说明</h3>
+      <p class="desc" id="phase-desc">点击流程图中任一节点查看详情。</p>
+      <dl>
+        <dt>评估规模</dt>
+        <dd>28</dd>
+        <dd class="note">评估单元（含5个盲区补齐）</dd>
+        <dt>推进</dt>
+        <dd>9</dd>
+        <dd class="note">≥75分，建议立即启动</dd>
+        <dt>谨慎</dt>
+        <dd>14</dd>
+        <dd class="note">50-74分，选择性推进</dd>
+        <dt>调整</dt>
+        <dd>5</dd>
+        <dd class="note">&lt;50分，需重大调整或暂缓</dd>
+        <dt>最高分</dt>
+        <dd>91</dd>
+        <dd class="note">SC-03 供应链金融AI</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<script>
+const nodes = document.querySelectorAll('.node');
+const panel = document.getElementById('detail-panel');
+const desc = document.getElementById('phase-desc');
+
+const details = {
+  p1: { title: 'Phase 1 · 素材搜索', desc: '同时启动4个子代理搜索（anysearch+last30days+web-access），并行抓取5个方向的原始素材，输出5份结构化素材卡（supply-chain/labor/management/business-ai-token/construction-schedule）。同时启动全球300+案例穷举，用于后续盲区补齐。' },
+  gap: { title: '盲区补齐', desc: '全球300+建筑AI案例穷举后，发现5个遗漏品类。经五步法验证，其中2个直接进入推进区间（IS-B08 AI质量检测87分、IS-A06 AI审图86分），验证了"交叉映射发现宝石"的方法论。' },
+  p2: { title: 'Phase 2 · 五步法预判', desc: '22路并行调用一堂五步法技能，每个单元独立完成Step 1-5逐层分析（需求→方案→资源→商模→路径），同步完成六模块行业预判（M1拆解→M2变化→M3稳态→M4时机→M5天花板→M6集中度）。' },
+  m1: { title: 'M1 拆解行业', desc: '产业链图绘制：识别各环节利润分配和关键控制节点。中建发展在供应链金融中同时控制数据（10万亿）和渠道（110万供应商），构成双重垄断。' },
+  m2: { title: 'M2 洞察变化', desc: '四维度扫描：政策（77号文脱核）、技术（AI风控）、需求（107万亿资产待盘活）、供给（竞品加速布局）。SC-03判断为"系统性变化"——三维共振。' },
+  m3: { title: 'M3 预判稳态B', desc: '推演行业终局：供应链金融从"核心企业信用背书"转向"数据信用驱动"，平台方凭借数据资产成为金融机构基础设施。' },
+  m4: { title: 'M4 Timing', desc: '窗口期判断：77号文2025.6施行，窗口刚完全打开，还有2-3年。竞品（电建、陕建）2024-2025密集布局但未形成垄断。' },
+  m5: { title: 'M5 天花板大小', desc: '四方法交叉验证：直接数据41万亿→Top-down 640亿→Bottom-up 550亿→类比联易融。结论：千亿级可触达市场。' },
+  m6: { title: 'M6 集中度', desc: '市场结构判断：C型（分散→集中），最佳时机。数据+资金通道构成双重壁垒，先行者优势明显。' },
+  p3: { title: 'Phase 3 · 七维评分', desc: '七维综合评分 = ①变化与天花板18 + ②终局与时机17 + ③需求真伪17 + ④方案与壁垒16 + ⑤团队与执行16 + ⑥商业模式16 - ⑦致命硬伤20。先判行业值不值（35分），再看自己行不行（65分），最后查硬伤。' },
+  'score-gate': { title: '≥75分判定', desc: '75分以上推进（9个），50-74分谨慎推进（14个），50分以下需重大调整（5个）。分水岭在商业模式——低于50分的全部死在商模维度。' },
+  p4: { title: 'Phase 4 · 交付', desc: '28单元全景汇总 → 方向级均分统计 → HTML报告生成 → Cloudflare Pages部署。' }
+};
+
+nodes.forEach(n => {
+  n.addEventListener('click', () => {
+    nodes.forEach(x => x.classList.remove('active'));
+    n.classList.add('active');
+    const d = details[n.dataset.id];
+    if (d) {
+      desc.textContent = d.desc;
+      const newH3 = document.createElement('h3');
+      newH3.textContent = d.title;
+      panel.replaceChild(newH3, panel.querySelector('h3'));
+    }
+  });
+});
+</script>
+</body>
+</html>

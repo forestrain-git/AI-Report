@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HW-17 建筑AI能效诊断仪 · 五步法深度分析</title>
+<title>HW-17 建筑AI能效诊断仪 · 五步法深度分析（修正版）</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -103,12 +103,12 @@ body {
   width: 88px;
   height: 88px;
   border-radius: 50%;
-  background: var(--grad-green);
+  background: var(--grad-yellow);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 24px rgba(67,160,71,0.45);
+  box-shadow: 0 4px 24px rgba(239,108,0,0.45);
 }
 .hero-badge .num {
   font-size: 36px;
@@ -456,6 +456,7 @@ table tr:last-child td { border-bottom: none; }
   margin-top: 7px;
   flex-shrink: 0;
 }
+.check-list li.item-green::before { background: var(--green); }
 
 /* ===== Action Card ===== */
 .action-card {
@@ -504,23 +505,23 @@ table tr:last-child td { border-bottom: none; }
 
 <!-- ===== Hero Header ===== -->
 <div class="hero">
-  <div class="hero-code">五步法深度分析 &middot; HW-17</div>
+  <div class="hero-code">五步法深度分析（修正版）&middot; HW-17</div>
   <div class="hero-badge-wrap">
     <div class="hero-badge">
-      <span class="num">81</span>
-      <span class="unit">总分</span>
+      <span class="num">75</span>
+      <span class="unit">总分 ↓6</span>
     </div>
   </div>
   <div class="hero-title">建筑AI能效诊断仪</div>
-  <div class="hero-sub">中建发展AI硬件方向</div>
+  <div class="hero-sub">中建发展AI硬件方向 · Plan B（检测服务）先行</div>
   <div class="hero-judgment">
-    <span style="font-size:16px;">✅</span> ✅建议推进
+    <span style="font-size:16px;">🟡</span> 谨慎推进 · 技术可行，商业条件需验证
   </div>
 </div>
 
 <!-- ===== Dimension Score Strip ===== -->
 <div class="dim-strip">
-  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-strip-title">七维评分 · 各维度表现（修正版）</div>
   <div class="dim-item">
     <span class="dim-label">变化天花板</span>
     <div class="dim-bar-wrap">
@@ -530,8 +531,8 @@ table tr:last-child td { border-bottom: none; }
   </div>  <div class="dim-item">
     <span class="dim-label">终局时机</span>
     <div class="dim-bar-wrap">
-      <div class="dim-bar"><div class="fill fill-green" style="width:82%"></div></div>
-      <span class="dim-score">14/17</span>
+      <div class="dim-bar"><div class="fill fill-green" style="width:76%"></div></div>
+      <span class="dim-score">13/17 ↓</span>
     </div>
   </div>  <div class="dim-item">
     <span class="dim-label">需求真伪</span>
@@ -548,21 +549,24 @@ table tr:last-child td { border-bottom: none; }
   </div>  <div class="dim-item">
     <span class="dim-label">商业模型</span>
     <div class="dim-bar-wrap">
-      <div class="dim-bar"><div class="fill fill-green" style="width:81%"></div></div>
-      <span class="dim-score">13/16</span>
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:69%"></div></div>
+      <span class="dim-score">11/16 ↓</span>
     </div>
   </div>  <div class="dim-item">
     <span class="dim-label">增长壁垒</span>
     <div class="dim-bar-wrap">
-      <div class="dim-bar"><div class="fill fill-green" style="width:80%"></div></div>
-      <span class="dim-score">12/15</span>
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:67%"></div></div>
+      <span class="dim-score">10/15 ↓</span>
     </div>
   </div>  <div class="dim-item">
     <span class="dim-label">风险扣分</span>
     <div class="dim-bar-wrap">
-      <div class="dim-bar"><div class="fill fill-red" style="width:20%"></div></div>
-      <span class="dim-score">-2/10</span>
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:30%"></div></div>
+      <span class="dim-score">-3/10 ↓</span>
     </div>
+  </div>
+  <div style="margin-top:10px;font-size:11px;color:var(--slate-400);text-align:center;border-top:1px solid var(--slate-100);padding-top:10px;">
+    修正依据：②终局14→13（能碳平台刚POC，渠道协同周期更长）；⑤商模13→11（无高客单价销售经验，CAC未知）；⑥壁垒12→10（建筑数据存量不多）；⑦风险-2→-3（新增卡牌10和13）
   </div>
 </div>
 
@@ -571,27 +575,31 @@ table tr:last-child td { border-bottom: none; }
 
   <!-- ===== 预判摘要 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">📋</span> 预判摘要（修正版）</h2>
     <div class="summary-box amber-border">
       <div class="sb-row">
         <span class="sb-label">20张硬伤卡牌评分</span>
-        <span><span class="tag tag-yellow">5/20 命中</span></span>
+        <span><span class="tag tag-yellow">7/20 命中（中风险）</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">变化</span>
+        <span>原5/20 → 修正7/20（新增卡牌10+13，划除卡牌19）</span>
       </div>
       <div class="sb-row">
         <span class="sb-label">整体判定</span>
-        <span class="verdict-badge vg">🟢 可推进 — 热成像硬件成熟、AI差异化明确、市场天花板高</span>
+        <span class="verdict-badge va">🟡 谨慎推进 — 技术可行，商业条件比原假设弱</span>
       </div>
       <div class="sb-row">
         <span class="sb-label">推进优先级</span>
-        <span><span class="tag tag-blue">T2·核心战役</span></span>
+        <span><span class="tag tag-yellow">Plan B（检测服务）先行</span></span>
       </div>
     </div>
-    <p><strong>一句话结论：</strong>手持热成像+AI分析，建筑缺陷自动分类（冷热桥/保温缺陷/门窗漏气/幕墙渗水），与能碳平台强协同。</p>
+    <p><strong>一句话结论：</strong>边缘AI+热成像的技术路径可行，团队AI能力有。但能碳平台刚POC、建筑数据不多、没卖过高客单价设备。建议先走检测服务模式验证核心假设，不急着做硬件。</p>
   </div>
 
   <!-- ===== 行业预判六模块 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">🏰</span> 行业预判六模块</h2>
     <div class="tbl-wrap">
       <table>
         <tr><th>模块</th><th>名称</th><th>结果</th></tr>
@@ -605,50 +613,112 @@ table tr:last-child td { border-bottom: none; }
     </div>
   </div>
 
+  <!-- ===== 商业模式修正 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">💰</span> 商业模式（修正版）</h2>
+    <div class="callout callout-yellow">
+      <strong>核心变化：</strong>原分析推荐Plan A（设备销售3.5万/台+年费）。但实际情况是能碳平台刚POC、没有高客单价销售经验、建筑数据不多。修正后建议从<b>Plan B（检测服务）先行</b>。
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>路径</th><th>做法</th><th>收入</th><th>前提</th></tr>
+        <tr>
+          <td><strong>Plan B（首选修正）</strong></td>
+          <td>借热像仪+AI团队，按栋收检测费</td>
+          <td>0.5-0.8万/栋，年200栋≈100-160万</td>
+          <td>验证AI精度+付费意愿+积累数据</td>
+        </tr>
+        <tr>
+          <td>Plan A（后续）</td>
+          <td>验证通过后启动设备产品化</td>
+          <td>3.5万/台+0.8万年费</td>
+          <td>Phase 2验证通过+能碳平台跑通</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 卡牌修正 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">🔄</span> 卡牌修正 · 5/20→7/20</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>变化</th><th>卡牌</th><th>说明</th></tr>
+        <tr>
+          <td><span class="tag tag-green">✅ 划除</span></td>
+          <td>#19 团队缺AI能力</td>
+          <td>团队已有AI视觉/嵌入式能力</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-yellow">⚠️ 新增</span></td>
+          <td>#10 算不清CAC/LTV</td>
+          <td>没卖过高客单价（3.5万级）设备，CAC完全未知</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-yellow">⚠️ 新增</span></td>
+          <td>#13 单一渠道风险</td>
+          <td>能碳平台刚POC，其他渠道均未建立</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
   <!-- ===== 推进建议 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 推进建议</h2>
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">▶️</span> 推进建议（修正版）</h2>
     <div class="action-card">
-      <div class="ac-title">核心建议</div>
-      <div class="ac-desc">热成像硬件成熟、AI差异化明确、市场天花板高、与能碳平台协同强，建议积极推进。</div>
+      <div class="ac-title">Phase 1（0-6个月）：检测服务试水</div>
+      <div class="ac-desc">借/租1台热像仪 + AI团队部署模型 → 对中建体系内1-2栋建筑做实测检测 → 验证AI精度和付费意愿</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">Phase 2（6-12个月）：决策点</div>
+      <div class="ac-desc">验证通过则启动设备产品化 + 能碳平台联动；不通过则方向暂缓</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">Phase 3（12个月+）：规模化</div>
+      <div class="ac-desc">能碳平台跑通后，走"设备+服务+平台"协同路线</div>
     </div>
   </div>
 
   <!-- ===== 关键假设 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">🧪</span> 关键假设清单（修正版）</h2>
     <div class="summary-strip">
       <span class="strip-label">总计</span>
-      <div class="strip-bar"><div class="strip-fill" style="width:50%;background:var(--grad-yellow);"></div></div>
-      <span class="strip-val" style="color:var(--amber);">5 项</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:60%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">7 项</span>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">P0 致命假设：3 项</div>
+        <div class="ai-meta">AI精度≥90% · 边缘推理≤2秒 · 客户愿为检测服务付费</div>
+      </div>
     </div>
     <div class="assumption-item">
       <div class="ai-prio p1">P1</div>
       <div class="ai-text">
-        <div class="ai-label">P1 级重要假设：2 项</div>
-        <div class="ai-meta">影响商业可行性 · 需试点验证</div>
-      </div>
-    </div>    <div class="assumption-item">
-      <div class="ai-prio p2">P2</div>
-      <div class="ai-text">
-        <div class="ai-label">P2 级次要假设：3 项</div>
-        <div class="ai-meta">可后续验证 · 不阻塞启动</div>
+        <div class="ai-label">P1 重要假设：4 项</div>
+        <div class="ai-meta">付费接受度 · 数据来源 · 数据积累速度 · 能碳平台进度</div>
       </div>
     </div>
   </div>
 
   <!-- ===== 风险提示 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 风险提示 &middot; 硬伤卡牌</h2>
+    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">💡</span> 风险提示 · 硬伤卡牌（7张）</h2>
     <div class="summary-strip">
       <span class="strip-label">命中数</span>
-      <div class="strip-bar"><div class="strip-fill" style="width:25%;background:var(--grad-yellow);"></div></div>
-      <span class="strip-val" style="color:var(--amber);">5/20</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:35%;background:var(--grad-yellow);"></div></div>
+      <span class="strip-val" style="color:var(--amber);">7/20</span>
     </div>
+    <p style="margin-bottom:10px;font-size:13px;color:var(--slate-600);">核心风险集中在商业侧而非技术侧：</p>
     <ul class="check-list">
-      <li>#17 壁垒是团队能力（2/5）</li>
-      <li>#20 运营复杂度（1/5）</li>
-
+      <li>#10 CAC未知（新增）— 没有高客单价销售经验</li>
+      <li>#13 渠道未建立（新增）— 能碳平台刚POC</li>
+      <li>#17 壁垒依赖团队能力</li>
+      <li>#1/#3/#4 需求侧待验证</li>
+      <li>#11/#20 毛利和运营</li>
     </ul>
   </div>
 
@@ -656,7 +726,7 @@ table tr:last-child td { border-bottom: none; }
 
 <!-- ===== Footer ===== -->
 <div class="footer">
-  <p>分析引擎：一堂五步法 x 20张硬伤卡牌 &middot; 2026-06-15</p>
+  <p>分析引擎：一堂五步法 x 20张硬伤卡牌 &middot; 2026-06-16（第一次重审修正）</p>
   <p class="brand">中建发展AI硬件方向</p>
 </div>
 

@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HW-03 AI安全帽 · 五步法深度分析</title>
+<title>HW-03 AI安全帽 · 五步法深度分析（修正版）</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -456,6 +456,9 @@ table tr:last-child td { border-bottom: none; }
   margin-top: 7px;
   flex-shrink: 0;
 }
+.check-list li.pass::before { background: var(--green); }
+.check-list li.item-green { color: var(--green); }
+.check-list li.item-green::before { background: var(--green); }
 
 /* ===== Action Card ===== */
 .action-card {
@@ -476,6 +479,9 @@ table tr:last-child td { border-bottom: none; }
   color: var(--slate-600);
   line-height: 1.6;
 }
+
+/* ===== Strikethrough style ===== */
+.strike { text-decoration: line-through; opacity: 0.5; }
 
 /* ===== Footer ===== */
 .footer {
@@ -504,23 +510,23 @@ table tr:last-child td { border-bottom: none; }
 
 <!-- ===== Hero Header ===== -->
 <div class="hero">
-  <div class="hero-code">五步法深度分析 &middot; HW-03</div>
+  <div class="hero-code">五步法深度分析（修正版）&middot; HW-03</div>
   <div class="hero-badge-wrap">
     <div class="hero-badge">
-      <span class="num">84</span>
-      <span class="unit">总分</span>
+      <span class="num">87</span>
+      <span class="unit">总分 ↑3</span>
     </div>
   </div>
   <div class="hero-title">AI安全帽</div>
-  <div class="hero-sub">中建发展AI硬件方向</div>
+  <div class="hero-sub">中建发展AI硬件方向 · 已量产59元走经销商</div>
   <div class="hero-judgment">
-    <span style="font-size:16px;">✅</span> ✅建议推进
+    <span style="font-size:16px;">🟢</span> 低风险 · 硬件已跑通，AI变现待验证
   </div>
 </div>
 
 <!-- ===== Dimension Score Strip ===== -->
 <div class="dim-strip">
-  <div class="dim-strip-title">七维评分 &middot; 各维度表现</div>
+  <div class="dim-strip-title">七维评分 · 各维度表现（修正版）</div>
   <div class="dim-item">
     <span class="dim-label">变化天花板</span>
     <div class="dim-bar-wrap">
@@ -542,14 +548,14 @@ table tr:last-child td { border-bottom: none; }
   </div>  <div class="dim-item">
     <span class="dim-label">方案优劣</span>
     <div class="dim-bar-wrap">
-      <div class="dim-bar"><div class="fill fill-green" style="width:88%"></div></div>
-      <span class="dim-score">15/17</span>
+      <div class="dim-bar"><div class="fill fill-green" style="width:94%"></div></div>
+      <span class="dim-score">16/17 ↑</span>
     </div>
   </div>  <div class="dim-item">
     <span class="dim-label">商业模型</span>
     <div class="dim-bar-wrap">
-      <div class="dim-bar"><div class="fill fill-green" style="width:81%"></div></div>
-      <span class="dim-score">13/16</span>
+      <div class="dim-bar"><div class="fill fill-green" style="width:88%"></div></div>
+      <span class="dim-score">14/16 ↑</span>
     </div>
   </div>  <div class="dim-item">
     <span class="dim-label">增长壁垒</span>
@@ -560,9 +566,12 @@ table tr:last-child td { border-bottom: none; }
   </div>  <div class="dim-item">
     <span class="dim-label">风险扣分</span>
     <div class="dim-bar-wrap">
-      <div class="dim-bar"><div class="fill fill-red" style="width:20%"></div></div>
-      <span class="dim-score">-2/10</span>
+      <div class="dim-bar"><div class="fill fill-green" style="width:10%"></div></div>
+      <span class="dim-score">-1/10 ↑</span>
     </div>
+  </div>
+  <div style="margin-top:10px;font-size:11px;color:var(--slate-400);text-align:center;border-top:1px solid var(--slate-100);padding-top:10px;">
+    修正依据：依据用户实际情况划除卡牌4/19/20；方案分16(已有量产产品+经销商体系)，商模14(硬件验证但AI变现待验证)，风险-1(三张硬伤划除)
   </div>
 </div>
 
@@ -571,27 +580,31 @@ table tr:last-child td { border-bottom: none; }
 
   <!-- ===== 预判摘要 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x1F4CB;</span> 预判摘要</h2>
-    <div class="summary-box amber-border">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">📋</span> 预判摘要（修正版）</h2>
+    <div class="summary-box green-border">
       <div class="sb-row">
         <span class="sb-label">20张硬伤卡牌评分</span>
-        <span><span class="tag tag-yellow">7/20 命中</span></span>
+        <span><span class="tag tag-green">3/20 命中（低风险）</span></span>
+      </div>
+      <div class="sb-row">
+        <span class="sb-label">已划除</span>
+        <span><span class="tag tag-green">卡牌4 · 19 · 20</span></span>
       </div>
       <div class="sb-row">
         <span class="sb-label">整体判定</span>
-        <span class="verdict-badge vg">✅ 建议推进 — 行业级6模块全通过，政策+技术+市场三浪叠加</span>
+        <span class="verdict-badge vg">🟢 低风险 — 硬件已跑通，AI变现待验证</span>
       </div>
       <div class="sb-row">
         <span class="sb-label">推进优先级</span>
         <span><span class="tag tag-blue">T2·核心战役</span></span>
       </div>
     </div>
-    <p><strong>一句话结论：</strong>在现有最低成本安全帽上叠加AI能力层，1400万工人数据采集终端，接入智能班组实现实时定位和行为识别。</p>
+    <p><strong>一句话结论：</strong>59元智能安全帽已量产，经销商渠道已验证。下一步不是改SaaS，是把后台数据做成独立产品卖给保险公司和工程局。AI不在帽子上，在后台云端。</p>
   </div>
 
   <!-- ===== 行业预判六模块 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">🏰</span> 行业预判六模块</h2>
     <div class="tbl-wrap">
       <table>
         <tr><th>模块</th><th>名称</th><th>结果</th></tr>
@@ -605,54 +618,107 @@ table tr:last-child td { border-bottom: none; }
     </div>
   </div>
 
+  <!-- ===== 商业模式定位 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">💰</span> 商业模式（修正）</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>收入层</th><th>方式</th><th>状态</th><th>毛利率</th></tr>
+        <tr><td>① 硬件销售</td><td>59元/顶，经销商拿货</td><td><span class="tag tag-green">✅ 已跑通</span></td><td>~20%</td></tr>
+        <tr><td>② AP及现场服务</td><td>按工地另行报价</td><td><span class="tag tag-green">✅ 已跑通</span></td><td>30-50%</td></tr>
+        <tr><td>③ 工程局年费</td><td>安全态势订阅20-30万/年</td><td><span class="tag tag-yellow">⏳ 待验证</span></td><td>80%+</td></tr>
+        <tr><td>④ 保险数据分成</td><td>按保费规模1-3%分成</td><td><span class="tag tag-yellow">⏳ 待验证</span></td><td>80%+</td></tr>
+      </table>
+    </div>
+    <div class="callout callout-green">
+      <strong>关键说明：</strong>不是SaaS订阅模式。硬件买断+AP服务费是已有收入。③④是新增数据变现方向，买方与硬件买方不是同一批人（工程局/保险公司 vs 项目部），不存在"二次收费"问题。
+    </div>
+  </div>
+
+  <!-- ===== 卡牌修正说明 ===== -->
+  <div class="card">
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">✅</span> 卡牌修正 · 3张划除</h2>
+    <div class="summary-box green-border">
+      <div class="sb-row">
+        <span class="sb-label">命中数变化</span>
+        <span><span class="tag tag-yellow">7/20 → </span><span class="tag tag-green">3/20</span></span>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>卡牌</th><th>原判定</th><th>修正</th><th>依据</th></tr>
+        <tr>
+          <td>#4 用户接受度</td>
+          <td><span class="tag tag-yellow">命中</span></td>
+          <td><span class="tag tag-green">✅ 通过</span></td>
+          <td>工人必须戴，不存在接受度问题</td>
+        </tr>
+        <tr>
+          <td>#19 硬件能力</td>
+          <td><span class="tag tag-yellow">命中</span></td>
+          <td><span class="tag tag-green">✅ 通过</span></td>
+          <td>团队已在做硬件，已验证</td>
+        </tr>
+        <tr>
+          <td>#20 部署复杂度</td>
+          <td><span class="tag tag-yellow">命中</span></td>
+          <td><span class="tag tag-green">✅ 通过</span></td>
+          <td>IoT硬件已验证通过</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
   <!-- ===== 推进建议 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">&#x25B6;&#xFE0F;</span> 推进建议</h2>
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">▶️</span> 推进建议</h2>
     <div class="action-card">
-      <div class="ac-title">核心建议</div>
-      <div class="ac-desc">先做最小闭环验证（1个工地x300顶x3个月），验证工人接受度和工地部署复杂度。</div>
+      <div class="ac-title">第一件事：验证数据变现假设</div>
+      <div class="ac-desc">用已有历史数据跑初版"工地安全评分"模型 → 找1-2家保险公司做PoC → "用我的评分回溯你们的历史赔付，看有没有相关性"</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">持续：硬件继续走量</div>
+      <div class="ac-desc">59元不涨价，经销商不减速。数据量是后续一切的基础。硬件本身已经是跑通的生意。</div>
     </div>
   </div>
 
   <!-- ===== 关键假设 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+    <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">🧪</span> 关键假设清单（修正版）</h2>
     <div class="summary-strip">
       <span class="strip-label">总计</span>
-      <div class="strip-bar"><div class="strip-fill" style="width:70%;background:var(--grad-yellow);"></div></div>
-      <span class="strip-val" style="color:var(--amber);">7 项</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:40%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">4 项</span>
+    </div>
+    <div class="assumption-item">
+      <div class="ai-prio p0">P0</div>
+      <div class="ai-text">
+        <div class="ai-label">P0 致命假设：1 项</div>
+        <div class="ai-meta">保险公司愿意为工地安全评分数据付费，需PoC验证</div>
+      </div>
     </div>
     <div class="assumption-item">
       <div class="ai-prio p1">P1</div>
       <div class="ai-text">
-        <div class="ai-label">P1 级重要假设：4 项</div>
-        <div class="ai-meta">影响商业可行性 · 需试点验证</div>
-      </div>
-    </div>    <div class="assumption-item">
-      <div class="ai-prio p2">P2</div>
-      <div class="ai-text">
-        <div class="ai-label">P2 级次要假设：3 项</div>
-        <div class="ai-meta">可后续验证 · 不阻塞启动</div>
+        <div class="ai-label">P1 重要假设：3 项</div>
+        <div class="ai-meta">工程局付费意愿 · 数据合规路径 · 历史数据量级足够</div>
       </div>
     </div>
   </div>
 
   <!-- ===== 风险提示 ===== -->
   <div class="card">
-    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 风险提示 &middot; 硬伤卡牌</h2>
+    <h2><span class="emoji-box" style="background:var(--green-bg);color:var(--green);">💡</span> 剩余风险 · 硬伤卡牌（3张）</h2>
     <div class="summary-strip">
       <span class="strip-label">命中数</span>
-      <div class="strip-bar"><div class="strip-fill" style="width:35%;background:var(--grad-yellow);"></div></div>
-      <span class="strip-val" style="color:var(--amber);">7/20</span>
+      <div class="strip-bar"><div class="strip-fill" style="width:15%;background:var(--grad-green);"></div></div>
+      <span class="strip-val" style="color:var(--green);">3/20</span>
     </div>
+    <p style="margin-bottom:10px;font-size:13px;color:var(--slate-600);">三张残余均为"怎么做"而非"做不做"的问题：</p>
     <ul class="check-list">
-      <li>#4 用户接受度未实测</li>
-      <li>#7 功能堆砌需做MVP取舍</li>
-      <li>#13 单一获客渠道</li>
-      <li>#17 壁垒依赖资源优势</li>
-      <li>#19 缺硬件品控经验</li>
-      <li>#20 工地部署复杂度</li>
-
+      <li class="item-green">#7（残余）AI增值层功能取舍 — 从工地安全评分单一产品起步</li>
+      <li class="item-green">#12（残余）保险数据服务定价 — 需要找保险公司实际报价，桌面推演无法解决</li>
+      <li class="item-green">#13（残余）数据变现渠道待验证 — 保险PoC是唯一验证方式</li>
     </ul>
   </div>
 
@@ -660,7 +726,7 @@ table tr:last-child td { border-bottom: none; }
 
 <!-- ===== Footer ===== -->
 <div class="footer">
-  <p>分析引擎：一堂五步法 x 20张硬伤卡牌 &middot; 2026-06-15</p>
+  <p>分析引擎：一堂五步法 x 20张硬伤卡牌 &middot; 2026-06-16（第一次重审修正）</p>
   <p class="brand">中建发展AI硬件方向</p>
 </div>
 
