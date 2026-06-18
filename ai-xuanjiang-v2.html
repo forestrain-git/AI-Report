@@ -124,6 +124,11 @@ body {
 .toc-row.current .toc-dot{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 0 0 6px rgba(26,86,219,.12)}
 .toc-row.current .toc-name{color:var(--accent-dark)}
 .toc-row.current .toc-tag{background:var(--accent);color:#fff}
+/* TOC Part 色调 */
+#slide-toc-2 .toc-row.current{--accent:#D97706;--accent-light:#FFFBEB;--accent-dark:#92400E}
+#slide-toc-3 .toc-row.current{--accent:#059669;--accent-light:#ECFDF5;--accent-dark:#065F46}
+#slide-toc-4 .toc-row.current{--accent:#7C3AED;--accent-light:#F5F3FF;--accent-dark:#5B21B6}
+#slide-toc-5 .toc-row.current{--accent:#CC0000;--accent-light:#FEF2F2;--accent-dark:#991B1B}
 
 /* --- Typography --- */
 .kicker {
@@ -581,22 +586,25 @@ table.compact td, table.compact th { padding: 8px 12px; }
 
 <!-- ─── P1 · 封面 ─── -->
 <section class="slide active" id="slide-1" data-type="cover">
-  <div style="margin-bottom:40px;">
-    <span class="kicker">中建发展 · AI 分享</span>
+  <div style="margin-bottom:60px;">
+    <span class="kicker" style="letter-spacing:.15em;opacity:.7;">中建发展 · AI 分享</span>
   </div>
-  <h1 class="slide-title" style="font-size:clamp(44px,3.8vw,60px);margin-bottom:32px;">
-    AI 时代：我们的选择与行动
+  <h1 class="slide-title" style="font-size:clamp(52px,4.5vw,72px);margin-bottom:24px;line-height:1.2;">
+    AI 时代：<br>我们的选择与行动
   </h1>
-  <p class="lead">从政策压力到技术平权，从认知重建到分层落地</p>
-  <div class="divider" style="margin:40px auto;"></div>
-  <div style="display:flex;gap:32px;justify-content:center;margin-top:24px;">
-    <span class="tag tag-blue">政策锚定</span>
-    <span class="tag tag-blue">同行压力</span>
-    <span class="tag tag-blue">技术祛魅</span>
-    <span class="tag tag-blue">分层行动</span>
-    <span class="tag tag-blue">风险管控</span>
+  <p class="lead" style="max-width:600px;margin:0 auto 48px;font-size:var(--text-h3);">从政策压力到技术平权，从认知重建到分层落地</p>
+  <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;opacity:.6;">
+    <span style="font-size:14px;color:var(--accent);">政策锚定</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">同行压力</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">技术祛魅</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">分层行动</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">风险管控</span>
   </div>
-  <div class="footnote" style="border-top:none;margin-top:60px;">
+  <div class="footnote" style="border-top:none;margin-top:80px;">
     演讲人：XXX ｜ 日期：2026.XX.XX ｜ 中建发展 · AI 分享
   </div>
   <div class="speaker-notes">欢迎致辞。说明本次宣讲的背景：国资委要求、集团部署、中建发展的使命。强调这不是技术培训，而是战略认知对齐。</div>
@@ -2116,16 +2124,16 @@ table.compact td, table.compact th { padding: 8px 12px; }
           <tr><td><strong>Hermes</strong></td><td>AI 效率工具</td><td><span class="tag tag-green">零</span></td></tr>
           <tr><td><strong>豆包 / Kimi</strong></td><td>写邮件、读文档、做PPT</td><td><span class="tag tag-green">零</span></td></tr>
         </table>
-        <div style="margin-top:16px;padding:14px;background:var(--surface-alt);border-radius:var(--radius);border:1px solid var(--border);">
-          <p style="margin:0;font-size:var(--text-small);"><strong class="accent">真实案例：</strong>王佳男——商务经理，数天时间零代码自建 19 页商务管理平台。<br><strong class="danger">不是程序员也能用 AI 造系统，关键是你愿不愿意动手。</strong></p>
+        <div style="margin-top:16px;padding:14px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);">
+          <p style="margin:0;font-size:var(--text-small);"><strong class="accent">这件事已经在发生了：</strong>我们有同事——非程序员——几天时间零代码自建了 19 页管理平台。<br><strong class="danger">不是程序员也能用 AI 造系统，关键是你愿不愿意动手。</strong></p>
         </div>
       </div>
     </div>
   </div>
   <div class="footnote">
-    来源：WorkBuddy、龙虾、Hermes 官方文档；王佳男案例
+    来源：WorkBuddy、龙虾、Hermes 官方文档
   </div>
-  <div class="speaker-notes">第一条线针对没用过AI的人。核心主张：不是"用了有好处"，是"不用就落后"。5分钟vs2小时，24倍效率差距。工具全部零门槛——豆包、Kimi、WorkBuddy，打开就能用。王佳男的案例要讲透：一个非技术人员，几天时间零代码造了一个管理系统。演讲时可以说："不要等公司部署系统，不要等领导安排培训。今天回去打开豆包，让它帮你写一封邮件。这就是第一步。"</div>
+  <div class="speaker-notes">第一条线针对没用过AI的人。核心主张：不是"用了有好处"，是"不用就落后"。5分钟vs2小时，24倍效率差距。工具全部零门槛——豆包、Kimi、WorkBuddy，打开就能用。有个真实案例：一个非技术人员，几天时间零代码造了一个管理系统。演讲时可以说："不要等公司部署系统，不要等领导安排培训。今天回去打开豆包，让它帮你写一封邮件。这就是第一步。"</div>
 </section>
 
 <!-- ─── P27 · 第二条线：做深做透 ─── -->
@@ -2234,6 +2242,20 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <h2 class="slide-title" style="margin:12px 0 28px;">30/60/90 天路线图——两条线同步推进。</h2>
   </div>
   <div class="slide-body">
+    <div class="stats" style="justify-content:center;gap:16px;margin-bottom:12px;">
+      <div class="stat" style="background:#E8EFFC;border-radius:var(--radius);padding:12px 28px;border-left:4px solid var(--accent);">
+        <div class="stat-value" style="font-size:clamp(36px,3vw,48px);color:var(--accent);">30</div>
+        <div class="stat-label" style="font-size:var(--text-small);margin-top:2px;">基线建立</div>
+      </div>
+      <div class="stat" style="background:#E8EFFC;border-radius:var(--radius);padding:12px 28px;border-left:4px solid var(--accent);">
+        <div class="stat-value" style="font-size:clamp(36px,3vw,48px);color:var(--accent);">60</div>
+        <div class="stat-label" style="font-size:var(--text-small);margin-top:2px;">试点运行</div>
+      </div>
+      <div class="stat" style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5);border-radius:var(--radius);padding:12px 28px;border-left:4px solid var(--success);">
+        <div class="stat-value" style="font-size:clamp(36px,3vw,48px);color:var(--success);">90</div>
+        <div class="stat-label" style="font-size:var(--text-small);margin-top:2px;">产品原型</div>
+      </div>
+    </div>
     <table>
       <tr>
         <th style="width:12%;">阶段</th>
@@ -2393,7 +2415,59 @@ table.compact td, table.compact th { padding: 8px 12px; }
   <div class="speaker-notes">7天行动清单，两条线各7天。第一条线从最简单的开始——写邮件、读PDF、整理录音、写周报。第二条线稍进阶——写脚本、搭看板、做自动化、分享经验。重点：这些全部零门槛、零成本、今天就能开始。蓝色底部框收尾："7天后，你就不再是同一个人了。"</div>
 </section>
 
-<!-- ─── P32 · 工具箱 ─── -->
+<!-- ─── P32 · 已经跑起来的系统 ─── -->
+<section class="slide" id="slide-38" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第五部分 · 风险管控与行动倡议</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">这不是 PPT。这些系统已经在跑了。</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cards cards-3" style="gap:16px;">
+      <div class="card" style="border-top:4px solid var(--accent);padding:16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:24px;">🏛️</span>
+          <div class="card-title" style="margin:0;font-size:var(--text-body);">智能评标中心</div>
+        </div>
+        <p style="font-size:var(--text-small);margin-bottom:8px;">AI 围串标识别 · 评标室实时监控 · 专家签到管理</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag tag-green" style="font-size:11px;">SC-04 方向</span>
+          <span class="tag tag-blue" style="font-size:11px;">已上线</span>
+        </div>
+        <p style="font-size:11px;color:var(--ink-muted);margin:8px 0 0;">bid.forestrain.top</p>
+      </div>
+      <div class="card" style="border-top:4px solid var(--success);padding:16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:24px;">🏭</span>
+          <div class="card-title" style="margin:0;font-size:var(--text-body);">云控恒进水系统</div>
+        </div>
+        <p style="font-size:var(--text-small);margin-bottom:8px;">水务实时监控大屏 · 泵站数据可视化 · 异常自动告警</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag tag-green" style="font-size:11px;">智慧水务</span>
+          <span class="tag tag-blue" style="font-size:11px;">已上线</span>
+        </div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--warning);padding:16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:24px;">🏠</span>
+          <div class="card-title" style="margin:0;font-size:var(--text-body);">中建方程智慧养老</div>
+        </div>
+        <p style="font-size:var(--text-small);margin-bottom:8px;">健康监测 · 照护任务管理 · SOS告警 · 家属互动</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag tag-green" style="font-size:11px;">产业服务AI</span>
+          <span class="tag tag-blue" style="font-size:11px;">已上线</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:12px 16px;background:var(--accent-light);border-radius:var(--radius);text-align:center;">
+      <p style="margin:0;font-size:var(--text-small);color:var(--accent-dark);">
+        <strong>商务管理平台也在跑了</strong>——有同事用 AI 几天时间零代码搭建了 19 页管理系统。会说话就能造系统，不是口号。
+      </p>
+    </div>
+  </div>
+  <div class="speaker-notes">这一页用实物证明：AI不是PPT上的概念，是已经在跑的系统。三个系统逐一过：智能评标中心（招投标方向）、云控水务（产业服务方向）、智慧养老（产业服务方向）。底部蓝框点题商务管理平台——呼应前边"会说话就能造系统"，不重复展开。演讲时可以说"想看的会后可以来体验"。</div>
+</section>
+
+<!-- ─── P33 · 工具箱 ─── -->
 <section class="slide" id="slide-33" data-type="content" style="padding-top:16px;padding-bottom:56px;">
   <div class="slide-header">
     <span class="kicker" style="margin-bottom:6px;">第五部分 · 风险管控与行动倡议</span>
@@ -2426,15 +2500,20 @@ table.compact td, table.compact th { padding: 8px 12px; }
         </div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:24px;padding:20px;background:var(--accent-light);border-radius:var(--radius);">
-      <p style="font-size:var(--text-h3);margin:0;">📱 完整工具箱及使用指南</p>
-      <p style="font-size:var(--text-body);margin:8px 0 0;color:var(--ink-dim);">请扫码获取或联系信息化部领取</p>
+    <div style="display:flex;align-items:center;gap:24px;margin-top:20px;padding:16px 24px;background:var(--accent-light);border-radius:var(--radius);">
+      <div style="flex-shrink:0;">
+        <img src="data:image/png;base64,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" alt="AI快速入门指南二维码" style="width:100px;height:100px;border-radius:8px;">
+      </div>
+      <div>
+        <p style="font-size:var(--text-h3);margin:0;">📱 扫码获取 AI 快速入门指南</p>
+        <p style="font-size:var(--text-small);margin:4px 0 0;color:var(--ink-dim);">扫码即学 · 学了就用 · 用了再学</p>
+      </div>
     </div>
   </div>
   <div class="footnote">
     来源：各工具官方文档；中建集团信息化部
   </div>
-  <div class="speaker-notes">工具箱页现场讲解每个工具。日常办公三个（豆包/Kimi/通义听悟），开发提效三个（Cursor/V0/Claude），企业级三个（云筑AI/WorkBuddy/集团AI平台）。最后放二维码，扫码带走完整工具箱（可以链接到一个在线文档或小程序）。</div>
+  <div class="speaker-notes">工具箱页现场讲解每个工具。日常办公三个（豆包/Kimi/通义听悟），开发提效三个（Cursor/V0/Claude），企业级三个（云筑AI/WorkBuddy/集团AI平台）。最后二维码，扫码带走完整工具箱。</div>
 </section>
 
 <!-- ─── P33 · 收尾页 ─── -->
@@ -2463,10 +2542,16 @@ table.compact td, table.compact th { padding: 8px 12px; }
   <div class="quote" style="text-align:center;border:none;padding:0;margin:0 auto;">
     "AI 转型最大的风险不是技术失败，是人的信任破产。"
   </div>
-  <p style="text-align:center;font-size:var(--text-h2);margin-top:24px;color:var(--accent-dark);font-family:var(--font-display);font-weight:700;">
+  <p style="text-align:center;font-size:var(--text-h2);margin-top:24px;color:var(--accent-dark);font-weight:700;">
     最懂业务的人，现在最懂 AI。
   </p>
-  <div class="footnote" style="text-align:center;border-top:none;margin-top:32px;">
+  <div style="max-width:700px;margin:24px auto 0;padding:16px 24px;background:var(--accent-light);border-radius:var(--radius);">
+    <p style="margin:0;font-size:var(--text-body);color:var(--accent-dark);">
+      <strong>三个月后我们坐在这里</strong>，回头看今天——<br>
+      我希望看到的不是另一份报告，而是<strong>已经跑起来的试点、正在用 AI 写周报的同事、和第一版产品的 Demo。</strong>
+    </p>
+  </div>
+  <div class="footnote" style="text-align:center;border-top:none;margin-top:24px;">
     谢谢大家 · 期待行动
   </div>
   <div class="speaker-notes">最后一页。三个时间锚点——本月成立工作组、本季度选场景试点、本年度形成模板。然后两句话收尾。第一句："AI转型最大的风险不是技术失败，是人的信任破产。"——让听众感受到紧迫感但不是恐惧。第二句："最懂业务的人，现在最懂AI。"——这是给在座每一个人的鼓励。谢谢大家。</div>
