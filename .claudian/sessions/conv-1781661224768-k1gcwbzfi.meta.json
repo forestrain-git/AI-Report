@@ -4,8 +4,8 @@
   "title": "梳理汇报PPT整体逻辑与架构顺畅度",
   "titleGenerationStatus": "success",
   "createdAt": 1781661224768,
-  "updatedAt": 1781762268475,
-  "lastResponseAt": 1781762268475,
+  "updatedAt": 1781765814777,
+  "lastResponseAt": 1781765814777,
   "sessionId": "0b36e251-6ab6-4de8-9ec4-6c4017b1af2a",
   "providerState": {
     "providerSessionId": "0b36e251-6ab6-4de8-9ec4-6c4017b1af2a",
@@ -710,11 +710,11 @@
   },
   "usage": {
     "model": "opus[1m]",
-    "inputTokens": 208,
+    "inputTokens": 674,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 305792,
+    "cacheReadInputTokens": 306944,
     "contextWindow": 1000000,
-    "contextTokens": 306000,
+    "contextTokens": 307618,
     "percentage": 31,
     "contextWindowIsAuthoritative": true
   }

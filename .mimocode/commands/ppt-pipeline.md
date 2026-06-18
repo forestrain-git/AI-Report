@@ -1,5 +1,5 @@
 ---
-description: "从大纲MD生成HTML幻灯片，支持迭代编辑、部署到Cloudflare、发送飞书。完整的PPT制作流水线。"
+description: "从大纲MD生成HTML幻灯片，支持迭代编辑、发送飞书。完整的PPT制作流水线。"
 agent: main
 ---
 
@@ -18,7 +18,6 @@ agent: main
 1. 读取大纲文件，理解结构（Part 1-N、每页标题、内容类型）
 2. 如果用户未指定风格，询问：
    - 风格选择：`guizang-whiteboard`（白底楷体蓝，国企宣讲）还是 `frontend-slides`（创意动画风）
-   - 是否需要部署到 Cloudflare
    - 是否需要发送飞书
 3. 确认大纲无误后进入生成
 
@@ -42,14 +41,7 @@ agent: main
 - 整体结构调整 → 回到 Phase 1 修改大纲后重新生成
 - 风格微调 → 修改 CSS 变量或布局参数
 
-### Phase 4：部署（可选）
-
-如果用户要求部署：
-1. 确认 Cloudflare token 可用（检查环境变量或 `.env` 文件）
-2. 调用 `cloudflare-deploy` 技能
-3. 返回公网链接
-
-### Phase 5：分发（可选）
+### Phase 4：分发（可选）
 
 如果用户要求发飞书：
 1. 使用飞书 API 上传文件或发送链接

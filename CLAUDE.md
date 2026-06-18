@@ -78,7 +78,6 @@
 | **前端幻灯片** / frontend-slides / HTML演示 | `~/.claude/skills/frontend-slides/SKILL.md` | 生成零依赖 HTML 幻灯片，16:9 固定舞台，浏览器打开即演示。 |
 | **PPT大纲** / humanize-ppt / 演讲体检 | `~/.claude/skills/humanize-ppt/SKILL.md` | AST大纲导演 + 渲染后质检。先出大纲再交给渲染技能。 |
 | **白板PPT** / guizang-whiteboard / 宣讲PPT / 做PPT | `.claude/skills/guizang-whiteboard/SKILL.md` | 从大纲md生成白板蓝主题HTML幻灯片（楷体/白底/蓝色），含紧凑布局规范、演讲模式、TOC目录。面向国企宣讲场景。 |
-| **Cloudflare部署** / deploy / 发链接 | `~/.claude/skills/cloudflare-deploy/SKILL.md` | 部署 HTML 到 Cloudflare Pages，返回公网链接。 |
 
 ## 当被要求执行以下操作时，请遵循核心逻辑：
 
