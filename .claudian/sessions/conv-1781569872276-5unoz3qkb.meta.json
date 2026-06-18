@@ -4,6 +4,19 @@
   "title": "commit一下",
   "titleGenerationStatus": "failed",
   "createdAt": 1781569872276,
-  "updatedAt": 1781569873784,
-  "sessionId": null
+  "updatedAt": 1781602172382,
+  "lastResponseAt": 1781601956497,
+  "sessionId": "ce457166-caef-46ee-8b0d-7cbaf879ec4d",
+  "providerState": {
+    "providerSessionId": "ce457166-caef-46ee-8b0d-7cbaf879ec4d"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 138,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 551680,
+    "contextWindow": 1000000,
+    "contextTokens": 551818,
+    "percentage": 55
+  }
 }

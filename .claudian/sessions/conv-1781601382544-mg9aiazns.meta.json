@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781601382544-mg9aiazns",
+  "providerId": "claude",
+  "title": "分析fut开头方向的靠谱程度",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781601382545,
+  "updatedAt": 1781661099821,
+  "lastResponseAt": 1781658738093,
+  "sessionId": "d2fa13d7-e3b3-45e1-91b5-33953bfe7017",
+  "providerState": {
+    "providerSessionId": "d2fa13d7-e3b3-45e1-91b5-33953bfe7017"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 3521,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 141120,
+    "contextWindow": 1000000,
+    "contextTokens": 144641,
+    "percentage": 14
+  }
+}

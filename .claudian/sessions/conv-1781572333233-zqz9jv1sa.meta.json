@@ -1,0 +1,23 @@
+{
+  "id": "conv-1781572333233-zqz9jv1sa",
+  "providerId": "claude",
+  "title": "审计五步法分析评分一致性",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781572333233,
+  "updatedAt": 1781573306791,
+  "lastResponseAt": 1781572546055,
+  "sessionId": "d471f55d-4d0b-4fc8-b7d8-f10dc8d01bcf",
+  "providerState": {
+    "providerSessionId": "d471f55d-4d0b-4fc8-b7d8-f10dc8d01bcf"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 304,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 101760,
+    "contextWindow": 1000000,
+    "contextTokens": 102064,
+    "percentage": 10,
+    "contextWindowIsAuthoritative": true
+  }
+}

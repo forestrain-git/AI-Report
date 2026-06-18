@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781573322684-hs88ot4qy",
+  "providerId": "claude",
+  "title": "查询中建AI硬件发展现状",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781573322684,
+  "updatedAt": 1781600849763,
+  "lastResponseAt": 1781598107776,
+  "sessionId": "5dad6aff-d8dd-41c4-bb06-571df16b346b",
+  "providerState": {
+    "providerSessionId": "5dad6aff-d8dd-41c4-bb06-571df16b346b"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 704,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 347008,
+    "contextWindow": 1000000,
+    "contextTokens": 347712,
+    "percentage": 35
+  }
+}

@@ -4,19 +4,19 @@
   "title": "聚焦当前项目，关于中建发展软件ai选择，结论是什么",
   "titleGenerationStatus": "failed",
   "createdAt": 1781569588645,
-  "updatedAt": 1781569735554,
-  "lastResponseAt": 1781569735554,
+  "updatedAt": 1781602743272,
+  "lastResponseAt": 1781571413355,
   "sessionId": "285999a2-2381-4a17-9583-d3e4c65b9ca2",
   "providerState": {
     "providerSessionId": "285999a2-2381-4a17-9583-d3e4c65b9ca2"
   },
   "usage": {
     "model": "sonnet[1m]",
-    "inputTokens": 1927,
+    "inputTokens": 1679,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 59840,
+    "cacheReadInputTokens": 90368,
     "contextWindow": 1000000,
-    "contextTokens": 61767,
-    "percentage": 6
+    "contextTokens": 92047,
+    "percentage": 9
   }
 }
