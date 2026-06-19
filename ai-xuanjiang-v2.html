@@ -1356,55 +1356,91 @@ table.compact td, table.compact th { padding: 8px 12px; }
   <div class="speaker-notes">能源央企是我们的参照系。三个案例三种模式：中国石油做大模型（3000亿参数、152个场景），国家电网做效率提升（20分钟变3分钟），南方电网做日常提效（每人每天省2小时）。重点是：这些不是实验室项目，已经在生产环境跑着了。</div>
 </section>
 
-<!-- ─── P10 · 建筑央企同行 ─── -->
+<!-- ─── P13 · 建筑央企同行（拓展版） ─── -->
 <section class="slide" id="slide-11" data-type="content" style="padding-top:16px;padding-bottom:56px;">
   <div class="slide-header">
     <span class="kicker" style="margin-bottom:6px;">第二部分 · 行业对标与差距分析</span>
-    <h2 class="slide-title" style="margin:12px 0 28px;">同行已经在动了。再不追就晚了。</h2>
+    <h2 class="slide-title" style="margin:12px 0 24px;">同行已经在动了。再不追就晚了。</h2>
   </div>
   <div class="slide-body">
-    <div class="cards cards-4">
-      <div class="card card-accent">
-        <div class="card-title">🏗️ 中铁建设</div>
-        <p><strong>"铁小智"</strong></p>
-        <p style="font-size:var(--text-body);">
-          22 万㎡方案，AI <strong class="accent">90 秒</strong>审核<br>
-          已在 <strong>100+</strong> 项目应用
+    <!-- 4 个同行案例，每个带多维度数据 -->
+    <div class="cards cards-4" style="margin-bottom:12px;">
+      <!-- 中铁建设 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🏗️ 中铁建设</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">"铁小智"</strong> <span style="font-size:var(--text-small);color:var(--ink-muted);">建筑行业首个施工方案AI审核平台</span></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          <strong class="danger">22 万㎡</strong>高铁站房方案 · AI <strong class="accent">90 秒</strong>审核 → 传统 3-4 小时
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>效率提升 <strong class="success">80%</strong> · 返工率下降 <strong>65%</strong> · 成本降低 <strong>73%</strong></li>
+          <li>已覆盖 <strong>100+</strong> 项目 · <strong>3000+</strong> 份方案 · 10 余种类型</li>
+          <li>入选北京市智能建造创新应用场景（第一批）</li>
+        </ul>
+      </div>
+
+      <!-- 中铁十一局 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🚇 中铁十一局</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">大盾构无人化运输</strong></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          入选国资委<strong class="danger">首批 40 项央企 AI 高价值场景</strong><br>
+          <span style="color:var(--danger);font-weight:700;">建筑施工领域唯一</span>
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>应用于 <strong>20 余个</strong>国家重点工程</li>
+          <li>金塘海底隧道：世界首次管片/箱涵无人化水平+垂直运输</li>
+          <li>蜀安隧道：14 米级盾构，月均 <strong>400 米</strong>进尺新纪录</li>
+        </ul>
+      </div>
+
+      <!-- 中交集团 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🌉 中交集团</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">"蓝翼"大模型</strong> <span style="font-size:var(--text-small);color:var(--ink-muted);">央企首个土木建筑大模型</span></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          <strong class="accent">140 亿</strong>参数 · <strong class="accent">30+</strong> 场景应用
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>建筑央企中<strong>首个</strong>自研行业大模型</li>
+          <li>覆盖设计、施工、运维全链条场景</li>
+          <li>对标：中石油昆仑大模型（3000亿参数·152场景）的轻量版</li>
+        </ul>
+      </div>
+
+      <!-- 中冶赛迪 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🏭 中冶赛迪</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">AI 视觉识别</strong> <span style="font-size:var(--text-small);color:var(--ink-muted);">工业场景 CV 成熟度验证</span></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          识别准确率 <strong class="accent">98.7%</strong>
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>工业场景 AI 视觉识别已高度成熟</li>
+          <li>可迁移至建筑工地安全监控、质量检测等场景</li>
+          <li>为 HW-03 AI安全帽方向提供技术可行性佐证</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 关键信号 + 对标结论 -->
+    <div style="display:flex;gap:12px;align-items:stretch;">
+      <div style="flex:1.3;padding:12px 16px;background:var(--danger-bg);border-radius:var(--radius);border-left:4px solid var(--danger);">
+        <p style="margin:0;font-size:var(--text-body);">
+          <strong class="danger">🚨 关键信号：</strong>中铁十一局的"大盾构无人化运输"是建筑施工领域<strong>唯一</strong>入选央企 40 项 AI 高价值场景的项目。在央企 AI 的官方版图上，建筑施工只占一席。
         </p>
       </div>
-      <div class="card card-accent">
-        <div class="card-title">🚇 中铁十一局</div>
-        <p><strong>大盾构无人化运输</strong></p>
-        <p style="font-size:var(--text-body);">
-          建筑施工领域<strong class="danger">唯一入选</strong><br>
-          央企 40 项 AI 高价值场景
-        </p>
-      </div>
-      <div class="card card-accent">
-        <div class="card-title">🌉 中交集团</div>
-        <p><strong class="accent">"蓝翼"大模型</strong></p>
-        <p style="font-size:var(--text-body);">
-          央企<strong>首个</strong>土木建筑大模型<br>
-          <strong>140 亿</strong>参数
-        </p>
-      </div>
-      <div class="card card-accent">
-        <div class="card-title">🏭 中冶赛迪</div>
-        <p><strong>AI 视觉识别</strong></p>
-        <p style="font-size:var(--text-body);">
-          识别准确率<br>
-          <strong class="accent">98.7%</strong>
+      <div style="flex:1;padding:12px 16px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);">
+        <p style="margin:0;font-size:var(--text-body);">
+          <strong class="accent">💡 对标结论：</strong>三家的方向与中建发展 P8 推进方向高度重合——AI方案审核（招投标合规）、无人化运输/机器人（AI安全帽+建筑机器人）。<strong>方向验证正确，接下来看速度。</strong>
         </p>
       </div>
     </div>
-    <div style="margin-top:20px;padding:14px 20px;background:var(--danger-bg);border-radius:var(--radius);border-left:4px solid var(--danger);">
-      <p style="margin:0;font-size:var(--text-body);"><strong class="danger">关键信号：</strong>中铁十一局的"大盾构无人化运输"是建筑施工领域<strong>唯一</strong>入选央企 40 项 AI 高价值场景的项目。这意味着在央企 AI 的官方版图上，建筑施工只占一席。</p>
-    </div>
   </div>
- <div class="footnote">
-    来源：中铁建设、中铁十一局、中交集团、中冶赛迪公开案例；小组调研
+  <div class="footnote">
+    来源：中铁建设、中铁十一局、中交集团、中冶赛迪公开案例；国资委首批40项央企AI高价值场景名单；小组调研
   </div>
-  <div class="speaker-notes">这一页要制造"同辈压力"。中铁建设90秒审核22万平米方案，中铁十一局入选央企40项AI高价值场景——建筑施工领域唯一一个。中交做了央企首个土木建筑大模型。这些人不是科技公司，是我们的同行。底部红框是杀手锏：央企AI版图上，建筑施工只有一席，再不抢就没了。</div>
+  <div class="speaker-notes">这一页拓展了四个同行案例的详情。中铁建设铁小智（效率80%·返工率65%·3000+方案），中铁十一局大盾构（唯一入选央企AI场景·20+国家重点工程），中交蓝翼大模型（央企首个·140亿参数·30+场景），中冶赛迪视觉识别（98.7%·成熟度佐证）。底部双栏：左红框信号+右蓝框对标结论——指向P8方向正确。</div>
 </section>
 
 <!-- ─── P11 · 中建系兄弟单位（一）─── -->
