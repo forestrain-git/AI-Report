@@ -71,7 +71,6 @@ body {
   flex-direction: column;
   padding: var(--slide-pad);
   padding-bottom: calc(var(--slide-pad) + 52px); /* space for nav bar */
-  overflow-y: auto;
   opacity: 0;
   transition: opacity .3s ease;
 }
@@ -87,12 +86,14 @@ body {
   align-items: center;
   text-align: center;
   background: linear-gradient(135deg, #f8faff 0%, #e8effc 100%);
+  overflow-y: auto;
 }
 /* 定调/金句页（大留白） */
 .slide[data-type="pivot"] {
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow-y: auto;
 }
 /* 内容页 */
 .slide[data-type="content"] {
@@ -396,6 +397,7 @@ table.compact td, table.compact th { padding: 8px 12px; }
   font-size: var(--text-footnote);
   color: var(--ink-muted);
   line-height: 1.5;
+  flex-shrink: 0;
 }
 
 /* --- Part Separator --- */
@@ -418,7 +420,6 @@ table.compact td, table.compact th { padding: 8px 12px; }
 }
 .slide-body {
   flex: 1;
-  overflow-y: hidden;
   min-height: 0;
 }
 
@@ -1432,7 +1433,8 @@ table.compact td, table.compact th { padding: 8px 12px; }
       </div>
       <div style="flex:1;padding:12px 16px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);">
         <p style="margin:0;font-size:var(--text-body);">
-          <strong class="accent">💡 对标结论：</strong>三家的方向与中建发展 P8 推进方向高度重合——AI方案审核（招投标合规）、无人化运输/机器人（AI安全帽+建筑机器人）。<strong>方向验证正确，接下来看速度。</strong>
+          <strong class="accent">💡 对标结论：</strong>铁小智的方案 AI 审核，与我们的<strong class="accent">招投标合规审查</strong>方向直接重合——都是"用 AI 审文档"，这条路已有同行跑通。<br>
+          其余三家虽然在具体场景上不同，但都在证明同一件事：<strong>AI 嵌入建筑生产流程已经不是要不要的问题，是谁先做好的问题。</strong>
         </p>
       </div>
     </div>
