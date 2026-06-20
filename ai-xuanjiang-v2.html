@@ -1662,9 +1662,9 @@ table.compact td, table.compact th { padding: 8px 12px; }
       </tr>
       <tr>
         <td><strong class="accent">多模态</strong></td>
-        <td>只能读文字</td>
-        <td><strong>能看图纸、听语音、读表格</strong></td>
-        <td>图纸审查、语音巡检记录、表格自动解析</td>
+        <td>只能读写文字</td>
+        <td><strong>输入</strong>：能看图纸、听语音、读表格<br><strong>输出</strong>：能生成图片、合成语音、出视频</td>
+        <td>图纸审查、语音巡检、表格解析 → 自动生成整改图示+语音播报</td>
       </tr>
       <tr>
         <td><strong class="accent">工具调用</strong></td>
@@ -1711,40 +1711,53 @@ table.compact td, table.compact th { padding: 8px 12px; }
         <td><strong>Chat</strong></td>
         <td>你说一句，它回一句</td>
         <td>★☆☆☆</td>
-        <td>豆包 / Kimi</td>
+        <td>ChatGPT · 豆包 · Kimi · Gemini · DeepSeek · 通义千问</td>
         <td><span class="tag tag-green">已普及</span></td>
       </tr>
       <tr>
         <td><strong class="accent">Copilot</strong></td>
         <td>你干活，它在旁边帮</td>
         <td>★★☆☆</td>
-        <td>Cursor / WPS AI</td>
+        <td>GitHub Copilot · Cursor · WPS AI · 通义灵码</td>
         <td><span class="tag tag-green">大规模落地</span></td>
       </tr>
       <tr>
         <td><strong class="accent">Agent</strong></td>
         <td>你下任务，它自己干</td>
         <td>★★★☆</td>
-        <td>WorkBuddy / 龙虾 / Hermes / Claude</td>
+        <td>Claude Code · Gemini Agent · 扣子 · Dify</td>
         <td><span class="tag tag-blue">快速成熟</span></td>
       </tr>
       <tr>
         <td><strong class="danger">Multi-Agent</strong></td>
         <td>你定目标，团队自己干</td>
         <td>★★★★</td>
-        <td>CrewAI / AutoGen</td>
+        <td>Manus · CrewAI · AutoGen</td>
         <td><span class="tag tag-blue">已可用</span></td>
       </tr>
     </table>
-    <div class="split" style="margin-top:24px;align-items:center;">
-      <div>
-        <div style="display:flex;gap:16px;align-items:center;">
-          <div style="width:120px;height:8px;background:linear-gradient(90deg,#059669,#1A56DB,#CC0000);border-radius:4px;"></div>
-          <span style="font-size:var(--text-small);color:var(--ink-dim);">自主度从低到高 →</span>
+    <div class="split" style="margin-top:16px;gap:20px;align-items:stretch;">
+      <div style="background:var(--accent-light);border-radius:var(--radius);padding:16px 20px;">
+        <p style="margin:0 0 10px;font-size:var(--text-body);font-weight:700;color:var(--accent-dark);">
+          📈 中建智能自己正在走的这条路
+        </p>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;font-size:var(--text-body);">
+          <span style="background:#fef2f2;padding:6px 12px;border-radius:6px;color:var(--danger);font-weight:600;">6 个月前</span>
+          <span style="font-size:1.2em;color:var(--ink-muted);">→</span>
+          <span style="background:#ecfdf5;padding:6px 12px;border-radius:6px;color:var(--success);font-weight:600;">现在</span>
+        </div>
+        <p style="margin:0 0 4px;font-size:var(--text-body);color:var(--ink-dim);">
+          公司用 AI <strong>聊天</strong> → 公司用 AI <strong class="accent">建系统、拿项目、拓业务边界</strong>
+        </p>
+        <div style="margin-top:8px;font-size:var(--text-small);color:var(--ink-dim);">
+          海外体系 os-五个项目 · 7步LLM流水线 · ~18次调用/项目 · <strong class="accent">3分钟端到端</strong> · 110+评审规则 · 即将与集团签约
         </div>
       </div>
-      <div style="text-align:right;">
-        <p style="margin:0;font-size:var(--text-h3);"><strong class="accent">关键认知：</strong>四种模式共存互补，<br><strong class="danger">选对级别比追最新更重要。</strong></p>
+      <div style="background:var(--surface-alt);border-radius:var(--radius);padding:16px 20px;display:flex;flex-direction:column;justify-content:center;">
+        <p style="margin:0;font-size:var(--text-h3);">
+          <strong class="accent">关键认知：</strong>选对级别比追最新重要。<br>
+          <span style="color:var(--ink-dim);font-size:var(--text-body);">日常用 Chat/Copilot 就很好。<br>复杂任务可以试试 Agent——我们已经试过了，跑通了。</span>
+        </p>
       </div>
     </div>
   </div>
@@ -1758,47 +1771,47 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <h2 class="slide-title" style="margin:12px 0 28px;">钱在往 AI 流。窗口期不会等人。</h2>
   </div>
   <div class="slide-body">
-    <p style="font-size:var(--text-h3);color:var(--ink-dim);margin-bottom:20px;">技术在进化，资本也在投票——看懂趋势，才能踩准节奏。</p>
-    <div class="split">
+    <p style="font-size:var(--text-h3);color:var(--ink-dim);margin-bottom:16px;">AI 不是在匀速进步——是在<strong class="danger">加速</strong>。每一步的间隔都在缩短。</p>
+    <div class="split" style="gap:20px;">
       <div class="split-left">
-        <h3>关键事件时间线</h3>
+        <h3>加速时间线——从年缩到月</h3>
         <div class="timeline" style="margin-top:12px;">
           <div class="timeline-item">
-            <div class="timeline-year">2022 Q4</div>
-            <div class="timeline-text"><strong>ChatGPT 发布</strong> → 2个月1亿用户 → 全球AI投资开始爆发</div>
+            <div class="timeline-year" style="color:var(--ink-muted);">2022 Q4</div>
+            <div class="timeline-text"><strong>ChatGPT 发布</strong> · 2个月1亿用户 · 史上最快产品增长</div>
           </div>
           <div class="timeline-item">
-            <div class="timeline-year" style="color:var(--accent);">2023 全年</div>
-            <div class="timeline-text"><strong>全球 AI 投资超 $2000 亿</strong> → 微软 $130 亿投 OpenAI → 各国出台 AI 战略</div>
+            <div class="timeline-year" style="color:var(--warning);">2023</div>
+            <div class="timeline-text"><strong>GPT-4 发布</strong>（3月）· 全球 AI 投资破 $2000亿 · 各国出台战略 <span style="color:var(--ink-muted);font-size:var(--text-small);">间距：4个月</span></div>
           </div>
           <div class="timeline-item">
             <div class="timeline-year" style="color:var(--warning);">2024</div>
-            <div class="timeline-text"><strong>DeepSeek-V3 开源</strong> → 中国 AI 企业融资创纪录 → Agent 框架爆发</div>
+            <div class="timeline-text"><strong>DeepSeek-V3 开源</strong>（12月）· Claude 超越 GPT · Agent 框架爆发 · 中国 AI 融资创纪录 <span style="color:var(--ink-muted);font-size:var(--text-small);">间距：9个月</span></div>
           </div>
           <div class="timeline-item">
-            <div class="timeline-year" style="color:var(--danger);">2025-2026</div>
-            <div class="timeline-text"><strong>国资委明确央企 AI 投资方向</strong> → 行业大模型商业化 → Multi-Agent 进入生产</div>
+            <div class="timeline-year" style="color:var(--danger);">2025</div>
+            <div class="timeline-text"><strong>Manus · DeepSeek-R1 · Gemini Agent</strong> · 国资委明确央企 AI 投资 · 国发11号文 <span style="color:var(--ink-muted);font-size:var(--text-small);">间距：3个月</span></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year" style="color:var(--danger);">2026</div>
+            <div class="timeline-text"><strong>Multi-Agent 进入生产 · 行业大模型规模化落地</strong> · 八部门 AI+招投标全面推行 <span style="color:var(--ink-muted);font-size:var(--text-small);">间距：正在加速</span></div>
           </div>
         </div>
       </div>
       <div class="split-right">
         <h3>对你意味着什么</h3>
-        <div class="cards" style="grid-template-columns:1fr;margin-top:12px;">
-          <div class="card card-accent">
-            <p style="margin:0;"><strong class="accent">窗口期有限</strong><br>
-            <span style="font-size:var(--text-body);">资本涌入意味着竞争对手在加速，先行者优势会快速缩小</span></p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+          <div class="card card-accent" style="padding:12px 16px;">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="accent">窗口在加速关闭。</strong>每一步的间隔从年→月。2022到2023等了4个月，2025到2026已经压到3个月。明年的竞争只会更快。</p>
           </div>
-          <div class="card card-accent">
-            <p style="margin:0;"><strong class="accent">成本在下降</strong><br>
-            <span style="font-size:var(--text-body);">开源模型（DeepSeek/Qwen）让 AI 使用成本从百万级降到万元级</span></p>
+          <div class="card card-accent" style="padding:12px 16px;">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="accent">门槛在加速降低。</strong>DeepSeek等开源模型让 AI 成本从百万级降到万元级。2023年还要博士团队，2026年产品经理一周就能出系统。</p>
           </div>
-          <div class="card card-accent">
-            <p style="margin:0;"><strong class="accent">人才在流动</strong><br>
-            <span style="font-size:var(--text-body);">AI 人才从互联网大厂向传统行业扩散——现在不抢，以后更难</span></p>
+          <div class="card card-accent" style="padding:12px 16px;">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="accent">政策在加速收紧。</strong>国发11号文（2025.8）→ 八部门AI招投标（2026.2）→ 2027强制截止。不是建议，是倒计时。</p>
           </div>
-          <div class="card card-danger">
-            <p style="margin:0;"><strong class="danger">不进则退</strong><br>
-            <span style="font-size:var(--text-body);">全球 AI 采用率从 1.5% 快速攀升，三年后"不用 AI"将等于"不会用电脑"</span></p>
+          <div class="card card-danger" style="padding:12px 16px;">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="danger">每个加速都在问你：还要等吗？</strong>三年后"不用AI"将等于"不会用电脑"——这句话从预言变成了正在兑现的现实。</p>
           </div>
         </div>
       </div>
@@ -1810,54 +1823,43 @@ table.compact td, table.compact th { padding: 8px 12px; }
   <div class="speaker-notes">这一页和 P17 互补——P17 讲"AI能做什么"，这一页讲"钱在往哪里流"。四个关键事件快速过。重点在右侧四个卡片：窗口期有限、成本在下降、人才在流动、不进则退。最后那句"不用AI等于不会用电脑"要加重语气——这是对在座每一个人的警告。</div>
 </section>
 
-<!-- ─── P19 · AI 技术架构图 ─── -->
+<!-- ─── P19 · 真正的门槛在哪 ─── -->
 <section class="slide" id="slide-20" data-type="content" style="padding-top:16px;padding-bottom:56px;">
   <div class="slide-header">
     <span class="kicker" style="margin-bottom:6px;">第三部分 · 技术解构与认知重建</span>
-    <h2 class="slide-title" style="margin:12px 0 28px;">AI 技术分软硬两条线。结论：集成大于自研。</h2>
+    <h2 class="slide-title" style="margin:12px 0 20px;">技术层在快速平权。真正的门槛在上层。</h2>
   </div>
   <div class="slide-body">
-    <div class="split">
-      <div class="split-left">
-        <h3 style="text-align:center;"><span class="tag tag-blue" style="font-size:var(--text-body);">💻 软件栈</span></h3>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
-          <div style="background:var(--accent);color:#fff;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-h3);font-weight:700;">
-            应用层 — 智能体 / 场景 / 业务系统
-          </div>
-          <div style="background:#3B82F6;color:#fff;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-body);">
-            数据层 — 知识库 / RAG / 数据治理
-          </div>
-          <div style="background:#60A5FA;color:#fff;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-body);">
-            模型层 — 大模型 / 垂域模型 / Agent
-          </div>
-          <div style="background:#93C5FD;color:#111827;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-body);">
-            算力层 — GPU / 昇腾 / 云服务
-          </div>
-        </div>
+    <!-- 三层倒金字塔 -->
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;align-items:center;">
+      <div style="width:90%;background:linear-gradient(135deg,#0d47a1,#1e40af);color:#fff;padding:16px 24px;border-radius:12px;text-align:center;">
+        <p style="margin:0;font-size:var(--text-h3);font-weight:700;">🏗️ 上层：行业壁垒——别人跨不进来</p>
+        <p style="margin:4px 0 0;font-size:var(--text-body);opacity:0.85;">10万亿交易数据 · 1400万工人 · 建筑行业 know-how · 客户信任 · 场景理解</p>
+        <p style="margin:4px 0 0;font-size:var(--text-small);opacity:0.7;">这些不会因为 AI 技术进步而贬值——反而会升值。因为 AI 需要数据喂养，需要场景验证。</p>
       </div>
-      <div class="split-right">
-        <h3 style="text-align:center;"><span class="tag tag-green" style="font-size:var(--text-body);">🔧 硬件栈</span></h3>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
-          <div style="background:var(--success);color:#fff;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-h3);font-weight:700;">
-            终端层 — AR 眼镜 / 安全帽 / 机器人
-          </div>
-          <div style="background:#10B981;color:#fff;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-body);">
-            边缘层 — Jetson / ESP32 / AI 盒子
-          </div>
-          <div style="background:#34D399;color:#111827;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-body);">
-            感知层 — 摄像头 / 传感器 / IoT
-          </div>
-          <div style="background:#6EE7B7;color:#111827;padding:14px 20px;border-radius:var(--radius);text-align:center;font-size:var(--text-body);">
-            芯片层 — ESP32 / RK3588 / 昇腾
-          </div>
-        </div>
+      <div style="width:75%;background:var(--surface-alt);border:2px dashed var(--border);padding:14px 20px;border-radius:var(--radius);text-align:center;">
+        <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--ink);">🔧 中层：技术迁移能力——决定快慢</p>
+        <p style="margin:2px 0 0;font-size:var(--text-small);color:var(--ink-dim);">把行业知识和业务逻辑翻译成 AI 能理解的指令、工作流、评测标准的能力。<br>这不是程序员的事——是<strong>最懂业务的人 + AI 工具</strong>的组合。</p>
+      </div>
+      <div style="width:60%;background:#e5e7eb;padding:12px 16px;border-radius:var(--radius);text-align:center;">
+        <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--ink-dim);">⬜ 底层：技术基础设施——快速平权中</p>
+        <p style="margin:2px 0 0;font-size:var(--text-small);color:var(--ink-muted);">大模型 · 算力 · 开源框架 · 开发工具——所有人拿到的都是一样的，而且越来越便宜。</p>
       </div>
     </div>
-    <div style="margin-top:24px;text-align:center;padding:14px 20px;background:var(--accent-light);border-radius:var(--radius);">
-      <p style="margin:0;font-size:var(--text-h3);"><strong class="accent">关键洞察：</strong>两条栈都有成熟的开源/商用方案，<strong class="danger">集成 > 自研</strong>。</p>
+
+    <!-- 三句结论 -->
+    <div style="display:flex;gap:16px;">
+      <div style="flex:1;padding:14px 16px;background:var(--accent-light);border-radius:var(--radius);text-align:center;">
+        <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--accent-dark);">❌ 不是：集成大于自研</p>
+        <p style="margin:4px 0 0;font-size:var(--text-small);color:var(--ink-dim);">集成没有护城河——谁都能集成。</p>
+      </div>
+      <div style="flex:1;padding:14px 16px;background:var(--danger-bg);border-radius:var(--radius);text-align:center;">
+        <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--danger);">✅ 而是：行业深耕 × AI 迁移能力</p>
+        <p style="margin:4px 0 0;font-size:var(--text-small);color:var(--ink-dim);">数据独占 + 场景理解 + 把业务翻译成 AI 的能力 = <strong>真正的壁垒</strong></p>
+      </div>
     </div>
   </div>
-  <div class="speaker-notes">双栈并列，左边软件右边硬件，每边四层。重点是让听众理解：AI不是单一技术，是一个分层的体系。对中建发展来说，不需要从底层芯片做起——每层都有成熟的方案可以集成。关键词：集成大于自研。</div>
+  <div class="speaker-notes">这一页驳斥"集成大于自研"的简单化结论。用三层倒三角展示：底层（技术基础设施）在快速平权，所有人都拿一样的东西；中层（技术迁移能力——把业务翻译成AI）是快慢的差异；上层（行业壁垒——数据、know-how、场景、信任）是别人跨不进来的。两行结论对比：集成没有护城河，真正的壁垒是行业深耕×AI迁移能力。</div>
 </section>
 
 <!-- ─── P20+P21 · 软硬件门槛已低（合并） ─── -->
@@ -1867,34 +1869,76 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <h2 class="slide-title" style="margin:12px 0 28px;">软硬件门槛都已经塌了。会说话能造系统，40 块钱能做识别。</h2>
   </div>
   <div class="slide-body">
-    <div class="split">
-      <div class="split-left">
-        <h3 style="margin-top:0;">💻 软件篇——三个真实案例</h3>
-        <table style="font-size:var(--text-small);margin-top:4px;">
-          <tr><th style="width:20%;">角色</th><th style="width:35%;">成果</th><th>工具</th></tr>
-          <tr><td><strong class="accent">👩‍💼 产品经理</strong></td><td>1 周出 29 页前端</td><td>AI 生成完整页面</td></tr>
-          <tr><td><strong class="accent">💼 商务经理</strong></td><td>数天自建 19 页管理平台</td><td>零代码 AI 搭建</td></tr>
-          <tr><td><strong class="accent">📐 总工程师</strong></td><td>碎片时间写水务监控大屏</td><td>AI 辅助数据可视化</td></tr>
-        </table>
-        <div style="margin-top:8px;padding:8px 12px;background:var(--accent-light);border-radius:var(--radius);">
-          <p style="margin:0;font-size:var(--text-body);">三个人都不是程序员。以前开发是程序员的事，现在 <strong class="danger">会说话就能造系统</strong>。</p>
+    <div class="split" style="gap:20px;align-items:stretch;">
+      <!-- 左侧：软件——递进：先展示程序员做了什么，再说非程序员也能做到 -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <h3 style="margin:0;">💻 软件篇——可演示的系统</h3>
+        <!-- 第一层：程序员做的 -->
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-left:4px solid var(--accent);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:var(--text-body);">🏛️ 智能评标中心</strong>
+            <span class="tag tag-green" style="font-size:10px;">可演示</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+            AI 围串标识别 · 评标室实时监控 · 专家签到 · bid.forestrain.top
+          </p>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-left:4px solid var(--accent);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:var(--text-body);">🏭 云控恒进水系统</strong>
+            <span class="tag tag-green" style="font-size:10px;">可演示</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+            水务监控大屏 · 泵站可视化 · 液位/流量趋势预测
+          </p>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-left:4px solid var(--accent);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:var(--text-body);">🏠 智慧养老平台</strong>
+            <span class="tag tag-green" style="font-size:10px;">可演示</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+            健康监测 · 照护管理 · SOS告警 · 家属互动 · 7大模块
+          </p>
+        </div>
+        <!-- 第二层：不是程序员也能做到 -->
+        <div style="padding:10px 14px;background:var(--accent-light);border-radius:var(--radius);text-align:center;">
+          <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--accent-dark);">
+            而且，这些不是只有程序员才能做到——
+          </p>
         </div>
       </div>
-      <div class="split-right">
-        <h3 style="margin-top:0;">🔧 硬件篇——¥40 起</h3>
-        <div style="padding:14px;background:var(--surface-alt);border-radius:var(--radius);border:2px solid var(--accent);margin-top:4px;text-align:center;">
-          <p style="font-size:var(--text-h2);margin-bottom:4px;"><strong class="accent">ESP32-CAM</strong> <span style="color:var(--ink-dim);font-size:0.6em;">（¥40）</span></p>
-          <p style="margin:12px 0 28px;">+ AI 模型 = 人脸识别 · 行动识别</p>
-          <p><span class="tag tag-green" style="font-size:var(--text-small);">千元级成本</span> <span class="tag tag-blue" style="font-size:var(--text-small);">万元级能力</span></p>
+
+      <!-- 右侧：硬件 -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <h3 style="margin:0;">🔧 硬件篇——门槛同样是零</h3>
+        <!-- ESP32-S3 机器人 -->
+        <div style="padding:12px 16px;background:var(--surface);border:2px solid var(--accent);border-radius:var(--radius);text-align:center;">
+          <p style="font-size:var(--text-h3);margin-bottom:4px;"><strong class="accent">ESP32-S3 智能机器人</strong> <span style="color:var(--ink-dim);font-size:0.6em;">（¥90）</span></p>
+          <p style="margin:4px 0;font-size:var(--text-body);">人脸识别 · 语音对话 · 无所不知 · 自主行动</p>
+          <div style="margin:8px 0;padding:20px;background:#f0f4f8;border-radius:8px;border:1px dashed var(--border-strong);min-height:120px;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);font-size:var(--text-small);">
+            <!-- 留空给截图 -->
+            📷 截图区域
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-small);color:var(--ink-dim);">
+            用 Agent 协助构建——<strong>门槛极低</strong>（AI 帮你写代码）<strong>天花板极高</strong>（后台调用大模型）
+          </p>
         </div>
-        <p style="margin-top:10px;font-size:var(--text-body);">市面已有 <strong class="accent">165 款</strong>成熟 AI 硬件（安全帽·摄像头·机器人·AR等），中建发展的优势在<strong class="danger">场景理解</strong>，不在造硬件。</p>
+        <!-- ESP32-CAM -->
+        <div style="padding:10px 14px;background:var(--surface-alt);border-radius:var(--radius);text-align:center;">
+          <p style="margin:0;font-size:var(--text-body);"><strong class="accent">ESP32-CAM（¥40）</strong> + AI = 远程摄像头 · 人脸识别 · 行动识别</p>
+          <p style="margin:4px 0 0;"><span class="tag tag-green">千元级成本</span> <span class="tag tag-blue">万元级能力</span></p>
+        </div>
+        <p style="font-size:var(--text-body);color:var(--ink-dim);margin:4px 0 0;">
+          市面已有 <strong class="accent">165 款</strong>成熟 AI 硬件——安全帽·摄像头·机器人·AR眼镜。中建发展的优势在<strong class="danger">场景理解</strong>。
+        </p>
       </div>
     </div>
   </div>
   <div class="footnote">
-    来源：中建发展内部案例；ESP32 官方技术文档；AI 硬件市场调研
+    来源：中建智能实践案例；ESP32 官方技术文档；AI 硬件市场调研
   </div>
-  <div class="speaker-notes">合并页——左软件右硬件，一句话总结：门槛已经塌了。软件侧三个案例全部是非技术人员，硬件侧40块钱的ESP32-CAM加AI就能做人脸识别。两件事放在一起讲才有冲击力：不仅软件不用写代码，硬件也不用自己造。</div>
+  <div class="speaker-notes">软件侧三层递进：第一层，三个已上线可演示的系统（智能评标/云控水务/智慧养老）；第二层，蓝框点出"不是只有程序员才能做到"——为后面 P22 的高阶案例铺垫。硬件侧：ESP32-S3 智能机器人（¥90，人脸识别/语音对话/自主行动，Agent协助构建，门槛极低天花板极高），留出了截图位。底部 ESP32-CAM 保持。</div>
 </section>
 
 <!-- ─── P22 · AI 从虚拟走向现实 ─── -->
@@ -1904,33 +1948,38 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <h2 class="slide-title" style="margin:12px 0 28px;">AI 已经从虚拟走向现实。门槛是零。</h2>
   </div>
   <div class="slide-body">
-    <div class="cards cards-3" style="margin-bottom:20px;">
+    <div class="cards cards-3" style="margin-bottom:16px;">
+      <!-- 最简单：IT运维 -->
       <div class="card card-accent">
-        <div class="card-title">🖥️ IT 运维</div>
+        <div class="card-title">🖥️ IT 运维——电脑风扇/打印机</div>
         <table class="compact" style="margin:6px 0;">
-          <tr><td style="width:22%;"><strong>场景</strong></td><td>电脑风扇狂转</td></tr>
-          <tr><td><strong>以前</strong></td><td>找 IT 运维，等半天</td></tr>
-          <tr><td><strong>现在</strong></td><td>跟 Claude 说一句 → 自动诊断并杀掉异常进程</td></tr>
-          <tr><td><strong>结果</strong></td><td><strong class="success">30秒解决，零门槛</strong></td></tr>
+          <tr><td style="width:22%;"><strong>以前</strong></td><td>风扇狂转 → 找 IT，等半天<br>打印机卡纸 → 叫维修，半天废了</td></tr>
+          <tr><td><strong>现在</strong></td><td>跟 Claude 说一句 → 自动诊断进程<br>拍照发给 AI → 语音指导自己修</td></tr>
+          <tr><td><strong>结果</strong></td><td><strong class="success">30秒/几分钟解决，零门槛</strong></td></tr>
         </table>
       </div>
+      <!-- 中等：会议纪要 -->
       <div class="card card-accent">
-        <div class="card-title">📋 会议纪要</div>
+        <div class="card-title">📋 会议纪要——自动整理</div>
         <table class="compact" style="margin:6px 0;">
-          <tr><td style="width:22%;"><strong>场景</strong></td><td>部门周会录音整理</td></tr>
-          <tr><td><strong>以前</strong></td><td>人工听写，2小时</td></tr>
+          <tr><td style="width:22%;"><strong>以前</strong></td><td>人工听写，2小时</td></tr>
           <tr><td><strong>现在</strong></td><td>通义听悟自动转写 + Kimi 提取要点</td></tr>
           <tr><td><strong>结果</strong></td><td><strong class="success">10分钟出纪要，结构化归档</strong></td></tr>
         </table>
       </div>
+      <!-- 最震撼：数据分析 + 硬件 -->
       <div class="card card-accent">
-        <div class="card-title">📊 数据分析</div>
+        <div class="card-title">📊 数据分析——自动出报告</div>
         <table class="compact" style="margin:6px 0;">
-          <tr><td style="width:22%;"><strong>场景</strong></td><td>季度采购数据汇总</td></tr>
-          <tr><td><strong>以前</strong></td><td>Excel 手动整理，1-2天</td></tr>
+          <tr><td style="width:22%;"><strong>以前</strong></td><td>Excel 手动整理，1-2天</td></tr>
           <tr><td><strong>现在</strong></td><td>DeepSeek 写脚本自动清洗 + 生成图表</td></tr>
           <tr><td><strong>结果</strong></td><td><strong class="success">30分钟完成，含异常标记</strong></td></tr>
         </table>
+        <div style="margin-top:8px;padding:6px 10px;background:var(--danger-bg);border-radius:6px;text-align:center;">
+          <p style="margin:0;font-size:var(--text-small);color:var(--danger);font-weight:700;">
+            🔧 硬件也不远了——ESP32-S3 机器人 ¥90 就能做识别+对话
+          </p>
+        </div>
       </div>
     </div>
     <div class="cards cards-3" style="grid-template-columns:1fr 1fr 1fr;">
