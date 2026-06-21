@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781766579112-fcy1s7qji",
+  "providerId": "claude",
+  "title": "查看最新 AI 汇报材料",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781766579112,
+  "updatedAt": 1781960144696,
+  "lastResponseAt": 1781832407714,
+  "sessionId": "44ca3139-5424-459c-86a8-4e3274af1217",
+  "providerState": {
+    "providerSessionId": "44ca3139-5424-459c-86a8-4e3274af1217"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 769,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 280768,
+    "contextWindow": 1000000,
+    "contextTokens": 281537,
+    "percentage": 28
+  }
+}

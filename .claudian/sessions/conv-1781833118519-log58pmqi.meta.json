@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781833118519-log58pmqi",
+  "providerId": "claude",
+  "title": "分析AI宣讲HTML第7-10页逻辑",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781833118519,
+  "updatedAt": 1781960127707,
+  "lastResponseAt": 1781960127707,
+  "sessionId": "e105d3f6-86ab-4124-84a1-c8dd30ca749b",
+  "providerState": {
+    "providerSessionId": "e105d3f6-86ab-4124-84a1-c8dd30ca749b"
+  },
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 1000000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

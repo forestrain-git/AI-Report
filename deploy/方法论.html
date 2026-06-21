@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>分析方法论 · 一堂五步法 × 业务预判 × 七维评分</title>
+<style>
+:root {
+  --bg: #fafaf8; --card: #ffffff; --text: #1a1a1a;
+  --text-secondary: #555; --text-muted: #888;
+  --accent: #1565c0; --accent-soft: #e3f2fd;
+  --green: #1e8449; --amber: #b7950b; --red: #c0392b;
+  --border: #e8e4e0; --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --radius: 6px;
+  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", "Consolas", monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 15px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+.container { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; }
+.report-header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 0 36px; text-align: center; }
+.report-header .tag { display: inline-block; background: rgba(255,255,255,0.15); color: #ffd700; padding: 3px 14px; border-radius: 20px; font-size: 12px; letter-spacing: 0.06em; margin-bottom: 14px; }
+.report-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.03em; }
+.report-header .sub { font-size: 14px; color: rgba(255,255,255,0.65); }
+
+h2 { font-size: 22px; margin: 36px 0 14px; color: var(--accent); border-bottom: 2px solid var(--accent-soft); padding-bottom: 8px; }
+h3 { font-size: 18px; margin: 26px 0 10px; color: var(--text); }
+h4 { font-size: 16px; margin: 18px 0 8px; color: var(--text-secondary); }
+p { margin: 8px 0; }
+
+table { width: 100%; border-collapse: collapse; margin: 14px 0; background: var(--card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+th { background: #f8f6f4; font-weight: 600; color: var(--text); border-bottom: 2px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f8f9fa; }
+
+blockquote { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 12px 20px; margin: 14px 0; border-radius: 0 var(--radius) var(--radius) 0; color: var(--text-secondary); }
+
+.callout { border-left: 4px solid var(--accent); background: #f5f7fa; padding: 12px 18px; margin: 12px 0; border-radius: 0 var(--radius) var(--radius) 0; font-size: 14px; color: var(--text-secondary); }
+.callout strong { color: var(--text); }
+
+.tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; letter-spacing: 0.01em; }
+.tag-green { background: #dcfce7; color: var(--green); }
+.tag-amber { background: #fef3c7; color: var(--amber); }
+.tag-red { background: #fee2e2; color: var(--red); }
+.tag-blue { background: var(--accent-soft); color: var(--accent); }
+
+.step-flow { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+.step-flow .step { flex: 1; min-width: 100px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 12px; text-align: center; box-shadow: var(--shadow); }
+.step-flow .step .step-num { font-size: 24px; font-weight: 800; color: var(--accent); }
+.step-flow .step .step-name { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 4px; }
+.step-flow .step .step-q { font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.4; }
+
+.module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+.module-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+.module-card .mc-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.04em; }
+.module-card .mc-title { font-size: 15px; font-weight: 700; color: var(--text); margin: 4px 0; }
+.module-card .mc-q { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+.footer { text-align: center; padding: 24px; font-size: 12px; color: var(--text-muted); margin-top: 40px; border-top: 1px solid var(--border); }
+
+@media (max-width: 600px) {
+  .module-grid { grid-template-columns: 1fr; }
+  .step-flow .step { min-width: 70px; padding: 10px 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div class="tag">分析方法论</div>
+  <h1>一堂五步法 × 业务预判 × 七维评分</h1>
+  <div class="sub">基于 Truman 方法论 + 周子敬行业画布 · 经 6 个搞砸 + 2 个成功 + 47 份源材料验证</div>
+</div>
+
+<div class="container">
+
+<h2>一、总览：四层筛选流水线</h2>
+
+<p>57 个方向不是平行比较——它们被投入一条四层筛选流水线，层层淘汰。每一层回答一个独立的"要不要继续"的问题。不能在第四层评分的方向说明它已经在前面被否决了，根本没有进入评分环节。</p>
+
+<table>
+<tr><th>层</th><th>问题</th><th>不通过则</th></tr>
+<tr><td><strong>第一层</strong></td><td>这跟AI有关系吗？</td><td>淘汰 — 核心价值不在AI的方向不进入后续流程</td></tr>
+<tr><td><strong>第二层</strong></td><td>行业变化够大吗？（M2）天花板够高吗？（M3）集中度对我们有利吗？（M6）</td><td>淘汰 — 行业级不成立的方向不进入项目分析</td></tr>
+<tr><td><strong>第三层</strong></td><td>需求真吗？（Step1）方案有路吗？（Step2）能赚钱吗？（Step3）能增长吗？（Step4）有壁垒吗？（Step5）</td><td>Step1或Step2有疑虑→淘汰。Step3-5有疑虑→对应维度×0.7</td></tr>
+<tr><td><strong>第四层</strong></td><td>如果全通，这个方向值几分？</td><td>折后≥75→推进；60-74→探索；<60→淘汰</td></tr>
+</table>
+
+<h2>二、行业预判（六模块）</h2>
+
+<blockquote><strong>核心逻辑：</strong>在评估具体项目之前，先判断这个行业值不值得进。行业不行，再好的项目也做不大。</blockquote>
+
+<div class="module-grid">
+  <div class="module-card">
+    <div class="mc-num">M1</div>
+    <div class="mc-title">拆解行业</div>
+    <div class="mc-q">产业链长什么样？每个环节赚多少钱？关键控制节点在哪？</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-num">M2 · 筛选用</div>
+    <div class="mc-title">洞察变化</div>
+    <div class="mc-q">行业正在发生什么变化？够大吗？——没有变化就没有机会</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-num">M3 · 筛选用</div>
+    <div class="mc-title">预判稳态B</div>
+    <div class="mc-q">变化驱动下的最终市场天花板够高吗？</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-num">M4</div>
+    <div class="mc-title">分析 Timing</div>
+    <div class="mc-q">窗口开了吗？太早还是太晚？</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-num">M5</div>
+    <div class="mc-title">天花板大小</div>
+    <div class="mc-q">TAM/SAM/SOM 够不够支撑十亿/百亿量级？</div>
+  </div>
+  <div class="module-card">
+    <div class="mc-num">M6 · 筛选用</div>
+    <div class="mc-title">集中度</div>
+    <div class="mc-q">行业终局分散还是集中？对国央企有利吗？</div>
+  </div>
+</div>
+
+<h3>行业级通过标准</h3>
+<ul>
+  <li><span class="tag tag-green">🟢</span> 6模块全部通过 → 进入五步法项目分析</li>
+  <li><span class="tag tag-amber">🟡</span> 4-5模块通过 → 补充薄弱模块（标记待验证假设）</li>
+  <li><span class="tag tag-red">🔴</span> ≤3模块通过 → 行业级不通过，建议换方向</li>
+</ul>
+
+<p>M2、M3、M6 是第二层筛选的否决项：三者任一不通过即淘汰。但 M1、M4、M5 也是理解行业全貌的前提——你不知道产业链长什么样，就不知道机会在哪。</p>
+
+<h3>M6·集中度：C型最佳</h3>
+<div class="callout">
+  <strong>核心判断：</strong>
+  行业的终局集中度趋势决定策略。<br><br>
+  <strong>A型（分散→分散）</strong>：没有头部玩家形成，谁也吃不了谁。策略是差异化深耕，但天花板天然受限。<br>
+  <strong>B型（已集中）</strong>：已有寡头主导，没有你的位置。除非有颠覆性变量。<br>
+  <strong>C型★（分散→集中）</strong>：当前分散但正在收窄。谁先建立壁垒谁就是明天的寡头。这对国央企最有利——资源+政策+场景独占构成天然入场券。
+</div>
+
+<h2>三、五步法（逐层递进）</h2>
+
+<blockquote><strong>核心逻辑：</strong>五个步骤是递进关系——前一步不通过，后一步不可知。Step1是原点，Step5画终局。每一步验证一个关键假设，错了就停下来。</blockquote>
+
+<div class="step-flow">
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-name">需求</div>
+    <div class="step-q">谁？什么场景？痛吗？现在怎么解决的？</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-name">解决方案</div>
+    <div class="step-q">怎么解决？凭什么选你不选现有方案？</div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-name">商业模式</div>
+    <div class="step-q">能赚钱吗？单元模型健康吗？</div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-name">增长</div>
+    <div class="step-q">怎么获客？怎么复制放大？</div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-name">壁垒</div>
+    <div class="step-q">面对竞争，靠什么赢？</div>
+  </div>
+</div>
+
+<h3>Step 1 · 需求（原点问题）</h3>
+<p>不是"有没有人要"，是<strong>"有多痛"</strong>。用需求评估三角形判断：刚性 × 频次 × 普遍性。一个"有了更好"的需求不等于一个"雪中送炭"的需求。一年用一次的产品很难支撑持续商业模式。</p>
+<p><strong>核心工具：</strong>JTBD（用户雇佣产品完成什么任务）、TAM/SAM/SOM 天花板测算、终局光谱图。</p>
+
+<h3>Step 2 · 解决方案（价值问题）</h3>
+<p>不是说"我们有方案"，是<strong>"凭什么选你不选现有方案"</strong>。必须有一句话 Sharp 定位说清差异化。必须明确做了什么、不做什么。没有取舍逻辑的方案等于什么都要做——什么都做不好。</p>
+
+<h3>Step 3 · 商业模式（效率问题）</h3>
+<p>不能停留在"应该能赚钱"，要<strong>算清单元模型</strong>。单一客户/订单的收入-成本-利润、LTV/CAC、回收期、毛利率。至少要找 3 个对标基准值交叉验证。算不清 CAC 或 LTV、毛利<20%且无改善空间——就是永远赚不到钱。</p>
+
+<h3>Step 4 · 增长（复制问题）</h3>
+<p>不是"我觉得可以做渠道"，是<strong>最小成本验证过没有</strong>。渠道探索四步法：穷举→快测→对比→单点突破。只有一个渠道且未验证 ROI 就是断流即死。增长引擎类型分三种：黏着式（用了离不开）、付费式（花钱买流量）、病毒式（用户传播用户）。</p>
+
+<h3>Step 5 · 壁垒（终局问题）</h3>
+<p>不是说"我们有壁垒"，是<strong>你有的东西别人花 6 个月 1000 万能不能复制</strong>。六大壁垒类型：网络效应（最强）、无形资产（品牌/专利/许可）、规模效应、技术壁垒、转化成本、成本优势（最弱）。说不清护城河就是谁都能进来。</p>
+
+<h3>疑虑处理规则</h3>
+<div class="callout">
+  <strong>Step1 或 Step2 有疑虑：</strong>不作为独立方向立项、不给独立资源。可以顺带推进（如技术路线与已推进方向重叠），但不单独给预算。<br><br>
+  <strong>Step3-5 有疑虑：</strong>对应七维维度得分 ×0.7 后再算总分。不是"扣面子"——疑虑意味着该环节的不确定性会使产品成功率降低约 30%。
+</div>
+
+<h2>四、七维评分</h2>
+
+<p>通过四层筛选的方向进入七维评分。七个维度覆盖从"赛道好不好"到"能不能守住"的完整链条：</p>
+
+<table>
+<tr><th>维度</th><th>满分</th><th>测什么</th><th>关联方法论</th></tr>
+<tr><td>① 变化天花板</td><td>18</td><td>行业变化量级 + 稳态天花板</td><td>行业预判 M2 + M3 + M5</td></tr>
+<tr><td>② 终局时机</td><td>17</td><td>Timing 窗口 + 集中度趋势</td><td>行业预判 M4 + M6</td></tr>
+<tr><td>③ 需求真伪</td><td>17</td><td>需求刚性与真实性</td><td>五步法 Step 1</td></tr>
+<tr><td>④ 方案优劣</td><td>17</td><td>差异化定位 + MVP 可行性</td><td>五步法 Step 2</td></tr>
+<tr><td>⑤ 商业模型</td><td>16</td><td>单元模型健康度 + 毛利结构</td><td>五步法 Step 3</td></tr>
+<tr><td>⑥ 增长壁垒</td><td>15</td><td>获客路径 + 护城河强度</td><td>五步法 Step 4 + Step 5</td></tr>
+<tr><td>⑦ 风险扣分</td><td>-10</td><td>硬伤卡牌命中数 + 执行不确定性</td><td>20 张硬伤卡牌</td></tr>
+<tr style="background:#f0f6ff;"><td><strong>满分合计</strong></td><td><strong>100</strong></td><td colspan="2"></td></tr>
+</table>
+
+<div class="callout">
+  <strong>评分裁定：</strong><br>
+  折后 ≥75 → <span class="tag tag-green">✅ 推进</span> — 立即启动<br>
+  折后 60-74 → <span class="tag tag-amber">⚠️ 探索</span> — 以较小强度验证关键假设<br>
+  折后 <60 → <span class="tag tag-red">❌ 淘汰</span> — 不再投入资源
+</div>
+
+<h2>五、20 张硬伤卡牌</h2>
+
+<p>对每个方向不证明它"对"，而是主动找它哪里"错"。任何一张红牌都能一票否决。卡牌分五组：</p>
+
+<table>
+<tr><th>组</th><th>卡牌</th><th>核心问题</th></tr>
+<tr><td>需求（4张）</td><td>#1-4</td><td>目标用户太宽泛？痛点不够痛？频率太低？没跟真实用户验证过？</td></tr>
+<tr><td>方案（4张）</td><td>#5-8</td><td>和现有方案没区别？说不清卖点？功能堆砌？没有MVP概念？</td></tr>
+<tr><td>商模（4张）</td><td>#9-12</td><td>算不清单元模型？CAC > LTV？毛利<20%？没和基准对比过？</td></tr>
+<tr><td>增长（3张）</td><td>#13-15</td><td>只有一个未验证渠道？获客靠人肉？没有增长引擎？</td></tr>
+<tr><td>壁垒（3张）</td><td>#16-18</td><td>说不清护城河？壁垒是团队能力？六大类型一个不占？</td></tr>
+<tr><td>执行（2张）</td><td>#19-20</td><td>团队缺必备能力？低估运营复杂度？</td></tr>
+</table>
+
+<h3>风险判定</h3>
+<table>
+<tr><th>命中数</th><th>风险</th><th>行动</th></tr>
+<tr><td>0-3</td><td><span class="tag tag-green">低</span></td><td>细化关键假设验证方案</td></tr>
+<tr><td>4-7</td><td><span class="tag tag-amber">中</span></td><td>优先解决硬伤再推进</td></tr>
+<tr><td>8-12</td><td><span class="tag tag-red">高</span></td><td>重新评估可行性</td></tr>
+<tr><td>13-16</td><td><span class="tag tag-red">极高</span></td><td>不建议下场，换方向</td></tr>
+<tr><td>17-20</td><td><span class="tag tag-red">必死</span></td><td>100%会失败，立即放弃</td></tr>
+</table>
+
+<div class="callout">
+  <strong>验证依据：</strong>回溯分析 6 个搞砸案例——校车监控（8张）、团购新能源（7张）、医美沃柑（6张）、铜锅牛肉（6张）、美妆鸭货（5张）、智能硬件（7张）——命中 5-8 张硬伤的项目 100% 失败。20 张卡牌的"高风险"判定（8-12张）准确预警了最严重的失败。
+</div>
+
+<h2>六、四层筛选后的处置策略</h2>
+
+<p>被淘汰的方向不是废纸——区分两类，不同处置：</p>
+
+<table>
+<tr><th>类别</th><th>判定标准</th><th>处置</th></tr>
+<tr><td><span class="tag tag-amber">❶ 顺带覆盖</span></td><td>Step1-2有疑虑但内部需求明确、技术路线与已推进方向重叠、边际成本极低</td><td>不作为独立方向立项、不给独立资源。作为已推进方向的配套功能顺带覆盖。</td></tr>
+<tr><td><span class="tag tag-red">❷ 不建议投入</span></td><td>第一层伪AI（核心不是AI），或Step1/Step2直接否决（根本逻辑不成立）</td><td>不再投入资源。</td></tr>
+</table>
+
+<h2>七、方法论之间的关系</h2>
+
+<div class="callout">
+  <strong>不是三套独立框架，是一个递进决策流：</strong><br><br>
+  <strong>行业预判（六模块）</strong> → 这个行业值不值得进？<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;↓ 通过<br>
+  <strong>五步法（递进分析）</strong> → 这个项目能不能成？<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;↓ 通过<br>
+  <strong>七维评分（综合定量）</strong> → 值多少分？排第几？<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+  <strong>20张硬伤卡牌（主动找错）</strong> → 还有没有遗漏的致命伤？<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+  <strong>关键假设验证（最小闭环）</strong> → 最危险的那个假设，怎么用最小成本验证？
+</div>
+
+</div>
+
+<div class="footer">
+  <p>中建发展 AI方向研判报告 · 方法论附录</p>
+  <p>2026-06-19</p>
+</div>
+
+</body>
+</html>

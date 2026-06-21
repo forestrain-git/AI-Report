@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -29,11 +29,24 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFa
 .card p strong { color: var(--slate-800); }
 .callout { border-left: 3px solid var(--red); background: #fef2f2; padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13px; color: var(--slate-600); margin: 10px 0; line-height: 1.6; }
 .callout strong { color: var(--slate-800); }
+.dim-strip { background: #fff; margin: -12px 12px 16px; border-radius: 12px; padding: 16px 16px 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; z-index: 2; }
+.dim-strip-title { font-size: 12px; font-weight: 700; color: var(--slate-400); letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
+.dim-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
+.dim-item + .dim-item { border-top: 1px solid var(--slate-100); }
+.dim-label { width: 76px; font-size: 13px; font-weight: 600; color: var(--slate-700); flex-shrink: 0; }
+.dim-bar-wrap { flex: 1; display: flex; align-items: center; gap: 8px; }
+.dim-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--slate-100); overflow: hidden; }
+.dim-bar .fill { height: 100%; border-radius: 4px; }
+.fill-green { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.fill-yellow { background: linear-gradient(90deg, #d97706, #ca8a04); }
+.fill-red { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.dim-score { width: 48px; font-size: 13px; font-weight: 700; color: var(--slate-500); text-align: right; flex-shrink: 0; }
 .footer { text-align: center; padding: 16px; font-size: 12px; color: var(--slate-400); line-height: 1.6; }
 .footer .brand { color: var(--slate-300); margin-top: 4px; }
 </style>
 </head>
 <body>
+<script>if(!sessionStorage.getItem("auth"))location.replace("../../index.html")</script>
 <div class="container">
 <div class="hero">
   <div class="hero-code">五步法深度分析（修正版）&middot; HW-08</div>
@@ -47,6 +60,58 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFa
   <div class="hero-sub">物理部署方案是根基性缺陷</div>
   <div class="hero-judgment">
     <span style="font-size:16px;">🔴</span> 需重大调整 · 物理部署未解决
+  </div>
+</div>
+<div class="dim-strip">
+  <div class="dim-strip-title">七维评分 · 各维度表现</div>
+  <div class="dim-item">
+    <span class="dim-label">变化天花板</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:72%"></div></div>
+      <span class="dim-score">13/18</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">终局时机</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-yellow" style="width:71%"></div></div>
+      <span class="dim-score">12/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">需求真伪</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:82%"></div></div>
+      <span class="dim-score">14/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">方案优劣</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:24%"></div></div>
+      <span class="dim-score">4/17</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">商业模型</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:81%"></div></div>
+      <span class="dim-score">13/16</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">增长壁垒</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-green" style="width:73%"></div></div>
+      <span class="dim-score">11/15</span>
+    </div>
+  </div>
+  <div class="dim-item">
+    <span class="dim-label">风险扣分</span>
+    <div class="dim-bar-wrap">
+      <div class="dim-bar"><div class="fill fill-red" style="width:70%"></div></div>
+      <span class="dim-score">-7/10</span>
+    </div>
   </div>
 </div>
 <div class="content">

@@ -1,0 +1,22 @@
+{
+  "id": "conv-1781851773182-8mtnpnjrv",
+  "providerId": "claude",
+  "title": "分析子链接是否符合五步法七维打分",
+  "titleGenerationStatus": "success",
+  "createdAt": 1781851773182,
+  "updatedAt": 1781912064536,
+  "lastResponseAt": 1781912064536,
+  "sessionId": "9d3c97a0-b971-40a3-aa2d-bb35030c630a",
+  "providerState": {
+    "providerSessionId": "9d3c97a0-b971-40a3-aa2d-bb35030c630a"
+  },
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 217,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 278016,
+    "contextWindow": 1000000,
+    "contextTokens": 278233,
+    "percentage": 28
+  }
+}

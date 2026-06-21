@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HW-22 建筑机器人 · 七维评分</title>
+<title>HW-22 建筑机器人 · 五步法深度分析</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 :root { --blue: #1d4ed8; --blue-light: #dbeafe; --blue-50: #eff6ff; --green: #16a34a; --green-bg: #dcfce7; --amber: #d97706; --amber-bg: #fef3c7; --red: #dc2626; --red-bg: #fee2e2; --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0; --slate-300: #cbd5e1; --slate-400: #94a3b8; --slate-500: #64748b; --slate-600: #475569; --slate-700: #334155; --slate-800: #1e293b; --slate-900: #0f172a; --radius: 12px; --radius-sm: 8px; --grad-header: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); --grad-green: linear-gradient(135deg, #43a047, #66bb6a); --grad-yellow: linear-gradient(135deg, #ef6c00, #ffa726); --grad-red: linear-gradient(135deg, #e53935, #ef5350); }
-body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: var(--slate-800); font-size: 15px; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: var(--slate-800); font-size: 15px; -webkit-font-smoothing: antialiased; line-height: 1.6; }
 .container { max-width: 480px; margin: 0 auto; padding: 0 0 40px; }
 .hero { background: var(--grad-header); padding: 28px 20px 16px; color: #fff; text-align: center; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; top: -40%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
@@ -36,29 +36,78 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFa
 .card { background: #fff; border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--slate-100); }
 .card h2 { font-size: 17px; font-weight: 700; color: var(--slate-900); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
 .card h2 .emoji-box { width: 28px; height: 28px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.card h3 { font-size: 15px; font-weight: 700; color: var(--slate-800); margin-bottom: 10px; margin-top: 18px; }
+.card h3:first-child { margin-top: 0; }
+.card h4 { font-size: 14px; font-weight: 600; color: var(--slate-700); margin-bottom: 8px; margin-top: 4px; }
 .card p { font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 10px; }
 .card p:last-child { margin-bottom: 0; }
 .card p strong { color: var(--slate-800); }
 .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px; letter-spacing: 0.01em; line-height: 1.5; }
 .tag-green { background: var(--green-bg); color: var(--green); }
 .tag-yellow { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
 .tag-blue { background: var(--blue-light); color: var(--blue); }
 .verdict-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; }
 .verdict-badge.va { background: var(--amber-bg); color: var(--amber); }
+.summary-box { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; line-height: 1.7; color: var(--slate-700); margin-bottom: 12px; }
+.summary-box .sb-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+.summary-box .sb-row + .sb-row { border-top: 1px dashed var(--slate-200); }
+.summary-box .sb-row .sb-label { color: var(--slate-500); font-size: 13px; }
 .tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.5; }
 table th { text-align: left; font-weight: 600; color: var(--slate-500); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 8px 6px 0; border-bottom: 1px solid var(--slate-200); }
 table td { padding: 8px 8px 8px 0; border-bottom: 1px solid var(--slate-100); vertical-align: top; color: var(--slate-600); }
 table tr:last-child td { border-bottom: none; }
+table td.num { text-align: center; font-weight: 700; }
+.summary-strip { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--slate-50); border-radius: var(--radius-sm); margin-bottom: 10px; }
+.summary-strip .strip-label { font-size: 12px; color: var(--slate-500); flex-shrink: 0; min-width: 52px; }
+.summary-strip .strip-bar { flex: 1; height: 6px; background: var(--slate-200); border-radius: 3px; overflow: hidden; }
+.summary-strip .strip-bar .strip-fill { height: 100%; border-radius: 3px; }
+.summary-strip .strip-val { font-size: 13px; font-weight: 700; flex-shrink: 0; min-width: 28px; text-align: right; }
+.assumption-item { display: flex; gap: 10px; padding: 10px 12px; border: 1px solid var(--slate-100); border-radius: var(--radius-sm); margin-bottom: 8px; }
+.assumption-item:last-child { margin-bottom: 0; }
+.assumption-item .ai-prio { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 1px; }
+.assumption-item .ai-prio.p0 { background: var(--red); }
+.assumption-item .ai-prio.p1 { background: var(--amber); }
+.assumption-item .ai-prio.p2 { background: var(--blue); }
+.assumption-item .ai-text { flex: 1; min-width: 0; }
+.assumption-item .ai-text .ai-label { font-size: 13px; font-weight: 600; color: var(--slate-800); }
+.assumption-item .ai-text .ai-meta { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.sens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.sens-item { background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: var(--radius-sm); padding: 10px; }
+.sens-item .si-label { font-size: 11px; color: var(--slate-400); margin-bottom: 2px; font-weight: 600; }
+.sens-item .si-title { font-size: 13px; font-weight: 600; color: var(--slate-800); margin-bottom: 2px; }
+.sens-item .si-desc { font-size: 11px; color: var(--slate-500); line-height: 1.4; }
+.action-card { background: var(--blue-50); border: 1px solid var(--blue-light); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; }
+.action-card .ac-title { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+.action-card .ac-desc { font-size: 13px; color: var(--slate-600); line-height: 1.6; }
+.callout { border-left: 3px solid var(--blue); background: var(--slate-50); padding: 10px 14px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 13px; color: var(--slate-600); margin: 10px 0; line-height: 1.6; }
+.callout.callout-green { border-left-color: var(--green); background: #f0fdf4; }
+.callout.callout-yellow { border-left-color: var(--amber); background: #fffbeb; }
+.callout.callout-red { border-left-color: var(--red); background: #fef2f2; }
+.callout strong { color: var(--slate-800); }
+.hs { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 700; color: #fff; }
+.hs-0 { background: var(--green); }
+.hs-1 { background: var(--amber); }
+.hs-2 { background: var(--red); }
+.dir-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+.dir-dot.green { background: var(--green); }
+.dir-dot.yellow { background: var(--amber); }
+.dir-dot.red { background: var(--red); }
+.check-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.check-list li { padding: 5px 0; font-size: 13px; color: var(--slate-600); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+.check-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-top: 7px; flex-shrink: 0; }
 .footer { text-align: center; padding: 16px; font-size: 12px; color: var(--slate-400); line-height: 1.6; }
 .footer .brand { color: var(--slate-300); margin-top: 4px; }
-@media (max-width: 420px) { .hero { padding: 24px 14px 20px; } .hero-badge { width: 72px; height: 72px; } .hero-badge .num { font-size: 28px; } .card { padding: 16px; } }
+@media (max-width: 420px) { .hero { padding: 24px 14px 20px; } .hero-badge { width: 72px; height: 72px; } .hero-badge .num { font-size: 28px; } .sens-grid { grid-template-columns: 1fr; } .card { padding: 16px; } }
 </style>
 </head>
 <body>
+<script>if(!sessionStorage.getItem("auth"))location.replace("../../index.html")</script>
 <div class="container">
+
 <div class="hero">
-  <div class="hero-code">七维评分 &middot; HW-22</div>
+  <div class="hero-code">五步法深度分析 &middot; HW-22</div>
   <div class="hero-badge-wrap">
     <div class="hero-badge">
       <span class="num">66</span>
@@ -66,11 +115,12 @@ table tr:last-child td { border-bottom: none; }
     </div>
   </div>
   <div class="hero-title">建筑机器人</div>
-  <div class="hero-sub">推荐执行路径：少数股权投资</div>
+  <div class="hero-sub">推荐执行路径：少数股权投资 &middot; 非自研</div>
   <div class="hero-judgment">
-    <span style="font-size:16px;">⚠️</span> 谨慎推进 · 四层筛选折后分：~62 ⚠️（Step5⚠️→⑥×0.7；Step3不计）
+    <span style="font-size:16px;">&#x26A0;&#xFE0F;</span> 探索 · 折后~62分（Step5⚠️→⑥×0.7；Step3不计）
   </div>
 </div>
+
 <div class="dim-strip">
   <div class="dim-strip-title">七维评分 · 各维度表现</div>
   <div class="dim-item">
@@ -123,54 +173,341 @@ table tr:last-child td { border-bottom: none; }
     </div>
   </div>
 </div>
+
 <div class="content">
-  <div class="card">
-    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">📋</span> 评分摘要</h2>
-    <p><strong>68分 ⚠️ 谨慎推进</strong></p>
-    <p>赛道质量不输安全帽（6/6全过），但"少数股权投资"的执行路径压低了总分——M&A团队缺失、退出路径不明确、投后管理复杂。</p>
-  </div>
 
-  <!-- ===== 五步递进筛查 ===== -->
-  <div class="card">
-    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F50D;</span> 五步递进筛查</h2>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>步骤</th><th>状态</th><th>说明</th></tr>
-        <tr><td>Step 1 需求</td><td><span class="tag tag-green">✅</span></td><td>工人短缺+政策强制，需求真实刚性</td></tr>
-        <tr><td>Step 2 解决方案</td><td><span class="tag tag-green">✅</span></td><td>少数股权投资路径已获创始人验证</td></tr>
-        <tr><td>Step 3 商业模式</td><td><span class="tag tag-yellow">⚠️</span></td><td>投资回报周期长(3-7年)</td></tr>
-        <tr><td>Step 4 增长</td><td><span class="tag tag-yellow">⚠️</span></td><td>M&A团队能力缺失是执行瓶颈</td></tr>
-        <tr><td>Step 5 壁垒</td><td><span class="tag tag-yellow">⚠️</span></td><td>股权锁定效果有限</td></tr>
-      </table>
+<div class="card">
+  <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4CB;</span> 预判摘要</h2>
+  <div class="summary-box" style="border-left:3px solid var(--amber);">
+    <div class="sb-row">
+      <span class="sb-label">20张硬伤卡牌</span>
+      <span><span class="tag tag-yellow">6/20 中风险</span></span>
     </div>
-    <p><strong>筛查结论：</strong>⚠️ 谨慎推进（投资路径） — 卡在Step3+Step5。建议首轮3000-5000万试水，用12个月跑通模式。</p>
-  </div>
-
-  <div class="card">
-    <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">🎯</span> 与安全帽的对比</h2>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th>维度</th><th>HW-03 安全帽</th><th>HW-22 建筑机器人</th></tr>
-        <tr><td>赛道质量</td><td>6/6</td><td>6/6</td></tr>
-        <tr><td>④方案</td><td>16</td><td>10</td></tr>
-        <tr><td>⑤商模</td><td>14</td><td>9</td></tr>
-        <tr><td>⑦风险</td><td>-1</td><td>-4</td></tr>
-        <tr><td>总分</td><td>87 ✅</td><td>68 ⚠️</td></tr>
-      </table>
+    <div class="sb-row">
+      <span class="sb-label">关键致命伤</span>
+      <span style="font-weight:600;color:var(--slate-700);">无 P0 级 — 但#14（人肉方式非规模化）#19（M&A能力缺失）是执行瓶颈</span>
     </div>
-    <p>赛道天花板甚至更高，但投资模式的确定性和可控性远低于自研产品。</p>
+    <div class="sb-row">
+      <span class="sb-label">主要风险项</span>
+      <span style="font-weight:600;color:var(--slate-700);font-size:13px;">M&A团队缺失 · 退出路径不明确 · 投资回报周期3-7年</span>
+    </div>
+    <div class="sb-row">
+      <span class="sb-label">整体判定</span>
+      <span class="verdict-badge va">&#x26A0;&#xFE0F; 探索推进 — 赛道质量全通但投资执行路径风险高</span>
+    </div>
   </div>
-  <div class="card">
-    <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">💡</span> 建议</h2>
-    <p>① 方向值得做——比安全帽赛道还大</p>
-    <p>② 但不应大举投入——先最小成本跑通第一笔L1投资（3000-5000万），12个月验证模式</p>
-    <p>③ 引进1-2名产业投资背景人才——这比找标的更紧迫</p>
+  <p><strong>一句话结论：</strong>建筑机器人赛道天花板不输AI安全帽（甚至更大），但中建发展不应自研——以CVC少数股权投资切入，用集团施工场景提供被投企业独家验证环境。M&A人才引进比找标的更紧迫。</p>
+  <div class="callout callout-yellow">
+    <strong>核心判断：</strong>方向值得做——工人短缺+政策强制+中建场景独占，三重驱动。但"怎么做"是关键——投资路径的确定性远低于自研产品，M&A团队能力是最大的瓶颈。
   </div>
 </div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F9F0;</span> 五步递进筛查</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>步骤</th><th>状态</th><th>说明</th></tr>
+    <tr><td>Step 1 需求</td><td><span class="tag tag-green">&#x2705;</span></td><td>建筑工人年流失率30%+政策强制智能建造，需求真实刚性</td></tr>
+    <tr><td>Step 2 解决方案</td><td><span class="tag tag-green">&#x2705;</span></td><td>少数股权投资路径可行——集团施工场景=被投企业的独家验证环境</td></tr>
+    <tr><td>Step 3 商业模式</td><td><span class="tag tag-yellow">&#x26A0;&#xFE0F;</span></td><td>投资回报周期3-7年，退出路径不明确；但Step3不计入折扣（投资模式不适用传统单元模型）</td></tr>
+    <tr><td>Step 4 增长</td><td><span class="tag tag-yellow">&#x26A0;&#xFE0F;</span></td><td>M&A团队能力缺失是执行瓶颈——没有产业投资人就无法有效推进</td></tr>
+    <tr><td>Step 5 壁垒</td><td><span class="tag tag-yellow">&#x26A0;&#xFE0F;</span></td><td>股权锁定效果有限——被投企业可能被更大的CVC或PE抢走</td></tr>
+  </table></div>
+  <div class="callout callout-yellow">
+    <strong>筛查结论：&#x26A0;&#xFE0F; Step3+4+5疑虑。</strong>赛道质量全通，但执行路径（投资而非自研）引入三重不确定性。建议首轮3000-5000万试水L1投资，12个月验证模式后决定是否扩大。
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F3F0;</span> 行业预判六模块</h2>
+
+  <h3>M1 拆解行业</h3>
+  <p><strong>产业链</strong>：核心零部件（伺服电机/减速器/传感器/控制器）&#x2192; 机器人本体制造（砌砖/绑钢筋/焊接/喷涂/巡检/拆除）&#x2192; 系统集成（工地适配/与BIM联动/与项目管理软件对接）&#x2192; 终端用户（建筑总包/专业分包/劳务公司）</p>
+  <p><strong>利润分配（100元）</strong>：核心零部件 25-35% | 本体制造 15-25% | 系统集成 20-30% | 施工服务 20-30%。本体制造毛利偏低，系统集成+服务是利润高地。</p>
+  <p><strong>关键控制节点</strong>：<span class="tag tag-blue">技术壁垒型</span>（核心零部件+算法）+ <span class="tag tag-blue">场景壁垒型</span>（工地验证数据+施工know-how）。中建的优势在场景——集团施工量足够大，能提供独一无二的验证环境。</p>
+  <p><strong>可优化环节</strong>：砌砖/绑钢筋/喷涂三大工种占人工成本50%以上，机器人替代后效率可提升3-5倍。</p>
+
+  <h3>M2 洞察变化</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>维度</th><th>变化</th><th>量级</th></tr>
+      <tr><td>政策法规</td><td>住建部《智能建造与建筑工业化协同发展》2025年机器人渗透率目标10%</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+      <tr><td>需求侧</td><td>建筑工人老龄化加速，50岁以上占比超40%，年均流失率30%，"用工荒"不可逆</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+      <tr><td>新技术</td><td>SLAM导航+视觉伺服+力控精度成熟，砌砖机器人误差<2mm，效率=3-5工人</td><td class="num"><span class="tag tag-red">大</span></td></tr>
+      <tr><td>供给侧</td><td>国内碧桂园博智林/中建科工/大界等已有产品，海外Built Robotics/FBR融资过亿美元</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td>政策法规</td><td>安全事故追责趋严，高危工序（高空/深基坑/拆除）强制减人</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+    </table>
+  </div>
+  <div class="callout callout-green">
+    <strong>判断：系统性变化</strong> — 政策强制+工人不可逆短缺+技术成熟三重共振。这不是"锦上添花"，是建筑业的基础生产要素正在被重写。
+  </div>
+
+  <h3>M3 预判稳态B</h3>
+  <p><strong>原子需求</strong>：建筑总包（降低人工成本+提升施工质量，单台机器人年替代3-5人=节省30-50万/年）| 专业分包（绑钢筋/砌砖/喷涂的标准化作业）| 劳务公司（应对"用工荒"的替代方案）| 政府/业主（安全监管+质量可追溯）</p>
+  <div class="callout callout-yellow">
+    <strong>稳态推演：</strong>工人供给持续减少+机器人成本持续下降 &#x2192; 两者成本曲线在2028-2030年交叉 &#x2192; 机器人从"示范项目"变成"标准配置" &#x2192; <strong>拥有工地验证数据+施工场景的玩家锁定头部市场</strong>。
+  </div>
+  <p><strong>中建发展位置</strong>：<span class="tag tag-blue">场景独占</span> — 集团年施工面积超10亿m²，是全球最大的建筑机器人验证场景。江苏华大30年装备制造积累可提供零部件侧支撑。</p>
+
+  <h3>M4 Timing</h3>
+  <p><strong>周期</strong>：早期探索 &#x2192; 爆发增长过渡期。窗口<strong>已开，还有3-5年</strong>。</p>
+  <p><span class="dir-dot green"></span><strong>太早风险</strong>：<span class="tag tag-yellow">中</span> — 部分品类（砌砖/喷涂）已过技术验证阶段，但工地适配和ROI闭环仍需时间</p>
+  <p><span class="dir-dot red"></span><strong>太晚风险</strong>：<span class="tag tag-yellow">中</span> — 碧桂园博智林/中建科工已布局，但在集团体系内中建发展仍有差异化的CVC切入点</p>
+
+  <h3>M5 天花板大小</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>方法</th><th>估算</th></tr>
+      <tr><td>直接数据</td><td>全球建筑机器人市场2025约80亿美元&#x2192;2030约250亿美元，+26% CAGR</td></tr>
+      <tr><td>Top-down</td><td>中国建筑业总产值31万亿 &#x00D7; 人工成本占比20% &#x00D7; 机器人替代率10% = 6,200亿潜在替代空间</td></tr>
+      <tr><td>Bottom-up</td><td>砌砖+绑钢筋+喷涂+巡检 四大品类 &#x00D7; 万台级出货 &#x00D7; 均价30-80万 = 30-50亿/年</td></tr>
+      <tr><td>类比</td><td>工业机器人市场中国3000亿，建筑体量是制造业2倍但自动化率不到1%</td></tr>
+    </table>
+  </div>
+  <p><strong>结论</strong>：天花板 <span class="tag tag-green">500-1000亿</span>，不输甚至超过安全帽赛道。投资路径下中建可触达 <span class="tag tag-yellow">被投企业市值成长</span> 而非直接营收。</p>
+
+  <h3>M6 集中度</h3>
+  <p><strong>现状</strong>：碧桂园博智林/中建科工/大界/筑橙等多家布局，无绝对龙头。</p>
+  <p><strong>趋势</strong>：<span class="tag tag-green">C型（分散&#x2192;集中）&#x2605; 最佳时机</span> — 场景数据+施工know-how将推动头部集中，但不会形成单一垄断（不同工种需要不同机器人形态）。</p>
+  <p><strong>策略</strong>：CVC投资组合 — 不赌单一品类/单一公司，构建2-3家被投企业的品类矩阵。</p>
+  <div class="callout callout-green">
+    <strong>行业预判结论：</strong>&#x1F7E2; 6 模块全部通过。赛道质量不输甚至超过AI安全帽。
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F50D;</span> 五步法逐层分析</h2>
+
+  <h3>Step 1 需求</h3>
+  <p><strong>目标用户</strong>：建筑总包（中建体系内各工程局，降低人工依赖+提升质量）| 专业分包（绑钢筋/砌砖/喷涂等劳动密集型工序）| 劳务公司（应对用工荒，机器人替代=不用再四处招人）</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>场景</th><th>痛点</th><th>刚性</th></tr>
+      <tr><td>砌砖/抹灰</td><td>熟练瓦工日薪500+且招不到，50岁以上占40%，5年后断档</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+      <tr><td>钢筋绑扎</td><td>地铁/隧道/核电站钢筋密度极高，人工效率低、质量难统一</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+      <tr><td>喷涂/涂料</td><td>高空/密闭空间喷涂有安全风险，且漆膜厚度人工无法精确控制</td><td class="num"><span class="tag tag-red">刚性</span></td></tr>
+      <tr><td>巡检/监测</td><td>大跨度/高净空结构巡检依赖人工，效率低、漏检率高</td><td class="num"><span class="tag tag-yellow">中等</span></td></tr>
+    </table>
+  </div>
+  <p><strong>替代方案</strong>：人工（不可持续——工人越来越少越来越贵）+ 传统工程机械（无智能、仅替代体力不替代判断）+ 海外进口机器人（贵+不适配中国工地环境）</p>
+  <div class="callout callout-red">
+    <strong>需求评估三角形</strong>：<span class="tag tag-red">刚性</span> 雪中送炭（不是"省几个工人"，是"没有工人可用"）· <span class="tag tag-red">高频</span> 每日施工 · <span class="tag tag-red">广泛</span> 建筑业5000万工人×50%可替代工种
+  </div>
+
+  <h3>Step 2 解决方案</h3>
+  <div class="callout">
+    <strong>差异化定位：</strong>不是自己做机器人，是<strong>用中建集团10亿m²施工场景做"被投企业的独家验证环境"</strong>——碧桂园博智林是自己做，我们是投别人+给场景。区别在于：别人验证一个算法要跑10个工地，我们给被投企业开放100个工地同时验证。
+  </div>
+  <p><strong>核心卖点：</strong><span class="tag tag-blue" style="font-size:12px;padding:3px 10px;">"全球最大的建筑机器人验证场景——被投企业独家入场。"</span></p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th style="background:#e8f5e9;">做 &#x2705;</th><th style="background:#fdecea;">不做 &#x274C;</th></tr>
+      <tr><td>CVC少数股权投资（3000-5000万首轮L1）</td><td>自研建筑机器人（与碧桂园博智林/中建科工正面竞争）</td></tr>
+      <tr><td>向被投企业开放集团施工场景做验证</td><td>自己建机器人产线（重资产、长周期）</td></tr>
+      <tr><td>构建2-3个品类的投资组合（砌砖/绑钢筋/喷涂）</td><td>All-in单一品类（风险过于集中）</td></tr>
+      <tr><td>利用江苏华大离心机制造积累做零部件协同</td><td>做通用机器人（聚焦建筑垂直场景）</td></tr>
+    </table>
+  </div>
+  <p><strong>MVP</strong>：引进1-2名产业投资人才（比找标的更急）&#x2192; 筛选5-10家标的 &#x2192; 完成首笔L1投资（3000-5000万）&#x2192; 开放1-2个中建工地做验证 &#x2192; 12个月反馈数据决定下一步</p>
+
+  <h3>Step 3 商业模式</h3>
+  <p><span class="tag tag-blue">CVC投资模型（非传统单元模型）</span> — 收入来自股权增值+战略协同，而非产品销售。Step3不适用传统LTV/CAC计算。</p>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>回报来源</th><th>方式</th><th>时间线</th></tr>
+      <tr><td>股权增值退出</td><td>被投企业IPO或并购，3-7年退出</td><td>中长线</td></tr>
+      <tr><td>战略协同降本</td><td>集团内部采用被投企业产品，施工效率提升&#x2192;成本下降3-10%</td><td>1-3年见效</td></tr>
+      <tr><td>优先采购权</td><td>以投资换优先采购+价格优惠，锁定供给</td><td>投资后即生效</td></tr>
+      <tr><td>江苏华大零部件协同</td><td>被投企业采购离心机等零部件&#x2192;华大增收</td><td>1-2年</td></tr>
+    </table>
+  </div>
+  <p><strong>为什么Step3不计入折扣</strong>：CVC投资不适用传统五步法单元模型——没有"卖一份赚多少钱"的逻辑，而是"投对了赚资产增值"。但投资回报周期长（3-7年）和退出不确定性是真实风险。</p>
+  <div class="callout callout-yellow">
+    <strong>关键风险：</strong>首笔投资可能3-5年才能验证成败。如果12个月内投不出去，整个方向就停在纸面上——这是"执行风险"而非"方向风险"。
+  </div>
+
+  <h3>Step 4 增长</h3>
+  <p><strong>增长逻辑</strong>：不是卖产品——是<strong>投出成功案例&#x2192;被投企业成长&#x2192;股权增值+集团内部采用扩大&#x2192;吸引更多优质标的主动找上门</strong>的飞轮。</p>
+  <p><strong>核心瓶颈</strong>：M&A团队能力——没有产业投资背景的人，投资质量无法保证。这是比"有没有好标的"更前置的问题。</p>
+  <div class="callout callout-yellow">
+    <strong>增长飞轮（理论）：</strong>开放场景&#x2192;吸引优质标的&#x2192;精准投资&#x2192;被投企业成长&#x2192;集团施工采用+扩大场景开放&#x2192;吸引更多标的。但第一步"开放场景"和第三步"精准投资"都依赖M&A团队能力——当前缺失。
+  </div>
+
+  <h3>Step 5 壁垒</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>壁垒类型</th><th>具体内容</th><th>强度</th></tr>
+      <tr><td><strong>场景独占</strong> &#x1F511;</td><td>中建集团10亿m²施工场景+江苏华大制造积累，被投企业独家验证环境</td><td class="num"><span class="tag tag-green">强</span></td></tr>
+      <tr><td><strong>无形资产</strong></td><td>中建品牌+央企信用，初创公司以"中建被投"背书更容易获客</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td><strong>转化成本</strong></td><td>被投企业一旦融入中建施工体系，切换验证场景成本极高</td><td class="num"><span class="tag tag-yellow">中</span></td></tr>
+      <tr><td><strong>股权锁定</strong></td><td>少数股权不控股，被投企业可被更大的CVC/PE高价抢走</td><td class="num"><span class="tag tag-red">弱</span></td></tr>
+      <tr><td><strong>网络效应</strong></td><td>弱 — 品类间无直接协同</td><td class="num"><span class="tag tag-red">弱</span></td></tr>
+    </table>
+  </div>
+  <p><strong>可复制性评估</strong>：碧桂园创投 <span class="tag tag-yellow">1-2年</span>（有钱有场景但非建筑主业）| 高瓴/红杉等PE <span class="tag tag-yellow">随时可进入</span>（有钱无场景）| 中建科工 <span class="tag tag-yellow">1-2年</span>（同体系内但侧重自研）</p>
+  <div class="callout callout-red">
+    <strong>Step5核心疑虑：</strong>场景独占是真实壁垒，但股权锁定的弱性是结构性缺陷——被投企业始终可以"另觅新主"。CVC的竞争不是"谁场景大"，而是"谁投得早+投得准+跟得住"——这三点都要求有足够强的M&A团队。
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x1F4A5;</span> 20张硬伤卡牌诊断</h2>
+  <div class="summary-strip">
+    <span class="strip-label">总分</span>
+    <div class="strip-bar"><div class="strip-fill" style="width:30%;background:var(--grad-yellow);"></div></div>
+    <span class="strip-val" style="color:var(--amber);">6/20</span>
+  </div>
+  <div class="callout callout-yellow" style="margin-bottom:10px;">
+    <strong>结论：</strong>中风险。6张命中集中在执行层面——不是方向错了，是"谁来做"和"怎么做"的问题。
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>#</th><th>硬伤问题</th><th>评分</th><th>结论</th></tr>
+      <tr><td>1-3</td><td>目标用户/痛点/频率</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-green" style="margin-left:6px;">均未命中</span></td></tr>
+      <tr><td>4-6</td><td>用户验证/本质区别/卖点</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#5轻微（差异化待被投企业验证）</span></td></tr>
+      <tr><td>7-9</td><td>功能堆砌/MVP/单元模型</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="hs hs-1" style="margin-left:4px;">2</span> <span class="tag tag-yellow" style="margin-left:6px;">#9中等（CVC无传统单元模型）</span></td></tr>
+      <tr><td>10-12</td><td>CAC-LTV/毛利/基准对比</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="tag tag-yellow" style="margin-left:6px;">#11/12轻微</span></td></tr>
+      <tr><td>13-15</td><td>获客渠道/人肉/增长引擎</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-2" style="margin-left:4px;">2</span> <span class="hs hs-2" style="margin-left:4px;">1</span> <span class="tag tag-red" style="margin-left:6px;">#14命中：M&A靠人肉非规模化</span></td></tr>
+      <tr><td>16-18</td><td>护城河/壁垒/六大壁垒</td><td colspan="2"><span class="hs hs-0">0</span> <span class="hs hs-1" style="margin-left:4px;">1</span> <span class="hs hs-0" style="margin-left:4px;">0</span> <span class="tag tag-yellow" style="margin-left:6px;">#17轻微</span></td></tr>
+      <tr><td>19</td><td>团队缺少必备能力</td><td><span class="hs hs-2">3</span></td><td><span class="tag tag-red">#19命中：M&A人才缺失</span></td></tr>
+      <tr><td>20</td><td>低估运营复杂度</td><td><span class="hs hs-1">1</span></td><td><span class="tag tag-yellow">#20轻微：投后管理复杂度</span></td></tr>
+    </table>
+  </div>
+  <p style="font-size:13px;color:var(--slate-500);margin-top:8px;">六张中最致命的是#14（M&A靠人肉非规模化）和#19（团队缺产业投资能力）——这两个直接决定了"投资"这条路径能不能走通。</p>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:#eef2ff;color:#4338ca;">&#x1F9EA;</span> 关键假设清单</h2>
+  <div class="summary-strip">
+    <span class="strip-label">总计</span>
+    <div class="strip-bar"><div class="strip-fill" style="width:50%;background:var(--grad-yellow);"></div></div>
+    <span class="strip-val" style="color:var(--amber);">5 项</span>
+  </div>
+  <div class="assumption-item">
+    <div class="ai-prio p0">P0</div>
+    <div class="ai-text">
+      <div class="ai-label">H1：12个月内能引进1-2名产业投资背景人才</div>
+      <div class="ai-meta">招聘 &nbsp;|&nbsp; 标准：到岗且主导完成至少1个标的的尽职调查</div>
+    </div>
+  </div>
+  <div class="assumption-item">
+    <div class="ai-prio p0">P0</div>
+    <div class="ai-text">
+      <div class="ai-label">H2：能筛选出2-3个可投资的建筑机器人标的</div>
+      <div class="ai-meta">标的扫描 &nbsp;|&nbsp; 标准：标的年营收>2000万，产品已落地至少1个真实工地</div>
+    </div>
+  </div>
+  <div class="assumption-item">
+    <div class="ai-prio p1">P1</div>
+    <div class="ai-text">
+      <div class="ai-label">H3：集团内部愿意向被投企业开放工地做验证</div>
+      <div class="ai-meta">内部协调 &nbsp;|&nbsp; 标准：&#x2265;2个工程局同意开放试点工地</div>
+    </div>
+  </div>
+  <div class="assumption-item">
+    <div class="ai-prio p1">P1</div>
+    <div class="ai-text">
+      <div class="ai-label">H4：首笔L1投资3000-5000万能拿到合理估值</div>
+      <div class="ai-meta">估值谈判 &nbsp;|&nbsp; 标准：估值不超过年营收10倍或PS&#x2264;8</div>
+    </div>
+  </div>
+  <div class="assumption-item">
+    <div class="ai-prio p1">P1</div>
+    <div class="ai-text">
+      <div class="ai-label">H5：投后12个月内被投企业能在中建工地完成产品验证迭代</div>
+      <div class="ai-meta">投后管理 &nbsp;|&nbsp; 标准：被投企业产品效率/质量数据较投资前提升&#x2265;20%</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:#fce7f3;color:#be185d;">&#x1F4C8;</span> 敏感性分析</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>变量</th><th>基准</th><th>乐观</th><th>悲观</th></tr>
+      <tr><td>M&A人才引进</td><td>12个月内1人</td><td>6个月内2人&#x2192;年内投出2笔</td><td>12个月内0人&#x2192;方向搁置</td></tr>
+      <tr><td>标的估值</td><td>PS 6-8倍</td><td>PS 4-5倍（市场降温）</td><td>PS 10-12倍（竞争激烈）</td></tr>
+      <tr><td>工地验证周期</td><td>6-12个月</td><td>3-6个月（已有成熟产品）</td><td>12-18个月（需大量适配）</td></tr>
+      <tr><td>退出路径</td><td>IPO 5-7年</td><td>被并购3-5年</td><td>无法退出或折价退出</td></tr>
+    </table>
+  </div>
+  <p><strong>最敏感：</strong><span class="tag tag-red">M&A人才</span> — 这个变量是0/1开关，不到岗就什么都别谈。</p>
+
+  <h3>备选路径</h3>
+  <div class="sens-grid">
+    <div class="sens-item" style="border-left:3px solid var(--amber);">
+      <div class="si-label">Plan A（首选）</div>
+      <div class="si-title">CVC少数股权投资</div>
+      <div class="si-desc">引进M&A人才&#x2192;投2-3家标的&#x2192;场景赋能&#x2192;股权增值退出+战略协同</div>
+      <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">首笔3000-5000万，3-5年退出</div>
+    </div>
+    <div class="sens-item" style="border-left:3px solid var(--amber);">
+      <div class="si-label">Plan B（备选）</div>
+      <div class="si-title">JV合资公司</div>
+      <div class="si-desc">不投现有标的，拉头部机器人公司成立合资，中方出场景+渠道，对方出技术</div>
+      <div style="font-size:11px;color:var(--amber);font-weight:600;margin-top:4px;">控制力更强，但启动慢</div>
+    </div>
+  </div>
+  <div class="callout callout-red">
+    <strong>Plan C（退出条件）</strong>：12个月未能引进M&A人才 | 标的扫描后无可投对象 | 集团内部拒绝开放工地验证 | 首笔投资12个月无进度
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:var(--amber-bg);color:var(--amber);">&#x25B6;&#xFE0F;</span> 建议下一步行动</h2>
+  <div class="action-card">
+    <div class="ac-title">&#x1F4DD; 第一件事（本周）</div>
+    <div class="ac-desc">启动M&A人才招聘——找1-2名有产业投资背景的人，比找投资标的更紧迫。</div>
+  </div>
+  <ul class="check-list">
+    <li>定义JD：产业投资总监，要求3年以上智能制造/机器人赛道投资经验</li>
+    <li>渠道：猎头+中建体系内推荐+产业投资人脉网络</li>
+    <li>同步启动标的扫描（即使没全职M&A，先建标的池）</li>
+  </ul>
+  <div class="summary-strip">
+    <span class="strip-label">成功标准</span>
+    <div class="strip-bar"><div class="strip-fill" style="width:33%;background:var(--grad-yellow);"></div></div>
+    <span class="strip-val" style="color:var(--amber);">3个月至少1人到岗</span>
+  </div>
+  <p style="font-size:12px;color:var(--slate-400);">成本：猎头费5-10万 + 候选人差旅 | 候选人有产业投资经验是硬门槛，不可降级</p>
+
+  <div class="action-card" style="margin-top:10px;">
+    <div class="ac-title">&#x1F4CA; 并行：标的池扫描</div>
+    <div class="ac-desc">即便M&A人才未到位，先拉一份10-15家标的清单——砌砖/绑钢筋/喷涂/巡检四个品类各2-4家，标注融资轮次/营收/落地工地数/核心团队背景。</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:var(--blue-50);color:var(--blue);">&#x1F91D;</span> 与 HW-03 AI安全帽的对比</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>维度</th><th>HW-03 安全帽</th><th>HW-22 建筑机器人</th></tr>
+      <tr><td>赛道质量</td><td>6/6</td><td>6/6</td></tr>
+      <tr><td>天花板</td><td>300-500亿</td><td>500-1000亿</td></tr>
+      <tr><td>执行路径</td><td>自研+经销商（确定性高）</td><td>CVC投资（确定性低）</td></tr>
+      <tr><td>④方案</td><td>16（已量产）</td><td>10（依赖被投企业）</td></tr>
+      <tr><td>⑤商模</td><td>14（三层收入清晰）</td><td>9（投资回报不确定）</td></tr>
+      <tr><td>⑦风险</td><td>-1</td><td>-4</td></tr>
+      <tr><td>总分</td><td>87 &#x2705;</td><td>68 &#x26A0;</td></tr>
+    </table>
+  </div>
+  <p>赛道天花板甚至更高，但投资执行路径的确定性和可控性远低于自研产品。两者的核心差异不在"值不值得做"——都值得——而在<strong>"中建发展有没有能力做"</strong>。安全帽是"有能力自研"，建筑机器人是"有能力投资吗？"——当前答案是否定的。</p>
+</div>
+
+<div class="card">
+  <h2><span class="emoji-box" style="background:var(--slate-200);color:var(--slate-600);">&#x1F4C1;</span> 关联文件</h2>
+  <p style="font-size:13px;">
+    <a href="HW-03-AI%E5%AE%89%E5%85%A8%E5%B8%BD.html" style="color:var(--blue);text-decoration:none;">&#x1F4C4; HW-03 AI安全帽</a> — 硬件赛道对照，自研vs投资路径<br>
+    <a href="../../index.html" style="color:var(--blue);text-decoration:none;">&#x1F4CA; 中建发展AI硬件机会研判</a> — 所属机会研判总览
+  </p>
+</div>
+
+</div>
+
 <div class="footer">
-  <p>七维评分 · 2026-06-16</p>
+  <p>分析引擎：一堂五步法 x 20张硬伤卡牌 &middot; 2026-06-19（完整重写）</p>
   <p class="brand">中建发展AI硬件方向</p>
 </div>
+
 </div>
 </body>
 </html>

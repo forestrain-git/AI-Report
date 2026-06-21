@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -682,6 +682,7 @@ table td.num { text-align: center; font-weight: 700; }
 </style>
 </head>
 <body>
+<script>if(!sessionStorage.getItem("auth"))location.replace("../../index.html")</script>
 <div class="container">
 
 <!-- ===== Hero Header ===== -->
@@ -776,7 +777,7 @@ table td.num { text-align: center; font-weight: 700; }
       </div>
       <div class="sb-row">
         <span class="sb-label">整体判定</span>
-        <span class="verdict-badge" style="background:#fef3c7;color:var(--amber);">&#x26A0;&#xFE0F; 谨慎推进（需先验证差异化假设，再投入资源）</span>
+        <span class="verdict-badge" style="background:#fef3c7;color:var(--amber);">&#x26A0;&#xFE0F; 探索推进（需先验证差异化假设，再投入资源）</span>
       </div>
     </div>
   </div>
@@ -1146,7 +1147,7 @@ IS-A04 合同风险识别（新场景）
   </div>
 
   <!-- ===== 返回链接 ===== -->
-  <a class="back-link" href="../report.html">&#x2190; 返回全景报告</a>
+  <a class="back-link" href="../../index.html">&#x2190; 返回全景报告</a>
 
 </div>
 

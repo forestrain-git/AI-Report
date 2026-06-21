@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -80,6 +80,7 @@ table tr:last-child td { border-bottom: none; }
 </style>
 </head>
 <body>
+<script>if(!sessionStorage.getItem("auth"))location.replace("../../index.html")</script>
 <div class="container">
 <div class="hero">
   <div class="hero-code">五步法深度分析（修正版）&middot; HW-11</div>
@@ -92,7 +93,7 @@ table tr:last-child td { border-bottom: none; }
   <div class="hero-title">微型AI安全训导仪</div>
   <div class="hero-sub">中建发展AI硬件方向 · LW-03尚未开始，建议先做独立简易版</div>
   <div class="hero-judgment">
-    <span style="font-size:16px;">⚠️</span> ⚠️谨慎推进
+    <span style="font-size:16px;">⚠️</span> ⚠️探索推进
   </div>
 </div>
 <div class="dim-strip">
@@ -160,7 +161,7 @@ table tr:last-child td { border-bottom: none; }
       </div>
       <div class="sb-row">
         <span class="sb-label">整体判定</span>
-        <span class="verdict-badge va">⚠️ 谨慎推进 — 硬件可行但LW-03未开始</span>
+        <span class="verdict-badge va">⚠️ 探索推进 — 硬件可行但LW-03未开始</span>
       </div>
     </div>
     <p><strong>一句话结论：</strong>几十块的ESP32硬件+1400万工人数据=市场上没有的安全训导产品。但LW-03尚未开始，"大脑"缺失，"嘴巴"价值打折扣。建议先做独立简易版。</p>

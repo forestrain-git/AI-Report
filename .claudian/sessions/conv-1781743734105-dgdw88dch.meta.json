@@ -4,8 +4,8 @@
   "title": "分析中建发展AI战略选择逻辑",
   "titleGenerationStatus": "success",
   "createdAt": 1781743734105,
-  "updatedAt": 1781766392936,
-  "lastResponseAt": 1781766392936,
+  "updatedAt": 1781851648572,
+  "lastResponseAt": 1781766541829,
   "sessionId": "f3f440b8-5900-40b0-b2e3-162240b242a0",
   "providerState": {
     "providerSessionId": "f3f440b8-5900-40b0-b2e3-162240b242a0",
@@ -1663,11 +1663,11 @@
   },
   "usage": {
     "model": "opus[1m]",
-    "inputTokens": 1348,
+    "inputTokens": 161,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 522112,
+    "cacheReadInputTokens": 524288,
     "contextWindow": 1000000,
-    "contextTokens": 523460,
+    "contextTokens": 524449,
     "percentage": 52
   }
 }
