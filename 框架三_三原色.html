@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>AI战略三原色 · 框架候选三</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6fa;color:#1a1a2e;padding:20px;min-height:100vh}
+.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.sub{font-size:13px;color:#888;margin-bottom:20px}
+
+/* 三原色卡片 */
+.rgb{display:flex;flex-direction:column;gap:14px;margin:16px 0}
+.rgb-item{border-radius:14px;padding:20px;position:relative;overflow:hidden}
+.rgb-item .r-title{font-size:20px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.rgb-item .r-icon{font-size:28px}
+.rgb-item .r-sub{font-size:14px;font-weight:600;margin-bottom:6px;opacity:.9}
+.rgb-item .r-desc{font-size:13px;line-height:1.6;opacity:.85}
+.rgb-item .r-q{font-size:12px;font-style:italic;margin-top:8px;opacity:.7}
+.r1{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#991b1b;border:1px solid #fecaca}
+.r2{background:linear-gradient(135deg,#f0fdf4,#dcfce7);color:#065f46;border:1px solid #bbf7d0}
+.r3{background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#1e40af;border:1px solid #bfdbfe}
+
+.tagline{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;padding:16px;color:#fff;text-align:center;margin:16px 0}
+.tagline p{font-size:15px;font-weight:600;line-height:1.6}
+.tagline .small{font-size:12px;opacity:.7;margin-top:6px;font-weight:400}
+
+.section{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.s-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#f8fafc;border-radius:8px;font-size:13px;line-height:1.5}
+.s-item .icon{flex-shrink:0;font-size:16px}
+
+/* 调色比喻 */
+.palette{display:flex;gap:8px;justify-content:center;margin:12px 0}
+.palette .dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🎨 候选框架三：AI战略三原色</h1>
+  <div class="sub">如三原色调出所有颜色，三个基础元素调出AI战略</div>
+
+  <div class="rgb">
+    <div class="rgb-item r1">
+      <div class="r-title"><span class="r-icon">🔴</span> 资源</div>
+      <div class="r-sub">你有什么？—— 数据资产 + 人才 + 场景</div>
+      <div class="r-desc">数据体量多大？覆盖多广？质量如何？团队有没有AI能力？场景是否真实、高频？</div>
+      <div class="r-q">问：手上到底有什么牌？</div>
+    </div>
+    <div class="rgb-item r2">
+      <div class="r-title"><span class="r-icon">🟢</span> 能力</div>
+      <div class="r-sub">你会什么？—— 技术纵深 + 工程化</div>
+      <div class="r-desc">能做多深的事？从调API到训模型，我们的工程化能力到了哪一步？</div>
+      <div class="r-q">问：能把事做到多深？</div>
+    </div>
+    <div class="rgb-item r3">
+      <div class="r-title"><span class="r-icon">🔵</span> 选择</div>
+      <div class="r-sub">你选什么？—— 商业角色 + 策略节奏</div>
+      <div class="r-desc">赋能还是业务？激进还是稳妥？先打哪个方向？</div>
+      <div class="r-q">问：决定走哪条路？</div>
+    </div>
+  </div>
+
+  <div class="tagline">
+    <p>资源决定边界，能力决定高度，选择决定结果</p>
+    <div class="small">三原色缺一个，调不出想要的颜色</div>
+  </div>
+
+  <h2 style="color:#1e40af">💡 核心逻辑</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">🎨</span><span><strong>红+绿=橙</strong>：有好资源+有能力 → 可以做行业模型（橙）</span></div>
+    <div class="s-item"><span class="icon">🎨</span><span><strong>红+蓝=紫</strong>：有资源+选对了方向 → 但能力不够，执行会出问题（紫）</span></div>
+    <div class="s-item"><span class="icon">🎨</span><span><strong>绿+蓝=青</strong>：有能力+选对了 → 但没数据资源，做不深（青）</span></div>
+    <div class="s-item"><span class="icon">🎨</span><span><strong>三色齐=本色</strong>：资源+能力+选择都对 → 战略清晰，能落地</span></div>
+  </div>
+
+  <div class="palette">
+    <div class="dot" style="background:#ef4444">R</div>
+    <div class="dot" style="background:#22c55e">G</div>
+    <div class="dot" style="background:#3b82f6">B</div>
+    <div class="dot" style="background:#f59e0b">RG</div>
+    <div class="dot" style="background:#a855f7">RB</div>
+    <div class="dot" style="background:#06b6d4">GB</div>
+  </div>
+
+  <h2 style="color:#059669">✅ 优点</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">✔</span><span><strong>三原色的类比极好记</strong>——口头传播力强，适合宣讲</span></div>
+    <div class="s-item"><span class="icon">✔</span><span><strong>天然有诊断功能</strong>——缺哪个原色，战略就偏色，一眼能看出短板</span></div>
+    <div class="s-item"><span class="icon">✔</span><span><strong>动态视角</strong>——资源可以积累，能力可以建设，选择可以调整</span></div>
+  </div>
+
+  <h2 style="color:#d97706">⚠️ 注意事项</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">!</span><span>偏"诊断"而非"规划"——它告诉你缺什么，但没告诉你往哪走</span></div>
+    <div class="s-item"><span class="icon">!</span><span>三原色并列，没有递进关系——不能回答"先做哪个"</span></div>
+    <div class="s-item"><span class="icon">!</span><span>最好配合其他框架一起用（如十字象限），单用可能不够"抓手"</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "id": "conv-1782281471888-2lavfozyy",
+  "providerId": "claude",
+  "title": "Check for new PPT tool",
+  "titleGenerationStatus": "success",
+  "createdAt": 1782281471888,
+  "updatedAt": 1782284615519,
+  "lastResponseAt": 1782284615519,
+  "sessionId": "417c4892-3aa5-4a4d-a19e-c54a74458b91",
+  "providerState": {
+    "providerSessionId": "417c4892-3aa5-4a4d-a19e-c54a74458b91"
+  },
+  "usage": {
+    "model": "sonnet[1m]",
+    "inputTokens": 1957,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 49792,
+    "contextWindow": 1000000,
+    "contextTokens": 51749,
+    "percentage": 5
+  }
+}

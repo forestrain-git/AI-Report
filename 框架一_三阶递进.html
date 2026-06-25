@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>AI战略三阶递进 · 框架候选一</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6fa;color:#1a1a2e;padding:20px;min-height:100vh}
+.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.sub{font-size:13px;color:#888;margin-bottom:20px}
+h2{font-size:15px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+
+/* 三阶递进图 */
+.pyramid{display:flex;flex-direction:column;align-items:center;gap:0;margin:16px 0}
+.level{width:100%;padding:18px 16px;border-radius:12px;text-align:center;position:relative}
+.level .num{display:inline-block;width:28px;height:28px;border-radius:50%;color:#fff;font-size:13px;font-weight:700;line-height:28px;text-align:center;margin-bottom:6px}
+.level .title{font-size:17px;font-weight:700;margin-bottom:4px}
+.level .desc{font-size:13px;opacity:.85;line-height:1.5}
+.level .q{font-size:12px;opacity:.7;margin-top:6px;font-style:italic}
+.arrow{color:#bbb;font-size:20px;padding:4px 0}
+.l1 .num{background:#2563eb}
+.l1{background:#eff6ff;color:#1e40af}
+.l2 .num{background:#059669}
+.l2{background:#ecfdf5;color:#065f46}
+.l3 .num{background:#d97706}
+.l3{background:#fffbeb;color:#92400e}
+
+/* 三段论总结 */
+.tagline{text-align:center;padding:16px;background:linear-gradient(135deg,#1e40af,#2563eb);border-radius:12px;color:#fff;margin:16px 0}
+.tagline p{font-size:15px;font-weight:600;line-height:1.6}
+.tagline .small{font-size:12px;opacity:.8;margin-top:6px;font-weight:400}
+
+/* 适用场景 */
+.pros{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.pro-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#f8fafc;border-radius:8px;font-size:13px;line-height:1.5}
+.pro-item .icon{flex-shrink:0;font-size:16px}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🧱 候选框架一：AI战略三阶</h1>
+  <div class="sub">从现实出发，递进推演</div>
+
+  <div class="pyramid">
+    <div class="level l3" style="width:92%">
+      <div class="num">3</div>
+      <div class="title">数据战略 — 用什么赢</div>
+      <div class="desc">有什么数据？能形成飞轮吗？数据质量和治理够吗？</div>
+      <div class="q">问：如何让对手追不上？</div>
+    </div>
+    <div class="arrow">↑</div>
+    <div class="level l2" style="width:78%">
+      <div class="num">2</div>
+      <div class="title">商业定位 — 扮演什么角色</div>
+      <div class="desc">AI是工具（省钱）还是业务（赚钱）？赋能自己还是对外输出？</div>
+      <div class="q">问：怎么靠这个定位赢？</div>
+    </div>
+    <div class="arrow">↑</div>
+    <div class="level l1" style="width:64%">
+      <div class="num">1</div>
+      <div class="title">技术纵深 — 站在哪一层</div>
+      <div class="desc">从L0算力层到L4工具层——我们的能力能站在哪层？</div>
+      <div class="q">问：我们的现实是什么？</div>
+    </div>
+  </div>
+
+  <div class="tagline">
+    <p>做实技术层，选准商业位，筑牢数据墙</p>
+    <div class="small">从现实出发，不空中楼阁</div>
+  </div>
+
+  <h2 style="color:#1e40af">💡 核心逻辑</h2>
+  <div class="pros">
+    <div class="pro-item">
+      <span class="icon">①</span>
+      <span><strong>技术层是"不动产"</strong>——能做什么、不能做什么，有客观边界。基于现实，而不是愿望。</span>
+    </div>
+    <div class="pro-item">
+      <span class="icon">②</span>
+      <span><strong>商业定位是"选择"</strong>——在技术现实的基础上，决定走哪条路。这部分有主观判断空间。</span>
+    </div>
+    <div class="pro-item">
+      <span class="icon">③</span>
+      <span><strong>数据战略是"护城河"</strong>——定位定了之后，用数据把位置坐实。数据壁垒是最难复制的。</span>
+    </div>
+  </div>
+
+  <h2 style="color:#059669">✅ 优点</h2>
+  <div class="pros">
+    <div class="pro-item"><span class="icon">✔</span><span>递进逻辑严谨，每一步都建立在前面的事实基础上</span></div>
+    <div class="pro-item"><span class="icon">✔</span><span>避免"拍脑袋先定方向，发现技术跟不上"的尴尬</span></div>
+    <div class="pro-item"><span class="icon">✔</span><span>一句话可总结（做实技术层，选准商业位，筑牢数据墙），便于汇报</span></div>
+    <div class="pro-item"><span class="icon">✔</span><span>适合国企/央企语境：先看现状、再做规划、最后落执行</span></div>
+  </div>
+
+  <h2 style="color:#d97706">⚠️ 注意事项</h2>
+  <div class="pros">
+    <div class="pro-item"><span class="icon">!</span><span>技术层不能"刻舟求剑"——今天的技术能力≠2年后的能力。第二步需要包含对技术趋势的判断。</span></div>
+    <div class="pro-item"><span class="icon">!</span><span>"有了技术能力≠就应该做这个方向"——第三步的数据战略是最终的检验。</span></div>
+  </div>
+</div>
+</body>
+</html>

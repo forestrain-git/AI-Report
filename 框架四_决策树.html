@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>AI战略决策树 · 框架候选四</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6fa;color:#1a1a2e;padding:20px;min-height:100vh}
+.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.sub{font-size:13px;color:#888;margin-bottom:20px}
+
+/* 决策树节点 */
+.tree{display:flex;flex-direction:column;gap:0;margin:12px 0}
+.node{border-radius:12px;padding:14px 16px;position:relative}
+.node .n-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;opacity:.7}
+.node .n-q{font-size:16px;font-weight:700;margin-bottom:8px;line-height:1.4}
+.node .n-choices{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.choice{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;font-size:13px;line-height:1.5}
+.choice .arrow{font-size:16px;font-weight:700;flex-shrink:0}
+.choice-a{background:#eff6ff;color:#1e40af}
+.choice-b{background:#f8fafc;color:#64748b}
+
+.t-node{background:#fffbeb;border:2px solid #fcd34d}
+.d-node{background:#f0fdf4;border:2px solid #86efac}
+.r-node{background:#fef2f2;border:2px solid #fca5a5}
+
+.connector{text-align:center;color:#d1d5db;font-size:16px;padding:2px 0}
+
+.tagline{background:linear-gradient(135deg,#1e40af,#2563eb);border-radius:12px;padding:14px;color:#fff;text-align:center;margin:16px 0}
+.tagline p{font-size:14px;font-weight:600;line-height:1.6}
+
+.section{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.s-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#f8fafc;border-radius:8px;font-size:13px;line-height:1.5}
+.s-item .icon{flex-shrink:0;font-size:16px}
+
+/* 底部总结 */
+.summary{display:flex;flex-direction:column;gap:6px;margin-top:12px;padding:14px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;color:#fff}
+.summary .line{font-size:13px;line-height:1.6}
+.summary .line strong{color:#60a5fa}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🌳 候选框架四：AI战略决策树</h1>
+  <div class="sub">三个问题，一步一步锁定方向</div>
+
+  <div class="tree">
+    <!-- 第一问 -->
+    <div class="node t-node">
+      <div class="n-label">❓ 第一问</div>
+      <div class="n-q">你手里有什么别人没有的？</div>
+      <div class="n-choices">
+        <div class="choice choice-a">
+          <span class="arrow">▶</span>
+          <span><strong>有独占数据/场景</strong> → 可以做行业模型/深度产品，存在护城河可能</span>
+        </div>
+        <div class="choice choice-b">
+          <span class="arrow">▷</span>
+          <span><strong>没有独占资源</strong> → 只能做应用集成/工具赋能，壁垒靠执行速度</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">↓</div>
+
+    <!-- 第二问 -->
+    <div class="node d-node">
+      <div class="n-label">❓ 第二问</div>
+      <div class="n-q">你的核心能力离AI有多远？</div>
+      <div class="n-choices">
+        <div class="choice choice-a">
+          <span class="arrow">▶</span>
+          <span><strong>已有AI团队/技术积累</strong> → 可以考虑做深（微调/蒸馏/行业模型）</span>
+        </div>
+        <div class="choice choice-b">
+          <span class="arrow">▷</span>
+          <span><strong>没有AI团队</strong> → 先用API跑起来，验证需求再投入</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector">↓</div>
+
+    <!-- 第三问 -->
+    <div class="node r-node">
+      <div class="n-label">❓ 第三问</div>
+      <div class="n-q">你愿意为AI投入多少？</div>
+      <div class="n-choices">
+        <div class="choice choice-a">
+          <span class="arrow">▶</span>
+          <span><strong>愿意大投入</strong> → 可以做重（自研/行业模型/平台级）</span>
+        </div>
+        <div class="choice choice-b">
+          <span class="arrow">▷</span>
+          <span><strong>轻量试探</strong> → API集成+试点验证，用成果争取更多资源</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tagline">
+    <p>三个问题走完，你的AI战略大方向就出来了</p>
+  </div>
+
+  <div class="summary">
+    <div class="line">🔹 三条路的结果：</div>
+    <div class="line"><strong>AAA</strong>（独占数据+已有团队+愿意大投）→ <strong>行业模型深度玩家</strong></div>
+    <div class="line"><strong>BBB</strong>（无数据+无团队+轻量试探）→ <strong>先从应用集成开始</strong></div>
+    <div class="line"><strong>混合</strong> → 落在中间地带，具体分析</div>
+  </div>
+
+  <h2 style="color:#1e40af">💡 核心逻辑</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">🌳</span><span><strong>第一问定天花板</strong>——有没有独占资源决定了你能做多大</span></div>
+    <div class="s-item"><span class="icon">🌳</span><span><strong>第二问定起点</strong>——有没有AI基础决定了你从哪开始</span></div>
+    <div class="s-item"><span class="icon">🌳</span><span><strong>第三问定速度</strong>——愿意投多少钱决定了你跑多快</span></div>
+    <div class="s-item"><span class="icon">🌳</span><span><strong>三问连环</strong>——每一问的答案都在缩小下一问的选择范围</span></div>
+  </div>
+
+  <h2 style="color:#059669">✅ 优点</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">✔</span><span><strong>问答式引导</strong>——像做选择题一样轻松，适合带领领导层一步一步思考</span></div>
+    <div class="s-item"><span class="icon">✔</span><span><strong>自然有结论</strong>——走完三问，方向自动收窄，不需要额外推导</span></div>
+    <div class="s-item"><span class="icon">✔</span><span><strong>不会被架空</strong>——每个问题都有明确依据，不是凭直觉拍脑袋</span></div>
+    <div class="s-item"><span class="icon">✔</span><span><strong>适合一对多讨论</strong>——主持人带着现场走三问，参与感强</span></div>
+  </div>
+
+  <h2 style="color:#d97706">⚠️ 注意事项</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">!</span><span>答案可能太"二元"——现实情况往往介于两者之间，不是非此即彼</span></div>
+    <div class="s-item"><span class="icon">!</span><span>没有考虑"时间差"——今天没有团队不代表半年后没有，投入可以逐步增加</span></div>
+    <div class="s-item"><span class="icon">!</span><span>需要主持人有判断力——如果领导层对三个问题的回答不一致，需要引导讨论达成共识</span></div>
+  </div>
+</div>
+</body>
+</html>

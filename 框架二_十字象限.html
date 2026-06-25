@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>AI战略十字象限 · 框架候选二</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6fa;color:#1a1a2e;padding:20px;min-height:100vh}
+.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.sub{font-size:13px;color:#888;margin-bottom:20px}
+h2{font-size:15px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+
+/* 十字象限 - 用网格模拟 */
+.quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.quad{padding:16px;border-radius:12px;min-height:130px;display:flex;flex-direction:column}
+.quad .q-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.quad .q-desc{font-size:12px;line-height:1.5;opacity:.85;flex:1}
+.quad .q-tag{font-size:11px;padding:2px 8px;border-radius:10px;display:inline-block;width:fit-content;margin-top:6px;font-weight:600}
+
+.q1{background:#eff6ff;color:#1e40af;border:2px solid #93c5fd}
+.q1 .q-tag{background:#dbeafe;color:#1e40af}
+.q2{background:#ecfdf5;color:#065f46;border:2px solid #86efac}
+.q2 .q-tag{background:#d1fae5;color:#065f46}
+.q3{background:#fef2f2;color:#991b1b;border:2px solid #fca5a5}
+.q3 .q-tag{background:#fee2e2;color:#991b1b}
+.q4{background:#fffbeb;color:#92400e;border:2px solid #fcd34d}
+.q4 .q-tag{background:#fef3c7;color:#92400e}
+
+/* 轴标签 */
+.axis{display:flex;justify-content:space-between;font-size:11px;color:#888;padding:0 4px;margin-top:2px}
+.axis-left{text-align:left}
+.axis-right{text-align:right}
+.axis-center{text-align:center;font-size:12px;font-weight:600;color:#666;margin:4px 0}
+
+.section{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.s-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#f8fafc;border-radius:8px;font-size:13px;line-height:1.5}
+.s-item .icon{flex-shrink:0;font-size:16px}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>📊 候选框架二：AI战略十字象限</h1>
+  <div class="sub">一个坐标系，四个典型方向</div>
+
+  <div class="axis-center">技术纵深 ↑（做深）</div>
+  <div class="quad-grid">
+    <div class="quad q3">
+      <div class="q-title">⚠️ 重投深潜</div>
+      <div class="q-desc">自研模型/大投入/高风险<br>如：中石油昆仑大模型</div>
+      <span class="q-tag">💰 年投入十亿级</span>
+    </div>
+    <div class="quad q1">
+      <div class="q-title">🏰 深挖壁垒</div>
+      <div class="q-desc">行业模型 + 数据飞轮<br>如：云筑网行业匹配模型</div>
+      <span class="q-tag">🔒 最强护城河</span>
+    </div>
+    <div class="quad q4" style="grid-column:1">
+      <div class="q-title">🔘 浅尝辄止</div>
+      <div class="q-desc">无投入/无壁垒<br>建议：不要这样做</div>
+      <span class="q-tag">❌ 不推荐</span>
+    </div>
+    <div class="quad q2" style="grid-column:2">
+      <div class="q-title">⚡ 快速试水</div>
+      <div class="q-desc">API集成/工具赋能<br>如：用豆包写公文</div>
+      <span class="q-tag">✅ 起步首选</span>
+    </div>
+  </div>
+  <div class="axis">
+    <span class="axis-left">← 做浅（集成/API）</span>
+    <span class="axis-right">做深（自研/模型）→</span>
+  </div>
+  <div style="text-align:center;font-size:11px;color:#888;margin-top:8px">纵轴 ↑ = 做工具（赋能自己）→ 做业务（对外输出）</div>
+
+  <div style="background:linear-gradient(135deg,#1e40af,#2563eb);border-radius:12px;padding:14px;color:#fff;margin:16px 0;text-align:center">
+    <p style="font-size:14px;font-weight:600;line-height:1.6">"你想用AI省点钱，还是想用AI赚钱？<br>做多深，取决于你有多大的牌。"</p>
+  </div>
+
+  <h2 style="color:#1e40af">💡 核心逻辑</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">🎯</span><span><strong>横轴=能力轴</strong>（能做多深）：取决于团队、算力、数据基础</span></div>
+    <div class="s-item"><span class="icon">🎯</span><span><strong>纵轴=意图轴</strong>（想做什么）：是赋能内部还是做成产品卖出去</span></div>
+    <div class="s-item"><span class="icon">🎯</span><span><strong>两轴交汇=战略定位</strong>：一个组织落在一个象限里，不是所有象限都该追</span></div>
+  </div>
+
+  <h2 style="color:#059669">✅ 优点</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">✔</span><span>视觉冲击力强，一页PPT就能讲清楚，领导一看就懂</span></div>
+    <div class="s-item"><span class="icon">✔</span><span>"不要把时间花在不属于你的象限"——天然有排除法效果</span></div>
+    <div class="s-item"><span class="icon">✔</span><span>动态工具：可以随着能力提升，在象限间"迁移"</span></div>
+    <div class="s-item"><span class="icon">✔</span><span>天然回答"为什么我们不做XX"这类问题——因为在另一个象限</span></div>
+  </div>
+
+  <h2 style="color:#d97706">⚠️ 注意事项</h2>
+  <div class="section">
+    <div class="s-item"><span class="icon">!</span><span>可能过于简化——现实的AI战略不一定是四个象限能概括的</span></div>
+    <div class="s-item"><span class="icon">!</span><span>需要辅以具体案例来填充每个象限，否则显得空</span></div>
+    <div class="s-item"><span class="icon">!</span><span>"赋能自身"和"对外输出"可能并行，不是非此即彼</span></div>
+  </div>
+</div>
+</body>
+</html>
