@@ -4,19 +4,20 @@
   "title": "Check for new PPT tool",
   "titleGenerationStatus": "success",
   "createdAt": 1782281471888,
-  "updatedAt": 1782284615519,
-  "lastResponseAt": 1782284615519,
+  "updatedAt": 1782378267647,
+  "lastResponseAt": 1782378267647,
   "sessionId": "417c4892-3aa5-4a4d-a19e-c54a74458b91",
   "providerState": {
     "providerSessionId": "417c4892-3aa5-4a4d-a19e-c54a74458b91"
   },
   "usage": {
     "model": "sonnet[1m]",
-    "inputTokens": 1957,
+    "inputTokens": 992,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 49792,
+    "cacheReadInputTokens": 63232,
     "contextWindow": 1000000,
-    "contextTokens": 51749,
-    "percentage": 5
+    "contextTokens": 64224,
+    "percentage": 6,
+    "contextWindowIsAuthoritative": true
   }
 }
