@@ -4,8 +4,8 @@
   "title": "分析陶锋PPT讨论录音中的修改点",
   "titleGenerationStatus": "success",
   "createdAt": 1782280639713,
-  "updatedAt": 1782379475207,
-  "lastResponseAt": 1782379475207,
+  "updatedAt": 1782379860509,
+  "lastResponseAt": 1782379860509,
   "sessionId": "1533ed65-0576-4680-b92d-edf9543827d1",
   "providerState": {
     "providerSessionId": "1533ed65-0576-4680-b92d-edf9543827d1",
@@ -3276,11 +3276,11 @@
   },
   "usage": {
     "model": "sonnet[1m]",
-    "inputTokens": 118,
+    "inputTokens": 32,
     "cacheCreationInputTokens": 0,
-    "cacheReadInputTokens": 478080,
+    "cacheReadInputTokens": 498176,
     "contextWindow": 1000000,
-    "contextTokens": 478198,
-    "percentage": 48
+    "contextTokens": 498208,
+    "percentage": 50
   }
 }
