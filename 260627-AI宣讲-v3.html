@@ -1,0 +1,2846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1.0">
+<title>AI 时代：我们的选择与行动 · 中建发展 AI 宣讲</title>
+<style>
+/* ═══════════════════════════════════════════
+   Guizang Custom Theme — Whiteboard Blue
+   白底 · 蓝色楷体 · 国企稳重 · 大屏投影优化
+   ═══════════════════════════════════════════ */
+
+/* --- Design Tokens --- */
+:root {
+  --ink:        #111827;
+  --ink-dim:    #4B5563;
+  --ink-muted:  #9CA3AF;
+  --accent:     #1A56DB;
+  --accent-light: #E8EFFC;
+  --accent-dark:#1E40AF;
+  --danger:     #CC0000;
+  --danger-bg:  #FEF2F2;
+  --success:    #059669;
+  --warning:    #D97706;
+  --surface:    #FFFFFF;
+  --surface-alt:#F9FAFB;
+  --border:     #E5E7EB;
+  --border-strong:#D1D5DB;
+
+  --font-display: 'Microsoft YaHei', '微软雅黑', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --font-body:    'Microsoft YaHei', '微软雅黑', 'PingFang SC', 'Noto Sans SC', Arial, sans-serif;
+  --font-mono:    'Consolas', 'Courier New', monospace;
+
+  --text-hero:    clamp(36px, 3vw, 48px);
+  --text-h1:      clamp(28px, 2.4vw, 36px);
+  --text-h2:      clamp(24px, 2vw, 32px);
+  --text-h3:      clamp(20px, 1.6vw, 26px);
+  --text-body:    clamp(18px, 1.4vw, 22px);
+  --text-small:   clamp(16px, 1.2vw, 18px);
+  --text-footnote:clamp(14px, 1vw, 16px);
+
+  --leading:      1.45;
+  --leading-tight:1.25;
+  --slide-pad:    60px;
+  --gap:          24px;
+  --radius:       8px;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size: 16px; }
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading);
+  overflow: hidden;
+  width: 100vw; height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Deck & Slide --- */
+.deck {
+  width: 100vw; height: 100vh;
+  position: relative; overflow: hidden;
+}
+.slide {
+  position: absolute; inset: 0;
+  display: none;
+  flex-direction: column;
+  padding: var(--slide-pad);
+  padding-bottom: calc(var(--slide-pad) + 52px); /* space for nav bar */
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.slide.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* --- Slide Types --- */
+/* 封面 */
+.slide[data-type="cover"] {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #f8faff 0%, #e8effc 100%);
+  overflow-y: auto;
+}
+/* 定调/金句页（大留白） */
+.slide[data-type="pivot"] {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow-y: auto;
+}
+/* 内容页 */
+.slide[data-type="content"] {
+  justify-content: flex-start;
+}
+/* 分隔页（Part 过渡） */
+.slide[data-type="part"] {
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 120px;
+}
+/* 全局目录页 */
+.slide[data-type="toc"] {
+  justify-content: center;
+  align-items: center;
+}
+.toc-wrap{display:flex;flex-direction:column;gap:10px;width:100%;max-width:900px}
+.toc-row{display:flex;align-items:center;gap:20px;padding:18px 28px;border-radius:12px;border:1px solid var(--border);background:var(--surface);transition:all .3s}
+.toc-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:20px;font-weight:700;border:2px solid var(--border);background:var(--surface);color:var(--ink-muted);flex-shrink:0;transition:all .3s}
+.toc-name{font-family:var(--font-display);font-size:var(--text-h3);font-weight:700;color:var(--ink-muted);transition:color .3s}
+.toc-tag{padding:5px 14px;border-radius:6px;font-size:var(--text-footnote);font-weight:600;background:var(--border);color:var(--ink-muted);margin-left:auto;flex-shrink:0;transition:all .3s}
+.toc-connector{width:2px;height:10px;background:var(--border);margin-left:21px;transition:background .3s}
+/* 已完成部分 */
+.toc-row.done .toc-dot{border-color:var(--success);background:#D1FAE5;color:var(--success)}
+.toc-row.done .toc-tag{background:#D1FAE5;color:var(--success)}
+.toc-connector.done{background:var(--success)}
+/* 当前部分 */
+.toc-row.current{border-color:var(--accent);background:linear-gradient(135deg,var(--accent-light),rgba(232,239,252,.3));box-shadow:0 2px 16px rgba(26,86,219,.1)}
+.toc-row.current .toc-dot{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 0 0 6px rgba(26,86,219,.12)}
+.toc-row.current .toc-name{color:var(--accent-dark)}
+.toc-row.current .toc-tag{background:var(--accent);color:#fff}
+/* TOC Part 色调 */
+#slide-toc-2 .toc-row.current{--accent:#D97706;--accent-light:#FFFBEB;--accent-dark:#92400E}
+#slide-toc-3 .toc-row.current{--accent:#1A56DB;--accent-light:#E8EFFC;--accent-dark:#1E40AF}
+#slide-toc-4 .toc-row.current{--accent:#059669;--accent-light:#ECFDF5;--accent-dark:#065F46}
+#slide-toc-5 .toc-row.current{--accent:#7C3AED;--accent-light:#F5F3FF;--accent-dark:#5B21B6}
+#slide-toc-6 .toc-row.current{--accent:#CC0000;--accent-light:#FEF2F2;--accent-dark:#991B1B}
+
+/* --- Typography --- */
+.kicker {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.slide-title {
+  font-family: var(--font-body);
+  font-size: var(--text-h1);
+  font-weight: 700;
+  color: var(--accent-dark);
+  line-height: var(--leading-tight);
+  margin-bottom: 28px;
+  max-width: 1600px;
+}
+.slide[data-type="pivot"] .slide-title,
+.slide[data-type="cover"] .slide-title {
+  font-size: var(--text-hero);
+  color: var(--accent-dark);
+  max-width: 1200px;
+}
+.slide[data-type="part"] .slide-title {
+  font-size: clamp(40px, 3.5vw, 56px);
+  color: var(--accent-dark);
+}
+h3 {
+  font-family: var(--font-body);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 20px 0 12px;
+}
+p {
+  font-size: var(--text-body);
+  margin-bottom: 12px;
+  max-width: 1600px;
+}
+.lead {
+  font-size: var(--text-h3);
+  color: var(--ink-dim);
+  max-width: 900px;
+  margin: 0 auto 32px;
+  line-height: var(--leading);
+}
+.subtitle {
+  font-size: var(--text-h3);
+  color: var(--ink-dim);
+  margin-bottom: 16px;
+}
+
+/* 强调 */
+strong, b { font-weight: 700; }
+.accent { color: var(--accent); font-weight: 700; }
+.danger { color: var(--danger); font-weight: 700; }
+.success { color: var(--success); font-weight: 700; }
+.warning { color: var(--warning); font-weight: 700; }
+.highlight {
+  background: var(--accent-light);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+.mark-danger {
+  background: var(--danger-bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--danger);
+  font-weight: 700;
+}
+
+/* 金句 */
+.quote {
+  font-family: var(--font-body);
+  font-size: var(--text-h2);
+  font-style: italic;
+  color: var(--accent-dark);
+  border-left: 4px solid var(--accent);
+  padding: 16px 24px;
+  margin: 24px 0;
+  max-width: 1200px;
+  line-height: 1.5;
+}
+.quote-mark {
+  font-size: 4em;
+  color: var(--accent);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+  line-height: 0.5;
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* --- Divider --- */
+.divider {
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  margin: 20px 0;
+  max-width: 400px;
+}
+.divider-full {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* --- Tables --- */
+table {
+  width: 100%;
+  max-width: 1700px;
+  border-collapse: collapse;
+  margin: 12px 0 20px;
+  font-size: var(--text-body);
+}
+th {
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-small);
+  padding: 12px 16px;
+  text-align: left;
+  letter-spacing: .03em;
+}
+td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tr:nth-child(even) td { background: var(--surface-alt); }
+tr:hover td { background: var(--accent-light); }
+.table-accent th { background: var(--accent-dark); }
+
+/* 紧凑表格 */
+table.compact { font-size: var(--text-small); }
+table.compact td, table.compact th { padding: 8px 12px; }
+
+/* --- Cards Grid --- */
+.cards {
+  display: grid;
+  gap: var(--gap);
+  margin: 12px 0;
+}
+.cards-2 { grid-template-columns: 1fr 1fr; }
+.cards-3 { grid-template-columns: 1fr 1fr 1fr; }
+.cards-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+.card-accent {
+  border-left: 4px solid var(--accent);
+}
+.card-danger {
+  border-left: 4px solid var(--danger);
+}
+.card-title {
+  font-family: var(--font-body);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+}
+
+/* --- Timeline --- */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+  margin: 16px 0;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-light));
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -33px; top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.timeline-text {
+  font-size: var(--text-body);
+  color: var(--ink);
+}
+
+/* --- Metrics / Stats --- */
+.stats {
+  display: flex;
+  gap: 32px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+  padding: 16px 24px;
+}
+.stat-value {
+  font-family: var(--font-body);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.stat-value.danger-val { color: var(--danger); }
+.stat-label {
+  font-size: var(--text-small);
+  color: var(--ink-dim);
+  margin-top: 8px;
+}
+
+/* --- SVG Charts --- */
+.chart-container {
+  margin: 16px 0;
+  max-width: 1600px;
+}
+.chart-container svg {
+  max-width: 100%;
+  height: auto;
+}
+.chart-container svg text {
+  font-family: 'KaiTi', '楷体', Arial, sans-serif;
+}
+
+/* --- Two Column Layout --- */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.split-left { }
+.split-right { }
+
+/* --- Footnote --- */
+.footnote {
+  margin-top: auto;
+  padding-top: 12px;
+  padding-bottom: 4px;
+  border-top: 1px solid var(--border);
+  font-size: var(--text-footnote);
+  color: var(--ink-muted);
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+.fn-src { font-size: var(--text-footnote); color: var(--ink-muted) !important; line-height: 1.4; }
+.fn-marker { font-size: 0.65em; vertical-align: super; line-height: 0; color: var(--accent); font-weight: 600; cursor: help; }
+
+/* --- Part Separator --- */
+.part-number {
+  font-family: var(--font-body);
+  font-size: clamp(80px, 8vw, 140px);
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0.12;
+  position: absolute;
+  right: 80px;
+  bottom: 80px;
+  line-height: 1;
+}
+
+/* --- Slide Header --- */
+.slide-header {
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+.slide-body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* --- Tag / Badge --- */
+.tag {
+  display: inline-block;
+  font-size: var(--text-footnote);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+.tag-blue { background: var(--accent-light); color: var(--accent); }
+.tag-red { background: var(--danger-bg); color: var(--danger); }
+.tag-green { background: #ecfdf5; color: var(--success); }
+.tag-gray { background: var(--surface-alt); color: var(--ink-dim); }
+
+/* --- Flex List --- */
+.flex-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 12px 0;
+}
+.flex-item {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+/* --- Navigation Bar --- */
+.nav-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 48px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 200;
+  font-size: 14px;
+  color: var(--ink-dim);
+  font-family: Arial, sans-serif;
+}
+.nav-bar button {
+  background: none; border: none;
+  font-size: 18px; cursor: pointer;
+  color: var(--ink);
+  padding: 4px 12px;
+  border-radius: 4px;
+  transition: background .15s;
+}
+.nav-bar button:hover { background: var(--accent-light); }
+.nav-bar button:disabled { opacity: .25; cursor: default; }
+.nav-bar button:disabled:hover { background: none; }
+.nav-progress {
+  width: 200px; height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.nav-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width .3s ease;
+}
+.nav-folio {
+  font-variant-numeric: tabular-nums;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* --- Presenter Mode --- */
+.presenter-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: #1a1a2e;
+  z-index: 1000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+.presenter-overlay.active { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; }
+.presenter-current, .presenter-next {
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; overflow: hidden;
+}
+.presenter-current { background: #0d0d1a; }
+.presenter-next { background: #14142a; border-left: 2px solid #333; }
+.presenter-current iframe, .presenter-next iframe {
+  width: 100%; height: 100%;
+  border: none; border-radius: 8px;
+  background: #fff;
+}
+.presenter-bar {
+  grid-column: 1 / -1;
+  background: #111;
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.presenter-timer {
+  font-size: 36px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #60a5fa;
+}
+.presenter-notes {
+  color: #d1d5db;
+  font-size: 15px;
+  max-height: 60px;
+  overflow-y: auto;
+  flex: 1;
+  margin: 0 24px;
+  line-height: 1.4;
+}
+.presenter-controls button {
+  background: #333; color: #fff;
+  border: none; padding: 8px 16px;
+  border-radius: 6px; cursor: pointer;
+  font-size: 14px; margin-left: 8px;
+}
+.presenter-controls button:hover { background: #555; }
+.presenter-label {
+  font-size: 11px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 4px;
+}
+
+/* --- Speaker Notes (hidden in normal mode) --- */
+.speaker-notes { display: none; }
+
+/* --- Responsive: adjust for non-1920 screens --- */
+@media (max-width: 1400px) {
+  :root {
+    --slide-pad: 40px;
+    --gap: 16px;
+  }
+}
+
+/* --- Print --- */
+@media print {
+  .nav-bar, .presenter-overlay { display: none !important; }
+  .slide { position: relative; display: flex !important; opacity: 1 !important; page-break-after: always; min-height: 100vh; }
+  body { overflow: visible; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ╔══════════════════════════════════════════╗
+     ║  PART 1: 政策要求与战略方向 (P1-P6)     ║
+     ╚══════════════════════════════════════════╝ -->
+
+<!-- ─── P1 · 封面 ─── -->
+<section class="slide active" id="slide-cover" data-type="cover">
+  <div style="margin-bottom:60px;">
+    <span class="kicker" style="letter-spacing:.15em;opacity:.7;">中建发展 · AI 分享</span>
+  </div>
+  <h1 class="slide-title" style="font-size:clamp(52px,4.5vw,72px);margin-bottom:24px;line-height:1.2;">
+    AI 时代：<br>我们的选择与行动
+  </h1>
+  <p class="lead" style="max-width:600px;margin:0 auto 48px;font-size:var(--text-h3);">从趋势认知到战略选择，从个人实践到组织行动</p>
+  <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;opacity:.6;">
+    <span style="font-size:14px;color:var(--accent);">趋势认知</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">行业变化</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">战略选层</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">认知重建</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">实践路径</span>
+    <span style="font-size:14px;color:var(--ink-muted);">·</span>
+    <span style="font-size:14px;color:var(--ink-muted);">行动倡议</span>
+  </div>
+  <div class="footnote" style="border-top:none;margin-top:80px;">
+    演讲人：XXX ｜ 日期：2026.XX.XX ｜ 中建发展 · AI 分享
+  </div>
+  <div class="speaker-notes">欢迎致辞。说明本次宣讲的背景：国资委要求、集团部署、中建发展的使命。强调这不是技术培训，而是战略认知对齐。</div>
+</section>
+
+<!-- ─── TOC · Part 1 ─── -->
+<section class="slide" id="slide-toc-1" data-type="toc">
+  <div class="kicker">中建发展 · AI 分享</div>
+
+  <div class="toc-wrap">
+    <div class="toc-row current"><div class="toc-dot">1</div><div class="toc-name">趋势认知</div><div class="toc-tag">为什么要做</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">2</div><div class="toc-name">行业变化</div><div class="toc-tag">别人在做什么</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">3</div><div class="toc-name">战略选层</div><div class="toc-tag">选对层级再行动</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">4</div><div class="toc-name">认知重建</div><div class="toc-tag">AI 到底是什么</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">5</div><div class="toc-name">实践路径</div><div class="toc-tag">我们怎么做</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">6</div><div class="toc-name">行动倡议</div><div class="toc-tag">现在开始</div></div>
+  </div>
+  <div class="speaker-notes">展示整体目录结构，让听众对今天的分享有全局预期。从政策到行动，六步推进。</div>
+</section>
+
+<!-- ─── P2 · 国家的要求（上）：政策升级脉络 ─── -->
+<section class="slide" id="slide-1" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第一部分 · 政策要求与战略方向</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">AI 是国家意志。</h2>
+  </div>
+  <div class="slide-body">
+    <p style="margin-bottom:4px;">从战略规划 → 写入政府工作报告 → 国务院专文定目标——<strong>AI+ 已经不是行业热点，是国家意志。</strong></p>
+    <div class="split" style="margin-top:12px;">
+      <div class="split-left">
+        <h3 style="margin-bottom:12px;">📐 政策升级脉络</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2017.7</div>
+            <div class="timeline-text">国务院印发《新一代人工智能发展规划》<br><span class="tag tag-gray">国发〔2017〕35号</span> <span class="tag tag-blue">首次将 AI 上升为国家战略</span></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year" style="color:var(--warning);">2024.3</div>
+            <div class="timeline-text">"人工智能+"<strong>首次</strong>写入全国两会政府工作报告<br><span class="tag tag-blue">从产业政策升级为国策</span></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year" style="color:var(--danger);">2025.3</div>
+            <div class="timeline-text">"人工智能+"<strong>连续第二年</strong>写入政府工作报告<br><span class="tag tag-red">措辞从"开展"升级为"持续推进"</span></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year" style="color:var(--danger);">2025.8</div>
+            <div class="timeline-text">国务院印发《关于深入实施"人工智能+"行动的意见》<br><span class="tag tag-red">国发〔2025〕11号</span> <span class="tag tag-red">专文部署 · 定量化目标 · 定时间表</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="split-right">
+        <h3 style="margin-bottom:12px;">🗣️ 两会原话（逐年升级）</h3>
+        <div class="card" style="margin-bottom:16px;border-left:4px solid var(--accent);">
+          <div class="card-title" style="font-size:var(--text-small);"><span class="tag tag-blue">2024 年政府工作报告</span></div>
+          <div class="quote" style="border:none;padding:0;margin:8px 0 0;font-size:var(--text-body);">
+            "深化大数据、人工智能等研发应用，<strong>开展'人工智能+'行动</strong>，打造具有国际竞争力的数字产业集群。"
+          </div>
+        </div>
+        <div class="card" style="border-left:4px solid var(--danger);">
+          <div class="card-title" style="font-size:var(--text-small);"><span class="tag tag-red">2025 年政府工作报告</span></div>
+          <div class="quote" style="border:none;padding:0;margin:8px 0 0;font-size:var(--text-body);">
+            "<strong>持续推进</strong>'人工智能+'行动……支持大模型广泛应用，大力发展智能网联新能源汽车、人工智能手机和电脑、智能机器人等<strong>新一代智能终端</strong>以及智能制造装备。"
+          </div>
+        </div>
+        <div class="card card-accent" style="margin-top:16px;">
+          <div class="card-title">💡 关键认知</div>
+          <p style="font-size:var(--text-body);">继 2015 年"互联网+"之后，"人工智能+"是<strong class="danger">下一个十年级国家产业政策</strong>。但这次节奏更快——"互联网+"从提出到专文仅4个月，"AI+"也只用了一年半。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：国务院国发〔2017〕35号、国发〔2025〕11号；2024/2025 全国两会政府工作报告；小组调研
+  </div>
+  <div class="speaker-notes">这一页制造"政策升级"的紧迫感。先讲时间线：2017年就开始布局了，2024年首次写入两会，2025年连续第二年写入而且措辞升级——从"开展"到"持续推进"。然后翻到右边：把两年的政府工作报告原话放在一起对比，让听众自己感受措辞升级。最后用"互联网+"类比——上一个十年级政策是什么样的，这一个只会更快更猛。杀手锏金句："AI+不是选择题，是必答题；不是未来时，是现在进行时。"</div>
+</section>
+
+<!-- ─── P3-new · 国家的要求（下）：量化目标 + 建筑行业定向要求 ─── -->
+<section class="slide" id="slide-2" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第一部分 · 政策要求与战略方向</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">AI 是国家战略：从概念提出到全面行动</h2>
+  </div>
+  <div class="slide-body">
+    <div class="split">
+      <div class="split-left">
+        <h3 style="margin-bottom:12px;">📊 "三步走"量化路线图</h3>
+        <div class="stats" style="gap:16px;margin-bottom:20px;">
+          <div class="stat" style="background:var(--accent-light);border-radius:var(--radius);padding:16px 24px;flex:1;">
+            <div class="stat-value" style="font-size:clamp(32px,2.8vw,44px);">2027</div>
+            <div class="stat-label" style="font-size:var(--text-small);">AI 深融 6 大领域<br>智能终端/智能体<br><strong class="danger" style="font-size:var(--text-h2);">普及率 &gt; 70%</strong></div>
+          </div>
+          <div class="stat" style="background:var(--surface-alt);border-radius:var(--radius);padding:16px 24px;flex:1;">
+            <div class="stat-value" style="font-size:clamp(32px,2.8vw,44px);">2030</div>
+            <div class="stat-label" style="font-size:var(--text-small);">AI 全面赋能<br>高质量发展<br><strong style="font-size:var(--text-h2);color:var(--success);">普及率 &gt; 90%</strong></div>
+          </div>
+          <div class="stat" style="background:var(--surface-alt);border-radius:var(--radius);padding:16px 24px;flex:1;">
+            <div class="stat-value" style="font-size:clamp(32px,2.8vw,44px);">2035</div>
+            <div class="stat-label" style="font-size:var(--text-small);">全面步入<br><strong>智能经济</strong>和<br><strong>智能社会</strong>新阶段</div>
+          </div>
+        </div>
+        <h3 style="margin:12px 0 28px;">🎯 六大专项行动</h3>
+        <div class="cards cards-3" style="grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="card" style="padding:10px 14px;"><strong class="accent">①</strong> AI + 科技创新</div>
+          <div class="card" style="padding:10px 14px;"><strong class="accent">②</strong> AI + 产业</div>
+          <div class="card" style="padding:10px 14px;"><strong class="accent">③</strong> AI + 消费</div>
+          <div class="card" style="padding:10px 14px;"><strong class="accent">④</strong> AI + 民生</div>
+          <div class="card" style="padding:10px 14px;"><strong class="accent">⑤</strong> AI + 治理</div>
+          <div class="card" style="padding:10px 14px;"><strong class="accent">⑥</strong> AI + 全球合作</div>
+        </div>
+      </div>
+      <div class="split-right">
+        <h3 style="margin-bottom:12px;">🏗️ 对建筑行业的三条定向要求</h3>
+        <div class="cards" style="grid-template-columns:1fr;gap:14px;">
+          <div class="card card-accent">
+            <div class="card-title">🔧 产业升级</div>
+            <p style="font-size:var(--text-body);">"推动产业<strong>全要素智能化</strong>发展"</p>
+            <p style="font-size:var(--text-small);color:var(--ink-dim);margin-top:4px;">→ 设计、施工、运维全链条都要上 AI</p>
+          </div>
+          <div class="card card-accent">
+            <div class="card-title">🏠 "好房子"</div>
+            <p style="font-size:var(--text-body);">"拓展 AI 在'好房子'<strong>全生命周期</strong>的应用"</p>
+            <p style="font-size:var(--text-small);color:var(--ink-dim);margin-top:4px;">→ 直接点名建筑行业，覆盖规划→设计→建造→运维</p>
+          </div>
+          <div class="card card-accent">
+            <div class="card-title">🌆 城市治理</div>
+            <p style="font-size:var(--text-body);">"推动市政基础设施<strong>智能化改造升级</strong>"</p>
+            <p style="font-size:var(--text-small);color:var(--ink-dim);margin-top:4px;">→ 城市更新 + 智能化 = 中建的主战场</p>
+          </div>
+        </div>
+        <div class="quote" style="margin-top:16px;font-size:var(--text-body);">
+          "到 2027 年，率先实现人工智能与6大重点领域广泛深度融合，新一代智能终端、智能体等应用普及率超 70%。"
+        </div>
+        <p style="color:var(--ink-dim);font-size:var(--text-small);margin-top:4px;">—— 国务院《深入实施"人工智能+"行动的意见》</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：国务院国发〔2025〕11号《关于深入实施"人工智能+"行动的意见》；小组调研
+  </div>
+  <div class="speaker-notes">左半边：先用三个大数字镇住场——2027年70%、2030年90%、2035全面智能社会。这不是"建议"，是国务院定的量化目标。然后快速过六大专项行动，说明覆盖面极广。右半边：重点来了——政策方向明确。三条定向要求逐一展开，每一条都翻译成"对建筑业意味着什么"。"</div>
+</section>
+
+<!-- ─── P2 · 国资委的要求 ─── -->
+<section class="slide" id="slide-3" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第一部分 · 政策要求与战略方向</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">国资委：场景落地，子企业是主体</h2>
+  </div>
+  <div class="slide-body" style="gap:12px;">
+    <div class="split">
+      <div class="split-left">
+        <h3>三大定位 <span class="tag tag-blue">2026.1.28 国新办 · 庞骁刚</span></h3>
+        <div class="cards cards-2" style="grid-template-columns:1fr;">
+          <div class="card card-accent">
+            <p><strong class="accent">① 智算基础设施的重要供给者</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">央企不能只"用"算力，还要"建"算力——建智算中心、推国产替代</span></p>
+          </div>
+          <div class="card card-accent">
+            <p><strong class="accent">② AI 赋能千行百业的破题者</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">央企带头用 AI 改造主业，不是信息化部门的事，是一把手的事</span></p>
+          </div>
+          <div class="card card-accent">
+            <p><strong class="accent">③ 产业体系化布局的组织者</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">带动整个产业链一起上 AI，不只是自己用，还要拉着供应商一起</span></p>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:10px 14px;background:var(--surface-alt);border-radius:var(--radius);font-size:var(--text-small);color:var(--ink-dim);">
+          <strong>背景：</strong>庞骁刚 2025.10 从国家电网总经理调任国资委副主任，懂技术、懂行业，推动 AI 力度空前。
+        </div>
+      </div>
+      <div class="split-right">
+        <h3>四大任务 <span class="tag tag-blue">2026.2.10 深化部署会 · 张玉卓</span></h3>
+        <div class="cards cards-2" style="grid-template-columns:1fr;">
+          <div class="card">
+            <p><strong>① 强化自主创新</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">持续攻关大模型技术，掌握"根技术"，实现更多"0 到 1"突破</span></p>
+          </div>
+          <div class="card">
+            <p><strong>② 强化场景培育</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">AI 与主责主业精准对接——战略意义强、经济回报高、民生关联紧的场景优先</span></p>
+          </div>
+          <div class="card">
+            <p><strong>③ 强化投资牵引</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">扩大算力有效投资，推动万卡级国产智算集群建设，"算力+电力"协同</span></p>
+          </div>
+          <div class="card">
+            <p><strong>④ 强化开源开放协同</strong><br>
+            <span style="font-size:var(--text-small);color:var(--ink-dim);">推进"AI+"产业共同体建设，不搞封闭，要搞生态</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:14px 20px;background:var(--danger-bg);border-radius:var(--radius);border-left:4px solid var(--danger);">
+      <p style="margin:0;"><strong class="accent">💡 关键信号：</strong>央企数字化预算近 7000 亿<sup class="fn-marker">1</sup>，AI 预算 2000万-5000万的企业占 33%<sup class="fn-marker">2</sup>——大模型攻关、场景培育、算力投资、开源协同，四条线同时推进。窗口期不会等人，先行者正在拉开差距。</p>
+    </div>
+  </div>
+  <div class="footnote">
+    <div class="fn-src"><sup class="fn-marker">1</sup> 2024年央企老旧+数字化改造投资超8000亿（国资委官网） · <sup class="fn-marker">2</sup> 2025.5.8 央视/澎湃（央企数字化转型预算数据）</div>
+    来源：2026.1.28 国新办发布会（庞骁刚）；2026.2.10 国资委深化部署会（张玉卓讲话、庞骁刚主持）；2025.5.8 央视/澎湃；2025.1.14 国资委指导意见；小组调研
+  </div>
+  <div class="speaker-notes">三大定位的关键："供给者"意味着央企要建算力，不只是用；"破题者"意味着要攻坚突破AI与主业融合；"组织者"意味着要拉动整个产业链。四大任务中，"场景培育"对我们最直接——找场景的任务已经下放到子企业。底部关键信号：央企正在批量入场，窗口期不会等人。</div>
+</section>
+
+<!-- ─── P3 · 集团能做什么、打算做什么 ─── -->
+
+<!-- ═══════════ P4-new · 建筑业数字化现状 ═══════════ -->
+<section class="slide" id="slide-4-new" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第一部分 · 政策要求与战略方向</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">建筑业：数字底子薄，但条件已具备</h2>
+  </div>
+  <div class="slide-body">
+    <div class="split" style="margin-top:12px;">
+      <div class="split-left">
+        <h3 style="margin-bottom:12px;">全球主要行业数字化程度</h3>
+        <table style="font-size:var(--text-body);width:100%;">
+          <tr><th>指标</th><th>建筑业</th><th>制造业</th></tr>
+          <tr><td>McKinsey 数字化指数</td><td style="color:var(--danger);font-weight:700;">1.375</td><td>3.5</td></tr>
+          <tr><td>IT 支出占收入比</td><td style="color:var(--danger);">&lt;1%</td><td>~3%</td></tr>
+          <tr><td>20年生产力年均增长</td><td style="color:var(--danger);">1.0%</td><td>3.0%</td></tr>
+        </table>
+        <p style="margin-top:16px;font-size:var(--text-body);">全球排名<strong style="color:var(--danger);">倒数第二</strong>。但差距就是空间——建筑业占全球GDP 13%、劳动力7%，数字化每提升1分都是巨大增量。</p>
+      </div>
+      <div class="split-right">
+        <h3 style="margin-bottom:12px;">AI 的前提条件已经具备</h3>
+        <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent);">
+          <div class="card-title">管理层已数字化</div>
+          <p style="font-size:var(--text-body);">标书、方案、设计、计划、BIM——AI 可以直接切入。</p>
+        </div>
+        <div class="card" style="margin-bottom:12px;border-left:4px solid var(--accent);">
+          <div class="card-title">现场正在快速数字化</div>
+          <p style="font-size:var(--text-body);">拍照替代纸质、移动端替代手写、传感器替代人工检查。</p>
+        </div>
+        <div class="card card-accent" style="margin-top:12px;">
+          <div class="card-title">判断</div>
+          <p style="font-size:var(--text-body);"><strong>数字低，但不是零。AI 的入口已经打开了。</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">来源：McKinsey Global Institute (2017)</div>
+  <div class="speaker-notes">重新定位 McKinsey 数据——不是丢脸，是空间最大。管理层已数字化、现场在快速数字化。数字低但不是零，AI能切入的口子已打开。</div>
+</section>
+
+<!-- REMOVED: slide-4 -->
+
+<!-- ─── P7 · 中建发展的资源禀赋 ─── -->
+<section class="slide" id="slide-5" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第一部分 · 政策要求与战略方向</span>
+    <h2 class="slide-title" style="margin:12px 0 24px;">时机到了，我们选择行动</h2>
+  </div>
+  <div class="slide-body">
+    <p style="font-size:var(--text-h3);color:var(--ink-dim);margin-bottom:20px;">
+      四个方面的家底，让我们有能力去接。
+    </p>
+
+    <div class="cards-4 cards" style="margin-bottom:12px;">
+      <!-- 卡1：数据 -->
+      <div class="card" style="border-top:4px solid var(--accent);padding:22px 20px 18px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:1.8em;">🗃️</span>
+          <div class="card-title" style="margin-bottom:0;font-size:var(--text-h3);">数据资产</div>
+        </div>
+        <div class="stats" style="gap:6px;margin:0 0 10px;">
+          <div class="stat" style="padding:8px 6px;background:var(--accent-light);border-radius:6px;flex:1;text-align:center;">
+            <div class="stat-value" style="font-size:var(--text-h1);">10万亿+<sup class="fn-marker">1</sup></div>
+            <div class="stat-label" style="font-size:var(--text-small);">累计交易额</div>
+          </div>
+          <div class="stat" style="padding:8px 6px;background:var(--accent-light);border-radius:6px;flex:1;text-align:center;">
+            <div class="stat-value" style="font-size:var(--text-h1);">超2300万<sup class="fn-marker">2</sup></div>
+            <div class="stat-label" style="font-size:var(--text-small);">在册工人</div>
+          </div>
+          <div class="stat" style="padding:8px 6px;background:var(--accent-light);border-radius:6px;flex:1;text-align:center;">
+            <div class="stat-value" style="font-size:var(--text-h1);">140万</div>
+            <div class="stat-label" style="font-size:var(--text-small);">招标数据</div>
+          </div>
+        </div>
+        <p style="font-size:var(--text-body);margin:0;line-height:var(--leading);">
+          建筑行业信息化极低，这些数据只有我们有。别人想做这些产品，<strong>没有这个数据基础</strong>。
+        </p>
+      </div>
+
+      <!-- 卡2：已有产品 -->
+      <div class="card" style="border-top:4px solid var(--success);padding:22px 20px 18px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:1.8em;">✅</span>
+          <div class="card-title" style="margin-bottom:0;font-size:var(--text-h3);">已跑通的产品</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;font-size:var(--text-body);">
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>云筑AI大模型</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">中建首个商业化AI大模型，"采购文本生成算法"通过网信办第十一批深度合成服务算法备案</span>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>云智采 1.0</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">采购周期↓40%<sup class="fn-marker">3</sup> · 成本↓20%<sup class="fn-marker">3</sup></span>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>国际工程AI审查</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">集团海外部认可，履约中</span>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>制度AI审核</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">已服务集团办公厅</span>
+          </div>
+        </div>
+        <p style="font-size:var(--text-body);margin:0;color:var(--ink-dim);">
+          不是实验室概念，是已经在跑的系统。
+        </p>
+      </div>
+
+      <!-- 卡3：能力依托 -->
+      <div class="card" style="border-top:4px solid var(--accent);padding:22px 20px 18px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:1.8em;">🏗️</span>
+          <div class="card-title" style="margin-bottom:0;font-size:var(--text-h3);">产业能力依托</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;font-size:var(--text-body);">
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>中建生态</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">200万吨/日水务运营 · 五大区域、17个城市</span>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>中建环能</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">江苏华大离心机龙头 · 33年离心机研发制造底蕴</span>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>中建智能</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">智慧运营平台开发与运维经验</span>
+          </div>
+        </div>
+        <p style="font-size:var(--text-body);margin:0;color:var(--ink-dim);">
+          这些产业能力就是场景来源和工程化验证场。
+        </p>
+      </div>
+
+      <!-- 卡4：渠道 -->
+      <div class="card" style="border-top:4px solid var(--warning);padding:22px 20px 18px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:1.8em;">🔗</span>
+          <div class="card-title" style="margin-bottom:0;font-size:var(--text-h3);">渠道网络</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;font-size:var(--text-body);">
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>云筑网</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">110万供应商<sup class="fn-marker">4</sup> · 零获客成本铺开</span>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>中建大厦楼内</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">设计院/工程局/管理学院，试点零成本</span>
+          </div>
+          <div style="background:var(--surface-alt);border-radius:6px;padding:7px 12px;">
+            <strong>集团通道</strong><br>
+            <span style="color:var(--ink-dim);font-size:var(--text-small);">海外部 / 办公厅，已建立信任</span>
+          </div>
+        </div>
+        <p style="font-size:var(--text-body);margin:0;color:var(--ink-dim);">
+          有场景没AI能力的单位就在楼里。物理聚集降低了信任成本。
+        </p>
+      </div>
+    </div>
+
+    <p style="font-size:var(--text-h3);color:var(--ink-dim);text-align:center;margin:16px 0 8px;">
+      但这四张牌不能同时打。我们要<strong class="accent">有序打出，达到最好的效果</strong>——<br>
+      所以做了系统研判，找出最该先打的。
+    </p>
+  </div>
+  <div class="footnote">
+    <div class="fn-src"><sup class="fn-marker">1</sup> 中建发展官网 2025.11 — 累计履约额超10万亿 · <sup class="fn-marker">2</sup> 中建发展官网 2025.11 — 超2300万在册工人 · <sup class="fn-marker">3</sup> 科技日报/2025云顶大会 + 中建发展AI战略定位分析 · <sup class="fn-marker">4</sup> 中建发展官网（对外口径"超100万家"）</div>
+    来源：中建发展官网；科技日报/云顶大会；中建发展AI产品清单；中建生态/环能/智能公开资料；小组调研
+  </div>
+  <div class="speaker-notes">
+    四个能力依次展开：数据（三个大数字）、产品（云智采作为首发产品优先，海外部、制度审核在后）、产业依托（生态的运营场景、环能的制造能力、智能的平台经验——让总部看到中建发展不是只有云筑网）、渠道（云筑网+楼里邻居+集团通道）。最后一句转折：有序打出，不是全打出去。
+  </div>
+</section>
+
+
+<!-- ─── P8 · 结论：三个方向，数字说话 ─── -->
+<!-- REMOVED: slide-6 机会地图已移至Part3 -->
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║  PART 2: 行业对标与差距分析 (4页)        ║
+     ╚══════════════════════════════════════════╝ -->
+
+<!-- ─── TOC · Part 2 ─── -->
+<section class="slide" id="slide-toc-2" data-type="toc">
+  <div class="kicker">中建发展 · AI 分享</div>
+
+  <div class="toc-wrap">
+    <div class="toc-row done"><div class="toc-dot">1</div><div class="toc-name">趋势认知</div><div class="toc-tag">为什么要做</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row current"><div class="toc-dot">2</div><div class="toc-name">行业变化</div><div class="toc-tag">别人在做什么</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">3</div><div class="toc-name">战略选层</div><div class="toc-tag">选对层级再行动</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">4</div><div class="toc-name">认知重建</div><div class="toc-tag">AI 到底是什么</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">5</div><div class="toc-name">实践路径</div><div class="toc-tag">我们怎么做</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">6</div><div class="toc-name">行动倡议</div><div class="toc-tag">现在开始</div></div>
+  </div>
+  <div class="speaker-notes">进入第二部分。第一部分讲了"国家要我们做"，现在看看"别人已经在做什么"——用行业变化强化行动紧迫感。</div>
+</section>
+
+<!-- ─── P7 · 全球标杆（一）─── -->
+<section class="slide" id="slide-7" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第二部分 · 行业对标与差距分析</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">全球标杆已经在用 AI 改造建筑业。</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cards cards-3">
+      <div class="card card-accent">
+        <div class="card-title">🇫🇷 Eiffage（法国）</div>
+        <p><strong>招标书分析</strong></p>
+        <p style="font-size:var(--text-body);">
+          原需 <span class="danger">2 天</span><sup class="fn-marker">1</sup>，现在 <span class="accent">20 分钟</span><sup class="fn-marker">1</sup><br>
+          <strong class="success">节省 99% 时间</strong>
+        </p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-title">🇯🇵 Kajima（日本）</div>
+        <p><strong>远程机械操作</strong></p>
+        <p style="font-size:var(--text-body);">
+          <span class="accent">3 个工程师</span><sup class="fn-marker">2</sup>远程操作 <span class="accent">14 台机械</span><sup class="fn-marker">2</sup><br>
+          劳动力减少 <strong class="danger">80%</strong>，<strong class="success">零事故</strong>
+        </p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-title">🇫🇷 Bouygues（法国）</div>
+        <p><strong>施工调度优化</strong></p>
+        <p style="font-size:var(--text-body);">
+          <span class="accent">10 分钟</span><sup class="fn-marker">3</sup>生成<br>
+          <strong class="danger">600 万种</strong><sup class="fn-marker">3</sup>施工调度方案
+        </p>
+      </div>
+    </div>
+    <!-- 效率对比柱状图（SVG） -->
+    <div class="chart-container" style="margin-top:24px;">
+      <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- 背景网格 -->
+        <line x1="180" y1="40" x2="180" y2="220" stroke="#E5E7EB" stroke-width="1"/>
+        <line x1="180" y1="220" x2="860" y2="220" stroke="#E5E7EB" stroke-width="1"/>
+        <!-- Eiffage -->
+        <text x="170" y="75" text-anchor="end" font-size="15" fill="#111827" font-family="KaiTi,楷体,Arial">Eiffage 招标分析</text>
+        <rect x="180" y="58" width="10" height="28" fill="#D1D5DB" rx="2"/>
+        <text x="200" y="78" font-size="13" fill="#9CA3AF" font-family="Arial">2天</text>
+        <rect x="180" y="58" width="540" height="28" fill="#1A56DB" rx="2" opacity="0.9"/>
+        <text x="730" y="78" font-size="14" fill="#fff" font-weight="700" font-family="Arial">20分钟 (-99%)</text>
+        <!-- Kajima -->
+        <text x="170" y="135" text-anchor="end" font-size="15" fill="#111827" font-family="KaiTi,楷体,Arial">Kajima 远程操作</text>
+        <rect x="180" y="118" width="300" height="28" fill="#D1D5DB" rx="2"/>
+        <text x="490" y="138" font-size="13" fill="#9CA3AF" font-family="Arial">传统14人团队</text>
+        <rect x="180" y="118" width="65" height="28" fill="#059669" rx="2"/>
+        <text x="255" y="138" font-size="14" fill="#fff" font-weight="700" font-family="Arial">3人 (-80%)</text>
+        <!-- Bouygues -->
+        <text x="170" y="195" text-anchor="end" font-size="15" fill="#111827" font-family="KaiTi,楷体,Arial">Bouygues 调度优化</text>
+        <rect x="180" y="178" width="10" height="28" fill="#D1D5DB" rx="2"/>
+        <text x="200" y="198" font-size="13" fill="#9CA3AF" font-family="Arial">人工方案</text>
+        <rect x="180" y="178" width="540" height="28" fill="#D97706" rx="2"/>
+        <text x="730" y="198" font-size="14" fill="#fff" font-weight="700" font-family="Arial">600万种方案</text>
+      </svg>
+    </div>
+  </div>
+  <div class="footnote">
+    <div class="fn-src"><sup class="fn-marker">1</sup> Eiffage 公开案例 · <sup class="fn-marker">2</sup> Kajima A4CSEL 系统公开报道 · <sup class="fn-marker">3</sup> Bouygues 施工调度平台公开案例</div>
+    来源：McKinsey、Eiffage、Kajima、Bouygues 公开案例；小组调研
+  </div>
+  <div class="speaker-notes">三个案例，每个用一个数字讲清楚。Eiffage：2天变20分钟。Kajima：3人管14台机器，零事故。Bouygues：10分钟算600万种方案。这些不是PPT里的数字，是已经在落地的成果。下面的柱状图让对比更直观。</div>
+</section>
+
+
+<!-- ─── P13 · 建筑央企同行（拓展版） ─── -->
+<section class="slide" id="slide-8" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第二部分 · 行业对标与差距分析</span>
+    <h2 class="slide-title" style="margin:12px 0 24px;">行业正在发生积极变化</h2>
+  </div>
+  <div class="slide-body">
+    <!-- 4 个同行案例，每个带多维度数据 -->
+    <div class="cards cards-4" style="margin-bottom:12px;">
+      <!-- 中铁建设 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🏗️ 中国铁建·中铁建设</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">"铁小智"</strong> <span style="font-size:var(--text-small);color:var(--ink-muted);">建筑行业首个施工方案AI审核平台</span></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          <strong class="danger">22 万㎡</strong>高铁站房方案 · AI <strong class="accent">最快1分钟</strong><sup class="fn-marker">1</sup>审核 → 传统 2-3 小时
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>效率提升 <strong class="success">80%</strong> · 返工率下降 <strong>65%</strong> · 成本降低 <strong>73%</strong></li>
+          <li>已覆盖 <strong>100+</strong> 项目 · <strong>3000+</strong><sup class="fn-marker">1</sup> 份方案 · 10 余种类型</li>
+          <li>入选北京市智能建造创新应用场景（第一批）</li>
+        </ul>
+      </div>
+
+      <!-- 中铁十一局 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🚇 中铁十一局</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">大盾构无人化运输</strong></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          入选国资委<strong class="danger">首批 40 项央企 AI 高价值场景</strong><br>
+          <span style="color:var(--danger);font-weight:700;">建筑施工领域唯一</span>
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>应用于 <strong>20 余个</strong>国家重点工程</li>
+          <li>金塘海底隧道：世界首次管片/箱涵无人化水平+垂直运输</li>
+          <li>蜀安隧道：14 米级盾构，月均 <strong>400 米</strong>进尺新纪录</li>
+        </ul>
+      </div>
+
+      <!-- 中交集团 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🌉 中交集团</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">"蓝翼"大模型</strong> <span style="font-size:var(--text-small);color:var(--ink-muted);">央企首个土木建筑大模型</span></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          <strong class="accent">140 亿</strong><sup class="fn-marker">2</sup>参数 · <strong class="accent">30+</strong> 场景应用
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>建筑央企中<strong>首个</strong>自研行业大模型</li>
+          <li>覆盖设计、施工、运维全链条场景</li>
+          <li>对标：中石油昆仑大模型（3000亿参数·152场景）的轻量版</li>
+        </ul>
+      </div>
+
+      <!-- 中冶赛迪 -->
+      <div class="card card-accent" style="padding:18px 18px;">
+        <div class="card-title" style="font-size:var(--text-h3);">🏭 中冶赛迪</div>
+        <p style="margin:4px 0 6px;"><strong class="accent" style="font-size:var(--text-h2);">AI 视觉识别</strong> <span style="font-size:var(--text-small);color:var(--ink-muted);">工业场景 CV 成熟度验证</span></p>
+        <p style="font-size:var(--text-body);margin:0 0 4px;">
+          识别准确率 <strong class="accent">98.7%</strong>
+        </p>
+        <ul style="margin:2px 0 0;padding-left:16px;font-size:var(--text-small);color:var(--ink-dim);">
+          <li>工业场景 AI 视觉识别已高度成熟</li>
+          <li>可迁移至建筑工地安全监控、质量检测等场景</li>
+          <li>为 HW-03 AI安全帽方向提供技术可行性佐证</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 关键信号 + 对标结论 -->
+    <div style="display:flex;gap:12px;align-items:stretch;">
+      <div style="flex:1.3;padding:12px 16px;background:var(--danger-bg);border-radius:var(--radius);border-left:4px solid var(--danger);">
+        <p style="margin:0;font-size:var(--text-body);">
+          <strong class="danger">🚨 关键信号：</strong>中铁十一局的"大盾构无人化运输"是建筑施工领域<strong>唯一</strong>入选央企 40 项 AI 高价值场景的项目。在央企 AI 的官方版图上，建筑施工只占一席。
+        </p>
+      </div>
+      <div style="flex:1;padding:12px 16px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);">
+        <p style="margin:0;font-size:var(--text-body);">
+          <strong class="accent">💡 对标结论：</strong>铁小智的方案 AI 审核，与我们的<strong class="accent">招投标合规审查</strong>方向直接重合——都是"用 AI 审文档"，这条路已有同行跑通。<br>
+          其余三家虽然在具体场景上不同，但都在证明同一件事：<strong>AI 嵌入建筑生产流程已经不是要不要的问题，是谁先做好的问题。</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    <div class="fn-src"><sup class="fn-marker">1</sup> 北京建筑业协会·中铁建设铁小智发布报道 · <sup class="fn-marker">2</sup> 中国交通报/IT168 中交蓝翼报道</div>
+    来源：中铁建设、中铁十一局、中交集团、中冶赛迪公开案例；国资委首批40项央企AI高价值场景名单；小组调研
+  </div>
+  <div class="speaker-notes">这一页拓展了四个同行案例的详情。中铁建设铁小智（效率80%·返工率65%·3000+方案），中铁十一局大盾构（唯一入选央企AI场景·20+国家重点工程），中交蓝翼大模型（央企首个·140亿参数·30+场景），中冶赛迪视觉识别（98.7%·成熟度佐证）。底部双栏：左红框信号+右蓝框对标结论——指向P8方向正确。</div>
+</section>
+
+<!-- ─── 兄弟单位全景 ─── -->
+<section class="slide" id="slide-9" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第二部分 · 行业对标与差距分析</span>
+    <h2 class="slide-title" style="margin:12px 0 16px;">集团内部：生态正在激活</h2>
+  </div>
+  <div class="slide-body">
+    <!-- 三强主力卡 -->
+    <div class="cards cards-3" style="margin-bottom:10px;">
+      <div class="card card-accent" style="padding:16px 18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div class="card-title" style="margin-bottom:0;font-size:var(--text-h2);">🏗️ 五局</div>
+          <span class="tag tag-green" style="font-size:11px;">全员覆盖</span>
+        </div>
+        <p style="font-size:var(--text-body);margin:0 0 6px;">
+          近 <strong class="accent">4 万</strong><sup class="fn-marker">1</sup>名员工上线 AI 数智化学习平台<br>
+          学员活跃率<strong class="success"> 94%</strong><sup class="fn-marker">1</sup>
+        </p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">
+          基于绚星AI人才发展平台，"战略引领、技术驱动"<br>
+          → AI 培训不是 HR 的事，是战略工程。<strong>4 万人的组织能全员跑通，说明规模不是借口。</strong>
+        </p>
+      </div>
+      <div class="card card-accent" style="padding:16px 18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div class="card-title" style="margin-bottom:0;font-size:var(--text-h2);">🤖 八局</div>
+          <span class="tag tag-blue" style="font-size:11px;">质量控制</span>
+        </div>
+        <p style="font-size:var(--text-body);margin:0 0 6px;">
+          焊接机器人：变异系数 <span class="danger">15%</span> → <span class="accent">2%</span><sup class="fn-marker">2</sup><br>
+          效率提升 <strong class="success">2 倍</strong><sup class="fn-marker">2</sup>
+        </p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">
+          另有"路智纵横"道路智能建造系统，边沟装备效率 ↑50%+，平整度 ≤2mm<br>
+          → 两条产品线同时推进，<strong>有体系地做，不是零散试点。</strong>
+        </p>
+      </div>
+      <div class="card card-accent" style="padding:16px 18px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <div class="card-title" style="margin-bottom:0;font-size:var(--text-h2);">📊 中海</div>
+          <span class="tag tag-green" style="font-size:11px;">效率突破</span>
+        </div>
+        <p style="font-size:var(--text-body);margin:0 0 6px;">
+          千条清单 <strong class="accent">3 分钟</strong><sup class="fn-marker">3</sup>审完<br>
+          效率提升 <strong class="success">60 倍</strong><sup class="fn-marker">3</sup>
+        </p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">
+          基于建证大模型平台的文档智能审查能力<br>
+          → 与中建发展的招投标合规审查方向<strong>高度同质竞争</strong>，中海已经在跑了。
+        </p>
+      </div>
+    </div>
+
+    <!-- 补充两小卡 + 表格 -->
+    <div class="split" style="gap:16px;align-items:stretch;">
+      <div style="flex:1.2;display:flex;flex-direction:column;gap:8px;">
+        <div class="cards cards-2" style="margin:0;">
+          <div class="card card-accent" style="padding:12px 14px;text-align:center;">
+            <div class="card-title" style="font-size:var(--text-h3);">🏭 科工</div>
+            <p style="margin:4px 0;font-size:var(--text-body);"><strong>"云上农展"</strong></p>
+            <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);">获<strong class="accent">央视报道</strong></p>
+            <span class="tag tag-blue" style="font-size:10px;margin-top:4px;">品牌影响</span>
+          </div>
+          <div class="card card-accent" style="padding:12px 14px;text-align:center;">
+            <div class="card-title" style="font-size:var(--text-h3);">📐 西南院</div>
+            <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);"><strong>"生成式AI建筑结构智能化设计"</strong><br><span style="font-size:var(--text-small);">国资委<sup class="fn-marker" style="font-size:0.65em;vertical-align:super;color:var(--accent);font-weight:600;">5</sup>首批40项央企AI高价值场景</span></p>
+            <p style="margin:4px 0;font-size:var(--text-body);color:var(--ink-dim);">"问马工" AI 助手 · <strong class="accent">2000+</strong><sup class="fn-marker">4</sup> 用户 · <strong>24</strong><sup class="fn-marker">4</sup> 家单位</p>
+            <span class="tag tag-green" style="font-size:10px;margin-top:4px;">国资委认定</span>
+          </div>
+        </div>
+        <table class="compact" style="margin:0;">
+          <tr><th>单位</th><th>代表成果</th><th>关键词</th><th>与中建发展的重合度</th></tr>
+          <tr><td>五局</td><td>4万人AI培训，活跃率94%</td><td>全员覆盖</td><td>对标：组织和培训方法论</td></tr>
+          <tr><td>八局</td><td>焊接机器人，效率↑2倍</td><td>质量控制</td><td>对标：硬件集成落地能力</td></tr>
+          <tr><td>中海</td><td>千条清单3分钟，效率↑60倍</td><td>效率突破</td><td><strong class="danger">直接竞争：AI文档审查</strong></td></tr>
+          <tr><td>科工</td><td>"云上农展"央视报道</td><td>品牌影响</td><td>对标：品牌建设与影响力</td></tr>
+          <tr><td>西南院</td><td>国资委首批AI高价值场景<sup class="fn-marker">5</sup> + "问马工"2000+用户</td><td>国资委认定</td><td>对标：AI场景获国家级背书</td></tr>
+        </table>
+      </div>
+
+      <div style="flex:0.8;padding:16px 18px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);display:flex;flex-direction:column;justify-content:center;gap:10px;">
+        <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--accent);">
+          中建发展走在前面。<span style="color:var(--danger);font-weight:700;">但窗口期在缩短。</span>
+        </p>
+        <p style="margin:0;font-size:var(--text-body);color:var(--ink);">
+          中建电商已跑通 <strong class="accent">6 款</strong>AI 产品，中建智能软件团队已全面 AI 化——<strong>在集团 AI 场景落地进度上，我们是走在前面的少数。</strong>
+        </p>
+        <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);">
+          但中海等兄弟单位也在加速追赶，<strong class="danger">先发优势窗口期很短</strong>。中海的 AI 文档审查方向，会跟我们的招投标合规审查产生直接的竞争关系。
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    <div class="fn-src"><sup class="fn-marker">1</sup> 中建五局公开报道（绚星AI人才发展平台） · <sup class="fn-marker">2</sup> 中建八局焊接机器人公开案例 · <sup class="fn-marker">3</sup> 中海科技公开报道 · <sup class="fn-marker">4</sup> 西南院"问马工"AI助手公开数据 · <sup class="fn-marker">5</sup> 国资委首批40项央企AI高价值场景（科技日报/人民网2025.7）</div>
+    来源：中建五局（绚星AI人才发展平台）、八局（焊接机器人+路智纵横）、中海、科工、西南院公开案例；小组调研
+  </div>
+  <div class="speaker-notes">三张大卡讲主力（五局/八局/中海），每张不只有数字、还有一句"这意味着什么"的翻译。中海卡明确点出"与我们的招投标合规方向高度同质竞争"。下方两小卡补充科工和西南院——西南院新增国资委首批AI高价值场景认定，这是国家级背书。左边是汇总表，右边结论框点明：中建发展走在前面，但窗口期在缩短。</div>
+</section>
+
+<!-- ─── 差距总结（四层对标收束） ─── -->
+<section class="slide" id="slide-10" data-type="pivot">
+  <div class="slide-header" style="text-align:center;">
+    <span class="kicker">第二部分 · 行业对标与差距分析</span>
+    <h2 class="slide-title" style="text-align:center;">四层对标下来，结论很清楚。</h2>
+  </div>
+  <div class="slide-body" style="align-items:center;justify-content:center;gap:16px;">
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:1400px;width:100%;flex:1;justify-content:center;">
+      <div style="display:flex;gap:16px;align-items:center;padding:16px 24px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);border-left:4px solid var(--accent);">
+        <div style="font-size:var(--text-h3);font-weight:700;color:var(--accent);min-width:120px;">国际标杆</div>
+        <div style="flex:1;font-size:var(--text-body);color:var(--ink-dim);">
+          Eiffage 2天→20分钟，Kajima 3人管14台零事故，Bouygues 600万种方案
+        </div>
+        <div style="font-size:var(--text-body);font-weight:700;color:var(--ink);text-align:right;min-width:240px;">
+          AI 改造建筑业不是未来时，<strong class="accent">是现在进行时</strong>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:center;padding:16px 24px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);border-left:4px solid var(--danger);">
+        <div style="font-size:var(--text-h3);font-weight:700;color:var(--danger);min-width:120px;">国资体系</div>
+        <div style="flex:1;font-size:var(--text-body);color:var(--ink-dim);">
+          中石油昆仑 <strong>152</strong><sup class="fn-marker">1</sup> 场景，国网 <strong>故障诊断准确率85%</strong><sup class="fn-marker">2</sup>——先行央企对 AI 的容忍度和期望值都在快速上升
+        </div>
+        <div style="font-size:var(--text-body);font-weight:700;color:var(--ink);text-align:right;min-width:240px;">
+          国资委考核尺度<strong class="danger">不会等落后者</strong>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:center;padding:16px 24px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);border-left:4px solid var(--warning);">
+        <div style="font-size:var(--text-h3);font-weight:700;color:var(--warning);min-width:120px;">建筑同行</div>
+        <div style="flex:1;font-size:var(--text-body);color:var(--ink-dim);">
+          铁小智 3000+方案，中交蓝翼 140亿参数，中铁十一局唯一入选央企 AI 高价值场景
+        </div>
+        <div style="font-size:var(--text-body);font-weight:700;color:var(--ink);text-align:right;min-width:240px;">
+          直接竞争对手已在<strong class="warning">我们的赛道上跑出成果</strong>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:center;padding:16px 24px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);border-left:4px solid var(--accent);">
+        <div style="font-size:var(--text-h3);font-weight:700;color:var(--accent);min-width:120px;">中建系</div>
+        <div style="flex:1;font-size:var(--text-body);color:var(--ink-dim);">
+          五局/八局/中海/科工/西南院——5家兄弟已在集团建证底座上跑了起来，中建发展是其中之一
+        </div>
+        <div style="font-size:var(--text-body);font-weight:700;color:var(--ink);text-align:right;min-width:240px;">
+          同一集团同一底座，<strong class="accent">先发优势要守住</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 金句收束 -->
+    <div style="text-align:center;padding:8px 0 0;">
+      <div style="font-size:var(--text-h2);font-weight:700;color:var(--ink);line-height:1.5;">
+        四层看完一句结论——<strong style="color:var(--danger);">差距在应用层，不在技术层。中建发展已经在应用层跑在前面。</strong>
+      </div>
+      <div style="font-size:var(--text-h3);color:var(--ink-dim);margin-top:12px;">
+        但好消息是——<strong class="accent">技术门槛没有你想的那么高。</strong>
+      </div>
+    </div>
+  </div>
+  <div class="footnote" style="text-align:center;">
+    <div class="fn-src"><sup class="fn-marker">1</sup> 中石油昆仑大模型公开报道 · <sup class="fn-marker">2</sup> 国家电网·光明大模型公开报道</div>
+    来源：综合 Part 2 所有案例；国资委首批40项央企AI高价值场景名单；小组调研
+  </div>
+  <div class="speaker-notes">四层对标，每层用一行"我们看到什么 → 所以呢"的格式给出判断句。国际标杆→现在进行时；国资体系→不会等落后者；建筑同行→直接对手已跑出成果；中建系→先发优势要守住。四层看完落到最后金句：中建发展已经在应用层跑在前面，过渡到 Part 3 认知重建。</div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║  PART 3: 战略选层 (P13-P18)             ║
+     ╚══════════════════════════════════════════╝ -->
+
+<!-- ─── TOC · Part 3 ─── -->
+<section class="slide" id="slide-toc-3" data-type="toc">
+  <div class="kicker">中建发展 · AI 分享</div>
+
+  <div class="toc-wrap">
+    <div class="toc-row done"><div class="toc-dot">1</div><div class="toc-name">趋势认知</div><div class="toc-tag">为什么要做</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">2</div><div class="toc-name">行业变化</div><div class="toc-tag">别人在做什么</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row current"><div class="toc-dot">3</div><div class="toc-name">战略选层</div><div class="toc-tag">选对层级再行动</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">4</div><div class="toc-name">认知重建</div><div class="toc-tag">AI 到底是什么</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">5</div><div class="toc-name">实践路径</div><div class="toc-tag">我们怎么做</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">6</div><div class="toc-name">行动倡议</div><div class="toc-tag">现在开始</div></div>
+  </div>
+  <div class="speaker-notes">进入第三部分。前面讲了"为什么要做"和"别人在做什么"，现在回答一个更关键的问题：我们该怎么选方向？不是追热点，而是先定层、再定位、后定策。</div>
+</section>
+
+<!-- ─── P13 · AI战略的三个层次 ─── -->
+
+<!-- ═══════════ P11-new · 资源禀赋 ═══════════ -->
+<section class="slide" id="slide-resources" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第三部分 · 战略选层</span>
+    <h2 class="slide-title" style="margin:12px 0 16px;">我们的资源禀赋</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2col" style="margin-top:8px;">
+      <div class="card" style="border-left:4px solid var(--danger);">
+        <div class="card-title">数据资产</div>
+        <p style="font-size:var(--text-body);"><strong style="font-size:var(--text-h3);">10万亿+</strong><br>累计交易额</p>
+        <p style="font-size:var(--text-body);"><strong style="font-size:var(--text-h3);">超2300万</strong><br>在册工人</p>
+        <p style="font-size:var(--text-body);"><strong style="font-size:var(--text-h3);">140万次</strong><br>招标数据</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent);">
+        <div class="card-title">已跑通的产品</div>
+        <p style="font-size:var(--text-body);">云智采 · AI点验 90% 效率</p>
+        <p style="font-size:var(--text-body);">防作弊 · 130万+ 车辆覆盖</p>
+        <p style="font-size:var(--text-body);">供应商 · 110万+ 在线</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);">yzw.cn 已上线</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent);">
+        <div class="card-title">产业能力依托</div>
+        <p style="font-size:var(--text-body);">中建生态 · 200万吨/日水务</p>
+        <p style="font-size:var(--text-body);">中建环能 · 环保装备制造</p>
+        <p style="font-size:var(--text-body);">中建智能 · 软件团队转型AI</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent);">
+        <div class="card-title">渠道网络</div>
+        <p style="font-size:var(--text-body);">云筑网 110万+ 供应商</p>
+        <p style="font-size:var(--text-body);">楼里邻居 · 集团通道</p>
+        <p style="font-size:var(--text-body);">零获客成本铺开</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">来源：中建发展官网 2025.11 · yzw.cn</div>
+  <div class="speaker-notes">四张牌简要展开。结构为口头呼应四短板留锚点。</div>
+</section>
+
+
+<!-- ═══════════ P16-new · 四层筛选流水线 ═══════════ -->
+<section class="slide" id="slide-filter" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第三部分 · 战略选层</span>
+    <h2 class="slide-title" style="margin:12px 0 16px;">57个方向，怎么筛到8个？</h2>
+  </div>
+  <div class="slide-body">
+    <p style="font-size:var(--text-body);margin-bottom:12px;">不是平行比较——<strong>四层过滤器，层层淘汰。</strong></p>
+    <table style="font-size:var(--text-body);width:100%;">
+      <tr><th style="width:12%;">层</th><th style="width:38%;">问题</th><th>不通过则</th></tr>
+      <tr><td><span class="tag tag-red">第一层</span></td><td><strong>这跟AI有关系吗？</strong></td><td>淘汰——核心价值不在AI</td></tr>
+      <tr><td><span class="tag tag-red">第二层</span></td><td><strong>行业变化够大？天花板够高？集中度有利？</strong></td><td>淘汰——行业级不成立</td></tr>
+      <tr><td><span class="tag tag-red">第三层</span></td><td><strong>需求真？方案有路？能赚钱？能增长？有壁垒？</strong></td><td>前两步有疑虑→淘汰；后三步→打折</td></tr>
+      <tr><td><span class="tag tag-green">第四层</span></td><td><strong>如果全通，值几分？</strong></td><td>折后≥75推进 · 60-74探索</td></tr>
+    </table>
+    <div style="text-align:center;margin-top:16px;background:var(--surface-alt);border-radius:8px;padding:16px;">
+      <p style="font-size:var(--text-body);margin:0;">
+        <strong style="font-size:var(--text-h2);">57</strong> 进入 → 层层淘汰 → <strong style="font-size:var(--text-h2);color:var(--accent);">2推进 · 6探索 · 7储备</strong>
+      </p>
+    </div>
+  </div>
+  <div class="footnote">方法论：一堂五步法 x 周子敬行业画布 · 6个搞砸+2个成功案例验证</div>
+  <div class="speaker-notes">陶锋："用一页PPT把这个逻辑说了。"重点不是解释每层细节——是传递"系统筛的，不是拍脑袋"。</div>
+</section>
+
+<section class="slide" id="slide-11" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第三部分 · 战略选层</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">AI 战略的三个层次</h2>
+  </div>
+  <div class="slide-body" style="display:flex;align-items:center;justify-content:center;">
+    <div style="width:100%;max-width:1400px">
+      <div class="cards cards-3" style="margin-bottom:8px;gap:32px">
+        <div class="card" style="border-top:4px solid var(--accent-dark);text-align:center;padding:36px 28px">
+          <div style="font-size:var(--text-hero);font-weight:700;color:var(--accent-dark);margin-bottom:10px;line-height:1">①</div>
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--accent-dark);margin-bottom:18px">技术纵深</div>
+          <div style="font-size:var(--text-h3);color:var(--ink-dim);line-height:1.7;margin-bottom:16px">从 L0 算力到 L4 工具</div>
+          <div style="padding:14px 16px;background:var(--accent-light);border-radius:var(--radius);font-size:var(--text-body);color:var(--accent-dark);line-height:1.6;border:1px solid #bfdbfe">
+            <strong>技术现实决定 AI 可能性</strong><br>
+            <em>"Know your stack before you act."</em>
+          </div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--success);text-align:center;padding:36px 28px">
+          <div style="font-size:var(--text-hero);font-weight:700;color:var(--success);margin-bottom:10px;line-height:1">②</div>
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--success);margin-bottom:18px">商业定位</div>
+          <div style="font-size:var(--text-h3);color:var(--ink-dim);line-height:1.7;margin-bottom:16px">工具 / 产品 / 能力 / 战略</div>
+          <div style="padding:14px 16px;background:#f0fdf4;border-radius:var(--radius);font-size:var(--text-body);color:#065f46;line-height:1.6;border:1px solid #bbf7d0">
+            <strong>商业角色决定 ROI 天花板</strong><br>
+            <em>"AI is either a tool or a weapon — choose."</em>
+          </div>
+        </div>
+        <div class="card" style="border-top:4px solid var(--warning);text-align:center;padding:36px 28px">
+          <div style="font-size:var(--text-hero);font-weight:700;color:var(--warning);margin-bottom:10px;line-height:1">③</div>
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--warning);margin-bottom:18px">数据战略</div>
+          <div style="font-size:var(--text-h3);color:var(--ink-dim);line-height:1.7;margin-bottom:16px">独占数据 / 飞轮 / 壁垒</div>
+          <div style="padding:14px 16px;background:#fffbeb;border-radius:var(--radius);font-size:var(--text-body);color:#92400e;line-height:1.6;border:1px solid #fcd34d">
+            <strong>数据决定护城河深度</strong><br>
+            <em>"Data moats beat model speed."</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards cards-3" style="gap:32px;margin-bottom:8px">
+        <div style="text-align:center;padding:8px 0">
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--accent-dark);letter-spacing:.04em">先看能干什么</div>
+        </div>
+        <div style="text-align:center;padding:8px 0">
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--success);letter-spacing:.04em">再看该干什么</div>
+        </div>
+        <div style="text-align:center;padding:8px 0">
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--warning);letter-spacing:.04em">最后看凭什么赢</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px">
+        <span style="flex:1;height:3px;background:linear-gradient(90deg,var(--accent-dark),var(--success));border-radius:2px"></span>
+        <span style="font-size:36px;color:#bbb;font-weight:300">▶</span>
+        <span style="flex:1;height:3px;background:linear-gradient(90deg,var(--success),var(--warning));border-radius:2px"></span>
+      </div>
+
+      <div style="text-align:center;margin-bottom:16px">
+        <p style="font-size:var(--text-h3);color:var(--ink-dim);margin:0 0 16px;line-height:1.6">这三层不是选项题，是递进题——每一层都建立在上一层的现实之上。</p>
+      </div>
+
+      <div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;max-width:680px;margin:120px auto 0 0">
+        <p style="margin:0 0 6px;font-size:var(--text-body);color:var(--ink);font-weight:700">📌 框架出处</p>
+        <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);line-height:1.7">
+          ① <strong>国务院国资委《央企 AI+专项行动方案》(2025)</strong> — AI 建设的五层技术纵深框架<br>
+          ② <strong>Michael Porter《竞争战略》(1980)</strong> — 企业商业定位的四角色分类逻辑<br>
+          ③ <strong>Andrew Ng《AI Transformation Playbook》</strong> — 企业 AI 转型的方法论路径
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-notes">这一页是战略选层的总览。用三个大卡片把AI战略拆成三层：技术纵深（能做多深）、商业定位（该做什么角色）、数据战略（凭什么赢）。底部用递进箭头强调：不是并列选择，而是一层一层推导。框架出处标注清楚，增强权威性。</div>
+</section>
+
+<!-- ─── P14 · 技术纵深 ─── -->
+<section class="slide" id="slide-12" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第三部分 · 战略选层</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">第一层：技术纵深</h2>
+  </div>
+  <div class="slide-body">
+    <table>
+      <tr><th style="width:14%">层级</th><th style="width:18%">做什么</th><th style="width:12%">典型投入</th><th style="width:12%">壁垒来源</th><th style="width:44%">代表（全球视野）</th></tr>
+      <tr>
+        <td><strong>L0 算力层</strong></td>
+        <td>芯片制造 · 智算中心</td>
+        <td>百亿级+</td>
+        <td>资本+政策+技术</td>
+        <td><strong>国际：</strong>英伟达（芯片）、AWS（云算力）<br><strong>国内：</strong>华为海思（芯片）、阿里云（云算力）</td>
+      </tr>
+      <tr>
+        <td><strong>L1 基座模型层</strong></td>
+        <td>自研通用大模型</td>
+        <td>亿~十亿级</td>
+        <td>人才+算力+数据</td>
+        <td><strong>国际：</strong>OpenAI（GPT-4）、Google（Gemini）<br><strong>国内：</strong>DeepSeek、智谱 AI（GLM）</td>
+      </tr>
+      <tr style="background:#fffbeb;border-left:4px solid var(--warning)">
+        <td><strong style="color:var(--warning)">L2 行业模型层</strong></td>
+        <td><span style="color:var(--warning)">垂直领域精调/蒸馏</span></td>
+        <td><span style="color:var(--warning)">千万~亿级</span></td>
+        <td><span style="color:var(--warning)">行业数据</span></td>
+        <td>
+          <strong style="color:var(--warning)">国际：</strong>Bloomberg（金融 · 500 亿参数）<br>
+          <strong style="color:var(--warning)">国内：</strong>蚂蚁集团（金融 · FinGPT）<br><br>
+          <strong style="color:var(--warning)">↳ 小模型趋势：</strong>数十亿参数精调，在特定任务上接近大模型<br>
+          <span style="color:var(--warning);font-size:var(--text-small)">Phi-3-mini 3.8B 数学超越 GPT-3.5（46 倍差）<br>
+          MiniCPM 2.4B 中文超越 Llama-2-7B<br>
+          DeepSeek-R1 蒸馏 7B 数学接近 671B 原版（96 倍差）</span>
+        </td>
+      </tr>
+      <tr style="background:var(--accent-light);border-left:4px solid var(--accent)">
+        <td><strong style="color:var(--accent)">L3 应用集成层</strong></td>
+        <td><strong>AI 集成到业务场景</strong></td>
+        <td><strong>万~百万级</strong></td>
+        <td><strong>场景理解+数据</strong></td>
+        <td><strong>国际：</strong>Notion AI（文档协作）、Microsoft Copilot（办公）<br><strong>国内：</strong>钉钉 AI（协同）、扣子 Coze（低代码 Agent）</td>
+      </tr>
+      <tr>
+        <td><strong>L4 工具消费层</strong></td>
+        <td>终端用户直接使用<br>（聊天窗口/工具）</td>
+        <td>极高<br>（百亿级投入）</td>
+        <td>极高<br>（算力+规模效应）<br>赢家通吃</td>
+        <td><strong>国际：</strong>ChatGPT、Claude、Gemini<br><strong>国内：</strong>豆包、Kimi、DeepSeek</td>
+      </tr>
+    </table>
+
+    <div style="margin-top:16px;padding:18px 22px;background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius)">
+      <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--accent-dark);margin-bottom:10px">🎯 选择逻辑：我们的两条路</p>
+      <p style="margin:0 0 8px;font-size:var(--text-body);line-height:1.7">
+        <strong>L0-L1：</strong>投入百亿级，是"国家队"赛道，我们碰不了。<br>
+        <strong>L4：</strong>赢家通吃，只有头部玩家能存活。
+      </p>
+      <p style="margin:0 0 8px;font-size:var(--text-body);line-height:1.7">
+        <strong>我们有两个现实选择：</strong>
+      </p>
+      <p style="margin:0 0 6px;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--accent)">① L3 应用集成（快速落地）</strong>：用成熟大模型 + 场景理解，投入可控（万~百万级），壁垒在场景理解和数据。
+      </p>
+      <p style="margin:0;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--warning)">② L2 小模型蒸馏（深度壁垒）</strong>：有行业数据时，精调数十亿参数的小模型，在特定垂直任务上接近大模型效果。可本地化部署，数据不出域。
+      </p>
+      <div style="margin-top:12px;padding:12px;background:linear-gradient(135deg,var(--accent-light),#f0fdf4);border-radius:var(--radius);text-align:center">
+        <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--accent-dark)">先走 L3，再走 L2 — 用 L3 验证场景、积累数据，再用数据精调 L2 小模型</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-notes">这一层回答"我们能做多深"。用L0-L4五层表展示：L0-L1是国家队赛道，L4赢家通吃，中间L2和L3是我们的主战场。特别强调小模型趋势——用很小的参数在特定任务上接近大模型，这对有行业数据的企业是巨大机会。结论：先走L3验证场景，再走L2建立壁垒。</div>
+</section>
+
+<!-- ─── P15 · 商业定位 ─── -->
+<section class="slide" id="slide-13" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第三部分 · 战略选层</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">第二层：商业定位</h2>
+  </div>
+  <div class="slide-body">
+    <table>
+      <tr><th style="width:14%">角色</th><th style="width:16%">本质</th><th style="width:12%">典型投入</th><th style="width:14%">衡量标准</th><th style="width:44%">例子</th></tr>
+      <tr>
+        <td><strong>① 工具</strong><br><span style="font-size:var(--text-small);color:var(--ink-dim)">（成本中心）</span></td>
+        <td>AI 帮你干活<br>省人省钱</td>
+        <td>万~十万级</td>
+        <td>ROI<br>人效比</td>
+        <td><strong>例子：</strong>用 AI 写会议纪要、做 PPT、自动填表<br><strong>风险：</strong>天花板低，容易被复制</td>
+      </tr>
+      <tr>
+        <td><strong>② 产品</strong><br><span style="font-size:var(--text-small);color:var(--ink-dim)">（利润中心）</span></td>
+        <td>AI 本身是<br>你的产品</td>
+        <td>百万~千万级</td>
+        <td>ARR<br>市占率</td>
+        <td><strong>例子：</strong>Notion AI、钉钉 AI、Copilot<br><strong>风险：</strong>护城河难建，竞争激烈</td>
+      </tr>
+      <tr style="background:var(--accent-light);border-left:4px solid var(--accent)">
+        <td><strong style="color:var(--accent)">③ 能力</strong><br><span style="font-size:var(--text-small);color:var(--ink-dim)">（竞争壁垒）</span></td>
+        <td><strong>AI 嵌入核心业务<br>别人追不上</strong></td>
+        <td><strong>千万~亿级</strong></td>
+        <td><strong>替代成本<br>飞轮速度</strong></td>
+        <td><strong>例子：</strong>字节的推荐算法、特斯拉的 FSD<br><strong>风险：</strong>投入大，需要长期坚持</td>
+      </tr>
+      <tr>
+        <td><strong>④ 战略</strong><br><span style="font-size:var(--text-small);color:var(--ink-dim)">（重构行业）</span></td>
+        <td>AI 重新定义<br>你的行业</td>
+        <td>亿级+</td>
+        <td>市场份额<br>行业地位</td>
+        <td><strong>例子：</strong>Uber 重构出行、Netflix 重构娱乐<br><strong>风险：</strong>极高，需要极强资源和执行力</td>
+      </tr>
+    </table>
+
+    <div style="margin-top:16px;padding:18px 22px;background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius)">
+      <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--accent-dark);margin-bottom:10px">🎯 选择逻辑：中建发展的商业定位</p>
+      <p style="margin:0 0 8px;font-size:var(--text-body);line-height:1.7">
+        <strong>不能做：</strong>不能把"工具"当商业定位（内部提效 ≠ 目标）
+      </p>
+      <p style="margin:0 0 8px;font-size:var(--text-body);line-height:1.7">
+        <strong>能做：</strong>从产品起步，向能力演进——有独占数据可以建立壁垒
+      </p>
+      <p style="margin:0 0 6px;font-size:var(--text-body);line-height:1.7">
+        <strong>我们有三个选择：</strong>
+      </p>
+      <p style="margin:0 0 6px;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--accent)">① 工具（内部提效）</strong>：用现成模型，不需要自研，快速见效
+      </p>
+      <p style="margin:0 0 6px;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--success)">② 产品（对外输出）</strong>：用自有数据和模型壁垒，长期投入
+      </p>
+      <p style="margin:0;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--warning)">③ 能力（竞争壁垒）</strong>：AI 嵌入核心业务，建立数据飞轮，别人追不上
+      </p>
+      <div style="margin-top:12px;padding:12px;background:linear-gradient(135deg,var(--accent-light),#f0fdf4);border-radius:var(--radius);text-align:center">
+        <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--accent-dark)">先做工具验证场景，再做产品积累数据，最终建能力壁垒</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-notes">这一层回答"我们该做什么角色"。四个角色从工具到战略，投入和天花板逐级升高。重点强调：不能把"工具"当最终定位，那只是起点。中建发展有独有数据，应该从产品起步，最终建成能力壁垒。底部给出递进路径。</div>
+</section>
+
+<!-- ─── P16 · 数据战略 ─── -->
+<section class="slide" id="slide-14" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第三部分 · 战略选层</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">第三层：数据战略</h2>
+  </div>
+  <div class="slide-body">
+    <table>
+      <tr><th style="width:14%">层次</th><th style="width:16%">含义</th><th style="width:12%">壁垒</th><th style="width:14%">AI 价值</th><th style="width:44%">例子</th></tr>
+      <tr style="background:#f0fdf4;border-left:4px solid var(--success)">
+        <td><strong style="color:var(--success)">① 独占数据</strong></td>
+        <td><strong>只有你有<br>别人拿不到</strong></td>
+        <td><strong>极高</strong></td>
+        <td><strong>最强护城河<br>可以做深度产品</strong></td>
+        <td><strong>例子：</strong>Bloomberg 40 年金融数据、字节用户行为数据<br><strong>价值：</strong>可以训练行业垂直模型，建立壁垒</td>
+      </tr>
+      <tr>
+        <td><strong>② 半独占数据</strong></td>
+        <td>你有优势<br>但别人也能拿</td>
+        <td>中等</td>
+        <td>先发优势<br>需要快速迭代</td>
+        <td><strong>例子：</strong>行业公开数据 + 私有积累<br><strong>价值：</strong>有优势但窗口期短，需要快速建立壁垒</td>
+      </tr>
+      <tr>
+        <td><strong>③ 公开数据</strong></td>
+        <td>谁都能拿到</td>
+        <td>无</td>
+        <td>只能做通用应用<br>无壁垒</td>
+        <td><strong>例子：</strong>互联网公开数据、政府公开数据<br><strong>价值：</strong>只能做通用应用，无法建立壁垒</td>
+      </tr>
+      <tr>
+        <td><strong>④ 合成数据</strong></td>
+        <td>自己生成</td>
+        <td>弱</td>
+        <td>需要验证可靠性<br>可能有偏差</td>
+        <td><strong>例子：</strong>AI 生成的训练数据<br><strong>价值：</strong>可以补充数据，但需要验证质量</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ 无数据</strong></td>
+        <td>啥都没有</td>
+        <td>—</td>
+        <td>别做 AI 了</td>
+        <td><strong>例子：</strong>没有行业积累的新进入者<br><strong>价值：</strong>无法建立 AI 壁垒</td>
+      </tr>
+    </table>
+
+    <div style="margin-top:16px;padding:18px 22px;background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius)">
+      <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--accent-dark);margin-bottom:10px">🎯 选择逻辑：中建发展的数据战略</p>
+      <p style="margin:0 0 8px;font-size:var(--text-body);line-height:1.7">
+        <strong>不能做：</strong>浪费独占数据（只做公开数据应用）
+      </p>
+      <p style="margin:0 0 8px;font-size:var(--text-body);line-height:1.7">
+        <strong>能做：</strong>用独占数据训练行业小模型——10 万亿交易 + 2300 万工人 + 110 万供应商，别人拿不到
+      </p>
+      <p style="margin:0 0 6px;font-size:var(--text-body);line-height:1.7">
+        <strong>实现路径：</strong>
+      </p>
+      <p style="margin:0 0 6px;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--accent)">① 用产品积累数据</strong>（云智采等）
+      </p>
+      <p style="margin:0 0 6px;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--warning)">② 用数据训练模型</strong>（行业垂直小模型）
+      </p>
+      <p style="margin:0;font-size:var(--text-body);line-height:1.7">
+        <strong style="color:var(--success)">③ 用模型建立壁垒</strong>（别人追不上）
+      </p>
+      <div style="margin-top:12px;padding:12px;background:linear-gradient(135deg,var(--accent-light),#f0fdf4);border-radius:var(--radius);text-align:center">
+        <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--accent-dark)">数据是护城河，不是算法</p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-notes">这一层回答"我们凭什么赢"。数据是AI时代真正的护城河。中建发展有10万亿交易数据、2300万工人数据、110万供应商数据——这些都是别人拿不到的独占数据。重点是不要浪费这些资源去做公开数据应用，而要用它们训练行业小模型，建立壁垒。</div>
+</section>
+
+<!-- ─── P17 · 三阶决策 · 中建发展的选择 ─── -->
+<section class="slide" id="slide-15" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第三部分 · 战略选层</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">三阶决策 · 中建发展的选择</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cards cards-3" style="gap:24px;margin-bottom:24px">
+      <div class="card" style="border-top:4px solid var(--accent-dark);padding:22px">
+        <div style="text-align:center;margin-bottom:12px">
+          <div style="font-size:var(--text-hero);font-weight:700;color:var(--accent-dark)">①</div>
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--accent-dark)">定层</div>
+        </div>
+        <p style="margin:0 0 10px;font-size:var(--text-body);font-weight:600;text-align:center">先搞清楚"能做哪一层"</p>
+        <div style="font-size:var(--text-body);line-height:1.8">
+          <p style="margin:0 0 6px"><strong>L0-L1：</strong>百亿级，"国家队"赛道</p>
+          <p style="margin:0 0 6px"><strong>L2：</strong>千万~亿级，要行业数据</p>
+          <p style="margin:0 0 6px"><strong style="font-size:var(--text-h3);color:var(--accent-dark)">L3：万~百万级，主战场</strong></p>
+          <p style="margin:0"><strong>L4：</strong>百亿级，赢家通吃</p>
+        </div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--success);padding:22px">
+        <div style="text-align:center;margin-bottom:12px">
+          <div style="font-size:var(--text-hero);font-weight:700;color:var(--success)">②</div>
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--success)">定位</div>
+        </div>
+        <p style="margin:0 0 10px;font-size:var(--text-body);font-weight:600;text-align:center">再决定"做什么角色"</p>
+        <div style="font-size:var(--text-body);line-height:1.8">
+          <p style="margin:0 0 6px"><strong>工具：</strong>省钱，天花板低</p>
+          <p style="margin:0 0 6px"><strong style="font-size:var(--text-h3);color:var(--success)">产品→能力：赚现金流，建护城河</strong></p>
+          <p style="margin:0"><strong>战略：</strong>最高层次，极难</p>
+        </div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--warning);padding:22px">
+        <div style="text-align:center;margin-bottom:12px">
+          <div style="font-size:var(--text-hero);font-weight:700;color:var(--warning)">③</div>
+          <div style="font-size:var(--text-h2);font-weight:700;color:var(--warning)">定策</div>
+        </div>
+        <p style="margin:0 0 10px;font-size:var(--text-body);font-weight:600;text-align:center">最后回答"凭什么赢"</p>
+        <div style="font-size:var(--text-body);line-height:1.8">
+          <p style="margin:0 0 6px"><strong>数据：</strong>有没有独占？</p>
+          <p style="margin:0 0 6px"><strong>飞轮：</strong>能不能转？</p>
+          <p style="margin:0"><strong>壁垒：</strong>别人追得上吗？</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards cards-3" style="gap:24px;margin-bottom:24px">
+      <div class="card" style="background:var(--surface-alt);border:1px solid var(--border);padding:20px 22px;border-left:4px solid var(--accent-dark)">
+        <p style="margin:0 0 10px;font-size:var(--text-h2);font-weight:700;color:var(--accent-dark)">① 技术纵深</p>
+        <p style="margin:0;font-size:var(--text-body);line-height:1.7">选了应用集成 + 小模型，排除大模型和通用工具，专注垂直场景</p>
+      </div>
+      <div class="card" style="background:var(--surface-alt);border:1px solid var(--border);padding:20px 22px;border-left:4px solid var(--success)">
+        <p style="margin:0 0 10px;font-size:var(--text-h2);font-weight:700;color:var(--success)">② 商业定位</p>
+        <p style="margin:0;font-size:var(--text-body);line-height:1.7">选了产品起步 → 能力演进，排除纯工具（不赚钱）和纯战略（太远）</p>
+      </div>
+      <div class="card" style="background:var(--surface-alt);border:1px solid var(--border);padding:20px 22px;border-left:4px solid var(--warning)">
+        <p style="margin:0 0 10px;font-size:var(--text-h2);font-weight:700;color:var(--warning)">③ 数据战略</p>
+        <p style="margin:0;font-size:var(--text-body);line-height:1.7">选了独占数据筑墙，排除公开数据和纯技术竞争</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface-alt);border:2px solid var(--border);border-radius:var(--radius);padding:24px 32px;text-align:center">
+      <p style="margin:0 0 14px;font-size:var(--text-h2);line-height:1.6;color:var(--danger);font-weight:700">
+        不做什么：不造大模型、不卖通用工具、不拼纯技术
+      </p>
+      <p style="margin:0;font-size:var(--text-h1);line-height:1.5;color:var(--accent-dark);font-weight:800">
+        做什么：用独有数据 + 成熟 AI，做别人抄不走的建筑行业产品
+      </p>
+    </div>
+  </div>
+  <div class="speaker-notes">这是第三部分的收束页。用三张大卡片把前面的技术纵深、商业定位、数据战略合成"定层、定位、定策"三个决策动作。再用三张卡片给出中建发展的具体选择。最后用大横幅给出清晰结论：不做什么 vs 做什么。这个结论是后面认知重建和实施路径的总纲。</div>
+</section>
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║  PART 4: 技术解构与认知重建 (P14-P23)   ║
+     ╚══════════════════════════════════════════╝ -->
+
+<!-- ─── TOC · Part 4 ─── -->
+<section class="slide" id="slide-toc-4" data-type="toc">
+  <div class="kicker">中建发展 · AI 分享</div>
+
+  <div class="toc-wrap">
+    <div class="toc-row done"><div class="toc-dot">1</div><div class="toc-name">趋势认知</div><div class="toc-tag">为什么要做</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">2</div><div class="toc-name">行业变化</div><div class="toc-tag">别人在做什么</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">3</div><div class="toc-name">战略选层</div><div class="toc-tag">选对层级再行动</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row current"><div class="toc-dot">4</div><div class="toc-name">认知重建</div><div class="toc-tag">AI 到底是什么</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">5</div><div class="toc-name">实践路径</div><div class="toc-tag">我们怎么做</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">6</div><div class="toc-name">行动倡议</div><div class="toc-tag">现在开始</div></div>
+  </div>
+  <div class="speaker-notes">进入第四部分。方向选定了，接下来拆解 AI 技术本身，消除神秘感。</div>
+</section>
+
+<!-- ─── P14 · AI 60年时间线 ─── -->
+<section class="slide" id="slide-16" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第四部分 · 技术解构与认知重建</span>
+    <h2 class="slide-title" style="margin:12px 0 20px;">AI 的拐点是 2022 年——三件事叠加才有了今天。</h2>
+  </div>
+  <div class="slide-body">
+    <p style="font-size:var(--text-h3);color:var(--ink-dim);margin-bottom:20px;">不讲公式不讲代码，只讲和你有关的。</p>
+    <div style="display:flex;flex-direction:column;gap:16px;flex:1;">
+      <div class="timeline" style="margin:0;flex:1;">
+        <div class="timeline-item" style="margin-bottom:28px;">
+          <div class="timeline-year">1950s - 2010s</div>
+          <div class="timeline-text">
+            <strong>传统 AI 阶段</strong>：规则驱动、统计模型<br>
+            <span style="color:var(--ink-dim);">应用：人脸识别、安全帽检测、设备预测性维护</span>
+          </div>
+        </div>
+        <div class="timeline-item" style="margin-bottom:28px;">
+          <div class="timeline-year" style="color:var(--warning);">2017</div>
+          <div class="timeline-text">
+            <strong class="accent">Transformer 诞生</strong>：Google 论文《Attention Is All You Need》<br>
+            <span style="color:var(--ink-dim);">"注意力机制"让机器第一次能理解上下文关系</span>
+          </div>
+        </div>
+        <div class="timeline-item" style="margin-bottom:28px;">
+          <div class="timeline-year" style="color:var(--danger);">2022.11</div>
+          <div class="timeline-text">
+            <strong class="danger">ChatGPT 3.5 发布</strong>：2 个月 <strong>1 亿用户</strong><br>
+            <span style="color:var(--ink-dim);">AI 从实验室走进办公室——每个人都能用自然语言和 AI 对话</span>
+          </div>
+        </div>
+        <div class="timeline-item" style="margin-bottom:0;">
+          <div class="timeline-year" style="color:var(--danger);">2023 - 2026</div>
+          <div class="timeline-text">
+            <strong class="danger">大爆炸时代</strong>：GPT-4 → Claude（境外，仅作技术参考） → DeepSeek → 多模态 → Agent → 推理模型<br>
+            <span style="color:var(--ink-dim);">AI 不仅能聊天，还能看图纸、操作软件、自主完成任务</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:16px;align-items:stretch;">
+      <div style="flex:1;padding:14px 20px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);display:flex;flex-direction:column;justify-content:center;">
+        <p style="margin:0;font-size:var(--text-body);">
+          <strong class="accent">💡 关键转折点</strong>不是技术突破，而是<strong>交互方式的革命</strong>——从"你要学会编程"变成"你只要会说话"。
+        </p>
+      </div>
+      <div style="flex:1;padding:14px 20px;background:var(--surface-alt);border-radius:var(--radius);border-left:4px solid var(--ink-muted);display:flex;flex-direction:column;justify-content:center;">
+        <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);">
+          <strong>💡 对中建发展的启示</strong><br>
+          AI 发展了 70 年，但从 ChatGPT 到今天的爆发只用了不到 4 年。我们<strong>不需要懂 70 年的技术积累</strong>——只需要学会用这 4 年的工具。门槛比想象的低得多。
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：Google《Attention Is All You Need》(2017)；OpenAI ChatGPT 发布公告；小组调研
+  </div>
+  <div class="speaker-notes">时间线一页讲清AI发展史。重点不在技术细节，在于三个转折点：2017年Transformer让AI理解上下文、2022年ChatGPT让所有人能用AI、2023-2026年AI能做越来越多的事。底部两个并排框——左侧金句：交互方式的革命；右侧启示：门槛比想象的低得多。</div>
+</section>
+
+<!-- ─── P15 · 大模型三种形态 ─── -->
+<!-- REMOVED: slide-17 -->
+
+<!-- ─── P16 · LLM 四种能力升级 ─── -->
+<section class="slide" id="slide-18" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第四部分 · 技术解构与认知重建</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">大模型已经不是聊天工具了。它能看图、懂制度、做方案。</h2>
+  </div>
+  <div class="slide-body">
+    <table>
+      <tr>
+        <th style="width:14%;">能力</th>
+        <th style="width:22%;">以前</th>
+        <th style="width:22%;">现在</th>
+        <th style="width:42%;">建筑行业案例</th>
+      </tr>
+      <tr>
+        <td><strong class="accent">多模态</strong></td>
+        <td>只能读写文字</td>
+        <td><strong>输入</strong>：能看图纸、听语音、读表格、解析视频<br><strong>输出</strong>：能生成图片、合成语音、出视频、画示意图</td>
+        <td>图纸审查自动标记 → 生成整改图示+语音播报<br>巡检视频自动分析 → 输出带标注的截屏报告</td>
+      </tr>
+      <tr>
+        <td><strong class="accent">工具调用</strong></td>
+        <td>只会说</td>
+        <td><strong>基础</strong>：查数据库、发邮件、填表单（Function Calling）<br><strong>进阶</strong>：操控硬件、读写文件、跨系统编排（MCP / Agent）</td>
+        <td>自动填报、智能评标、系统间数据打通<br>ESP32-S3 机器人——AI 直接操控硬件做识别+对话</td>
+      </tr>
+      <tr>
+        <td><strong class="accent">知识库</strong></td>
+        <td>懂全世界</td>
+        <td><strong>懂你们公司</strong>（RAG：制度/合同/项目经验）<br><strong>懂你</strong>（LLM + Wiki：记住你的偏好、习惯、上下文）</td>
+        <td>制度问答、合同审查、历史项目检索<br>个人工作台——Claude Code 读取你的笔记和项目上下文</td>
+      </tr>
+      <tr>
+        <td><strong class="accent">推理能力</strong></td>
+        <td>直接回答</td>
+        <td><strong>先想再说</strong>——Claude 深度思考（境外，仅作技术参考） · Gemini Deep Think（境外，仅作技术参考） · DeepSeek-R1 · Qwen QwQ<br><span style="color:var(--ink-dim);font-size:var(--text-small);">2026 年推理已是大模型标配，不再是某个模型的独门绝技</span></td>
+        <td>施工方案智能审核、风险评估、多因素决策</td>
+      </tr>
+    </table>
+    <div class="quote" style="margin-top:20px;font-size:var(--text-body);">
+      这四种能力叠加在一起，意味着 AI 可以<strong class="danger">看懂你们的图纸、查阅你们的制度、操作你们的系统、做出合理判断</strong>。
+    </div>
+  </div>
+  <div class="speaker-notes">这张表要讲透。每一行都是"以前 vs 现在"的对比。重点是企业知识库那一行——RAG技术让AI不再只懂通用知识，它能学习你们公司的制度、合同、历史项目。最后一句话是杀手锏：四种能力叠加，AI可以看懂图纸、查制度、操作系统、做判断——这不是科幻，是2026年已经能做的事。</div>
+</section>
+
+<!-- ─── P17 · 四种工作模式 ─── -->
+<!-- REMOVED: slide-19 -->
+
+<!-- ─── P18 · AI 投资与市场演进 ─── -->
+<!-- REMOVED: slide-20 -->
+
+<!-- ─── P19 · 真正的门槛在哪 ─── -->
+<section class="slide" id="slide-21" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第四部分 · 技术解构与认知重建</span>
+    <h2 class="slide-title" style="margin:12px 0 20px;">技术层在快速平权。真正的门槛在上层。</h2>
+  </div>
+  <div class="slide-body">
+    <!-- 三层倒金字塔——加大间距和字号 -->
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;align-items:center;flex:1;justify-content:center;">
+      <div style="width:92%;background:linear-gradient(135deg,#0d47a1,#1e40af);color:#fff;padding:22px 28px;border-radius:12px;">
+        <p style="margin:0;font-size:var(--text-h3);font-weight:700;">🏗️ 上层：行业壁垒——别人跨不进来</p>
+        <p style="margin:8px 0 0;font-size:var(--text-body);opacity:0.9;">10万亿交易数据 · 超2300万在册工人 · 建筑行业 know-how · 客户信任 · 场景理解</p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);opacity:0.75;">这些不会因为 AI 技术进步而贬值——反而会升值。因为 AI 需要数据喂养，需要场景验证。</p>
+      </div>
+      <div style="width:78%;background:var(--surface-alt);border:2px dashed var(--border);padding:20px 26px;border-radius:var(--radius);">
+        <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--ink);">🔧 中层：AI 迁移能力——决定快慢</p>
+        <p style="margin:8px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+          把行业知识和业务逻辑翻译成 AI 能理解的指令、工作流、评测标准。<br>
+          这不是程序员的事——是<strong class="accent">最懂业务的人 + AI 工具</strong>的组合。
+        </p>
+      </div>
+      <div style="width:64%;background:#e5e7eb;padding:16px 22px;border-radius:var(--radius);">
+        <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--ink-dim);">⬜ 底层：技术基础设施——加速平权</p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);color:var(--ink-muted);">大模型 · 算力 · 开源框架 · 开发工具——所有人拿到的一样，且越来越便宜。</p>
+      </div>
+    </div>
+
+    <!-- 两行结论——加大 -->
+    <div style="display:flex;gap:16px;">
+      <div style="flex:1;padding:16px 20px;background:var(--accent-light);border-radius:var(--radius);text-align:center;">
+        <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--accent-dark);">❌ 不是集成大于自研</p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);color:var(--ink-dim);">集成没有护城河——谁都能集成。</p>
+      </div>
+      <div style="flex:1;padding:16px 20px;background:var(--danger-bg);border-radius:var(--radius);text-align:center;border:1px solid #fecaca;">
+        <p style="margin:0;font-size:var(--text-h3);font-weight:700;color:var(--danger);">✅ 而是行业深耕 × AI 迁移能力</p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);color:var(--ink-dim);">数据独占 + 场景理解 + 把业务翻译成 AI 的能力 = <strong class="danger">真正的壁垒</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-notes">这一页驳斥"集成大于自研"的简单化结论。用三层倒三角展示：底层（技术基础设施）在快速平权，所有人都拿一样的东西；中层（技术迁移能力——把业务翻译成AI）是快慢的差异；上层（行业壁垒——数据、know-how、场景、信任）是别人跨不进来的。两行结论对比：集成没有护城河，真正的壁垒是行业深耕×AI迁移能力。</div>
+</section>
+
+<!-- ─── P20+P21 · 软硬件门槛已低（合并） ─── -->
+<section class="slide" id="slide-22" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第四部分 · 技术解构与认知重建</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">软硬件门槛都已经塌了。会说话能造系统，40 块钱能做识别。</h2>
+  </div>
+  <div class="slide-body">
+    <div class="split" style="gap:20px;align-items:stretch;">
+      <!-- 左侧：软件——递进：先展示程序员做了什么，再说非程序员也能做到 -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <h3 style="margin:0;">💻 软件篇——可演示的系统</h3>
+        <!-- 第一层：程序员做的 -->
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-left:4px solid var(--accent);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:var(--text-body);">📚 管理学院档案管理系统</strong>
+            <span class="tag tag-green" style="font-size:10px;">可演示</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+            AI 自动分类归档 · 智能检索 · 审批流程自动化
+          </p>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-left:4px solid var(--accent);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:var(--text-body);">🏛️ 智能评标中心</strong>
+            <span class="tag tag-green" style="font-size:10px;">可演示</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+            AI 围串标识别 · 评标室实时监控 · 专家签到
+          </p>
+        </div>
+        <!-- 第二层：不是程序员也能做到 -->
+        <div style="padding:10px 14px;background:var(--accent-light);border-radius:var(--radius);text-align:center;">
+          <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--accent-dark);">
+            而且，这些不是只有程序员才能做到——
+          </p>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-left:4px solid var(--success);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:var(--text-body);">🏭 云控恒进水系统</strong>
+            <span class="tag tag-green" style="font-size:10px;">总工搭建</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+            水务监控大屏 · 泵站可视化 · 液位/流量趋势预测
+          </p>
+        </div>
+        <div style="padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);border-left:4px solid var(--success);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <strong style="font-size:var(--text-body);">🏠 智慧养老平台</strong>
+            <span class="tag tag-green" style="font-size:10px;">产品经理搭建</span>
+          </div>
+          <p style="margin:4px 0 0;font-size:var(--text-body);color:var(--ink-dim);">
+            健康监测 · 照护管理 · SOS告警 · 家属互动 · 7大模块
+          </p>
+        </div>
+      </div>
+
+      <!-- 右侧：硬件 -->
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <h3 style="margin:0;">🔧 硬件篇——百元级成本，万元级能力</h3>
+        <!-- ESP32 统一卡片 -->
+        <div style="padding:14px 18px;background:var(--surface);border:2px solid var(--accent);border-radius:var(--radius);">
+          <!-- S3 机器人：文字左 + 图片右 -->
+          <div style="display:flex;gap:14px;align-items:center;margin-bottom:10px;">
+            <div style="flex:1;">
+              <p style="font-size:var(--text-h3);margin:0;"><strong class="accent">ESP32-S3 智能机器人</strong> <span style="color:var(--ink-dim);font-size:0.6em;">¥90</span></p>
+              <p style="margin:4px 0;font-size:var(--text-body);">人脸识别 · 语音对话 · 无所不知 · 自主行动</p>
+              <p style="margin:4px 0 0;font-size:var(--text-small);color:var(--ink-dim);">
+                Agent 协助构建——门槛极低（AI 写代码）· 天花板极高（后台调大模型）
+              </p>
+            </div>
+            <img src="assets/esp32-s3-robot.png" alt="ESP32-S3 智能机器人" style="max-width:45%;max-height:130px;object-fit:contain;border-radius:8px;">
+          </div>
+          <!-- 分隔 -->
+          <div style="border-top:1px dashed var(--border);margin:0 0 10px;"></div>
+          <!-- CAM：文字左 + 图片右 -->
+          <div style="display:flex;gap:14px;align-items:center;">
+            <div style="flex:1;">
+              <p style="margin:0;font-size:var(--text-body);"><strong class="accent">ESP32-CAM（¥40）</strong> + AI = 远程摄像头 · 人脸识别 · 行动识别</p>
+            </div>
+            <img src="assets/esp32-cam.png" alt="ESP32-CAM" style="max-width:45%;max-height:130px;object-fit:contain;border-radius:8px;">
+          </div>
+        </div>
+        <div style="padding:10px 14px;background:var(--accent-light);border-radius:var(--radius);text-align:center;">
+          <p style="margin:0;font-size:var(--text-body);font-weight:700;color:var(--accent-dark);">
+            百元级成本，万元级能力——而且 Agent 可以帮你写硬件代码。
+          </p>
+        </div>
+        <p style="font-size:var(--text-body);color:var(--ink-dim);margin:0;">
+          市面已有 <strong class="accent">165 款</strong>成熟 AI 硬件——安全帽·摄像头·机器人·AR眼镜。中建发展的优势在<strong class="danger">场景理解</strong>。
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：中建智能实践案例；ESP32 官方技术文档；AI 硬件市场调研
+  </div>
+  <div class="speaker-notes">软件侧三层递进：第一层，三个已上线可演示的系统（智能评标/云控水务/智慧养老）；第二层，蓝框点出"不是只有程序员才能做到"——为后面 P22 的高阶案例铺垫。硬件侧：ESP32-S3 智能机器人（¥90，人脸识别/语音对话/自主行动，Agent协助构建，门槛极低天花板极高），留出了截图位。底部 ESP32-CAM 保持。</div>
+</section>
+
+<!-- ─── P22 · AI 从虚拟走向现实 ─── -->
+<section class="slide" id="slide-23" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第四部分 · 技术解构与认知重建</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">AI 已经从虚拟走向现实。门槛是零。</h2>
+  </div>
+  <div class="slide-body">
+    <div class="cards cards-3" style="margin-bottom:16px;">
+      <!-- 最简单：IT运维 -->
+      <div class="card card-accent" style="padding:18px;">
+        <div class="card-title" style="font-size:var(--text-h2);">🖥️ IT 运维</div>
+        <table style="margin:8px 0;font-size:var(--text-body);width:100%;">
+          <tr><td style="width:22%;"><strong>以前</strong></td><td style="font-size:var(--text-body);">风扇狂转 → 找 IT，等半天<br>打印机不工作 → 叫维修，半天废了</td></tr>
+          <tr><td style="width:22%;"><strong>现在</strong></td><td style="font-size:var(--text-body);">跟 Agent 说"风扇太吵" → 自动诊断进程<br>跟 Agent 说"打不出来" → 自己查网络、清队列、搞定</td></tr>
+          <tr><td><strong>结果</strong></td><td style="font-size:var(--text-body);"><strong class="success">几十秒解决，零门槛</strong></td></tr>
+        </table>
+      </div>
+      <!-- 中等：会议纪要 -->
+      <div class="card card-accent" style="padding:18px;">
+        <div class="card-title" style="font-size:var(--text-h2);">📋 会议纪要</div>
+        <table style="margin:8px 0;font-size:var(--text-body);width:100%;">
+          <tr><td style="width:22%;"><strong>以前</strong></td><td style="font-size:var(--text-body);">人工听写，2小时</td></tr>
+          <tr><td><strong>现在</strong></td><td style="font-size:var(--text-body);">通义听悟自动转写 + Kimi 提取要点</td></tr>
+          <tr><td><strong>结果</strong></td><td style="font-size:var(--text-body);"><strong class="success">10分钟出纪要，结构化归档</strong></td></tr>
+        </table>
+      </div>
+      <!-- 最震撼：数据分析 + 硬件 -->
+      <div class="card card-accent" style="padding:18px;">
+        <div class="card-title" style="font-size:var(--text-h2);">📊 数据分析</div>
+        <table style="margin:8px 0;font-size:var(--text-body);width:100%;">
+          <tr><td style="width:22%;"><strong>以前</strong></td><td style="font-size:var(--text-body);">Excel 手动整理，1-2天</td></tr>
+          <tr><td><strong>现在</strong></td><td style="font-size:var(--text-body);">DeepSeek 写脚本自动清洗 + 生成图表</td></tr>
+          <tr><td><strong>结果</strong></td><td style="font-size:var(--text-body);"><strong class="success">30分钟完成，含异常标记</strong></td></tr>
+        </table>
+        <div style="margin-top:8px;padding:6px 10px;background:var(--danger-bg);border-radius:6px;text-align:center;">
+          <p style="margin:0;font-size:var(--text-body);color:var(--danger);font-weight:700;">
+            🔧 硬件也不远了——ESP32-S3 机器人 ¥90 就能做识别+对话
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="cards cards-3" style="grid-template-columns:1fr 1fr 1fr;">
+      <div style="text-align:center;padding:16px;background:var(--accent-light);border-radius:var(--radius);">
+        <p style="font-size:var(--text-h3);margin:0;"><strong class="accent">结论一</strong></p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);">AI 正在从虚拟世界走向<strong class="danger">现实世界</strong></p>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--accent-light);border-radius:var(--radius);">
+        <p style="font-size:var(--text-h3);margin:0;"><strong class="accent">结论二</strong></p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);">这个过程极其<strong class="danger">平民化</strong>——一句话就够了</p>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--accent-light);border-radius:var(--radius);">
+        <p style="font-size:var(--text-h3);margin:0;"><strong class="accent">结论三</strong></p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);">这就是<strong class="danger">技术平权</strong>——门槛是零</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：真实使用案例
+  </div>
+  <div class="speaker-notes">两个极其生活化的案例。以前电脑风扇响你得找IT，打印机慢你得叫维修。现在跟AI说一句话——它帮你诊断、帮你修、甚至帮你测试。这不是未来，是今天。三个结论层层递进：AI走向现实→极度平民化→技术平权。门槛是零。</div>
+</section>
+
+<!-- ─── P23 · 一句话总结（定调页） ─── -->
+<section class="slide" id="slide-24" data-type="pivot">
+  <div style="margin-bottom:40px;">
+    <span class="quote-mark">"</span>
+  </div>
+  <h2 class="slide-title" style="text-align:center;font-size:var(--text-hero);max-width:1100px;">
+    技术门槛已经塌了。<strong class="danger">关键在于动手。</strong>
+  </h2>
+  <p class="lead" style="margin-top:32px;font-size:var(--text-h2);">
+    软件如此，硬件亦然。<br>
+    而且 AI 已经在帮你解决现实问题了。
+  </p>
+  <div class="divider" style="margin:32px auto;"></div>
+  <p style="color:var(--ink-dim);font-size:var(--text-h3);text-align:center;">
+    第三部分结束 · 接下来：回到我们自己，怎么干？
+  </p>
+  <div class="speaker-notes">这是第三部分的收尾定调页。停下来，让这句话沉入人心：技术门槛已经塌了，关键在于动手。前面用了10页（P14-P23）做了认知重建——技术平权已经发生，真正的门槛是行动。接下来进入第四部分：具体怎么干，五步法给出路径。</div>
+</section>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║  PART 5: 实施路径与分层推进 (P24-P29)   ║
+     ╚══════════════════════════════════════════╝ -->
+
+<!-- ─── TOC · Part 5 ─── -->
+<section class="slide" id="slide-toc-5" data-type="toc">
+  <div class="kicker">中建发展 · AI 分享</div>
+
+  <div class="toc-wrap">
+    <div class="toc-row done"><div class="toc-dot">1</div><div class="toc-name">趋势认知</div><div class="toc-tag">为什么要做</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">2</div><div class="toc-name">行业变化</div><div class="toc-tag">别人在做什么</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">3</div><div class="toc-name">战略选层</div><div class="toc-tag">选对层级再行动</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">4</div><div class="toc-name">认知重建</div><div class="toc-tag">AI 到底是什么</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row current"><div class="toc-dot">5</div><div class="toc-name">实践路径</div><div class="toc-tag">我们怎么做</div></div>
+    <div class="toc-connector"></div>
+    <div class="toc-row"><div class="toc-dot">6</div><div class="toc-name">行动倡议</div><div class="toc-tag">现在开始</div></div>
+  </div>
+  <div class="speaker-notes">进入第五部分。前四个部分建立了为什么做、怎么选、技术是什么的认知，现在进入"怎么做"。</div>
+</section>
+
+<!-- ─── P24 · 吴恩达五步法 ─── -->
+<section class="slide" id="slide-25" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第五部分 · 实施路径与分层推进</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">吴恩达五步法——战略不是第一步，是第四步。</h2>
+  </div>
+  <div class="slide-body">
+    <div class="split">
+      <div class="split-left">
+        <h3>Andrew Ng（吴恩达）是谁？</h3>
+        <p style="margin-top:8px;">
+          斯坦福教授 · Google Brain 创始人 · 前百度首席科学家 · Coursera 联合创始人
+        </p>
+        <p style="color:var(--accent);font-weight:700;">全球 AI 教育第一人</p>
+        <div class="divider" style="margin:20px 0;"></div>
+        <p style="font-size:var(--text-body);color:var(--ink-dim);">他总结了一套<strong>企业 AI 转型路线图</strong>——回答的是一个核心问题：</p>
+        <div style="padding:16px;background:var(--accent-light);border-radius:var(--radius);margin-top:12px;">
+          <p style="margin:0;font-size:var(--text-h3);text-align:center;"><strong class="accent">一个组织如何从零到一完成 AI 转型？</strong></p>
+        </div>
+        <div class="divider" style="margin:20px 0;"></div>
+        <div style="padding:16px;background:var(--danger-bg);border-radius:var(--radius);border-left:4px solid var(--danger);">
+          <p style="margin:0;font-size:var(--text-h3);"><strong class="danger">关键洞察：</strong>很多企业上来就搞战略规划、请咨询公司、写报告——<strong>错了</strong>。</p>
+          <p style="margin:8px 0 0;font-size:var(--text-body);">先跑试点搞清楚 AI 能做什么，<strong>再</strong>定战略。顺序不能反。</p>
+        </div>
+        <p style="margin:16px 0 0;font-size:var(--text-body);color:var(--ink-dim);">这不是个别现象——<strong>大多数企业都卡在第一步</strong>，因为没有现成的试点模板，不知道从哪件事开始。这很正常，但不能一直停在这里。</p>
+      </div>
+      <div class="split-right">
+        <h3>企业 AI 转型五步路线图</h3>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--surface-alt);border-radius:var(--radius);border-left:4px solid var(--accent);">
+            <span style="font-size:var(--text-hero);font-weight:700;color:var(--accent);font-family:Arial;line-height:1;">①</span>
+            <span style="font-size:var(--text-body);">开展<strong>试点项目</strong>以获得动力</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--surface-alt);border-radius:var(--radius);border-left:4px solid var(--accent);">
+            <span style="font-size:var(--text-hero);font-weight:700;color:var(--accent);font-family:Arial;line-height:1;">②</span>
+            <span style="font-size:var(--text-body);">组建<strong>内部 AI 团队</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--surface-alt);border-radius:var(--radius);border-left:4px solid var(--accent);">
+            <span style="font-size:var(--text-hero);font-weight:700;color:var(--accent);font-family:Arial;line-height:1;">③</span>
+            <span style="font-size:var(--text-body);">开展广泛的 <strong>AI 培训</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--danger-bg);border-radius:var(--radius);border-left:4px solid var(--danger);">
+            <span style="font-size:var(--text-hero);font-weight:700;color:var(--danger);font-family:Arial;line-height:1;">④</span>
+            <span style="font-size:var(--text-body);"><strong class="danger">制定 AI 战略</strong> ← 这是第四步！</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--surface-alt);border-radius:var(--radius);border-left:4px solid var(--accent);">
+            <span style="font-size:var(--text-hero);font-weight:700;color:var(--accent);font-family:Arial;line-height:1;">⑤</span>
+            <span style="font-size:var(--text-body);">协调<strong>内外部沟通</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：Andrew Ng《AI Transformation Playbook》；小组调研
+  </div>
+  <div class="speaker-notes">这一页是第四部分的总纲。先讲方法论来源——吴恩达《AI Transformation Playbook》，来自他在Google Brain和百度的实战经验，不是学术理论。再展示五步全景路线图。核心信息：战略是第四步不是第一步——很多企业上来就搞规划，错了。先跑试点搞清楚AI能做什么，再定战略。接下来五页，我们一步一步展开，看看中建发展在这条路上走到了哪里。</div>
+</section>
+
+<!-- ─── P26 · 五步法Step1：试点项目 ─── -->
+<!-- REMOVED: slide-26 五步法分步已压缩 -->
+
+<!-- ─── P27 · 五步法Step2：组建AI团队 ─── -->
+<!-- REMOVED: slide-27 五步法分步已压缩 -->
+
+<!-- ─── P28 · 五步法Step3：AI培训 ─── -->
+<!-- REMOVED: slide-28 五步法分步已压缩 -->
+
+<!-- ─── P29 · 五步法Step4：制定AI战略 ─── -->
+<!-- REMOVED: slide-29 五步法分步已压缩 -->
+
+<!-- ─── P30 · 五步法Step5：协调内外部沟通 ─── -->
+<!-- REMOVED: slide-30 五步法分步已压缩 -->
+
+<!-- ─── P31 · 五步法终局展望 ─── -->
+
+<!-- ═══════════ P24-new · 亲身经历 ═══════════ -->
+<section class="slide" id="slide-experience" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header" style="margin-bottom:4px;">
+    <span class="kicker" style="margin-bottom:6px;">第五部分 · 实施路径与分层推进</span>
+    <h2 class="slide-title" style="margin:12px 0 16px;">我的亲身经历：AI 是每天的实践</h2>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2col" style="margin-top:8px;">
+      <div class="card" style="border-left:4px solid var(--accent);">
+        <div class="card-title">用 Claude Code 搭系统</div>
+        <p style="font-size:var(--text-body);">中建人才服务系统——<strong>两个人，几天时间。</strong></p>
+        <p style="font-size:var(--text-body);">首企阳光评标中心——<strong>没有外包、没有美工，AI直接生成。</strong></p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent);">
+        <div class="card-title">用 Obsidian 建知识库</div>
+        <p style="font-size:var(--text-body);">57个方向研判、全套方法论——<strong>结构化沉淀，数据不出域。</strong></p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--accent);">
+        <div class="card-title">用龙虾做日常助手</div>
+        <p style="font-size:var(--text-body);">飞书原生，即装即用。<strong>从"学AI"变成"用AI"。</strong></p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-title">最大体会</div>
+        <p style="font-size:var(--text-body);"><strong>懂业务，AI是加速器。不懂，就是错误放大器。</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="speaker-notes">陶锋要求："把你做的事儿讲一讲。"三个案例。结尾体会给AI热潮降温。</div>
+</section>
+
+<section class="slide" id="slide-31" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第五部分 · 实施路径与分层推进</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">走完这五步，中建发展会是什么样？</h2>
+  </div>
+  <div class="slide-body">
+    <div style="display:flex;gap:28px;">
+      <!-- 左：愿景 -->
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:18px 24px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:var(--radius);border:2px solid var(--accent);text-align:center;">
+          <p style="margin:0;font-size:var(--text-h2);font-weight:700;color:var(--accent);">中建发展成为集团 AI 能力的核心输出方</p>
+        </div>
+        <div style="padding:14px 24px;background:var(--surface-alt);border-radius:var(--radius);border:1px solid var(--border);">
+          <p style="margin:0;font-size:var(--text-body);text-align:center;"><strong>各子企业都建立起自己的 AI 能力</strong></p>
+          <p style="margin:8px 0 0;font-size:var(--text-small);color:var(--ink-dim);">中建电商的供应链AI、中建环能的财务AI、中建生态的环保AI、中建发展的审计AI——每个方向都有自己的产品和数据积累</p>
+        </div>
+        <div style="padding:14px 24px;background:var(--surface-alt);border-radius:var(--radius);border:1px solid var(--border);">
+          <p style="margin:0;font-size:var(--text-body);text-align:center;"><strong>供应链、劳务、水务等方向数据飞轮开始转</strong></p>
+          <p style="margin:8px 0 0;font-size:var(--text-small);color:var(--ink-dim);">每个方向都形成"好产品→更多用户→更多数据→更好的产品"的正向循环，竞争对手拿到同样的数据才能追平</p>
+        </div>
+        <div style="padding:14px 24px;background:var(--surface-alt);border-radius:var(--radius);border:1px solid var(--border);">
+          <p style="margin:0;font-size:var(--text-body);text-align:center;">在集团<strong>"人工智能+"</strong>战略中占据<strong class="danger">不可替代</strong>的位置</p>
+          <p style="margin:8px 0 0;font-size:var(--text-small);color:var(--ink-dim);">其他工程局遇到 AI 需求，第一个想到的就是中建发展——因为我们在数据、场景、团队、产品上都走在前面</p>
+        </div>
+      </div>
+      <!-- 右：飞轮效应 -->
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <div style="padding:24px;background:var(--accent-light);border-radius:var(--radius);border:2px solid var(--accent);">
+          <p style="margin:0 0 20px;font-size:var(--text-h3);font-weight:700;text-align:center;color:var(--accent);">飞轮效应</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="width:72px;text-align:center;font-weight:700;color:var(--accent);font-family:Arial;">Step 1</span>
+              <span style="flex:1;padding:12px 18px;background:var(--accent);color:#fff;border-radius:var(--radius);font-weight:600;text-align:center;">拿信心</span>
+            </div>
+            <div style="text-align:center;color:var(--accent);font-size:18px;">↓</div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="width:72px;text-align:center;font-weight:700;color:var(--accent);font-family:Arial;">Step 2</span>
+              <span style="flex:1;padding:12px 18px;background:#3B82F6;color:#fff;border-radius:var(--radius);font-weight:600;text-align:center;">拿能力</span>
+            </div>
+            <div style="text-align:center;color:var(--accent);font-size:18px;">↓</div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="width:72px;text-align:center;font-weight:700;color:var(--accent);font-family:Arial;">Step 3</span>
+              <span style="flex:1;padding:12px 18px;background:#60A5FA;color:#fff;border-radius:var(--radius);font-weight:600;text-align:center;">拿需求</span>
+            </div>
+            <div style="text-align:center;color:var(--accent);font-size:18px;">↓</div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="width:72px;text-align:center;font-weight:700;color:var(--accent);font-family:Arial;">Step 4</span>
+              <span style="flex:1;padding:12px 18px;background:#059669;color:#fff;border-radius:var(--radius);font-weight:600;text-align:center;">拿壁垒</span>
+            </div>
+            <div style="text-align:center;color:var(--accent);font-size:18px;">↓</div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="width:72px;text-align:center;font-weight:700;color:var(--accent);font-family:Arial;">Step 5</span>
+              <span style="flex:1;padding:12px 18px;background:#047857;color:#fff;border-radius:var(--radius);font-weight:600;text-align:center;">拿势能</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：Andrew Ng《AI Transformation Playbook》；小组调研
+  </div>
+  <div class="speaker-notes">这是五步法的终局展望。左边讲三个愿景：中建发展成为集团AI能力核心输出方；各子企业有自己的AI能力，形成协同互助的内部AI生态；供应链、劳务、水务等方向数据飞轮开始转；在集团占据不可替代位置。右边讲飞轮效应——每一步都为下一步加力：拿信心→拿能力→拿需求→拿壁垒→拿势能。最后过渡到下一页："走完每一步，你具体获得什么？"</div>
+</section>
+
+<!-- ─── P32 · 每一步的意义 ─── -->
+<section class="slide" id="slide-32" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第五部分 · 实施路径与分层推进</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">五步法的回报与代价——每一步都不是白走的。</h2>
+  </div>
+  <div class="slide-body">
+    <table>
+      <tr><th style="width:16%;">步骤</th><th style="width:42%;background:var(--accent);color:#fff;">走完这一步，你获得</th><th style="width:42%;background:var(--danger);color:#fff;">不走会怎样</th></tr>
+      <tr><td><strong>① 试点</strong></td><td style="background:#EFF6FF;"><strong class="accent">信心</strong>——组织亲眼看到 AI 有用，愿意投入</td><td style="background:#FEF2F2;">永远停留在"AI 是概念"，资源投不下去</td></tr>
+      <tr><td><strong>② 建团队</strong></td><td style="background:#EFF6FF;"><strong class="accent">能力</strong>——有自己人能持续做 AI 项目</td><td style="background:#FEF2F2;">每个项目都依赖外部，积累不了经验</td></tr>
+      <tr><td><strong>③ 培训</strong></td><td style="background:#EFF6FF;"><strong class="accent">需求</strong>——业务部门自己会找 AI 机会</td><td style="background:#FEF2F2;">AI 团队永远在"推"，业务永远在"等"</td></tr>
+      <tr><td><strong>④ 定战略</strong></td><td style="background:#EFF6FF;"><strong class="accent">壁垒</strong>——数据飞轮开始转，对手追不上</td><td style="background:#FEF2F2;">散点式做项目，每个都浅，没有积累</td></tr>
+      <tr><td><strong>⑤ 沟通</strong></td><td style="background:#EFF6FF;"><strong class="accent">势能</strong>——人才、客户、资本向你聚拢</td><td style="background:#FEF2F2;">做了事没人知道，人才留不住</td></tr>
+    </table>
+    <div style="margin-top:20px;display:flex;gap:16px;">
+      <div style="flex:1;padding:16px 20px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);">
+        <p style="margin:0;font-size:var(--text-body);font-weight:600;color:var(--accent);">飞轮逻辑</p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);">五步是递进的——前一步是后一步的基础。<strong>信心</strong>催生投入，投入建<strong>能力</strong>，能力带出<strong>需求</strong>，需求沉淀为<strong>壁垒</strong>，壁垒吸引<strong>势能</strong>。每一步都在给飞轮加力。</p>
+      </div>
+      <div style="flex:1;padding:16px 20px;background:var(--danger-bg);border-radius:var(--radius);border-left:4px solid var(--danger);">
+        <p style="margin:0;font-size:var(--text-body);font-weight:600;color:var(--danger);">跳步的代价</p>
+        <p style="margin:6px 0 0;font-size:var(--text-body);">没有试点经验就建团队 → 找不准方向<br>没有培训就定战略 → 战略脱离业务<br>没有成果就沟通 → 变成吹牛，适得其反</p>
+      </div>
+    </div>
+    <p style="margin:20px 0 0;font-size:var(--text-h3);text-align:center;color:var(--ink-dim);">接下来，我们看看具体怎么走。</p>
+  </div>
+  <div class="footnote">
+    来源：Andrew Ng《AI Transformation Playbook》；小组调研
+  </div>
+  <div class="speaker-notes">这一页把五步法的回报和代价讲透。两列对比：左边是"走完这一步你获得什么"，右边是"不走会怎样"。每一步都有扎实的回报——试点拿信心、建团队拿能力、培训拿需求、定战略拿壁垒、沟通拿势能。不走也有代价：资源投不下去、依赖外部、业务永远在等、散点式没有积累、做了事没人知道。底部两个框解释飞轮递进逻辑和跳步的代价。过渡到路线图。</div>
+</section>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║  PART 6: 行动倡议                           ║
+     ╚══════════════════════════════════════════╝ -->
+
+<!-- ─── TOC · Part 6 ─── -->
+<section class="slide" id="slide-toc-6" data-type="toc">
+  <div class="kicker">中建发展 · AI 分享</div>
+
+  <div class="toc-wrap">
+    <div class="toc-row done"><div class="toc-dot">1</div><div class="toc-name">趋势认知</div><div class="toc-tag">为什么要做</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">2</div><div class="toc-name">行业变化</div><div class="toc-tag">别人在做什么</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">3</div><div class="toc-name">战略选层</div><div class="toc-tag">选对层级再行动</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">4</div><div class="toc-name">认知重建</div><div class="toc-tag">AI 到底是什么</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row done"><div class="toc-dot">5</div><div class="toc-name">实践路径</div><div class="toc-tag">我们怎么做</div></div>
+    <div class="toc-connector done"></div>
+    <div class="toc-row current"><div class="toc-dot">6</div><div class="toc-name">行动倡议</div><div class="toc-tag">现在开始</div></div>
+  </div>
+  <div class="speaker-notes">进入最后一部分。把认知转化为行动，从组织到个人，从今天开始。</div>
+</section>
+
+<!-- ─── P29 · 风险与真相 ─── -->
+<section class="slide" id="slide-33" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第六部分 · 风险与真相</span>
+    <h2 class="slide-title" style="margin:12px 0 28px;">80% 的企业 AI 项目没有交付预期价值。</h2>
+    <p style="margin:-12px 0 0;font-size:var(--text-body);color:var(--ink-dim);max-width:1000px;">不是技术不行——是方法不对。RAND Corporation 2025 年对 65 家企业的系统性研究（报告：The Root Causes of Failure for Artificial Intelligence Projects, 2025），给出了这个数字。</p>
+  </div>
+  <div class="slide-body">
+    <div style="text-align:center;margin-bottom:12px;">
+      <span class="stat-value danger-val" style="font-size:clamp(56px,4.5vw,72px);">80.3%<sup class="fn-marker">1</sup></span>
+      <p style="color:var(--ink-dim);font-size:var(--text-body);">未交付承诺的业务价值（RAND, 2025）</p>
+    </div>
+    <h3 style="margin:8px 0 16px;">五大核心失败原因</h3>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px;">
+      <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:10px 14px;border-radius:var(--radius);">
+        <p style="margin:0;font-size:var(--text-body);"><strong class="danger">① 问题定义不清</strong><br><span style="color:var(--ink-dim);font-size:var(--text-small);">不知道用 AI 解决什么</span></p>
+      </div>
+      <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:10px 14px;border-radius:var(--radius);">
+        <p style="margin:0;font-size:var(--text-body);"><strong class="danger">② 数据战略缺失</strong><br><span style="color:var(--ink-dim);font-size:var(--text-small);">数据质量差、没治理</span></p>
+      </div>
+      <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:10px 14px;border-radius:var(--radius);">
+        <p style="margin:0;font-size:var(--text-body);"><strong class="danger">③ IT 基础设施不足</strong><br><span style="color:var(--ink-dim);font-size:var(--text-small);">算力、网络、安全不达标</span></p>
+      </div>
+      <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:10px 14px;border-radius:var(--radius);">
+        <p style="margin:0;font-size:var(--text-body);"><strong class="danger">④ 技术与业务脱节</strong><br><span style="color:var(--ink-dim);font-size:var(--text-small);">技术不懂业务，业务不懂技术</span></p>
+      </div>
+      <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:10px 14px;border-radius:var(--radius);">
+        <p style="margin:0;font-size:var(--text-body);"><strong class="danger">⑤ 合规与风险失控</strong><br><span style="color:var(--ink-dim);font-size:var(--text-small);">数据安全、隐私保护不到位</span></p>
+      </div>
+    </div>
+
+    <div class="split" style="margin-top:12px;">
+      <div class="split-left">
+        <h3 style="margin:0 0 8px;">📊 这个数据到底在说什么？</h3>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;">
+          <p style="margin:0 0 6px;font-size:var(--text-small);color:var(--ink-dim);"><strong>RAND Corporation 2025</strong>：80.3% 的企业 AI 项目未能交付承诺价值——33.8% 在上线前被放弃，28.4% 上线后未达预期。</p>
+          <p style="margin:0;font-size:var(--text-small);color:var(--ink-dim);">2018 年 Gartner 原话（常被误传为"85% 失败"）是"因数据/算法/执行偏差导致错误结果"。2026 年 Gartner I&amp;O 研究进一步印证：仅 28% 完全达成 ROI，57% 的 I&amp;O 管理者经历过 AI 项目失败。</p>
+        </div>
+      </div>
+      <div class="split-right">
+        <h3 style="margin:0 0 8px;">⚠️ 失败项目的共同画像</h3>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:7px 12px;border-radius:var(--radius);">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="danger">大而全</strong> — 一上来就想做平台级改造</p>
+          </div>
+          <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:7px 12px;border-radius:var(--radius);">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="danger">技术先行</strong> — 买模型再找场景，本末倒置</p>
+          </div>
+          <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:7px 12px;border-radius:var(--radius);">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="danger">脱离业务</strong> — IT 部门自嗨，业务没参与</p>
+          </div>
+          <div style="background:var(--danger-bg);border-left:4px solid var(--danger);padding:7px 12px;border-radius:var(--radius);">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="danger">数据没准备好</strong> — 质量差、拿不到、不敢用</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:8px 14px;background:var(--surface-alt);border-radius:var(--radius);border:1px solid var(--border);margin-top:12px;">
+      <p style="margin:0;font-size:var(--text-small);color:var(--ink-dim);"><strong>⚠️ 六条合规红线已发书面材料</strong> — 涉密数据不接入外部平台 · 个人信息须审批 · AI 内容人工审核 · 不用未备案境外模型 · 人工保留最终决定权 · 纳入信息化统一管理。</p>
+    </div>
+  </div>
+  <div class="footnote">
+    <div class="fn-src"><sup class="fn-marker">1</sup> RAND Corporation 2025 (PT-A2680-1) — 2400+企业AI项目调查，rand.org/pubs/presentations/PTA2680-1.html</div>
+    来源：RAND Corporation 2025；Gartner 2026.4；Gartner 2018 预测；合规依据：《生成式人工智能服务管理暂行办法》《网络安全法》《数据安全法》、中建信字〔2025〕111号
+  </div>
+  <div class="speaker-notes">风险页。先用 80% RAND 数据制造紧迫感。然后说明这个数字不是危言耸听——Gartner 两个时间点的研究在同一个量级。接着过五大失败原因。右栏给出失败项目的共同画像：大而全、技术先行、脱离业务、数据没准备好。底部合规红线快速带过——之前已经发过书面材料。演讲时强调：这四类画像我们前面研究结论都避开了。过渡到下一页：那我们知道该往哪走吗？知道——我们有系统研究过的机会地图。</div>
+</section>
+
+<!-- ─── P30 · 机会地图 ─── -->
+<!-- REMOVED: slide-34 -->
+
+<!-- ─── P31 · 从地图到启动 ─── -->
+<section class="slide" id="slide-35" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第六部分 · 从地图到启动</span>
+    <h2 class="slide-title" style="margin:12px 0 24px;">从机会地图到组织行动——三个原则，一个启动包。</h2>
+  </div>
+  <div class="slide-body">
+    <div class="split">
+      <div class="split-left">
+        <h3 style="margin:0 0 14px;">🧭 组织启动三原则</h3>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:14px 16px;">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="accent">先试点再展开</strong></p>
+            <p style="margin:6px 0 0;font-size:var(--text-small);color:var(--ink-dim);">不要一上来做平台。在前面地图里选一个推进方向，组 3-5 人的小团队，2-4 周内出第一个 Demo。试点拿到信心，再考虑扩大。</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:14px 16px;">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="accent">先内部再外部</strong></p>
+            <p style="margin:6px 0 0;font-size:var(--text-small);color:var(--ink-dim);">先用 AI 解决自己的问题——提效、控风险、管数据。内部跑通了再谈对外输出。中建发展的数据显示，内部场景才是最大的低垂果实。</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:14px 16px;">
+            <p style="margin:0;font-size:var(--text-body);"><strong class="accent">先业务再技术</strong></p>
+            <p style="margin:6px 0 0;font-size:var(--text-small);color:var(--ink-dim);">让业务部门提出需求，信息化部门负责技术选型——遵循五步法 Step 1 的原则：选成功概率最高的，不是价值最大的。技术是工具，业务是发动机。</p>
+          </div>
+        </div>
+      </div>
+      <div class="split-right">
+        <h3 style="margin:0 0 14px;">🚀 最小启动包</h3>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+          <p style="margin:0 0 12px;font-size:var(--text-small);color:var(--ink-dim);">从现在开始，一个月内可以完成：</p>
+          <table class="compact">
+            <tr><th style="width:28%;">时间</th><th>行动</th></tr>
+            <tr><td><strong class="accent">本周</strong></td><td>从机会地图中选定 1-2 个试点方向</td></tr>
+            <tr><td><strong class="accent">第 2 周</strong></td><td>组建试点小组（业务+信息化混合）、申请首批算力资源</td></tr>
+            <tr><td><strong class="accent">第 3-4 周</strong></td><td>出第一个可演示的 Demo</td></tr>
+            <tr><td><strong class="accent">月末</strong></td><td>试点成果汇报 → 决定是否进入第二步（建团队）</td></tr>
+          </table>
+        </div>
+        <div style="margin-top:14px;padding:12px 14px;background:var(--accent-light);border-radius:var(--radius);">
+          <p style="margin:0;font-size:var(--text-body);">🔑 <strong>关键决策</strong>：总部成立 AI 专项工作组，统筹试点推进。信息化部门是驱动引擎，各子企业是试点土壤。</p>
+        </div>
+        <div style="margin-top:10px;padding:12px 14px;background:var(--surface-alt);border-radius:var(--radius);border:1px solid var(--border);">
+          <p style="margin:0;font-size:var(--text-small);color:var(--ink-dim);"><strong>💡 工具推荐</strong> — 试点阶段优先用集团统一平台（中建集团 AI 平台、云筑 AI）。日常提效用豆包/Kimi/通义听悟，开发加速用通义灵码/豆包 MarsCode/DeepSeek，自动化用影刀 RPA。会后扫码获取完整工具箱和 prompt 模板。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：Andrew Ng 五步法 × 中建发展 AI 方向研判
+  </div>
+  <div class="speaker-notes">从地图到启动页。这里把机会地图转化为组织层面的具体行动。左边讲三原则——先试点再展开、先内部再外部、先业务再技术，直接呼应风险页的失败画像（大而全→先试点、脱离业务→先业务）。右边给一个最小启动包：四步时间表（本周→第2周→第3-4周→月末），每一步都可执行。底部关键决策点出总部成立工作组的必要性，但不说"必须"，而是"关键决策"。过渡到下一页：组织有路径了，个人呢？</div>
+</section>
+
+<!-- ─── P32 · 每个人能贡献的三件事 ─── -->
+<section class="slide" id="slide-36" data-type="content" style="padding-top:16px;padding-bottom:56px;">
+  <div class="slide-header">
+    <span class="kicker" style="margin-bottom:6px;">第六部分 · 个人行动</span>
+    <h2 class="slide-title" style="margin:12px 0 24px;">组织成长，从每个人的习惯开始。</h2>
+    <p style="margin:-12px 0 0;font-size:var(--text-body);color:var(--ink-dim);max-width:1000px;">前面讲的是组织怎么启动。这里讲<strong>总部每个人</strong>——领导、信息化骨干、业务人员——明天就能开始的最小行动。个人成长服务于组织成长。</p>
+  </div>
+  <div class="slide-body">
+    <div class="cards cards-3" style="gap:16px;">
+      <div class="card" style="border-top:4px solid var(--accent);padding:20px 18px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span style="font-size:28px;">📅</span>
+          <div class="card-title" style="margin:0;font-size:var(--text-h3);">今天</div>
+        </div>
+        <p style="font-size:var(--text-body);margin-bottom:8px;"><strong>用 AI 完成一件日常工作。</strong></p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin-bottom:12px;">把今天的某件事——写一封邮件、读一份报告、整理一次会议纪要——交给 AI。</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;">
+          <span class="tag tag-blue" style="font-size:11px;">豆包</span>
+          <span class="tag tag-blue" style="font-size:11px;">Kimi</span>
+          <span class="tag tag-blue" style="font-size:11px;">通义听悟</span>
+        </div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--success);padding:20px 18px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span style="font-size:28px;">🗣️</span>
+          <div class="card-title" style="margin:0;font-size:var(--text-h3);">本周</div>
+        </div>
+        <p style="font-size:var(--text-body);margin-bottom:8px;"><strong>向一个同事展示你的 AI 用法。</strong></p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin-bottom:12px;">你用什么 AI、解决了什么、省了多少时间。当用法在团队里扩散，组织就开始变了。</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;">
+          <span class="tag tag-green" style="font-size:11px;">工具不限</span>
+          <span class="tag tag-green" style="font-size:11px;">场景不限</span>
+        </div>
+      </div>
+      <div class="card" style="border-top:4px solid var(--warning);padding:20px 18px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span style="font-size:28px;">⚙️</span>
+          <div class="card-title" style="margin:0;font-size:var(--text-h3);">本月</div>
+        </div>
+        <p style="font-size:var(--text-body);margin-bottom:8px;"><strong>优化一个重复性工作流。</strong></p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin-bottom:12px;">找一个每周做两次以上的流程，用 AI 或自动化工具缩短一半。你的领域知识 × AI = 组织的生产力增量。</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;">
+          <span class="tag tag-gray" style="font-size:11px;">影刀 RPA</span>
+          <span class="tag tag-gray" style="font-size:11px;">豆包 MarsCode</span>
+          <span class="tag tag-gray" style="font-size:11px;">钉钉宜搭</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;text-align:center;padding:14px;background:var(--accent-light);border-radius:var(--radius);">
+      <p style="margin:0;font-size:var(--text-h3);"><strong class="accent">第一周的意义不是学会工具，是养成"遇事问 AI"的习惯。</strong>这个习惯，就是组织飞轮的第一步。</p>
+    </div>
+  </div>
+  <div class="footnote">
+    来源：各工具官方文档
+  </div>
+  <div class="speaker-notes">个人行动页。三个卡片按时间递进：今天→本周→本月。不贴角色标签——对总部领导和信息化骨干都适用。每张卡片包含：时间、动作、说明、推荐工具。底部蓝框把个人习惯和组织飞轮挂起来，回到五步法的语境。过渡到最后一页：这就是你带走的。</div>
+</section>
+
+<!-- ─── P33 · 立即动手 ─── -->
+<section class="slide" id="slide-37" data-type="pivot" style="justify-content:center;align-items:center;text-align:center;overflow-y:auto;">
+  <div style="margin-bottom:36px;">
+    <span class="kicker" style="letter-spacing:.12em;">立即动手</span>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:center;gap:28px;padding:20px 28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;max-width:600px;margin:0 auto 32px;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+    <div style="flex-shrink:0;">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGbAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAH6klEQVR4nO3dQXLjQA4AwfHG/P/Ls09QH7BYlJx5dpAyRVX0BYGff//+/QEo+M//+wMAvBIsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CAjL9TF/r5+Zm6VNHLeseXR3TtOi8eV1su3+6jqcc4da8vNrj81AkLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CAjLFZwheDI0VrlqfANgfclr+Ob/32B/+vb31Eg5ywgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyFidJXyxOZpUHN36k91vuPm0r+1AHPTLfyBOWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWScmyXko829hMtb56ZMPaLlvYR85IQFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhlnCW64NwQ3OG27O5X3xXsJfzgkLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CAjHOzhF88vXVtTnDqXgdNjUAe3Ev4xT+QF05YQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZKzOEkYH06ZcG0yb+jyPX+vUpa5dZ9Av/4G8cMICMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CAjLHh51++33FKdGp3yrXB5qm32q9jihMWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGclFqtcmzh5t3u7gvOG1PbIH36KD39qIwa/VCQvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsICM1VnCF9c2wR3cKGfecO1eB117IZcfoxMWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGT/F0aTNz3xw4uyLh+k2dwW+WH4bDy7THGEvIfAbCRaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWEDG6l7Ca1NgLw5Oik25Nrj3eLvNey0P7l37Rq69sX+csIAQwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8hYnSV8MTW+tDyTaL3jR9+6LG9w3nBzvHHzRzTICQvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsICMsVnCa5Niy3sJf/lCvRcHB9M+uvZWP9p81MtTq05YQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZJzbS7i5Le5FdJrsxdS84eDqxuUJ0LV7HXyLDn6kF05YQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAhmABGYIFZAgWkPHzxTsXNxWndr941+ymwa/s2g/k4FvthAVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWEDG6izhlM0Rp4NbQl8c3CM79Yg2r/Ni+RG9uDaTOMgJC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgIxzewlfXJsmG3RtE9zgYyyOUr5Y3rdY/NfsJQR+I8ECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvI+Dt1oegmuFP3erS5A/HguOWLzf2GLw6OWx58sV84YQEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAxNktY3BV4cOne5mN8uc7gxNnm7N6m6P8VnRJ1wgIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCDjZ3NXYHTqasq16a3l0c7Nb7a4AXPQwZWLU5ywgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBibJeSja8N0B6fJNscbD/77L64t91zmhAVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWEDG36kLRTe4TZma3tqcApuaN3z86l9uN/WRrg3TDT6iKdcmWx85YQEZggVkCBaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWEDG2PDzi2sjqS8GZ0SvTfYe3CS6+e9Hd81OufYWPXLCAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIGN1lvBFdL/ji6l/bWrgbnmR6ouDM3cfHVwhPPWGHNxZ64QFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZggVkCBaQIVhAxrlZwi+2uQjv4EjmwZm7NcurG6euc3C00wkLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADLOEezant67da/l20aV7U3OC16ZWBx+jExaQIVhAhmABGYIFZAgWkCFYQIZgARmCBWQIFpAhWECGYAEZ52YJD65C23Rted/gpNjB2b2PDn7mqdtFxy2dsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8j4WV5O962uDcG92NyC98hb9PFvNtcyTrGXEPiNBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBjbJYQ4H/NCQvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIyBAvIECwgQ7CADMECMgQLyBAsIEOwgAzBAjIEC8gQLCBDsIAMwQIy/gstNEw1W0zKFwAAAABJRU5ErkJggg==" alt="AI快速入门指南二维码" style="width:160px;height:160px;border-radius:10px;">
+    </div>
+    <div style="text-align:left;">
+      <p style="font-size:var(--text-h2);margin:0;font-weight:700;">📱 扫码带走</p>
+      <p style="font-size:var(--text-h3);margin:6px 0 8px;font-weight:700;color:var(--accent);">"AI 今晚动手包"</p>
+      <p style="font-size:var(--text-body);margin:0 0 4px;color:var(--ink-dim);">3 个即用工具 · 2 个 prompt 模板</p>
+      <p style="font-size:var(--text-body);margin:0 0 4px;color:var(--ink-dim);">今晚行动清单 · 数据安全提醒</p>
+      <p style="font-size:var(--text-small);margin:8px 0 0;color:var(--ink-muted);">扫码即学 · 学了就用 · 用了再学</p>
+    </div>
+  </div>
+
+  <div class="divider" style="width:60px;margin:0 auto 32px;"></div>
+
+  <div style="max-width:750px;margin:0 auto 24px;padding:20px 28px;background:var(--accent-light);border-radius:var(--radius);">
+    <p style="margin:0;font-size:var(--text-h3);color:var(--accent-dark);line-height:1.6;">
+      <strong>三个月后我们坐在这里</strong>，回头看今天——<br>
+      希望看到的不是另一份报告，而是<strong>已经跑起来的试点、正在用 AI 写周报的同事、和第一版产品的 Demo。</strong>
+    </p>
+  </div>
+
+  <p style="font-size:var(--text-h2);margin:0;font-weight:700;color:var(--accent-dark);">
+    🚀 现在开始。
+  </p>
+
+  <div class="footnote" style="text-align:center;border-top:none;margin-top:32px;">
+    谢谢大家
+  </div>
+  <div class="speaker-notes">最后一页。核心只有一个：扫码带走"AI 今晚动手包"。这是把今天一整场宣讲转化为今晚每个人具体行动的唯一入口。愿景部分用"三个月后回头看"给出具体画面，和前面五步法的飞轮终点——试点拿信心——形成闭环。结尾四个字"现在开始"干净利落。</div>
+</section>
+
+</div><!-- end .deck --><!-- end .deck -->
+
+<!-- ═══ Navigation Bar ═══ -->
+<nav class="nav-bar" id="navBar">
+  <button id="btnPrev" onclick="goSlide(current-1)">◀</button>
+  <div class="nav-progress"><div class="nav-progress-fill" id="progressFill"></div></div>
+  <span class="nav-folio" id="folio">1 / 44</span>
+  <button id="btnNext" onclick="goSlide(current+1)">▶</button>
+  <span style="margin-left:16px;color:#9CA3AF;font-size:12px;">P: 演讲模式 · ←→: 翻页 · G: 跳转</span>
+</nav>
+
+<!-- ═══ Presenter Mode Overlay ═══ -->
+<div class="presenter-overlay" id="presenterOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;color:#fff;font-family:Arial,sans-serif;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr auto;height:100%;">
+    <!-- 左侧：演讲备注 -->
+    <div style="padding:40px;overflow-y:auto;display:flex;flex-direction:column;">
+      <div style="font-size:12px;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">演讲备注</div>
+      <div id="presenterNotes" style="font-size:20px;line-height:1.6;color:#e5e7eb;flex:1;overflow-y:auto;"></div>
+    </div>
+    <!-- 右侧：计时器 + 页码 + 控制 -->
+    <div style="padding:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;border-left:1px solid #333;">
+      <div id="presenterTimer" style="font-size:72px;font-weight:700;color:#60a5fa;font-variant-numeric:tabular-nums;margin-bottom:24px;">00:00:00</div>
+      <div id="presenterPage" style="font-size:24px;color:#9ca3af;margin-bottom:40px;">1 / 44</div>
+      <div style="display:flex;gap:12px;">
+        <button onclick="goSlide(current-1)" style="background:#333;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:16px;cursor:pointer;">◀ 上一页</button>
+        <button onclick="goSlide(current+1)" style="background:#1A56DB;color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:16px;cursor:pointer;">下一页 ▶</button>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:16px;">
+        <button onclick="resetTimer()" style="background:#222;color:#9ca3af;border:1px solid #444;padding:8px 16px;border-radius:6px;font-size:14px;cursor:pointer;">重置计时</button>
+        <button onclick="togglePresenter()" style="background:#222;color:#9ca3af;border:1px solid #444;padding:8px 16px;border-radius:6px;font-size:14px;cursor:pointer;">退出 (P)</button>
+      </div>
+      <!-- 下一页预览提示 -->
+      <div style="margin-top:32px;padding:16px 20px;background:#111;border-radius:8px;width:100%;max-width:400px;">
+        <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">下一页标题</div>
+        <div id="presenterNextTitle" style="font-size:16px;color:#d1d5db;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Go-to Slide Dialog ═══ -->
+<div id="gotoDialog" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:300;justify-content:center;align-items:center;">
+  <div style="background:#fff;padding:32px;border-radius:12px;min-width:320px;text-align:center;">
+    <h3 style="margin-bottom:16px;font-family:var(--font-display);">跳转到页面</h3>
+    <input id="gotoInput" type="number" min="1" max="44" style="font-size:24px;padding:8px 16px;width:120px;text-align:center;border:2px solid var(--accent);border-radius:8px;" placeholder="1-44">
+    <div style="margin-top:16px;">
+      <button onclick="doGoto()" style="background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:16px;cursor:pointer;">跳转</button>
+      <button onclick="closeGoto()" style="background:var(--surface-alt);border:none;padding:10px 24px;border-radius:8px;font-size:16px;cursor:pointer;margin-left:8px;">取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   Navigation & Presenter Mode
+   ═══════════════════════════════════════════ */
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+// Update slide counter in nav
+document.getElementById('folio').textContent = `1 / ${total}`;
+
+function goSlide(n) {
+  if (n < 0 || n >= total) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  document.getElementById('folio').textContent = `${current+1} / ${total}`;
+  document.getElementById('progressFill').style.width = `${((current+1)/total)*100}%`;
+  document.getElementById('btnPrev').disabled = current === 0;
+  document.getElementById('btnNext').disabled = current === total - 1;
+  // Update hash
+  history.replaceState(null, '', `#slide-${current+1}`);
+  // Update presenter if active
+  if (presenterActive) updatePresenter();
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  // Goto dialog
+  if (document.getElementById('gotoDialog').style.display === 'flex') {
+    if (e.key === 'Escape') closeGoto();
+    if (e.key === 'Enter') doGoto();
+    return;
+  }
+  switch(e.key) {
+    case 'ArrowRight':
+    case ' ':
+    case 'PageDown':
+      e.preventDefault();
+      goSlide(current + 1);
+      break;
+    case 'ArrowLeft':
+    case 'PageUp':
+      e.preventDefault();
+      goSlide(current - 1);
+      break;
+    case 'Home':
+      e.preventDefault();
+      goSlide(0);
+      break;
+    case 'End':
+      e.preventDefault();
+      goSlide(total - 1);
+      break;
+    case 'p':
+    case 'P':
+      togglePresenter();
+      break;
+    case 'g':
+    case 'G':
+      openGoto();
+      break;
+    case 'Escape':
+      if (presenterActive) togglePresenter();
+      break;
+  }
+});
+
+// Hash navigation on load
+const hash = location.hash;
+if (hash && hash.startsWith('#slide-')) {
+  const n = parseInt(hash.replace('#slide-', '')) - 1;
+  if (n >= 0 && n < total) goSlide(n);
+}
+
+// Goto dialog
+function openGoto() {
+  const d = document.getElementById('gotoDialog');
+  d.style.display = 'flex';
+  const inp = document.getElementById('gotoInput');
+  inp.value = '';
+  inp.focus();
+}
+function closeGoto() {
+  document.getElementById('gotoDialog').style.display = 'none';
+}
+function doGoto() {
+  const n = parseInt(document.getElementById('gotoInput').value);
+  if (n >= 1 && n <= total) goSlide(n - 1);
+  closeGoto();
+}
+
+/* ─── Presenter Mode ─── */
+let presenterActive = false;
+let timerInterval = null;
+let timerSeconds = 0;
+
+function togglePresenter() {
+  presenterActive = !presenterActive;
+  const overlay = document.getElementById('presenterOverlay');
+  if (presenterActive) {
+    overlay.style.display = 'block';
+    updatePresenter();
+    startTimer();
+  } else {
+    overlay.style.display = 'none';
+    stopTimer();
+  }
+}
+
+function updatePresenter() {
+  // Speaker notes
+  const notesEl = slides[current].querySelector('.speaker-notes');
+  document.getElementById('presenterNotes').textContent =
+    notesEl ? notesEl.textContent : '（无演讲备注）';
+  // Page counter
+  document.getElementById('presenterPage').textContent = `${current+1} / ${total}`;
+  // Next slide title preview
+  const nextTitle = document.getElementById('presenterNextTitle');
+  if (current + 1 < total) {
+    const nextH2 = slides[current + 1].querySelector('.slide-title');
+    nextTitle.textContent = nextH2 ? nextH2.textContent : '（最后一页）';
+  } else {
+    nextTitle.textContent = '— 结束 —';
+  }
+}
+
+function startTimer() {
+  timerSeconds = 0;
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+}
+
+function resetTimer() {
+  timerSeconds = 0;
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const h = Math.floor(timerSeconds / 3600);
+  const m = Math.floor((timerSeconds % 3600) / 60);
+  const s = timerSeconds % 60;
+  document.getElementById('presenterTimer').textContent =
+    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+// Init
+goSlide(0);
+</script>
+
+</body>
+</html>
