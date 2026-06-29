@@ -794,99 +794,94 @@ table.compact td, table.compact th { padding: 8px 12px; }
 <section class="slide" id="slide-7" data-type="content" style="padding-top:16px;padding-bottom:56px;">
   <div class="slide-header">
     <span class="kicker" style="margin-bottom:6px;">第二部分 · 行业对标与差距分析</span>
-    <h2 class="slide-title" style="margin:12px 0 16px;">全球建筑行业 AI：百花齐放</h2>
-    <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);">从设计到施工、从机器人到碳减排——每个环节都有人在用 AI 重新定义</p>
+    <h2 class="slide-title" style="margin:12px 0 16px;">全球建筑行业 AI：巨头已全面入场</h2>
+    <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);">卡特彼勒、小松、Autodesk、西门子、英伟达——都在用 AI 重新定义建筑业</p>
   </div>
   <div class="slide-body">
-    <div class="cards cards-4" style="gap:12px;margin-bottom:12px;">
-      <!-- 设计环节 -->
-      <div class="card" style="border-top:3px solid var(--accent);padding:14px 16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-blue" style="font-size:10px;">设计</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇳🇴 挪威</span>
-        </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Spacemaker</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI 自动生成数千种建筑布局方案，优化采光、风噪、密度</p>
-        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong class="accent">Autodesk 以 2.4 亿美元收购</strong><sup class="fn-marker">1</sup></p>
-      </div>
-      <!-- 施工管理 -->
-      <div class="card" style="border-top:3px solid var(--success);padding:14px 16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-green" style="font-size:10px;">施工管理</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 美国</span>
-        </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">ALICE Technologies</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI 探索数百万种施工排程方案，自动优化成本和工期</p>
-        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--success);">斯坦福团队，累计融资约 3000 万美元</strong><sup class="fn-marker">2</sup></p>
-      </div>
-      <!-- 工地安全 -->
+    <!-- 上排：设备巨头 + 自主机械 -->
+    <div class="cards cards-4" style="gap:12px;margin-bottom:10px;">
       <div class="card" style="border-top:3px solid var(--danger);padding:14px 16px;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-red" style="font-size:10px;">工地安全</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇸🇪 瑞典</span>
+          <span class="tag tag-red" style="font-size:10px;">自主矿卡</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 卡特彼勒</span>
         </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Skanska Safety Sidekick</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">全球前五大承包商，AI 实时识别工地安全隐患，已覆盖 3000+ 人<sup class="fn-marker">3</sup></p>
-        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong class="danger">试点项目效率明显提升</strong></p>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Cat Command</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">矿卡/推土机/挖掘机全自动作业，一人监管多台<sup class="fn-marker">1</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong class="danger">累计自主运输超 50 亿吨</strong></p>
       </div>
-      <!-- 进度追踪 -->
+      <div class="card" style="border-top:3px solid var(--accent);padding:14px 16px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+          <span class="tag tag-blue" style="font-size:10px;">自主矿卡</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇯🇵 小松</span>
+        </div>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">FrontRunner AHS</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">全球首个商用矿卡自动驾驶（2008年），智能施工平台<sup class="fn-marker">2</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong class="accent">累计自主运输超 60 亿吨</strong></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--success);padding:14px 16px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+          <span class="tag tag-green" style="font-size:10px;">自主控制</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 天宝</span>
+        </div>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Trimble Earthworks</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">半自主/自主推土机、挖掘机控制，与 CAT、小松深度合作<sup class="fn-marker">3</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--success);">全球数千工地部署</strong></p>
+      </div>
       <div class="card" style="border-top:3px solid var(--warning);padding:14px 16px;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-gray" style="font-size:10px;background:#fffbeb;color:var(--warning);">进度追踪</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇮🇱 以色列</span>
+          <span class="tag tag-gray" style="font-size:10px;background:#fffbeb;color:var(--warning);">自主矿卡</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇸🇪 沃尔沃</span>
         </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Buildots</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">安全帽装 360° 相机，AI 自动比对 BIM 模型追踪施工进度<sup class="fn-marker">4</sup></p>
-        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--warning);">累计融资约 6000 万美元</strong></p>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Volvo Autonomous</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">自主矿卡 TA15 + 全线电动化挖掘机/装载机<sup class="fn-marker">4</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--warning);">矿区商用部署中</strong></p>
       </div>
     </div>
+    <!-- 下排：软件平台 + 科技巨头 -->
     <div class="cards cards-4" style="gap:12px;">
-      <!-- 机器人砌砖 -->
       <div class="card" style="border-top:3px solid var(--accent);padding:14px 16px;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-blue" style="font-size:10px;">建筑机器人</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇦🇺 澳大利亚</span>
+          <span class="tag tag-blue" style="font-size:10px;">BIM + AI</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 Autodesk</span>
         </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">FBR Hadrian X</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">全自动砌砖机器人，每小时可砌约 1000 块砖，已在中东和美国部署<sup class="fn-marker">5</sup></p>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Construction Cloud + AI</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI 风险评分（Construction IQ）、AI 生成式设计（Forma），数十万项目在用<sup class="fn-marker">5</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong class="accent">市值约 500-600 亿美元</strong></p>
       </div>
-      <!-- 3D打印 -->
       <div class="card" style="border-top:3px solid var(--success);padding:14px 16px;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-green" style="font-size:10px;">3D 打印</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 美国</span>
+          <span class="tag tag-green" style="font-size:10px;">数字孪生</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇩🇪 西门子</span>
         </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">ICON</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI 驱动大型 3D 打印房屋，正与 NASA 合作月球基地建设<sup class="fn-marker">6</sup></p>
-        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--success);">累计融资约 4 亿美元</strong></p>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Building X</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI + 数字孪生管理建筑能效、暖通、安防，与英伟达 Omniverse 合作<sup class="fn-marker">6</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--success);">市值约 1200-1400 亿欧元</strong></p>
       </div>
-      <!-- 碳减排 -->
       <div class="card" style="border-top:3px solid var(--danger);padding:14px 16px;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-red" style="font-size:10px;">碳减排</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇨🇦 加拿大</span>
+          <span class="tag tag-red" style="font-size:10px;">数字孪生</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 英伟达</span>
         </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">BrainBox AI</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">深度学习预测建筑能耗，自动优化暖通系统，能耗降低约 25%<sup class="fn-marker">7</sup></p>
-        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong class="danger">碳排放降低约 40%</strong></p>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Omniverse</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AEC 数字孪生实时协作平台，合作方：Autodesk、Bentley、Trimble、Arup<sup class="fn-marker">7</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong class="danger">市值约 1-2 万亿美元</strong></p>
       </div>
-      <!-- 无人机巡检 -->
       <div class="card" style="border-top:3px solid var(--warning);padding:14px 16px;">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-gray" style="font-size:10px;background:#fffbeb;color:var(--warning);">无人机巡检</span>
-          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 美国</span>
+          <span class="tag tag-gray" style="font-size:10px;background:#fffbeb;color:var(--warning);">混合现实</span>
+          <span style="font-size:var(--text-small);color:var(--ink-muted);">🇺🇸 微软</span>
         </div>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Skydio</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI 自主无人机，自动巡检工地、3D 扫描、进度监控<sup class="fn-marker">8</sup></p>
-        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--warning);">估值超 22 亿美元</strong></p>
+        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">HoloLens + Azure Digital Twins</p>
+        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">混合现实 BIM 叠加、数字孪生平台，Bechtel 等大型承包商在用<sup class="fn-marker">8</sup></p>
+        <p style="font-size:var(--text-small);margin:6px 0 0;"><strong style="color:var(--warning);">市值约 2.5-3 万亿美元</strong></p>
       </div>
     </div>
   </div>
   <div class="footnote">
-    <div class="fn-src"><sup class="fn-marker">1</sup> Autodesk 2020 年收购公告 · <sup class="fn-marker">2</sup> ALICE Technologies 公开融资信息 · <sup class="fn-marker">3</sup> Skanska USA 官方新闻稿 · <sup class="fn-marker">4</sup> Buildots 公开融资信息 · <sup class="fn-marker">5</sup> FBR 官网及 ASX 公告 · <sup class="fn-marker">6</sup> ICON 官网及 NASA Project Olympus · <sup class="fn-marker">7</sup> BrainBox AI 官网 · <sup class="fn-marker">8</sup> Skydio 公开融资信息</div>
-    来源：各公司官网、Crunchbase、Construction Dive、TechCrunch
+    <div class="fn-src"><sup class="fn-marker">1</sup> Caterpillar 官网 · <sup class="fn-marker">2</sup> Komatsu 官网 · <sup class="fn-marker">3</sup> Trimble 官网 · <sup class="fn-marker">4</sup> Volvo CE 官网 · <sup class="fn-marker">5</sup> Autodesk 官网 · <sup class="fn-marker">6</sup> Siemens Building X · <sup class="fn-marker">7</sup> NVIDIA Omniverse · <sup class="fn-marker">8</sup> Microsoft HoloLens / Azure Digital Twins</div>
+    来源：各公司官网；Construction Dive；TechCrunch
   </div>
-  <div class="speaker-notes">8个案例，覆盖7个国家、6个环节：设计（Spacemaker，2.4亿美元被Autodesk收购）、施工管理（ALICE，斯坦福团队）、工地安全（Skanska）、进度追踪（Buildots，安全帽360°相机）、建筑机器人（FBR砌砖机器人）、3D打印（ICON，跟NASA合作月球基地）、碳减排（BrainBox AI，能耗降25%）、无人机巡检（Skydio，22亿美元估值）。每个环节都有人在做，百花齐放。过渡：国外已经百花齐放，国内同行呢？</div>
+  <div class="speaker-notes">上排讲设备端：卡特彼勒和小松各自累计自主运输超50/60亿吨——这不是实验室，是大规模商用。天宝做自主控制，跟CAT、小松合作。沃尔沃也在做自主矿卡+全线电动化。下排讲软件端：Autodesk数十万项目在用AI风险评分；西门子Building X用AI+数字孪生管建筑能效；英伟达Omniverse做AEC数字孪生；微软HoloLens做混合现实BIM叠加。大公司全入场了，建筑业AI不是概念，是正在发生的事实。过渡：国外巨头全面入场，国内同行呢？</div>
 </section>
 
 
