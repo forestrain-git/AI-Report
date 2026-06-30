@@ -695,7 +695,7 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <h2 class="slide-title" style="margin:12px 0 28px;">建筑业数字化：差距就是空间</h2>
   </div>
   <div class="slide-body">
-    <div class="split" style="align-items:center;">
+    <div class="split" style="align-items:stretch;gap:24px;">
       <div class="split-left" style="text-align:center;">
         <div style="padding:24px;background:var(--danger-bg);border-radius:var(--radius);margin-bottom:16px;">
           <div style="font-size:clamp(56px,5vw,80px);font-weight:700;color:var(--danger);line-height:1;">1.375</div>
@@ -708,14 +708,19 @@ table.compact td, table.compact th { padding: 8px 12px; }
           <div style="font-size:var(--text-body);color:var(--ink-muted);">制造业约 3%</div>
         </div>
       </div>
-      <div class="split-right" style="display:flex;align-items:center;">
-        <div class="card" style="border-left:4px solid var(--accent);background:var(--accent-light);padding:32px 28px;">
-          <p style="font-size:var(--text-h2);margin:0;line-height:1.5;font-weight:700;color:var(--accent-dark);">
-            差距在，但条件已经具备了——就看谁先动手。
-          </p>
-          <p style="font-size:var(--text-body);margin:16px 0 0;color:var(--ink-dim);line-height:1.7;">
-            标书、方案、BIM 已经数字化交付，现场拍照替代纸质。国务院对建筑业点名三条：产业升级、"好房子"、城市治理。
-          </p>
+      <div class="split-right" style="display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;">
+        <div style="height:140px;overflow:hidden;">
+          <img src="assets/construction-urban-site.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.5);">
+        </div>
+        <div style="flex:1;display:flex;align-items:center;padding:32px 28px;background:var(--accent-light);">
+          <div>
+            <p style="font-size:var(--text-h2);margin:0;line-height:1.5;font-weight:700;color:var(--accent-dark);">
+              差距在，但条件已经具备了——就看谁先动手。
+            </p>
+            <p style="font-size:var(--text-body);margin:16px 0 0;color:var(--ink-dim);line-height:1.7;">
+              标书、方案、BIM 已经数字化交付，现场拍照替代纸质。国务院对建筑业点名三条：产业升级、"好房子"、城市治理。
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -730,10 +735,14 @@ table.compact td, table.compact th { padding: 8px 12px; }
 <section class="slide" id="slide-4" data-type="content" style="padding-top:16px;padding-bottom:56px;">
   <div class="slide-header" style="margin-bottom:4px;">
     <span class="kicker" style="margin-bottom:6px;">第一部分 · 趋势认知</span>
-    <h2 class="slide-title" style="margin:12px 0 28px;">集团内部：AI 生态已激活</h2>
+    <h2 class="slide-title" style="margin:12px 0 14px;">集团内部：AI 生态已激活</h2>
   </div>
   <div class="slide-body">
-    <!-- 上半屏：国资委 + 集团 -->
+    <!-- 配图 -->
+    <div style="margin-bottom:14px;border-radius:var(--radius);overflow:hidden;max-height:90px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+      <img src="assets/government-building.jpg" alt="" style="width:100%;height:auto;display:block;object-fit:cover;filter:brightness(0.85) saturate(0.8);">
+    </div>
+    <!-- 内容：国资委 + 集团 -->
     <div style="display:flex;gap:24px;margin-bottom:20px;">
       <div style="flex:1;">
         <h3 style="margin-bottom:8px;">国资委明确了三件事 <span class="tag tag-blue">2026.1–2</span></h3>
@@ -808,42 +817,48 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <div style="margin-bottom:14px;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);max-height:260px;">
       <img src="assets/mining-truck-chile.jpg" alt="卡特彼勒自主矿卡在矿区作业" style="width:100%;height:auto;display:block;object-fit:cover;">
     </div>
-    <div class="cards cards-4" style="gap:14px;">
-      <div class="card" style="border-top:3px solid var(--danger);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-red" style="font-size:10px;">自主矿卡/推土机</span>
+    <div class="cards cards-2" style="gap:12px;">
+      <!-- 上排：卡特彼勒 小松 -->
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--danger);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-caterpillar.png" alt="Caterpillar" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇺🇸 卡特彼勒</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Cat Command</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">矿卡/推土机全自动作业，一人远程监管多台<sup class="fn-marker">1</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong class="danger">累计自主运输超 40 亿吨</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇺🇸 卡特彼勒 <span class="tag tag-red" style="font-size:10px;">自主矿卡/推土机</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">Cat Command：矿卡/推土机全自动，一人监管多台<sup class="fn-marker">1</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong class="danger">累计自主运输超 40 亿吨</strong></p>
+        </div>
       </div>
-      <div class="card" style="border-top:3px solid var(--accent);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-blue" style="font-size:10px;">自主矿卡</span>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--accent);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-komatsu.png" alt="Komatsu" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇯🇵 小松</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">FrontRunner AHS</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">全球首个商用矿卡自动驾驶（2008年）<sup class="fn-marker">2</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong class="accent">累计自主运输超 40 亿吨</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇯🇵 小松 <span class="tag tag-blue" style="font-size:10px;">自主矿卡</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">FrontRunner AHS：全球首个商用矿卡自动驾驶（2008年）<sup class="fn-marker">2</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong class="accent">累计自主运输超 40 亿吨</strong></p>
+        </div>
       </div>
-      <div class="card" style="border-top:3px solid var(--success);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-green" style="font-size:10px;">自主控制系统</span>
+      <!-- 下排：天宝 沃尔沃 -->
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--success);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-trimble.png" alt="Trimble" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇺🇸 天宝 Trimble</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Earthworks</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">推土机/挖掘机半自主控制，与 CAT、小松等 OEM 合作<sup class="fn-marker">3</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong style="color:var(--success);">全球数千工地部署</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇺🇸 天宝 Trimble <span class="tag tag-green" style="font-size:10px;">自主控制系统</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">Earthworks：推土机/挖掘机半自主控制，与 CAT、小松等 OEM 合作<sup class="fn-marker">3</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong style="color:var(--success);">全球数千工地部署</strong></p>
+        </div>
       </div>
-      <div class="card" style="border-top:3px solid var(--warning);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-gray" style="font-size:10px;background:#fffbeb;color:var(--warning);">自主+电动</span>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--warning);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-volvo.png" alt="Volvo CE" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇸🇪 沃尔沃 CE</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Autonomous + Electric</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">自主矿卡 TA15 + 中小型设备已电动化<sup class="fn-marker">4</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong style="color:var(--warning);">矿区商用部署中</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇸🇪 沃尔沃 CE <span class="tag tag-gray" style="font-size:10px;">自主+电动</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">Volvo Autonomous：自主矿卡 TA15 + 中小型设备已电动化<sup class="fn-marker">4</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong style="color:var(--warning);">矿区商用部署中</strong></p>
+        </div>
       </div>
     </div>
   </div>
@@ -865,42 +880,48 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <div style="margin-bottom:14px;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);max-height:260px;">
       <img src="assets/bim-digital-twin.jpg" alt="建筑数字孪生3D可视化" style="width:100%;height:auto;display:block;object-fit:cover;">
     </div>
-    <div class="cards cards-4" style="gap:14px;">
-      <div class="card" style="border-top:3px solid var(--accent);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-blue" style="font-size:10px;">BIM + AI</span>
+    <div class="cards cards-2" style="gap:12px;">
+      <!-- 上排：Autodesk 西门子 -->
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--accent);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-autodesk.png" alt="Autodesk" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇺🇸 Autodesk</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Construction Cloud + AI</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI 风险评分（Construction IQ）、AI 生成式设计（Forma）<sup class="fn-marker">5</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong class="accent">Construction IQ 分析超 1.3 亿条数据</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇺🇸 Autodesk <span class="tag tag-blue" style="font-size:10px;">BIM + AI</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">Construction Cloud + AI：AI 风险评分（Construction IQ）、AI 生成式设计（Forma）<sup class="fn-marker">5</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong class="accent">Construction IQ 分析超 1.3 亿条数据</strong></p>
+        </div>
       </div>
-      <div class="card" style="border-top:3px solid var(--success);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-green" style="font-size:10px;">数字孪生</span>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--success);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-siemens.png" alt="Siemens" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇩🇪 西门子</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Building X</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI + 数字孪生管理建筑能效、暖通、安防<sup class="fn-marker">6</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong style="color:var(--success);">与英伟达 Omniverse 合作</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇩🇪 西门子 <span class="tag tag-green" style="font-size:10px;">数字孪生</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">Building X：AI + 数字孪生管理建筑能效、暖通、安防<sup class="fn-marker">6</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong style="color:var(--success);">与英伟达 Omniverse 合作</strong></p>
+        </div>
       </div>
-      <div class="card" style="border-top:3px solid var(--danger);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-red" style="font-size:10px;">数字孪生平台</span>
+      <!-- 下排：英伟达 微软 -->
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--danger);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-nvidia.png" alt="NVIDIA" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇺🇸 英伟达</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">Omniverse</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AEC 数字孪生实时协作平台，基于 OpenUSD<sup class="fn-marker">7</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong class="danger">合作方：Autodesk、Bentley、Trimble</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇺🇸 英伟达 <span class="tag tag-red" style="font-size:10px;">数字孪生平台</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">Omniverse：AEC 数字孪生实时协作平台，基于 OpenUSD<sup class="fn-marker">7</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong class="danger">合作方：Autodesk、Bentley、Trimble</strong></p>
+        </div>
       </div>
-      <div class="card" style="border-top:3px solid var(--warning);padding:16px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
-          <span class="tag tag-gray" style="font-size:10px;background:#fffbeb;color:var(--warning);">混合现实</span>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--warning);">
+        <div style="flex-shrink:0;width:80px;height:80px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <img src="assets/logo-microsoft.png" alt="Microsoft" style="max-width:70px;max-height:70px;">
         </div>
-        <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 6px;">🇺🇸 微软</p>
-        <p style="font-size:var(--text-body);font-weight:700;margin:0 0 4px;">HoloLens + Azure DT</p>
-        <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">混合现实 BIM 叠加 + 数字孪生 IoT 平台<sup class="fn-marker">8</sup></p>
-        <p style="font-size:var(--text-body);margin:8px 0 0;"><strong style="color:var(--warning);">Azure DT 被 Bentley 等集成</strong></p>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">🇺🇸 微软 <span class="tag tag-gray" style="font-size:10px;">混合现实</span></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">HoloLens + Azure Digital Twins：混合现实 BIM 叠加<sup class="fn-marker">8</sup></p>
+          <p style="font-size:var(--text-body);margin:4px 0 0;"><strong style="color:var(--warning);">Azure DT 被 Bentley 等集成</strong></p>
+        </div>
       </div>
     </div>
   </div>
@@ -919,26 +940,46 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <h2 class="slide-title" style="margin:12px 0 24px;">建筑央企同行：AI 四个落地方向</h2>
   </div>
   <div class="slide-body">
-    <div class="cards cards-2" style="margin-bottom:16px;">
-      <div class="card card-accent" style="padding:20px;">
-        <div class="card-title" style="font-size:var(--text-h2);">🏗️ 中铁建设</div>
-        <p style="font-size:var(--text-h3);margin:8px 0;"><strong class="accent">"铁小智"</strong> — 施工方案AI审核，1分钟审完</p>
-        <span class="tag tag-green">已覆盖30余项目</span>
+    <div class="cards cards-2" style="gap:12px;">
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--accent);">
+        <div style="flex-shrink:0;width:70px;height:70px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;font-size:28px;">
+          <img src="assets/logo-crcc.png" alt="中铁建设" style="max-width:60px;max-height:60px;" onerror="this.outerHTML='🏗️'">
+        </div>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">中铁建设</p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;"><strong class="accent">"铁小智"</strong> — 施工方案AI审核，1分钟审完</p>
+          <span class="tag tag-green" style="margin-top:4px;">已覆盖30余项目</span>
+        </div>
       </div>
-      <div class="card card-accent" style="padding:20px;">
-        <div class="card-title" style="font-size:var(--text-h2);">🚇 中铁十一局</div>
-        <p style="font-size:var(--text-h3);margin:8px 0;"><strong class="accent">大盾构无人化运输</strong> — 建筑施工领域唯一入选</p>
-        <span class="tag tag-red">国资委首批40项</span>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--danger);">
+        <div style="flex-shrink:0;width:70px;height:70px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;font-size:28px;">
+          🚇
+        </div>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">中铁十一局</p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;"><strong class="accent">大盾构无人化运输</strong> — 建筑施工领域唯一入选</p>
+          <span class="tag tag-red" style="margin-top:4px;">国资委首批40项</span>
+        </div>
       </div>
-      <div class="card card-accent" style="padding:20px;">
-        <div class="card-title" style="font-size:var(--text-h2);">🌉 中交集团</div>
-        <p style="font-size:var(--text-h3);margin:8px 0;"><strong class="accent">"蓝翼"大模型</strong> — 央企自研土木建筑大模型</p>
-        <span class="tag tag-blue">140亿参数 · 30+场景</span>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--success);">
+        <div style="flex-shrink:0;width:70px;height:70px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;font-size:28px;">
+          <img src="assets/logo-ccccltd.png" alt="中交集团" style="max-width:60px;max-height:60px;" onerror="this.outerHTML='🌉'">
+        </div>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">中交集团</p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;"><strong class="accent">"蓝翼"大模型</strong> — 央企自研土木建筑大模型</p>
+          <span class="tag tag-blue" style="margin-top:4px;">140亿参数 · 30+场景</span>
+        </div>
       </div>
-      <div class="card card-accent" style="padding:20px;">
-        <div class="card-title" style="font-size:var(--text-h2);">🏭 中冶赛迪</div>
-        <p style="font-size:var(--text-h3);margin:8px 0;"><strong class="accent">AI 视觉识别</strong> — 工业场景已成熟，可迁移至工地</p>
-        <span class="tag tag-blue">技术可行性验证</span>
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:14px;border-left:4px solid var(--warning);">
+        <div style="flex-shrink:0;width:70px;height:70px;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;font-size:28px;">
+          🏭
+        </div>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-body);font-weight:700;margin:0 0 2px;">中冶赛迪</p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;"><strong class="accent">AI 视觉识别</strong> — 工业场景已成熟，可迁移至工地</p>
+          <span class="tag tag-blue" style="margin-top:4px;">技术可行性验证</span>
+        </div>
       </div>
     </div>
     <div style="text-align:center;padding:14px 20px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);">
@@ -958,24 +999,41 @@ table.compact td, table.compact th { padding: 8px 12px; }
 <section class="slide" id="slide-9" data-type="content" style="padding-top:16px;padding-bottom:56px;">
   <div class="slide-header">
     <span class="kicker" style="margin-bottom:6px;">第二部分 · 行业对标与差距分析</span>
-    <h2 class="slide-title" style="margin:12px 0 16px;">集团内部：五局、八局、中海已动起来</h2>
+    <h2 class="slide-title" style="margin:12px 0 14px;">集团内部：五局、八局、中海已动起来</h2>
   </div>
   <div class="slide-body">
-    <div class="cards cards-3" style="margin-bottom:16px;">
-      <div class="card card-accent" style="padding:24px 20px;">
-        <div class="card-title" style="font-size:var(--text-h2);">🏗️ 五局</div>
-        <p style="font-size:var(--text-hero);font-weight:700;color:var(--accent);margin:8px 0;">4万人<sup class="fn-marker">1</sup></p>
-        <p style="font-size:var(--text-body);margin:0;">全员上线 AI 学习平台，活跃率 94%。<strong>4万人能跑通，说明规模不是借口。</strong></p>
+    <!-- 配图 -->
+    <div style="margin-bottom:14px;border-radius:var(--radius);overflow:hidden;max-height:90px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+      <img src="assets/team-meeting-office.jpg" alt="" style="width:100%;height:auto;display:block;object-fit:cover;filter:brightness(0.8);">
+    </div>
+    <div class="cards cards-3" style="gap:14px;">
+      <div class="card" style="padding:18px 20px;display:flex;gap:14px;border-left:4px solid var(--accent);">
+        <div style="flex-shrink:0;width:60px;height:60px;background:var(--accent-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--accent-dark);">
+          <img src="assets/logo-cseceglobal.png" alt="中建" style="max-width:50px;max-height:50px;" onerror="this.outerHTML='5'">
+        </div>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 2px;">五局</p>
+          <p style="font-size:var(--text-hero);font-weight:700;color:var(--accent);margin:4px 0;line-height:1;">4万人<sup class="fn-marker">1</sup></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">全员上线 AI 学习平台，活跃率 94%。<strong>规模不是借口。</strong></p>
+        </div>
       </div>
-      <div class="card card-accent" style="padding:24px 20px;">
-        <div class="card-title" style="font-size:var(--text-h2);">🤖 八局</div>
-        <p style="font-size:var(--text-hero);font-weight:700;color:var(--accent);margin:8px 0;">效率↑2倍<sup class="fn-marker">2</sup></p>
-        <p style="font-size:var(--text-body);margin:0;">焊接机器人，质量波动从15%降到2%。<strong>有体系地做，不是零散试点。</strong></p>
+      <div class="card" style="padding:18px 20px;display:flex;gap:14px;border-left:4px solid var(--success);">
+        <div style="flex-shrink:0;width:60px;height:60px;background:#D1FAE5;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--success);">
+          <img src="assets/logo-cseceglobal.png" alt="中建" style="max-width:50px;max-height:50px;" onerror="this.outerHTML='8'">
+        </div>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 2px;">八局</p>
+          <p style="font-size:var(--text-hero);font-weight:700;color:var(--accent);margin:4px 0;line-height:1;">效率↑2倍<sup class="fn-marker">2</sup></p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">焊接机器人，质量波动从15%降到2%。<strong>有体系地做。</strong></p>
+        </div>
       </div>
-      <div class="card card-accent" style="padding:24px 20px;">
-        <div class="card-title" style="font-size:var(--text-h2);">📊 中海</div>
-        <p style="font-size:var(--text-hero);font-weight:700;color:var(--danger);margin:8px 0;">直接竞争</p>
-        <p style="font-size:var(--text-body);margin:0;">AI文档智能审查，跟我们的招投标合规方向<strong>高度重合</strong>——中海已经在跑了。</p>
+      <div class="card" style="padding:18px 20px;display:flex;gap:14px;border-left:4px solid var(--warning);">
+        <div style="flex-shrink:0;width:60px;height:60px;background:#fffbeb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--warning);">海</div>
+        <div style="flex:1;">
+          <p style="font-size:var(--text-h3);font-weight:700;margin:0 0 2px;">中海</p>
+          <p style="font-size:var(--text-hero);font-weight:700;color:var(--danger);margin:4px 0;line-height:1;">直接竞争</p>
+          <p style="font-size:var(--text-small);color:var(--ink-dim);margin:0;">AI文档智能审查，跟我们的招投标方向<strong>高度重合</strong>。</p>
+        </div>
       </div>
     </div>
     <div style="text-align:center;padding:14px 20px;background:var(--accent-light);border-radius:var(--radius);border-left:4px solid var(--accent);">
