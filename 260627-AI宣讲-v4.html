@@ -592,16 +592,23 @@ table.compact td, table.compact th { padding: 8px 12px; }
      ╚══════════════════════════════════════════╝ -->
 
 <!-- ─── P1 · 封面 ─── -->
-<section class="slide active" id="slide-cover" data-type="cover">
-  <div style="margin-bottom:60px;">
-    <span class="kicker" style="letter-spacing:.15em;opacity:.7;">中建发展 · AI 分享</span>
+<section class="slide active" id="slide-cover" data-type="cover" style="position:relative;overflow:hidden;background:none;">
+  <!-- 背景图 -->
+  <div style="position:absolute;inset:0;z-index:0;">
+    <img src="assets/construction-tower-cranes.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.35);">
   </div>
-  <h1 class="slide-title" style="font-size:clamp(52px,4.5vw,72px);margin-bottom:24px;line-height:1.2;">
-    AI 时代：<br>我们的选择与行动
-  </h1>
-  <p class="lead" style="max-width:600px;margin:0 auto 48px;font-size:var(--text-h3);">AI 跟咱们有什么关系</p>
-  <div class="footnote" style="border-top:none;margin-top:80px;">
-    演讲人：XXX ｜ 日期：2026.XX.XX ｜ 中建发展 · AI 分享
+  <!-- 内容层 -->
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%;">
+    <div style="margin-bottom:60px;">
+      <span class="kicker" style="letter-spacing:.15em;opacity:.7;">中建发展 · AI 分享</span>
+    </div>
+    <h1 class="slide-title" style="font-size:clamp(52px,4.5vw,72px);margin-bottom:24px;line-height:1.2;color:#fff;">
+      AI 时代：<br>我们的选择与行动
+    </h1>
+    <p class="lead" style="max-width:600px;margin:0 auto 48px;font-size:var(--text-h3);color:rgba(255,255,255,.85);">AI 跟咱们有什么关系</p>
+    <div class="footnote" style="border-top:none;margin-top:80px;color:rgba(255,255,255,.5);">
+      演讲人：XXX ｜ 日期：2026.XX.XX ｜ 中建发展 · AI 分享
+    </div>
   </div>
   <div class="speaker-notes">欢迎致辞。说明本次宣讲的背景：国资委要求、集团部署、中建发展的使命。强调这不是技术培训，而是战略认知对齐。</div>
 </section>
@@ -1075,10 +1082,9 @@ table.compact td, table.compact th { padding: 8px 12px; }
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:16px">
-        <span style="flex:1;height:3px;background:linear-gradient(90deg,var(--accent-dark),var(--success));border-radius:2px"></span>
-        <span style="font-size:36px;color:#bbb;font-weight:300">▶</span>
-        <span style="flex:1;height:3px;background:linear-gradient(90deg,var(--success),var(--warning));border-radius:2px"></span>
+      <!-- 视觉分隔：建筑图 -->
+      <div style="margin:12px 0;border-radius:var(--radius);overflow:hidden;max-height:100px;box-shadow:0 1px 8px rgba(0,0,0,0.06);">
+        <img src="assets/modern-architecture-glass.jpg" alt="" style="width:100%;height:auto;display:block;object-fit:cover;filter:brightness(0.9) saturate(0.7);">
       </div>
 
       <div style="text-align:center;margin-bottom:16px">
@@ -1452,16 +1458,24 @@ table.compact td, table.compact th { padding: 8px 12px; }
     <p style="margin:0;font-size:var(--text-body);color:var(--ink-dim);">前面聊的都是方向，接下来说说具体怎么做。</p>
   </div>
   <div class="slide-body">
-    <div class="split" style="margin-top:20px;">
-      <div class="split-left">
-        <div style="padding:24px;background:var(--surface-alt);border-radius:var(--radius);text-align:center;border:2px solid var(--accent);">
+    <div style="display:flex;gap:24px;align-items:stretch;height:100%;">
+      <!-- 左：个人 -->
+      <div style="flex:1;display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;border:2px solid var(--accent);">
+        <div style="height:140px;overflow:hidden;">
+          <img src="assets/team-architectural-plans.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.6);">
+        </div>
+        <div style="padding:20px 24px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;">
           <p style="font-size:var(--text-hero);font-weight:800;color:var(--accent);margin:0;">个人</p>
           <p style="font-size:var(--text-body);margin:12px 0 0;">五个人已经做到了</p>
           <p style="font-size:var(--text-small);color:var(--ink-dim);margin:4px 0 0;">我同事做到了，我也能做到</p>
         </div>
       </div>
-      <div class="split-right">
-        <div style="padding:24px;background:var(--accent-light);border-radius:var(--radius);text-align:center;">
+      <!-- 右：组织 -->
+      <div style="flex:1;display:flex;flex-direction:column;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
+        <div style="height:140px;overflow:hidden;">
+          <img src="assets/team-architectural-plans.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.7) grayscale(0.5);">
+        </div>
+        <div style="padding:20px 24px;text-align:center;background:var(--accent-light);flex:1;display:flex;flex-direction:column;justify-content:center;">
           <p style="font-size:var(--text-hero);font-weight:800;color:var(--accent);margin:0;">组织</p>
           <p style="font-size:var(--text-body);margin:12px 0 0;">试点、培训、团队</p>
           <p style="font-size:var(--text-small);color:var(--ink-dim);margin:4px 0 0;">怎么试、怎么推、怎么建团队</p>
@@ -1469,7 +1483,7 @@ table.compact td, table.compact th { padding: 8px 12px; }
       </div>
     </div>
   </div>
-  <div class="speaker-notes">这一页是第四部分的总纲。不引方法论名人，不讲五步法。直接说：前面讨论了方向和框架，现在分两条线落地——组织做什么、个人做什么。简洁有力。</div>
+  <div class="speaker-notes">过渡页。前面聊方向，接下来分两条线落地——个人先（我同事做到了）、组织后（试点培训团队）。左右两卡用同一张图不同滤镜区分层次。</div>
 </section>
 
 <!-- REMOVED: slide-26 -->
@@ -1612,12 +1626,16 @@ table.compact td, table.compact th { padding: 8px 12px; }
 <!-- REMOVED: slide-36 (merged into new org/personal slides) -->
 
 <!-- ─── P33 · 立即动手 ─── -->
-<section class="slide" id="slide-37" data-type="pivot" style="justify-content:center;align-items:center;text-align:center;overflow-y:auto;">
-  <div style="margin-bottom:36px;">
-    <span class="kicker" style="letter-spacing:.12em;">立即动手</span>
+<section class="slide" id="slide-37" data-type="pivot" style="position:relative;overflow:hidden;background:none;">
+  <div style="position:absolute;inset:0;z-index:0;">
+    <img src="assets/modern-architecture-glass.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.25);">
   </div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%;padding:40px;">
+    <div style="margin-bottom:24px;">
+      <span class="kicker" style="letter-spacing:.12em;color:rgba(255,255,255,.6);">立即动手</span>
+    </div>
 
-  <div style="display:flex;align-items:center;justify-content:center;gap:28px;padding:20px 28px;background:var(--surface);border:1px solid var(--border);border-radius:12px;max-width:600px;margin:0 auto 32px;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+  <div style="display:flex;align-items:center;justify-content:center;gap:28px;padding:20px 28px;background:rgba(255,255,255,.95);border-radius:12px;max-width:600px;margin:0 auto 24px;box-shadow:0 8px 32px rgba(0,0,0,.25);">
     <div style="flex-shrink:0;">
       <img src="data:image/png;base64,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" alt="AI快速入门指南二维码" style="width:160px;height:160px;border-radius:10px;">
     </div>
@@ -1630,22 +1648,23 @@ table.compact td, table.compact th { padding: 8px 12px; }
     </div>
   </div>
 
-  <div class="divider" style="width:60px;margin:0 auto 32px;"></div>
+  <div class="divider" style="width:60px;margin:0 auto 24px;border-color:rgba(255,255,255,.15);"></div>
 
-  <div style="max-width:750px;margin:0 auto 24px;padding:20px 28px;background:var(--accent-light);border-radius:var(--radius);">
-    <p style="margin:0;font-size:var(--text-h3);color:var(--accent-dark);line-height:1.6;">
+  <div style="max-width:750px;margin:0 auto 24px;padding:20px 28px;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border-radius:var(--radius);">
+    <p style="margin:0;font-size:var(--text-h3);color:rgba(255,255,255,.95);line-height:1.6;">
       <strong>希望三个月后，我们回头看</strong>——已经有跑起来的试点和第一版 Demo。
     </p>
   </div>
 
   <p style="font-size:var(--text-h2);margin:0;font-weight:700;color:var(--accent-dark);">
     🚀 现在开始。
-  </p>
+    </p>
 
-  <div class="footnote" style="text-align:center;border-top:none;margin-top:32px;">
-    谢谢大家
+    <div class="footnote" style="text-align:center;border-top:none;margin-top:32px;color:rgba(255,255,255,.4);">
+      谢谢大家
+    </div>
   </div>
-  <div class="speaker-notes">最后一页。核心只有一个：扫码带走"AI 今晚动手包"。这是把今天一整场宣讲转化为今晚每个人具体行动的唯一入口。愿景部分用"三个月后回头看"给出具体画面，和前面五步法的飞轮终点——试点拿信心——形成闭环。结尾四个字"现在开始"干净利落。</div>
+  <div class="speaker-notes">最后一页。核心只有一个：扫码带走"AI 今晚动手包"。这是把今天一整场宣讲转化为今晚每个人具体行动的唯一入口。愿景部分用"三个月后回头看"给出具体画面。结尾四个字"现在开始"干净利落。</div>
 </section>
 
 </div><!-- end .deck --><!-- end .deck -->
