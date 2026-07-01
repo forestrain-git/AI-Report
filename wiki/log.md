@@ -1,3 +1,18 @@
+## [2026-06-30] update | 全球建筑AI案例搜索+四页替换+16个案例页
+- **触发**: AI宣讲Slide-7/8/9/10数据核查与替换
+- **变更**:
+  - Slide-7a: 替换为[Balfour Beatty/Strabag DARIA/鹿岛A4CSEL/Skanska]四个真AI案例
+  - Slide-7b: 去掉Autodesk，新增Google Cloud×Eiffage，标题改为"跨界颠覆者"
+  - Slide-8: 替换为[隧道股份/中交蓝翼/上海建工/精工钢构]四个国内标杆
+  - Slide-9: 中建系AI群像，经多轮筛选后定稿为[中海/西南院/三局/安装]四强
+  - Slide-10: 技术纵深表回归L0-L4顺序
+  - 封面tagline从"AI跟咱们有什么关系"改为"从趋势到行动，AI如何重塑我们的行业"
+  - 方向页标题改为"从战略框架到方向试探：三个初步思路"
+  - 个人案例页恢复Work Buddy/Obsidian/Windsurf/Claude工具图标
+  - 删除多个页面的底部装饰图（slide-2/4/9/14/15/技术纵深）
+- **搜索规模**: 6路Agent并行，覆盖全球84+企业、8个技术场景、中建系20+子企业，收集300+案例
+- **知识库同步**: wiki/sources/新增16个案例页面；index.md新增16个索引条目
+- **冲突**: 无
 ## [2026-06-24] query | 生成[[concepts/AI战略选择框架]] — 广义AI战略选择全景图谱
 - **触发**: 陶锋PPT讨论后续，需战略框架指导方向选择
 - **变更**: 新建 [[concepts/AI战略选择框架]] — 7个维度（技术纵深/商业角色/策略节奏/人才组织/数据战略/部署方式/时代约束）+ 各维度主要流派 + 整合决策框架
@@ -1670,5 +1685,26 @@
   - [[HW-11-微型AI安全训导仪]] — 新增"数据来源与口径说明"表格 + "入口竞争风险分析"（传统安全培训替代方案）
   - [[HW-22-建筑机器人]] — 新增"数据来源与口径说明"表格 + "入口竞争风险分析"（央企审批 vs VC/PE估值博弈）
   - [[HW-16-泵站AI巡检终端]] — 新增"数据来源与口径说明"表格 + "入口竞争风险分析"（SKF/恩德斯豪斯工业PHM降维打击）
+- **冲突**: 无
+
+## [2026-06-26] sync | 安装可视化 HTML 编辑工具（DeckBuilder + GrapeJS）
+- **变更**: 在 `inbox/tools/` 下安装 DeckBuilder 单文件编辑器与 GrapeJS 最小演示项目
+  - `inbox/tools/deckbuilder/editor.html` — DeckBuilder V53.9 单文件版
+  - `inbox/tools/grapesjs-demo/` — GrapeJS v0.23.2 最小可运行演示
+  - 各目录新增安全审查与使用说明文档
+- **安全审查结论**:
+  - DeckBuilder：静态扫描未发现恶意代码、后门、病毒或数据外发；仅 Google Fonts 外部字体加载；内嵌 html2canvas/jsPDF/interact.js 均为公开库；无 eval/fetch/WebSocket/postMessage
+  - GrapeJS：`npm audit` 结果 **0 vulnerabilities**；无 postinstall 脚本；BSD-3-Clause 许可证
+- **冲突**: 无
+
+## [2026-06-30] update | 全球建筑AI案例搜索+三页替换+12个案例页
+- **触发**: AI宣讲Slide-7/7b/8数据核查与替换
+- **变更**:
+  - Slide-7a: 替换为 [Balfour Beatty / Strabag DARIA / 鹿岛A4CSEL / Autodesk] 四个真AI案例，标题改为"全球建筑业AI：真金白银在落地的案例"
+  - Slide-7b: Autodesk卡片替换为Google Cloud×Eiffage，标题改为"跨界颠覆者：科技巨头正在进入建筑行业"；所有案例加入年份标签
+  - Slide-8: 替换为[隧道股份数智盾构 / 中交蓝翼 / 上海建工云工 / 精工钢构未来工厂]四个国内标杆，标题改为"国内建筑AI：不只是概念，已有标杆跑通"
+  - 新建12个wiki案例页 (wiki/sources/案例-*)
+  - 更新wiki/index.md（新增12个Sources条目）
+- **知识库同步**: wiki/sources/ 新增12个案例页面；index.md新增12个索引条目
 - **冲突**: 无
 

@@ -6,6 +6,23 @@
 - [[Anthropic_Claude_Tutorial]] — Anthropic 官方 Claude 教程精华。
 - [[Elements_of_AI]] — 赫尔辛基大学《AI 基础》课程笔记。
 - [[Microsoft_AI_for_Beginners]] — 微软 AI 入门课程要点。
+- [[案例-Balfour-Beatty-AI投资]] — 英国最大基建商720万英镑AI投资，全员Copilot部署，生产率↑14-15%。
+- [[案例-Strabag-DARIA]] — 奥地利建筑集团DARIA AI财务风险预测，准确率80%，全集团推广。
+- [[案例-鹿岛建设-A4CSEL]] — 日本鹿岛建设14台无人重机AI协同运行，创水库施工量最高纪录。
+- [[案例-Autodesk-ConstructionIQ-Forma]] — Autodesk Construction IQ分析1.5亿条数据，覆盖12,000+项目。
+- [[案例-Skanska-Sidekick]] — Skanska Safety Sidekick + Dusty放线机器人，已评估70+AI工具。
+- [[案例-Google-Cloud-Eiffage]] — Google Cloud跨界建筑业，15个AI用例，RFP分析2天→20分钟。
+- [[案例-西门子-BuildingX]] — 西门子Building X数字孪生管理建筑能效，实测节能高达30%。
+- [[案例-英伟达-Omniverse]] — 英伟达Omniverse AEC数字孪生平台，连接Autodesk/Bentley/Trimble三大生态。
+- [[案例-微软-Azure-Copilot]] — 微软Azure DT+Copilot+HoloLens全栈渗透建筑业。
+- [[案例-隧道股份-数智盾构]] — 隧道股份AI盾构自主施工，自动化率95%，创868米/月世界纪录。
+- [[案例-中交建-蓝翼大模型]] — 央企首个土木行业大模型，140亿参数，行业知识覆盖率75%。
+- [[案例-上海建工-云工大模型]] — 国内首个建筑AI MaaS平台，10万用户，2500万次使用。
+- [[案例-精工钢构-未来工厂]] — 浙江省首座建筑业"未来工厂"，AI调图效率↑70%，合格率＞99.7%。
+- [[案例-中建西南院-ArchiMind]] — 中建西南院AI全面布局：ArchiMind入选工信部+国资委、EasyBIM超Revit 100%、能源管控降耗30%。
+- [[案例-中建三局-天工云]] — 天工云+DeepSeek成本测算4-7天→2-3天、施工机器人矩阵、无图建造技术体系。
+- [[案例-中建八局-无人化梁厂]] — 无人化梁厂自动化率82.5%、AI焊接变异15%→2%、无人机病害检测准确率95%。
+- [[案例-中海集团-LivingOS]] — "海小算"立面测算7天→30分钟、Living OS智居空间、AI视觉质检。
 
 ## Entities
 - [[中国建筑集团]] — 全球最大建筑投资建设集团，世界500强央企，中建发展的母公司。
